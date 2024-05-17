@@ -1,0 +1,45 @@
+@font-face {
+  font-family: "iconfont"; /* Project id  */
+  src: url('iconfont.ttf?t=1715945291445') format('truetype');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-code:before {
+  content: "\e7fc";
+}
+
+.icon-jdbc:before {
+  content: "\e602";
+}
+
+.icon-bug:before {
+  content: "\e633";
+}
+
+.icon-Hivebiao:before {
+  content: "\e626";
+}
+
+.icon-spring:before {
+  content: "\e671";
+}
+
+.icon-kuazhanjiaobengongji:before {
+  content: "\e7e4";
+}
+
+.icon-SQLzhurugongji:before {
+  content: "\e6f9";
+}
+
+.icon-icons8-mybatis:before {
+  content: "\e60c";
+}
+
