@@ -8,32 +8,40 @@
     <link rel="stylesheet" href="/lib/layui-v2.6.3/css/layui.css" media="all">
     <link rel="stylesheet" href="/lib/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
     <link rel="stylesheet" href="/css/public.css" media="all">
+
+    <link rel="stylesheet" href="/css/codemirror.css" media="all">
+    <link rel="stylesheet" href="/css/style.css" media="all">
+    <link rel="stylesheet" href="/css/juejin.css" media="all">
+    <link rel="stylesheet" href="/lib/custom-icon/iconfont.css" media="all">
+
     <style>
+        .main_btn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        form {
+            width: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        form input {
+            margin-right: 10px; /* 设置输入框之间的右边距 */
+        }
+
+        .layui-form-select {
+            width: 120px;
+        }
+
         .layui-card {
-            border: 1px solid #f2f2f2;
-            border-radius: 5px;
+            display: block;
         }
 
         .icon {
             margin-right: 10px;
-            color: #1aa094;
-        }
-
-        .icon-cray {
-            color: #ffb800 !important;
-        }
-
-        .icon-blue {
-            color: #1e9fff !important;
-        }
-
-        .icon-tip {
-            color: #ff5722 !important;
-        }
-
-        .layuimini-qiuck-module {
-            text-align: center;
-            margin-top: 10px
+            color: #ec0808;
         }
 
         .layuimini-qiuck-module a i {
@@ -61,160 +69,34 @@
             font-size: 14px;
         }
 
-        .welcome-module {
-            width: 100%;
-            height: 210px;
-        }
-
-        .panel {
-            background-color: #fff;
-            border: 1px solid transparent;
-            border-radius: 3px;
-            -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
-            box-shadow: 0 1px 1px rgba(0, 0, 0, .05)
-        }
-
-        .panel-body {
-            padding: 10px
-        }
-
-        .panel-title {
-            margin-top: 0;
-            margin-bottom: 0;
-            font-size: 12px;
-            color: inherit
-        }
-
-        .label {
-            display: inline;
-            padding: .2em .6em .3em;
-            font-size: 75%;
-            font-weight: 700;
-            line-height: 1;
-            color: #fff;
-            text-align: center;
-            white-space: nowrap;
-            vertical-align: baseline;
-            border-radius: .25em;
-            margin-top: .3em;
-        }
-
-        .layui-red {
-            color: red
-        }
-
         .main_btn > p {
             height: 40px;
         }
 
-        .layui-bg-number {
-            background-color: #F8F8F8;
-        }
-
-        .layuimini-notice:hover {
-            background: #f6f6f6;
-        }
-
-        .layuimini-notice {
-            padding: 7px 16px;
-            clear: both;
-            font-size: 12px !important;
-            cursor: pointer;
-            position: relative;
-            transition: background 0.2s ease-in-out;
-        }
-
-        .layuimini-notice-title, .layuimini-notice-label {
-            padding-right: 70px !important;
-            text-overflow: ellipsis !important;
-            overflow: hidden !important;
-            white-space: nowrap !important;
-        }
-
-        .layuimini-notice-title {
-            line-height: 28px;
-            font-size: 14px;
-        }
-
-        .layuimini-notice-extra {
-            position: absolute;
-            top: 50%;
-            margin-top: -8px;
-            right: 16px;
-            display: inline-block;
-            height: 16px;
-            color: #999;
-        }
     </style>
 </head>
 <body>
 <div class="layuimini-container">
     <div class="layuimini-main">
-
         <div class="layui-row layui-col-space15">
-            <div class="layui-col-md12">
-                <div class="layui-row layui-col-space15">
-                        <div class="layui-col-md6">
-                            <h1><span class="iconfont icon-bug"> 漏洞环境：JDBC-原生SQL语句拼接</span></h1>
-                            <div class="layui-tab">
-                                <ul class="layui-tab-title">
-                                    <li class="layui-this">增加-add</li>
-                                    <li>删除-delete</li>
-                                    <li>修改-update</li>
-                                    <li>查询-select</li>
-                                </ul>
-                                <div class="layui-tab-content">
-
-                                    <div class="layui-tab-item layui-show">
-                                        <blockquote class="layui-elem-quote main_btn">
-                                            1
-                                        </blockquote>
-                                    </div>
-                                    <div class="layui-tab-item">
-                                        <blockquote class="layui-elem-quote main_btn">
-                                            2
-                                        </blockquote>
-                                    </div>
-                                    <div class="layui-tab-item">
-                                        <blockquote class="layui-elem-quote main_btn">
-                                            3
-                                        </blockquote>
-                                    </div>
-                                    <div class="layui-tab-item">
-                                        <blockquote class="layui-elem-quote main_btn">
-                                            4
-                                        </blockquote>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="layui-col-md6">
-                            <h1><span class="iconfont icon-code"> 漏洞代码</span></h1>
-                            <blockquote class="layui-elem-quote-vul main_btn">
-
-                                 代码容器
-                                                                <pre class="layui-code">
-                                                                <code class="javascript">
-                                                                  // JavaScript 代码示例
-                                                                  function greet() {
-                                                                    console.log("Hello, world!");
-                                                                  }
-                                                                  greet();
-                                                                </code>
-                                                              </pre>
-
-
-
-                            </blockquote>
-                        </div>
+            <div class="layui-col-md12" style="margin-top: 10px">
+                <div class="layui-row layui-col-space15" style="background-color: #dbe9f7">
+                    <h2 style="color: #333;">什么是 JDBC？</h2>
+                    <p>
+                        JDBC（Java Database Connectivity）是一套用于在 Java 程序中操作关系型数据库的 API。它提供了一种标准的 Java 方法来连接和执行 SQL 查询，从而实现与数据库的交互。
+                    </p>
+                    <h2 style="color: #333;">什么是 SQL 注入？</h2>
+                    <p>
+                        SQL 注入是一种常见的 Web 应用程序安全漏洞，攻击者利用这种漏洞通过在输入字段中插入恶意 SQL 语句来执行非授权的数据库操作。这可能导致数据泄露、数据损坏或者完整性受损。
+                    </p>
                 </div>
             </div>
-            <div class="layui-col-md12">
+
+            <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-bug"> 漏洞环境：JDBC-原生SQL语句拼接</span></h1>
-                        <div class="layui-tab">
+                        <h1><span class="iconfont icon-bug">  漏洞环境：JDBC-原生SQL语句拼接</span></h1>
+                        <div class="layui-tab layui-tab-brief">
                             <ul class="layui-tab-title">
                                 <li class="layui-this">增加-add</li>
                                 <li>删除-delete</li>
@@ -222,165 +104,1201 @@
                                 <li>查询-select</li>
                             </ul>
                             <div class="layui-tab-content">
-
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
-                                        1
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="username" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="用户名" autocomplete="off"
+                                                       class="layui-input">
+                                                <input type="password" name="password" style="width: 150px" required
+                                                       lay-verify="required" placeholder="密码" autocomplete="off"
+                                                       class="layui-input">
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <select class="layui-form-select"
+                                                        style="background-color: #5eb878;!important;">
+                                                    <option value="">示例Payload</option>
+                                                    <option value="0">'</option>
+                                                    <option value="1">上海</option>
+                                                    <option value="2">广州</option>
+                                                    <option value="3">深圳</option>
+                                                    <option value="4">杭州</option>
+                                                </select>
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="vul1-raw-joint-add" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+
+                                <div class="layui-tab-item">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="id" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="用户id" autocomplete="off"
+                                                       class="layui-input">
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="vul1-raw-joint-delete" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
                                     </blockquote>
                                 </div>
                                 <div class="layui-tab-item">
                                     <blockquote class="layui-elem-quote main_btn">
-                                        2
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="id" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="用户id" autocomplete="off"
+                                                       class="layui-input">
+                                                <input type="text" name="username" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="用户名" autocomplete="off"
+                                                       class="layui-input">
+                                                <input type="password" name="password" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="密码" autocomplete="off"
+                                                       class="layui-input">
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="vul1-raw-joint-update" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
                                     </blockquote>
                                 </div>
                                 <div class="layui-tab-item">
                                     <blockquote class="layui-elem-quote main_btn">
-                                        3
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="id" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="用户id" autocomplete="off"
+                                                       class="layui-input">
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="vul1-raw-joint-select" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
                                     </blockquote>
                                 </div>
-                                <div class="layui-tab-item">
-                                    <blockquote class="layui-elem-quote main_btn">
-                                        4
-                                    </blockquote>
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-warning icon"></i>测试结果</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre id="vul1-raw-joint-result" style="color: red;font-size: 15px;"></pre>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code"> 漏洞代码</span></h1>
-                        <blockquote class="layui-elem-quote-vul main_btn">
-
-                            代码容器
-                            <pre class="layui-code">
-                                                                <code class="javascript">
-                                                                  // JavaScript 代码示例
-                                                                  function greet() {
-                                                                    console.log("Hello, world!");
-                                                                  }
-                                                                  greet();
-                                                                </code>
-                                                              </pre>
-
-
-
-                        </blockquote>
+                        <h1><span class="iconfont icon-code">  缺陷代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="vul1RawJoint">
+                            </div>
+                        </div>
                     </div>
+
                 </div>
             </div>
+            <div class="layui-col-md12" style="margin-top: 10px">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-bug">  漏洞环境：JDBC-预编译拼接</span></h1>
+                        <div class="layui-tab layui-tab-brief">
+                            <ul class="layui-tab-title">
+                                <li class="layui-this">增加</li>
+                                <li>删除</li>
+                                <li>修改</li>
+                                <li>查询</li>
+                            </ul>
+                            <div class="layui-tab-content">
+                                <div class="layui-tab-item layui-show">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="username" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="用户名" autocomplete="off"
+                                                       class="layui-input">
+                                                <input type="password" name="password" style="width: 150px" required
+                                                       lay-verify="required" placeholder="密码" autocomplete="off"
+                                                       class="layui-input">
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <select class="layui-form-select"
+                                                        style="background-color: #5eb878;!important;">
+                                                    <option value="">示例Payload</option>
+                                                    <option value="0">'</option>
+                                                    <option value="1">上海</option>
+                                                    <option value="2">广州</option>
+                                                    <option value="3">深圳</option>
+                                                    <option value="4">杭州</option>
+                                                </select>
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="vul2-prepareStatement-joint-add" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
 
+                                <div class="layui-tab-item">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="id" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="用户id" autocomplete="off"
+                                                       class="layui-input">
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="vul2-prepareStatement-joint-delete" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+                                <div class="layui-tab-item">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="id" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="用户id" autocomplete="off"
+                                                       class="layui-input">
+                                                <input type="text" name="username" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="用户名" autocomplete="off"
+                                                       class="layui-input">
+                                                <input type="password" name="password" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="密码" autocomplete="off"
+                                                       class="layui-input">
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="vul2-prepareStatement-joint-update" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+                                <div class="layui-tab-item">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="id" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="用户id" autocomplete="off"
+                                                       class="layui-input">
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="vul2-prepareStatement-joint-select" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-warning icon"></i>测试结果</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre id="vul2-prepareStatement-joint-result"
+                                                 style="color: red;font-size: 15px;"></pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code">  缺陷代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="vul2prepareStatementJoint">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="layui-col-md12" style="margin-top: 10px">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-bug">  漏洞环境：JdbcTemplate-SQL语句拼接</span></h1>
+                        <div class="layui-tab layui-tab-brief">
+                            <ul class="layui-tab-title">
+                                <li class="layui-this">增加</li>
+                                <li>删除</li>
+                                <li>修改</li>
+                                <li>查询</li>
+                            </ul>
+                            <div class="layui-tab-content">
+                                <div class="layui-tab-item layui-show">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="username" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="用户名" autocomplete="off"
+                                                       class="layui-input">
+                                                <input type="password" name="password" style="width: 150px" required
+                                                       lay-verify="required" placeholder="密码" autocomplete="off"
+                                                       class="layui-input">
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <select class="layui-form-select"
+                                                        style="background-color: #5eb878;!important;">
+                                                    <option value="">示例Payload</option>
+                                                    <option value="0">'</option>
+                                                    <option value="1">上海</option>
+                                                    <option value="2">广州</option>
+                                                    <option value="3">深圳</option>
+                                                    <option value="4">杭州</option>
+                                                </select>
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="vul3-JdbcTemplate-joint-add" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+
+                                <div class="layui-tab-item">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="id" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="用户id" autocomplete="off"
+                                                       class="layui-input">
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="vul3-JdbcTemplate-joint-delete" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+                                <div class="layui-tab-item">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="id" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="用户id" autocomplete="off"
+                                                       class="layui-input">
+                                                <input type="text" name="username" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="用户名" autocomplete="off"
+                                                       class="layui-input">
+                                                <input type="password" name="password" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="密码" autocomplete="off"
+                                                       class="layui-input">
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="vul3-JdbcTemplate-joint-update" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+                                <div class="layui-tab-item">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="id" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="用户id" autocomplete="off"
+                                                       class="layui-input">
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="vul3-JdbcTemplate-joint-select" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-warning icon"></i>测试结果</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre id="vul3-JdbcTemplate-joint-result"
+                                                 style="color: red;font-size: 15px;"></pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code">  缺陷代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="vul3JdbcTemplateJoint">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="layui-col-md12" style="margin-top: 10px">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-anquan">  安全代码：JdbcTemplate预编译</span></h1>
+                        <div class="layui-tab layui-tab-brief">
+                            <ul class="layui-tab-title">
+                                <li class="layui-this">增加</li>
+                                <li>删除</li>
+                                <li>修改</li>
+                                <li>查询</li>
+                            </ul>
+                            <div class="layui-tab-content">
+                                <div class="layui-tab-item layui-show">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="username" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="用户名" autocomplete="off"
+                                                       class="layui-input">
+                                                <input type="password" name="password" style="width: 150px" required
+                                                       lay-verify="required" placeholder="密码" autocomplete="off"
+                                                       class="layui-input">
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <select class="layui-form-select"
+                                                        style="background-color: #5eb878;!important;">
+                                                    <option value="">示例Payload</option>
+                                                    <option value="0">'</option>
+                                                    <option value="1">上海</option>
+                                                    <option value="2">广州</option>
+                                                    <option value="3">深圳</option>
+                                                    <option value="4">杭州</option>
+                                                </select>
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="safe2-JdbcTemplate-PrepareStatement-Parametric-add" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+
+                                <div class="layui-tab-item">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="id" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="用户id" autocomplete="off"
+                                                       class="layui-input">
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="safe2-JdbcTemplate-PrepareStatement-Parametric-delete" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+                                <div class="layui-tab-item">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="id" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="用户id" autocomplete="off"
+                                                       class="layui-input">
+                                                <input type="text" name="username" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="用户名" autocomplete="off"
+                                                       class="layui-input">
+                                                <input type="password" name="password" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="密码" autocomplete="off"
+                                                       class="layui-input">
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="safe2-JdbcTemplate-PrepareStatement-Parametric-update" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+                                <div class="layui-tab-item">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="id" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="用户id" autocomplete="off"
+                                                       class="layui-input">
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="safe2-JdbcTemplate-PrepareStatement-Parametric-select" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-warning icon"></i>测试结果</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre id="safe2-JdbcTemplate-PrepareStatement-Parametric-result"
+                                                 style="color: red;font-size: 15px;"></pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code">  安全代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="safe2JdbcTemplatePrepareStatementParametric">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="layui-col-md12" style="margin-top: 10px">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-anquan">  安全环境：自定义黑名单-用户输入过滤</span></h1>
+                        <div class="layui-tab layui-tab-brief">
+                            <ul class="layui-tab-title">
+                                <li class="layui-this">增加</li>
+                                <li>删除</li>
+                                <li>修改</li>
+                                <li>查询</li>
+                            </ul>
+                            <div class="layui-tab-content">
+                                <div class="layui-tab-item layui-show">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="username" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="用户名" autocomplete="off"
+                                                       class="layui-input">
+                                                <input type="password" name="password" style="width: 150px" required
+                                                       lay-verify="required" placeholder="密码" autocomplete="off"
+                                                       class="layui-input">
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <select class="layui-form-select"
+                                                        style="background-color: #5eb878;!important;">
+                                                    <option value="">示例Payload</option>
+                                                    <option value="0">'</option>
+                                                    <option value="1">上海</option>
+                                                    <option value="2">广州</option>
+                                                    <option value="3">深圳</option>
+                                                    <option value="4">杭州</option>
+                                                </select>
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="safe3-Blacklist-checkSqlBlackList-add" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+
+                                <div class="layui-tab-item">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="id" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="用户id" autocomplete="off"
+                                                       class="layui-input">
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="safe3-Blacklist-checkSqlBlackList-delete" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+                                <div class="layui-tab-item">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="id" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="用户id" autocomplete="off"
+                                                       class="layui-input">
+                                                <input type="text" name="username" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="用户名" autocomplete="off"
+                                                       class="layui-input">
+                                                <input type="password" name="password" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="密码" autocomplete="off"
+                                                       class="layui-input">
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="safe3-Blacklist-checkSqlBlackList-update" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+                                <div class="layui-tab-item">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="id" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="用户id" autocomplete="off"
+                                                       class="layui-input">
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="safe3-Blacklist-checkSqlBlackList-select" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-warning icon"></i>测试结果</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre id="safe3-Blacklist-checkSqlBlackList-result"
+                                                 style="color: red;font-size: 15px;"></pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code">  安全代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="safe3BlacklistcheckSqlBlackList">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="layui-col-md12" style="margin-top: 10px">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-anquan">  安全环境：数据类型-用户请求参数校验</span></h1>
+                        <div class="layui-tab layui-tab-brief">
+                            <ul class="layui-tab-title">
+                                <li class="layui-this">增加</li>
+                                <li>删除</li>
+                                <li>修改</li>
+                                <li>查询</li>
+                            </ul>
+                            <div class="layui-tab-content">
+                                <div class="layui-tab-item layui-show">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="username" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="用户名" autocomplete="off"
+                                                       class="layui-input">
+                                                <input type="password" name="password" style="width: 150px" required
+                                                       lay-verify="required" placeholder="密码" autocomplete="off"
+                                                       class="layui-input">
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <select class="layui-form-select"
+                                                        style="background-color: #5eb878;!important;">
+                                                    <option value="">示例Payload</option>
+                                                    <option value="0">'</option>
+                                                    <option value="1">上海</option>
+                                                    <option value="2">广州</option>
+                                                    <option value="3">深圳</option>
+                                                    <option value="4">杭州</option>
+                                                </select>
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="safe4-Request-Parameter-Validate-add" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+
+                                <div class="layui-tab-item">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="id" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="用户id" autocomplete="off"
+                                                       class="layui-input">
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="safe4-Request-Parameter-Validate-delete" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+                                <div class="layui-tab-item">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="id" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="用户id" autocomplete="off"
+                                                       class="layui-input">
+                                                <input type="text" name="username" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="用户名" autocomplete="off"
+                                                       class="layui-input">
+                                                <input type="password" name="password" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="密码" autocomplete="off"
+                                                       class="layui-input">
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="safe4-Request-Parameter-Validate-update" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+                                <div class="layui-tab-item">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="id" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="用户id" autocomplete="off"
+                                                       class="layui-input">
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="safe4-Request-Parameter-Validate-select" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-warning icon"></i>测试结果</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre id="safe4-Request-Parameter-Validate-result"
+                                                 style="color: red;font-size: 15px;"></pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code">  安全代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="safe4RequestRarameterValidate">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="layui-col-md12" style="margin-top: 10px">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-anquan">  安全环境：Web安全框架-采用ESAPI过滤</span></h1>
+                        <div class="layui-tab layui-tab-brief">
+                            <ul class="layui-tab-title">
+                                <li class="layui-this">增加</li>
+                                <li>删除</li>
+                                <li>修改</li>
+                                <li>查询</li>
+                            </ul>
+                            <div class="layui-tab-content">
+                                <div class="layui-tab-item layui-show">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="username" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="用户名" autocomplete="off"
+                                                       class="layui-input">
+                                                <input type="password" name="password" style="width: 150px" required
+                                                       lay-verify="required" placeholder="密码" autocomplete="off"
+                                                       class="layui-input">
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <select class="layui-form-select"
+                                                        style="background-color: #5eb878;!important;">
+                                                    <option value="">示例Payload</option>
+                                                    <option value="0">'</option>
+                                                    <option value="1">上海</option>
+                                                    <option value="2">广州</option>
+                                                    <option value="3">深圳</option>
+                                                    <option value="4">杭州</option>
+                                                </select>
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="safe4-EASAPI-Filter-add" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+
+                                <div class="layui-tab-item">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="id" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="用户id" autocomplete="off"
+                                                       class="layui-input">
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="safe4-EASAPI-Filter-delete" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+                                <div class="layui-tab-item">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="id" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="用户id" autocomplete="off"
+                                                       class="layui-input">
+                                                <input type="text" name="username" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="用户名" autocomplete="off"
+                                                       class="layui-input">
+                                                <input type="password" name="password" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="密码" autocomplete="off"
+                                                       class="layui-input">
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="safe4-EASAPI-Filter-update" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+                                <div class="layui-tab-item">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="id" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="用户id" autocomplete="off"
+                                                       class="layui-input">
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="safe4-EASAPI-Filter-select" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-warning icon"></i>测试结果</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre id="safe4-EASAPI-Filter-result"
+                                                 style="color: red;font-size: 15px;"></pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code">  安全代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="safe4EASAPIFilter">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="layui-col-md12" style="margin-top: 10px">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-anquan">  特殊场景：使用prepareStatement时，order by下的sql注入问题</span></h1>
+                        <div class="layui-tab layui-tab-brief">
+                            <ul class="layui-tab-title">
+                                <li class="layui-this">增加</li>
+                                <li>删除</li>
+                                <li>修改</li>
+                                <li>查询</li>
+                            </ul>
+                            <div class="layui-tab-content">
+                                <div class="layui-tab-item layui-show">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="username" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="用户名" autocomplete="off"
+                                                       class="layui-input">
+                                                <input type="password" name="password" style="width: 150px" required
+                                                       lay-verify="required" placeholder="密码" autocomplete="off"
+                                                       class="layui-input">
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <select class="layui-form-select"
+                                                        style="background-color: #5eb878;!important;">
+                                                    <option value="">示例Payload</option>
+                                                    <option value="0">'</option>
+                                                    <option value="1">上海</option>
+                                                    <option value="2">广州</option>
+                                                    <option value="3">深圳</option>
+                                                    <option value="4">杭州</option>
+                                                </select>
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="special1-OrderBy-add" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+
+                                <div class="layui-tab-item">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="id" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="用户id" autocomplete="off"
+                                                       class="layui-input">
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="special1-OrderBy-delete" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+                                <div class="layui-tab-item">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="id" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="用户id" autocomplete="off"
+                                                       class="layui-input">
+                                                <input type="text" name="username" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="用户名" autocomplete="off"
+                                                       class="layui-input">
+                                                <input type="password" name="password" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="密码" autocomplete="off"
+                                                       class="layui-input">
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="special1-OrderBy-update" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+                                <div class="layui-tab-item">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="id" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="用户id" autocomplete="off"
+                                                       class="layui-input">
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="special1-OrderBy-select" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-warning icon"></i>测试结果</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre id="special1-OrderBy-result"
+                                                 style="color: red;font-size: 15px;"></pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code">  安全代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="special1OrderBy">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="layui-col-md12" style="margin-top: 10px">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-anquan">  特殊场景：使用%和模糊查询-like</span></h1>
+                        <div class="layui-tab layui-tab-brief">
+                            <ul class="layui-tab-title">
+                                <li class="layui-this">增加</li>
+                                <li>删除</li>
+                                <li>修改</li>
+                                <li>查询</li>
+                            </ul>
+                            <div class="layui-tab-content">
+                                <div class="layui-tab-item layui-show">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="username" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="用户名" autocomplete="off"
+                                                       class="layui-input">
+                                                <input type="password" name="password" style="width: 150px" required
+                                                       lay-verify="required" placeholder="密码" autocomplete="off"
+                                                       class="layui-input">
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <select class="layui-form-select"
+                                                        style="background-color: #5eb878;!important;">
+                                                    <option value="">示例Payload</option>
+                                                    <option value="0">'</option>
+                                                    <option value="1">上海</option>
+                                                    <option value="2">广州</option>
+                                                    <option value="3">深圳</option>
+                                                    <option value="4">杭州</option>
+                                                </select>
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="special2-Like-add" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+
+                                <div class="layui-tab-item">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="id" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="用户id" autocomplete="off"
+                                                       class="layui-input">
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="special2-Like-delete" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+                                <div class="layui-tab-item">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="id" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="用户id" autocomplete="off"
+                                                       class="layui-input">
+                                                <input type="text" name="username" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="用户名" autocomplete="off"
+                                                       class="layui-input">
+                                                <input type="password" name="password" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="密码" autocomplete="off"
+                                                       class="layui-input">
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="special2-Like-update" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+                                <div class="layui-tab-item">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="id" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="用户id" autocomplete="off"
+                                                       class="layui-input">
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="special2-Like-select" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-warning icon"></i>测试结果</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre id="special2-Like-result"
+                                                 style="color: red;font-size: 15px;"></pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code">  安全代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="special2Like">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
     </div>
 </div>
-<script src="/lib/layui-v2.6.3/layui.js" charset="utf-8"></script>
-<script src="/js/lay-config.js?v=1.0.4" charset="utf-8"></script>
-<script>
-    layui.use(['layer', 'miniTab', 'echarts'], function () {
+</div>
+<script src="/lib/layui-v2.6.3/layui.js" charSet="utf-8"></script>
+<script src="/js/lay-config.js?v=1.0.4" charSet="utf-8"></script>
+
+<script src="/js/jquery.request.js" charSet="utf-8"></script>
+<script src="/js/jquery-3.4.1.min.js"></script>
+<script src="/js/bootstrap.js"></script>
+<script src="/js/codemirror.js"></script>
+<script src="/js/clike.js"></script>
+<script src="/js/staticcode.js"></script>
+
+<script type="text/javascript">
+    layui.use(['layer', 'miniTab', 'common'], function () {
         var $ = layui.jquery,
             layer = layui.layer,
             miniTab = layui.miniTab,
-            echarts = layui.echarts;
-
+            common = layui.common;
         miniTab.listen();
+        layer.msg("SQL注入-JDBC")
 
-        /**
-         * 查看公告信息
-         **/
-        $('body').on('click', '.layuimini-notice', function () {
-            var title = $(this).children('.layuimini-notice-title').text(),
-                noticeTime = $(this).children('.layuimini-notice-extra').text(),
-                content = $(this).children('.layuimini-notice-content').html();
-            var html = '<div style="padding:15px 20px; text-align:justify; line-height: 22px;border-bottom:1px solid #e2e2e2;background-color: #2f4056;color: #ffffff">\n' +
-                '<div style="text-align: center;margin-bottom: 20px;font-weight: bold;border-bottom:1px solid #718fb5;padding-bottom: 5px"><h4 class="text-danger">' + title + '</h4></div>\n' +
-                '<div style="font-size: 12px">' + content + '</div>\n' +
-                '</div>\n';
-            parent.layer.open({
-                type: 1,
-                title: '系统公告' + '<span style="float: right;right: 1px;font-size: 12px;color: #b1b3b9;margin-top: 1px">' + noticeTime + '</span>',
-                area: '300px;',
-                shade: 0.8,
-                id: 'layuimini-notice',
-                btn: ['查看', '取消'],
-                btnAlign: 'c',
-                moveType: 1,
-                content: html,
-                success: function (layero) {
-                    var btn = layero.find('.layui-layer-btn');
-                    btn.find('.layui-layer-btn0').attr({
-                        href: 'https://gitee.com/zhongshaofa/layuimini',
-                        target: '_blank'
-                    });
-                }
-            });
-        });
+        common.formListenFun("vul1-raw-joint-add", "add", "/sqli/jdbc/a-vul1-raw-joint", "vul1-raw-joint-result","get");
+        common.formListenFun("vul1-raw-joint-delete", "delete", "/sqli/jdbc/a-vul1-raw-joint", "vul1-raw-joint-result","get");
+        common.formListenFun("vul1-raw-joint-update", "update", "/sqli/jdbc/a-vul1-raw-joint", "vul1-raw-joint-result","get");
+        common.formListenFun("vul1-raw-joint-select", "select", "/sqli/jdbc/a-vul1-raw-joint", "vul1-raw-joint-result","get");
 
-        /**
-         * 报表功能
-         */
-        var echartsRecords = echarts.init(document.getElementById('echarts-records'), 'walden');
-        var optionRecords = {
-            tooltip: {
-                trigger: 'axis'
-            },
-            legend: {
-                data: ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎']
-            },
-            grid: {
-                left: '3%',
-                right: '4%',
-                bottom: '3%',
-                containLabel: true
-            },
-            toolbox: {
-                feature: {
-                    saveAsImage: {}
-                }
-            },
-            xAxis: {
-                type: 'category',
-                boundaryGap: false,
-                data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
-            },
-            yAxis: {
-                type: 'value'
-            },
-            series: [
-                {
-                    name: '邮件营销',
-                    type: 'line',
-                    data: [120, 132, 101, 134, 90, 230, 210]
-                },
-                {
-                    name: '联盟广告',
-                    type: 'line',
-                    data: [220, 182, 191, 234, 290, 330, 310]
-                },
-                {
-                    name: '视频广告',
-                    type: 'line',
-                    data: [150, 232, 201, 154, 190, 330, 410]
-                },
-                {
-                    name: '直接访问',
-                    type: 'line',
-                    data: [320, 332, 301, 334, 390, 330, 320]
-                },
-                {
-                    name: '搜索引擎',
-                    type: 'line',
-                    data: [820, 932, 901, 934, 1290, 1330, 1320]
-                }
-            ]
+        var cmConfig = {
+            lineNumbers: true,
+            lineWrapping: false,
+            indentUnit: 4,
+            indentWithTabs: true,
+            theme: 'juejin',
+            styleActiveLine: {nonEmpty: true},
+            fontSize: "18px",
+            mode: "text/x-java"
         };
-        echartsRecords.setOption(optionRecords);
 
-        // echarts 窗口缩放自适应
-        window.onresize = function () {
-            echartsRecords.resize();
-        }
+        CodeMirror(document.getElementById("vul1RawJoint"), Object.assign({}, cmConfig, {
+            value: vul1RawJoint
+        }));
+        CodeMirror(document.getElementById("vul2prepareStatementJoint"), Object.assign({}, cmConfig, {
+            value: vul2prepareStatementJoint
+        }));
+        CodeMirror(document.getElementById("vul3JdbcTemplateJoint"), Object.assign({}, cmConfig, {
+            value: vul3JdbcTemplateJoint
+        }));
+        CodeMirror(document.getElementById("safe1PrepareStatementParametric"), Object.assign({}, cmConfig, {
+            value: safe1PrepareStatementParametric
+        }));
+        CodeMirror(document.getElementById("safe2JdbcTemplatePrepareStatementParametric"), Object.assign({}, cmConfig, {
+            value: safe2JdbcTemplatePrepareStatementParametric
+        }));
+        CodeMirror(document.getElementById("safe3BlacklistcheckSqlBlackList"), Object.assign({}, cmConfig, {
+            value: safe3BlacklistcheckSqlBlackList
+        }));
+        CodeMirror(document.getElementById("safe4RequestRarameterValidate"), Object.assign({}, cmConfig, {
+            value: safe4RequestRarameterValidate
+        }));
+        CodeMirror(document.getElementById("safe4EASAPIFilter"), Object.assign({}, cmConfig, {
+            value: safe4EASAPIFilter
+        }));
+        CodeMirror(document.getElementById("special1OrderBy"), Object.assign({}, cmConfig, {
+            value: special1OrderBy
+        }));
+        CodeMirror(document.getElementById("special2Like"), Object.assign({}, cmConfig, {
+            value: special2Like
+        }));
+
 
     });
+
 </script>
+
 </body>
 </html>

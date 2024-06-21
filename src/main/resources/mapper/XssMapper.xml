@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.whgojp.modules.xss.mapper.XssMapper">
+
+    <resultMap id="BaseResultMap" type="top.whgojp.modules.xss.entity.Xss">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="content" column="content" jdbcType="VARCHAR"/>
+            <result property="date" column="date" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,content,date
+    </sql>
+    <insert id="insertAll">
+        insert into xss
+            (content, date)
+        values (#{content,jdbcType=VARCHAR}, #{date,jdbcType=VARCHAR})
+
+    </insert>
+    <select id="selectAll" resultType="top.whgojp.modules.xss.entity.Xss">
+        select * from xss;
+    </select>
+</mapper>

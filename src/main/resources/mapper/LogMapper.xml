@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.whgojp.modules.system.mapper.LogMapper">
+
+    <resultMap id="BaseResultMap" type="top.whgojp.modules.system.entity.Log">
+            <id property="logid" column="logId" jdbcType="VARCHAR"/>
+            <result property="username" column="username" jdbcType="VARCHAR"/>
+            <result property="optionname" column="optionName" jdbcType="VARCHAR"/>
+            <result property="optionterminal" column="optionTerminal" jdbcType="VARCHAR"/>
+            <result property="optionip" column="optionIp" jdbcType="VARCHAR"/>
+            <result property="optiontime" column="optionTime" jdbcType="DATE"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        logId,username,optionName,
+        optionTerminal,optionIp,optionTime
+    </sql>
+</mapper>

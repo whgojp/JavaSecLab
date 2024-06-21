@@ -608,3 +608,28 @@
 2024-05-17 20:56:46.980 [RMI TCP Connection(2)-192.168.1.141] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
 2024-05-17 20:56:46.980 [RMI TCP Connection(2)-192.168.1.141] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
 2024-05-17 20:56:46.981 [RMI TCP Connection(2)-192.168.1.141] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 0 ms
+2024-05-17 21:36:02.504 [main] INFO  top.whgojp.Application - Starting Application using Java 1.8.0_382 on MacBook-Pro with PID 32467 (/Users/whgojp/Desktop/Security/JAVA/JavaSecLab/target/classes started by whgojp in /Users/whgojp/Desktop/Security/JAVA/JavaSecLab)
+2024-05-17 21:36:02.505 [main] INFO  top.whgojp.Application - The following 1 profile is active: "dev"
+2024-05-17 21:36:02.945 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2024-05-17 21:36:02.950 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2024-05-17 21:36:02.951 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2024-05-17 21:36:02.951 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.78]
+2024-05-17 21:36:02.988 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-05-17 21:36:02.988 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 463 ms
+2024-05-17 21:36:03.113 [main] INFO  o.s.b.a.web.servlet.WelcomePageHandlerMapping - Adding welcome page: class path resource [static/index.html]
+2024-05-17 21:36:03.280 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2024-05-17 21:36:03.290 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2024-05-17 21:36:03.319 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 9090 (http)
+2024-05-17 21:36:03.320 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-9090"]
+2024-05-17 21:36:03.320 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2024-05-17 21:36:03.320 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.78]
+2024-05-17 21:36:03.324 [main] INFO  o.a.c.c.ContainerBase.[Tomcat-1].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-05-17 21:36:03.324 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 32 ms
+2024-05-17 21:36:03.330 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver - Exposing 13 endpoint(s) beneath base path '/sys/actuator'
+2024-05-17 21:36:03.346 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-9090"]
+2024-05-17 21:36:03.347 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 9090 (http) with context path ''
+2024-05-17 21:36:03.355 [main] INFO  top.whgojp.Application - Started Application in 1.112 seconds (JVM running for 1.494)
+2024-05-17 21:36:03.358 [main] INFO  top.whgojp.Application - ==================SpringBoot启动成功================
+2024-05-17 21:36:03.575 [RMI TCP Connection(1)-172.20.10.4] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-05-17 21:36:03.575 [RMI TCP Connection(1)-172.20.10.4] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-05-17 21:36:03.576 [RMI TCP Connection(1)-172.20.10.4] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 1 ms

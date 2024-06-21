@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="/js/header.js"></script>
+
+    <style>
+        .layui-card {
+            border: 1px solid #f2f2f2;
+            border-radius: 5px;
+        }
+
+        .icon {
+            margin-right: 10px;
+            color: #1aa094;
+        }
+        .custom-a{
+            background-color: #f8f8f8;
+        }
+
+        .icon-blue {
+            color: #1e9fff !important;
+        }
+        .layuimini-qiuck-module {
+            text-align: center;
+            margin-top: 10px;
+            padding: 2.5px;
+        }
+
+        .layuimini-qiuck-module a i {
+            display: inline-block;
+            width: 100%;
+            height: 60px;
+            line-height: 60px;
+            text-align: center;
+            border-radius: 2px;
+            font-size: 30px;
+            background-color: #F8F8F8;
+            color: #333;
+            transition: all .3s;
+            -webkit-transition: all .3s;
+        }
+
+        .layuimini-qiuck-module a cite {
+            position: relative;
+            top: 2px;
+            display: block;
+            color: #666;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            font-size: 14px;
+        }
+
+        .welcome-module {
+            width: 100%;
+            height: 80px;
+        }
+
+
+        .main_btn > p {
+            height: 40px;
+        }
+    </style>
+</head>
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <div class="layui-row layui-col-space15">
+
+            <div class="layui-col-md6">
+                <div class="layui-col-md6">
+                    <div class="layui-card">
+                        <div class="layui-card-header">
+                            <span class="iconfont icon-kuazhanjiaobengongji icon icon-blue"></span>
+                            跨站脚本
+                        </div>
+                        <div class="layui-card-body">
+                            <div class="welcome-module">
+                                <div class="layui-row layui-col-space10">
+                                    <div class="layui-col-xs3 layuimini-qiuck-module">
+                                        <div class="custom-a">
+                                        <a href="javascript:;" layuimini-content-href="page/xss/reflect.html"
+                                           data-title="反射型">
+                                            <span class="iconfont icon-R"></span>
+                                            <cite>反射型</cite>
+                                        </a>
+                                    </div>
+                                    </div>
+                                    <div class="layui-col-xs3 layuimini-qiuck-module">
+                                        <div class="custom-a">
+                                        <a href="javascript:;" layuimini-content-href="page/xss/store.html"
+                                           data-title="存储型">
+                                            <span class="iconfont icon-S1"></span>
+                                            <cite>存储型</cite>
+                                        </a>
+                                        </div>
+                                    </div>
+                                    <div class="layui-col-xs3 layuimini-qiuck-module">
+                                        <div class="custom-a">
+                                        <a href="javascript:;" layuimini-content-href="page/xss/dom.html"
+                                           data-title="DOM型">
+                                            <span class="iconfont icon-dom"></span>
+                                            <cite>DOM型</cite>
+                                        </a>
+                                        </div>
+                                    </div>
+                                    <div class="layui-col-xs3 layuimini-qiuck-module">
+                                        <div class="custom-a">
+                                        <a href="javascript:;" layuimini-content-href="page/xss/other.html"
+                                           data-title="图标列表">
+                                            <span class="iconfont icon-qita1"></span>
+                                            <cite>其他场景</cite>
+                                        </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-md6">
+
+                    <div class="layui-card">
+                        <div class="layui-card-header">
+                            <span class="iconfont icon-SQLzhurugongji icon icon-blue"></span>
+                            SQL注入
+                        </div>
+                        <div class="layui-card-body">
+                            <div class="welcome-module">
+                                <div class="layui-row layui-col-space10">
+                                    <div class="layui-col-xs3 layuimini-qiuck-module">
+                                        <div class="custom-a">
+                                        <a href="javascript:;" layuimini-content-href="page/sqli/jdbc.html"
+                                           data-title="JDBC">
+                                            <span class="iconfont icon-jdbc"></span>
+                                            <cite>JDBC</cite>
+                                        </a>
+                                        </div>
+                                    </div>
+                                    <div class="layui-col-xs3 layuimini-qiuck-module">
+                                        <div class="custom-a">
+                                        <a href="javascript:;" layuimini-content-href="page/sqli/mybatis.html"
+                                           data-title="MyBatis">
+                                            <span class="iconfont icon-icons8-mybatis"></span>
+                                            <cite>MyBatis</cite>
+                                        </a>
+                                        </div>
+                                    </div>
+                                    <div class="layui-col-xs3 layuimini-qiuck-module">
+                                        <div class="custom-a">
+                                        <a href="javascript:;" layuimini-content-href="page/sqli/jpa.html"
+                                           data-title="JPA">
+                                            <span class="iconfont icon-spring"></span>
+                                            <cite>JPA</cite>
+                                        </a>
+                                        </div>
+                                    </div>
+                                    <div class="layui-col-xs3 layuimini-qiuck-module">
+                                        <div class="custom-a">
+                                        <a href="javascript:;" layuimini-content-href="page/sqli/hibernate.html"
+                                           data-title="Hibernate">
+                                            <span class="iconfont icon-Hivebiao"></span>
+                                            <cite>Hibernate</cite>
+                                        </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="layui-col-md6">
+                <ul class="layui-timeline">
+                    <li class="layui-timeline-item">
+                        <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                        <div class="layui-timeline-content layui-text">
+                            <h3 class="layui-timeline-title">8月18日</h3>
+                            <p>
+                                layui 2.0 的一切准备工作似乎都已到位。发布之弦，一触即发。
+                                <br>不枉近百个日日夜夜与之为伴。因小而大，因弱而强。
+                                <br>无论它能走多远，抑或如何支撑？至少我曾倾注全心，无怨无悔 <i class="layui-icon"></i>
+                            </p>
+                        </div>
+                    </li>
+                    <li class="layui-timeline-item">
+                        <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                        <div class="layui-timeline-content layui-text">
+                            <h3 class="layui-timeline-title">8月16日</h3>
+                            <p>杜甫的思想核心是儒家的仁政思想，他有“<em>致君尧舜上，再使风俗淳</em>”的宏伟抱负。个人最爱的名篇有：
+                            </p>
+                            <ul>
+                                <li>《登高》</li>
+                                <li>《茅屋为秋风所破歌》</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="layui-timeline-item">
+                        <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                        <div class="layui-timeline-content layui-text">
+                            <h3 class="layui-timeline-title">2024-05</h3>
+                            <p>
+                                中国人民抗日战争胜利72周年
+                                <br>常常在想，尽管对这个国家有这样那样的抱怨，但我们的确生在了最好的时代
+                                <br>铭记、感恩
+                                <br>所有为中华民族浴血奋战的英雄将士
+                                <br>永垂不朽
+                            </p>
+                        </div>
+                    </li>
+                    <li class="layui-timeline-item">
+                        <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                        <div class="layui-timeline-content layui-text">
+                            <h3 class="layui-timeline-title">2024-03</h3>
+                            <p>一个想法💡</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    layui.use(['layer', 'miniTab', 'echarts'], function () {
+        var $ = layui.jquery,
+            layer = layui.layer,
+            miniTab = layui.miniTab,
+            echarts = layui.echarts;
+
+        miniTab.listen();
+
+        // echarts 窗口缩放自适应
+        window.onresize = function () {
+            echartsRecords.resize();
+        }
+
+    });
+</script>
+</body>
+</html>

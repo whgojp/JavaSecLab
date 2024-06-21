@@ -6,11 +6,53 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "553324",
+      "name": "验证 验证码",
+      "font_class": "yanzhengyanzhengma",
+      "unicode": "e624",
+      "unicode_decimal": 58916
+    },
+    {
+      "icon_id": "573856",
+      "name": "其他",
+      "font_class": "qita",
+      "unicode": "e66a",
+      "unicode_decimal": 58986
+    },
+    {
+      "icon_id": "900289",
+      "name": "其他",
+      "font_class": "qita1",
+      "unicode": "e66b",
+      "unicode_decimal": 58987
+    },
+    {
       "icon_id": "4767091",
       "name": "code",
       "font_class": "code",
       "unicode": "e7fc",
       "unicode_decimal": 59388
+    },
+    {
+      "icon_id": "5650938",
+      "name": "文件下载",
+      "font_class": "wenjianxiazai",
+      "unicode": "e641",
+      "unicode_decimal": 58945
+    },
+    {
+      "icon_id": "5874106",
+      "name": "password",
+      "font_class": "password",
+      "unicode": "e675",
+      "unicode_decimal": 58997
+    },
+    {
+      "icon_id": "6246302",
+      "name": "数据库",
+      "font_class": "shujuku",
+      "unicode": "e64c",
+      "unicode_decimal": 58956
     },
     {
       "icon_id": "6522242",
@@ -27,6 +69,13 @@
       "unicode_decimal": 58931
     },
     {
+      "icon_id": "9307276",
+      "name": "执行",
+      "font_class": "zhihang",
+      "unicode": "e816",
+      "unicode_decimal": 59414
+    },
+    {
       "icon_id": "9808734",
       "name": "Hive表",
       "font_class": "Hivebiao",
@@ -34,11 +83,39 @@
       "unicode_decimal": 58918
     },
     {
+      "icon_id": "11372643",
+      "name": "安全",
+      "font_class": "anquan",
+      "unicode": "e8ab",
+      "unicode_decimal": 59563
+    },
+    {
+      "icon_id": "12779504",
+      "name": "password",
+      "font_class": "password1",
+      "unicode": "e65d",
+      "unicode_decimal": 58973
+    },
+    {
+      "icon_id": "14440213",
+      "name": "黑客",
+      "font_class": "anonymity-101",
+      "unicode": "e60d",
+      "unicode_decimal": 58893
+    },
+    {
       "icon_id": "17271865",
       "name": "spring",
       "font_class": "spring",
       "unicode": "e671",
       "unicode_decimal": 58993
+    },
+    {
+      "icon_id": "19728554",
+      "name": "目录遍历",
+      "font_class": "mulubianli",
+      "unicode": "e7d6",
+      "unicode_decimal": 59350
     },
     {
       "icon_id": "19732264",
@@ -53,6 +130,76 @@
       "font_class": "SQLzhurugongji",
       "unicode": "e6f9",
       "unicode_decimal": 59129
+    },
+    {
+      "icon_id": "20710439",
+      "name": "文件",
+      "font_class": "wenjian",
+      "unicode": "e69f",
+      "unicode_decimal": 59039
+    },
+    {
+      "icon_id": "22383760",
+      "name": "dom",
+      "font_class": "dom",
+      "unicode": "ee08",
+      "unicode_decimal": 60936
+    },
+    {
+      "icon_id": "24264090",
+      "name": "icon_username",
+      "font_class": "icon_username",
+      "unicode": "e620",
+      "unicode_decimal": 58912
+    },
+    {
+      "icon_id": "24955060",
+      "name": "S",
+      "font_class": "S",
+      "unicode": "e6e9",
+      "unicode_decimal": 59113
+    },
+    {
+      "icon_id": "24955532",
+      "name": "R",
+      "font_class": "R",
+      "unicode": "e6ec",
+      "unicode_decimal": 59116
+    },
+    {
+      "icon_id": "24955543",
+      "name": "S",
+      "font_class": "S1",
+      "unicode": "e6ed",
+      "unicode_decimal": 59117
+    },
+    {
+      "icon_id": "26661694",
+      "name": "文件-删除",
+      "font_class": "wenjian-shanchu",
+      "unicode": "e656",
+      "unicode_decimal": 58966
+    },
+    {
+      "icon_id": "33556464",
+      "name": "cors",
+      "font_class": "cors",
+      "unicode": "e60a",
+      "unicode_decimal": 58890
+    },
+    {
+      "icon_id": "34997198",
+      "name": "文件-下载",
+      "font_class": "wenjian-xiazai",
+      "unicode": "e682",
+      "unicode_decimal": 59010
+    },
+    {
+      "icon_id": "34997200",
+      "name": "文件-上传",
+      "font_class": "wenjian-shangchuan",
+      "unicode": "e681",
+      "unicode_decimal": 59009
     },
     {
       "icon_id": "37546984",

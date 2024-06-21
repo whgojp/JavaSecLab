@@ -1,10 +1,10 @@
 {
   "homeInfo": {
     "title": "首页",
-    "href": "page/welcome-1.html?t=1"
+    "href": "page/home.html"
   },
   "logoInfo": {
-    "title": "LAYUI MINI",
+    "title": "JavaSecLab",
     "image": "images/logo.png",
     "href": ""
   },
@@ -15,6 +15,38 @@
       "href": "",
       "target": "_self",
       "child": [
+        {
+          "title": "跨站脚本",
+          "href": "",
+          "icon": "iconfont icon-kuazhanjiaobengongji",
+          "target": "_self",
+          "child": [
+            {
+              "title": "反射型",
+              "href": "page/xss/reflect.html",
+              "icon": "iconfont icon-R",
+              "target": "_self"
+            },
+            {
+              "title": "存储型",
+              "href": "page/xss/store.html",
+              "icon": "iconfont icon-S1",
+              "target": "_self"
+            },
+            {
+              "title": "DOM型",
+              "href": "page/xss/dom.html",
+              "icon": "iconfont icon-dom",
+              "target": "_self"
+            },
+            {
+              "title": "其他场景",
+              "href": "page/xss/other.html",
+              "icon": "iconfont icon-qita1",
+              "target": "_self"
+            }
+          ]
+        },
         {
           "title": "SQL注入",
           "href": "",
@@ -43,6 +75,76 @@
               "title": "Hibernate",
               "href": "page/injection/sqli/hibernate.html",
               "icon": "iconfont icon-Hivebiao",
+              "target": "_self"
+            }
+          ]
+        },
+        {
+          "title": "任意文件操作",
+          "href": "",
+          "icon": "iconfont icon-wenjian",
+          "target": "_self",
+          "child": [
+            {
+              "title": "文件上传",
+              "href": "page/welcome-1.html",
+              "icon": "iconfont icon-wenjian-shangchuan",
+              "target": "_self"
+            },
+            {
+              "title": "文件删除",
+              "href": "page/welcome-2.html",
+              "icon": "iconfont icon-wenjian-shanchu",
+              "target": "_self"
+            },
+            {
+              "title": "目录遍历",
+              "href": "page/welcome-3.html",
+              "icon": "iconfont icon-mulubianli",
+              "target": "_self"
+            },
+            {
+              "title": "文件下载",
+              "href": "page/welcome-3.html",
+              "icon": "iconfont icon-wenjian-xiazai",
+              "target": "_self"
+            },
+            {
+              "title": "文件包含",
+              "href": "page/welcome-3.html",
+              "icon": "iconfont icon-wenjian-xiazai",
+              "target": "_self"
+            }
+          ]
+        },
+        {
+          "title": "其他漏洞",
+          "href": "",
+          "icon": "iconfont icon-wenjian",
+          "target": "_self",
+          "child": [
+            {
+              "title": "跨源安全问题",
+              "href": "page/other/cross-origin.html",
+              "icon": "iconfont icon-cors",
+              "target": "_self"
+            },
+            {
+              "title": "用户名枚举",
+              "href": "page/welcome-1.html",
+              "icon": "iconfont icon-wenjian-shangchuan",
+              "target": "_self"
+            },
+            {
+              "title": "验证码复用",
+              "href": "page/welcome-2.html",
+              "icon": "iconfont icon-wenjian-shanchu",
+              "target": "_self"
+            },
+            {
+              "title": "弱口令",
+              "href": "page/welcome-3.html",
+              "icon": "iconfont icon-mulubianli",
               "target": "_self"
             }
           ]
@@ -108,32 +210,6 @@
               "href": "page/form-step.html",
               "icon": "fa fa-navicon",
               "target": "_self"
-            }
-          ]
-        },
-        {
-          "title": "登录模板",
-          "href": "",
-          "icon": "fa fa-flag-o",
-          "target": "_self",
-          "child": [
-            {
-              "title": "登录-1",
-              "href": "page/login-1.html",
-              "icon": "fa fa-stumbleupon-circle",
-              "target": "_blank"
-            },
-            {
-              "title": "登录-2",
-              "href": "page/login-2.html",
-              "icon": "fa fa-viacoin",
-              "target": "_blank"
-            },
-            {
-              "title": "登录-3",
-              "href": "page/login-3.html",
-              "icon": "fa fa-tags",
-              "target": "_blank"
             }
           ]
         },

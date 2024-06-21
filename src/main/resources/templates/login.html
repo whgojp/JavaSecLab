@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>JavaSeclab平台登录</title>
+    <link rel="stylesheet" href="/static/lib/layui-v2.6.3/css/layui.css" media="all">
+    <link rel="stylesheet" href="/static/lib/custom-icon/iconfont.css">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" media="screen" href="/static/lib/particles/assert/css/style.css">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            background: #fff;
+        }
+
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100vh; /* 根据需要调整高度 */
+            overflow: hidden; /* 防止绝对定位元素溢出 */
+            display: flex;
+            justify-content: center; /* 水平居中 */
+            align-items: center; /* 垂直居中，如果需要的话 */
+
+        }
+
+        .admin-login-container {
+            width: 100%;
+            max-width: 900px; /* 添加最大宽度以避免在大屏幕上过宽 */
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* 改为 space-between，使左右两个容器分别位于两侧 */
+            /*padding: 0 20px; !* 添加左右内边距以避免挨边显示 *!*/
+            box-shadow: 0 0 15px rgba(6, 17, 47, 0.7); /* 调整阴影效果 */
+            position: relative;
+            z-index: 2; /* 保证内容在粒子背景之上 */
+        }
+
+        .admin-login-background-left,
+        .admin-login-background-right {
+            width: 48%; /* 使用百分比设置宽度，避免在不同屏幕尺寸下布局失调 */
+            height: 460px;
+            padding: 20px;
+            box-shadow: none; /* 去掉阴影效果 */
+            z-index: 99999;
+        }
+
+        .admin-login-background-left {
+            background: #409eff;
+        }
+
+        .admin-login-background-right {
+            background: rgb(255, 255, 255);
+        }
+
+        .admin-header {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #303133;
+            font-weight: bold;
+            font-size: 22px
+        }
+
+        .layui-form {
+            width: 288px;
+            margin: 0 auto;
+            padding-top: 10px;
+            padding-bottom: 15px;
+            position: relative;
+        }
+
+        .item {
+            width: 288px;
+            height: 35px;
+            border-bottom: 1px solid #dae1e6;
+            margin-bottom: 35px;
+        }
+
+        .item input {
+            display: inline-block;
+            width: 227px;
+            height: 28px;
+            padding: 0;
+            position: absolute;
+            border: 0;
+            outline: 0;
+            font-size: 16px;
+            letter-spacing: 0;
+        }
+
+        #captcha {
+            position: absolute;
+            left: 195px;
+        }
+
+        .checkbox {
+            font-weight: 400;
+            text-align: left;
+            margin-bottom: 10px;
+            font-size: 16px;
+
+        }
+
+        input[type=checkbox] {
+            float: left;
+            display: block !important;
+            margin-top: 5px;
+        }
+
+        #current-time {
+            width: 100%;
+            color: white;
+            opacity: 0.9;
+            font-size: 14px;
+            overflow: hidden;
+        }
+
+        .quote {
+            color: white;
+            font-size: 16px;
+            margin-top: 35px;
+        }
+        #quote-question{
+            font-size: 20px;
+        }
+        #quote-answer{
+            margin-top: 15px;
+        }
+        .about-me{
+            position: absolute; /* 子div设置为绝对定位 */
+            bottom: 0; /* 从下向上设置，这样它便会靠近底部 */
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+
+<body class="container">
+<div id="particles-js"></div>
+<div class="admin-login-container">
+
+    <div class="admin-login-background-left">
+        <div id="current-time"></div>
+        <div class="quote">
+            <div id="quote-question"></div>
+            <div id="quote-answer"></div>
+        </div>
+        <div class="about-me">
+            <div id="description">JavaSecLab-一款……靶场</div>
+            <p>这里是一些icon、博客地址等</p>
+            <p>这里是一些icon、博客地址等</p>
+            <p>这里是一些icon、博客地址等</p>
+            <p>这里是一些icon、博客地址等</p>
+        </div>
+    </div>
+
+    <div class="admin-login-background-right"
+         th:with="exp=${#request.session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION')}">
+        <h1 class="admin-header">
+            <span class="iconfont-title icon-anonymity-101" style="font-size: 30px"> JavaSecLab</span>
+        </h1>
+
+        <div class="col-sm-12 mx-auto text-center">
+            <p th:if="${errorMessage}" th:text="${errorMessage}" style="text-align: center;color: red;font-size: 18px">
+                登录失败</p>
+        </div>
+
+
+        <form class="layui-form" th:action="@{/login}" method="post">
+            <div class="item">
+                <span class="iconfont icon-icon_username" style="font-size: 25px"></span>
+                <input type="text" name="username" placeholder="请输入用户名">
+            </div>
+            <div class="item">
+                <span class="iconfont icon-password1" style="font-size: 20px"></span>
+                <input style="padding-left: 5px" type="password" name="password" placeholder="请输入密码">
+            </div>
+
+            <div class="item">
+            <span class="iconfont icon-yanzhengyanzhengma" style="font-size: 20px">
+
+            <input type="text" name="captcha" placeholder="请输入验证码" autocomplete="off"
+                   style="padding-left: 5px">
+            <img id="captcha" class="admin-captcha" width="90" height="30" th:src="@{/captcha}"
+                 onclick="this.src='/captcha'">
+            </span>
+
+            </div>
+
+            <div class="checkbox mb-3">
+                <label>
+                    <input type="checkbox" value="remember-me">&nbsp;&nbsp;记住密码
+                </label>
+            </div>
+
+            <div style="text-align: center">
+
+                <button class="layui-btn layui-btn-normal layui-btn-lg"
+                        style="border-radius: .3rem;width: 100%; font-size: 20px " type="submit">登录
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+<script src="/static/js/formatTime.js"></script>
+<script src="/static/js/sec-tip.js"></script>
+<script src="/static/lib/jquery-3.4.1/jquery-3.4.1.min.js"></script>
+<script src="/static/lib/particles/particles.js"></script>
+<script src="/static/lib/particles/assert/js/app.js"></script>
+<script src="/static/lib/particles/assert/js/lib/stats.js"></script>
+<script>
+    let current_time = formatDate(new Date(), 'YYYY-mm-dd HH:MM:SS WWW QQQQ');
+    const curTimeEl = document.getElementById("current-time");
+    curTimeEl.innerHTML = current_time;
+    setInterval(() => {
+        current_time = formatDate(new Date(), 'YYYY-mm-dd HH:MM:SS WWW QQQQ');
+        curTimeEl.innerHTML = current_time;
+    }, 1000);
+
+    function getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min)) + min;
+    }
+
+
+    // document.getElementById("sec-tip").innerHTML = secTip[getRandomInt(0, secTip.length)]
+    const quotation = secTip[getRandomInt(0, secTip.length)];
+    document.getElementById("quote-question").innerHTML = quotation.question;
+    document.getElementById("quote-answer").innerHTML = quotation.answer;
+
+
+</script>
+</body>
+
+</html>

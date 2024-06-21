@@ -1,0 +1,14 @@
+/* 测试结果icon*/
+.icon-output {
+    margin-right: 10px;
+    color: #ec0808;
+}
+/* 提示icon*/
+.icon-tip {
+    margin-right: 10px;
+    color: #ffb700;
+}
+
+.cm-s-juejin .CodeMirror-gutters .safe {
+    border-left:6px solid rgba(0, 255, 4, 0.52);!important;
+}

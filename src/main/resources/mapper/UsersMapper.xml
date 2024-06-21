@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.whgojp.modules.injection.sqli.mapper.UsersMapper">
+
+    <resultMap id="BaseResultMap" type="top.whgojp.modules.injection.sqli.entity.Users">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="user" column="user" jdbcType="VARCHAR"/>
+            <result property="pass" column="pass" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,user,pass
+    </sql>
+    <insert id="customInsert">
+        insert into users
+            (id, user, pass)
+        values (#{id,jdbcType=NUMERIC}, #{user,jdbcType=VARCHAR}, #{pass,jdbcType=VARCHAR})
+
+    </insert>
+    <delete id="customDelete" parameterType="int">
+        delete
+        from users
+        where id = ?;
+    </delete>
+
+
+</mapper>

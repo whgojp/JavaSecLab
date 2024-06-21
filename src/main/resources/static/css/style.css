@@ -1,0 +1,21 @@
+.div-shadow {
+    margin-top: 10px !important;
+    width: 700px;
+    height: 380px !important;
+    padding: 10px;
+}
+
+#code-editor {
+    width: 100% !important;
+    height: 100% !important;
+    background-color: white;
+}
+.code-editor {
+    width: 100% !important;
+    height: 100% !important;
+    background-color: white;
+}
+.alert-span {
+    padding: 3px !important;
+    margin-bottom: 0rem !important;
+}

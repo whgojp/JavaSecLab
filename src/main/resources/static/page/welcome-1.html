@@ -152,76 +152,93 @@
 <div class="layuimini-container">
     <div class="layuimini-main">
         <div class="layui-row layui-col-space15">
+
             <div class="layui-col-md8">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
                         <div class="layui-card">
                             <div class="layui-card-header"><i class="fa fa-warning icon"></i>数据统计</div>
+                            <div class="layui-card-body layui-text layadmin-text">
+                                <p>同时满足同协议，同域名，同端口这三个条件，就是同源。</p>
+                                <p>跨域问题是浏览器对于ajax请求的一种安全限制: 一个页面发起的ajax请求，默认情况下只能是与当前页域名相同的路径，这能有效的阻止跨站攻击。</p>
+                                <p><a target="_blank" href="upload/cors.txt">POC</a></p>
+                                <p><a target="_blank"
+                                      href="https://blog.csdn.net/Be_insighted/article/details/119493419">跨域介绍</a></p>
+                                <p><a target="_blank" href="https://www.cnblogs.com/gorillalee/p/14561896.html">跨域资源共享（CORS）漏洞详解</a>
+                                </p>
+                                <p><a target="_blank"
+                                      href="https://www.cnblogs.com/Xy--1/p/13069099.html">CORS跨域漏洞学习</a></p>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="layui-col-md6">
+                        <div class="layui-card">
+                            <div class="layui-card-header"><i class="fa fa-credit-card icon icon-blue"></i>快捷入口
+                            </div>
                             <div class="layui-card-body">
                                 <div class="welcome-module">
-                                    <div class="layui-row layui-col-space10">
-                                        <div class="layui-col-xs6">
-                                            <div class="panel layui-bg-number">
-                                                <div class="panel-body">
-                                                    <div class="panel-title">
-                                                        <span class="label pull-right layui-bg-blue">实时</span>
-                                                        <h5>用户统计</h5>
-                                                    </div>
-                                                    <div class="panel-content">
-                                                        <h1 class="no-margins">1234</h1>
-                                                        <small>当前分类总记录数</small>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                    <div class="layui-row layui-col-space10 layuimini-qiuck">
+                                        <div class="layui-col-xs3 layuimini-qiuck-module">
+                                            <a href="javascript:;" layuimini-content-href="page/menu.html"
+                                               data-title="菜单管理" data-icon="fa fa-window-maximize">
+                                                <i class="fa fa-window-maximize"></i>
+                                                <cite>菜单管理</cite>
+                                            </a>
                                         </div>
-                                        <div class="layui-col-xs6">
-                                            <div class="panel layui-bg-number">
-                                                <div class="panel-body">
-                                                    <div class="panel-title">
-                                                        <span class="label pull-right layui-bg-cyan">实时</span>
-                                                        <h5>商品统计</h5>
-                                                    </div>
-                                                    <div class="panel-content">
-                                                        <h1 class="no-margins">1234</h1>
-                                                        <small>当前分类总记录数</small>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                        <div class="layui-col-xs3 layuimini-qiuck-module">
+                                            <a href="javascript:;" layuimini-content-href="page/setting.html"
+                                               data-title="系统设置" data-icon="fa fa-gears">
+                                                <i class="fa fa-gears"></i>
+                                                <cite>系统设置</cite>
+                                            </a>
                                         </div>
-                                        <div class="layui-col-xs6">
-                                            <div class="panel layui-bg-number">
-                                                <div class="panel-body">
-                                                    <div class="panel-title">
-                                                        <span class="label pull-right layui-bg-orange">实时</span>
-                                                        <h5>浏览统计</h5>
-                                                    </div>
-                                                    <div class="panel-content">
-                                                        <h1 class="no-margins">1234</h1>
-                                                        <small>当前分类总记录数</small>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                        <div class="layui-col-xs3 layuimini-qiuck-module">
+                                            <a href="javascript:;" layuimini-content-href="page/table.html"
+                                               data-title="表格示例" data-icon="fa fa-file-text">
+                                                <i class="fa fa-file-text"></i>
+                                                <cite>表格示例</cite>
+                                            </a>
                                         </div>
-                                        <div class="layui-col-xs6">
-                                            <div class="panel layui-bg-number">
-                                                <div class="panel-body">
-                                                    <div class="panel-title">
-                                                        <span class="label pull-right layui-bg-green">实时</span>
-                                                        <h5>订单统计</h5>
-                                                    </div>
-                                                    <div class="panel-content">
-                                                        <h1 class="no-margins">1234</h1>
-                                                        <small>当前分类总记录数</small>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                        <div class="layui-col-xs3 layuimini-qiuck-module">
+                                            <a href="javascript:;" layuimini-content-href="page/icon.html"
+                                               data-title="图标列表" data-icon="fa fa-dot-circle-o">
+                                                <i class="fa fa-dot-circle-o"></i>
+                                                <cite>图标列表</cite>
+                                            </a>
+                                        </div>
+                                        <div class="layui-col-xs3 layuimini-qiuck-module">
+                                            <a href="javascript:;" layuimini-content-href="page/form.html"
+                                               data-title="表单示例" data-icon="fa fa-calendar">
+                                                <i class="fa fa-calendar"></i>
+                                                <cite>表单示例</cite>
+                                            </a>
+                                        </div>
+                                        <div class="layui-col-xs3 layuimini-qiuck-module">
+                                            <a href="javascript:;" layuimini-content-href="page/404.html"
+                                               data-title="404页面" data-icon="fa fa-hourglass-end">
+                                                <i class="fa fa-hourglass-end"></i>
+                                                <cite>404页面</cite>
+                                            </a>
+                                        </div>
+                                        <div class="layui-col-xs3 layuimini-qiuck-module">
+                                            <a href="javascript:;" layuimini-content-href="page/button.html"
+                                               data-title="按钮示例" data-icon="fa fa-snowflake-o">
+                                                <i class="fa fa-snowflake-o"></i>
+                                                <cite>按钮示例</cite>
+                                            </a>
+                                        </div>
+                                        <div class="layui-col-xs3 layuimini-qiuck-module">
+                                            <a href="javascript:;" layuimini-content-href="https://www.baidu.com"
+                                               data-title="百度搜索" data-icon="fa fa-search">
+                                                <i class="fa fa-search"></i>
+                                                <cite>百度搜索</cite>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="layui-col-md6">
                         <div class="layui-card">
                             <div class="layui-card-header"><i class="fa fa-credit-card icon icon-blue"></i>快捷入口
                             </div>

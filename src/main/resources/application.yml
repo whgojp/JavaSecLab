@@ -6,6 +6,17 @@ spring:
   # 环境 dev|docker|prod
   profiles:
     active: dev
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher  #解决swaggerUI不匹配接口
+swagger:
+  enable: true
+  title: JavaSecLib后端 API
+  description: API 描述
+  version: 5.0.0
+  author: whgojp
+  url: https://blog.csdn.net/weixin_53009585
+  email: whgojp@foxmail.com
 management:
   # 端点信息接口使用的端口，为了和主系统接口使用的端口进行分离
   server:
@@ -20,6 +31,10 @@ management:
       exposure:
         include: '*'
       base-path: /sys/actuator
+
 logging:
   config: classpath:logback-spring.xml
 
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
