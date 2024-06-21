@@ -1,18 +1,16 @@
 package top.whgojp.security.detail;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import top.whgojp.modules.system.entity.User;
 import top.whgojp.modules.system.service.UserService;
+import top.whgojp.security.handler.CustomSimpleUrlAuthenticationFailureHandler;
 
 import java.util.*;
 
@@ -27,12 +25,12 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
     private UserService userService;
-
+    @Autowired
+    private CustomSimpleUrlAuthenticationFailureHandler customSimpleUrlAuthenticationFailureHandler;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User sysUser = userService.getOne(Wrappers.<User>query().lambda().eq(User::getUsername, username));
         if (ObjectUtil.isNull(sysUser)) {
-            log.info("用户名不存在！");
             throw new UsernameNotFoundException("用户不存在");
         }
 

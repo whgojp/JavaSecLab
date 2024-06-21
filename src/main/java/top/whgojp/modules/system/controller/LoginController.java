@@ -24,7 +24,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.UUID;
 
 /**
  * @description 登录处理
@@ -89,6 +88,7 @@ public class LoginController {
     public String hello() {
         return "this is resource";
     }
+
 
 
     @PostMapping("/authenticate")

@@ -1,6 +1,5 @@
 package top.whgojp.common.enums;
 
-import lombok.Data;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,17 +15,17 @@ public enum LoginError {
 
     FAILURE(0, "登录失败！"),
 
-    BADCREDENTIALS(1, "用户名密码错误！"),
+    BADCREDENTIALS(1, "用户名或密码错误!"),
 
     LOCKED(2, "用户已被锁定，无法登录！"),
 
     ACCOUNTEXPIRED(3, "用户已过时，无法登录！"),
 
-    USERNAMENOTFOUND(4, "用户不存在！");
+    USERNAMENOTFOUND(4, "用户不存在！"),
 
-//    CAPTCHANOTFOUND(5,'验证码不能为空！');
-//    CAPTCHAEXPIRED(6,'验证码已过期！');
-//    CAPTCHAERROR(7,'验证码错误！');
+    CAPTCHANOTFOUND(5,"验证码不能为空！"),
+    CAPTCHAEXPIRED(6,"验证码已过期！"),
+    CAPTCHAERROR(7,"验证码错误！");
 
 
     private Integer type;
@@ -38,12 +37,12 @@ public enum LoginError {
     static {
         mappings.put(FAILURE.type, FAILURE);
         mappings.put(BADCREDENTIALS.type, BADCREDENTIALS);
-        mappings.put(LOCKED.type, BADCREDENTIALS);
-        mappings.put(ACCOUNTEXPIRED.type, BADCREDENTIALS);
-        mappings.put(USERNAMENOTFOUND.type, BADCREDENTIALS);
-//        mappings.put(CAPTCHANOTFOUND.type, BADCREDENTIALS);
-//        mappings.put(CAPTCHAEXPIRED.type, BADCREDENTIALS);
-//        mappings.put(CAPTCHAERROR.type, BADCREDENTIALS);
+        mappings.put(LOCKED.type, LOCKED);
+        mappings.put(ACCOUNTEXPIRED.type, ACCOUNTEXPIRED);
+        mappings.put(USERNAMENOTFOUND.type, USERNAMENOTFOUND);
+        mappings.put(CAPTCHANOTFOUND.type, CAPTCHANOTFOUND);
+        mappings.put(CAPTCHAEXPIRED.type, CAPTCHAEXPIRED);
+        mappings.put(CAPTCHAERROR.type, CAPTCHAERROR);
 
     }
 

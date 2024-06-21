@@ -9,6 +9,7 @@ import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import top.whgojp.common.constant.SysConstant;
 import top.whgojp.common.enums.LoginError;
@@ -21,6 +22,7 @@ import java.io.IOException;
 
 @Data
 @Slf4j
+@Component
 public class CustomSimpleUrlAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 
     private static final String DEFAULT_FAILURE_URL = SysConstant.LOGIN_URL;
@@ -34,6 +36,7 @@ public class CustomSimpleUrlAuthenticationFailureHandler extends SimpleUrlAuthen
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
         super.onAuthenticationFailure(request, response, exception);
         setDefaultFailureUrl(determineFailureUrl(exception));
+        log.info("当前异常："+exception.getMessage());
 
         String loginIp = request.getRemoteHost();
         String loginDate = DateUtil.now();
@@ -48,7 +51,9 @@ public class CustomSimpleUrlAuthenticationFailureHandler extends SimpleUrlAuthen
             log.error(ex.getMessage(), ex);
         }
     }
+    public void CustomOnAuthenticationFailure(Exception exception){
 
+    }
     private String determineFailureUrl(AuthenticationException exception) {
         // 默认设置登录错误页面为/login
         defaultFailureUrl = StringUtils.hasLength(defaultFailureUrl) ? defaultFailureUrl : DEFAULT_FAILURE_URL;
@@ -63,7 +68,13 @@ public class CustomSimpleUrlAuthenticationFailureHandler extends SimpleUrlAuthen
     }
 
     private LoginError determineFailureType(AuthenticationException exception) {
-        if (exception instanceof UsernameNotFoundException) {
+        if (exception.getMessage() == "验证码为空"){
+            return LoginError.CAPTCHANOTFOUND;
+        } else if (exception.getMessage() == "验证码过期") {
+            return LoginError.CAPTCHAEXPIRED;
+        } else if (exception.getMessage() == "验证码不正确") {
+            return LoginError.CAPTCHAERROR;
+        } else if (exception instanceof UsernameNotFoundException) {
             return LoginError.USERNAMENOTFOUND;
         } else if (exception instanceof LockedException) {
             return LoginError.LOCKED;

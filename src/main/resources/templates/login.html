@@ -202,7 +202,7 @@
         </div>
 
 
-        <form class="layui-form-div" th:action="@{/login}" method="post">
+        <form class="layui-form-div" th:action="@{/loginProcess}" method="post">
             <div class="item">
                 <span class="iconfont icon-icon_username" style="font-size: 25px"></span>
                 <input type="text" name="username" required placeholder="请输入用户名">
@@ -215,7 +215,7 @@
             <div class="item">
             <span class="iconfont icon-yanzhengyanzhengma" style="font-size: 20px">
 
-            <input type="text" name="captcha" placeholder="请输入验证码" autocomplete="off"
+            <input type="text" name="captcha" required placeholder="请输入验证码" autocomplete="off"
                    style="padding-left: 5px">
         <img id="captcha" class="admin-captcha" width="90" height="30" th:src="@{/captcha}"
              onclick="this.src='/captcha?' + Math.random()">

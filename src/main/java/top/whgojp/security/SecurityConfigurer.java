@@ -2,20 +2,16 @@ package top.whgojp.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.authentication.AccountExpiredException;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.LockedException;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.ExceptionMappingAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.web.cors.CorsConfiguration;
@@ -23,22 +19,23 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import top.whgojp.common.config.AuthIgnoreConfig;
 import top.whgojp.common.constant.SysConstant;
+import top.whgojp.common.filter.ValidateCodeFilter;
 import top.whgojp.common.push.service.EmailPush;
 import top.whgojp.security.detail.CustomUserDetailsService;
 import top.whgojp.security.handler.CustomLogoutSuccessHandler;
 import top.whgojp.security.handler.CustomSavedRequestAwareAuthenticationSuccessHandler;
 import top.whgojp.security.handler.CustomSimpleUrlAuthenticationFailureHandler;
-import top.whgojp.common.enums.LoginError;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+@Configuration
 @EnableWebSecurity
 public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private AuthIgnoreConfig authIgnoreConfig;
+    @Autowired
+    private ValidateCodeFilter validateCodeFilter;
 
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
@@ -57,19 +54,21 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
         auth
                 // 不做具体的 AuthenticationManager 选择这里的默认使用 DaoAuthenticationConfigurer
                 // 这个 DetailsService 单纯就是从 Dao 层取得用户数据，它不进行密码校验
-                .userDetailsService(customUserDetailsService)
+                .userDetailsService(customUserDetailsService)   // 用户认证处理
                 // 如果上面那个 userDetailsService 够简单其实可以像下面这样用 SQL 语句查询比对
                 // .dataSource(dataSource)
                 // .usersByUsernameQuery("Select * from users where username=?")
                 // 这个 passwordEncoder 配置的实际就是 DaoAuthenticationConfigurer 的加密器
-                .passwordEncoder(passwordEncoder());
+                .passwordEncoder(passwordEncoder());    // 密码处理
 
     }
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         List<String> permitAll = authIgnoreConfig.getIgnoreUrls();
         permitAll.add(SysConstant.LOGIN_URL);
+        permitAll.add(SysConstant.LOGIN_PROCESS);
         permitAll.add(SysConstant.LOGOUT_URL);
         permitAll.add(SysConstant.JWT_AUTH);
         permitAll.add("/static/images/**");
@@ -93,11 +92,16 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 
 //        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
+        http.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class);
+
         http.formLogin()
                 .loginPage(SysConstant.LOGIN_URL)
-//                .loginProcessingUrl(SysConstant.LOGIN_PROCESS)
+                .loginProcessingUrl(SysConstant.LOGIN_PROCESS)
                 .successHandler(authenticationSuccessHandler())
                 .failureHandler(customSimpleUrlAuthenticationFailureHandler());
+
+//                .defaultSuccessUrl("/index")
+//                .failureUrl("/login");
 
         http.logout()
                 .logoutSuccessHandler(customLogoutSuccessHandler())
@@ -110,7 +114,6 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
 
         // 如果不用验证码，注释这个过滤器即可
-//        http.addFilterBefore(new ValidateCodeFilter(), UsernamePasswordAuthenticationFilter.class);
 //        http.addFilterAt(usernamePasswordAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
 
@@ -172,20 +175,5 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
         return customSimpleUrlAuthenticationFailureHandler;
     }
 
-    public AuthenticationFailureHandler exceptionMappingAuthenticationFailureHandler() {
-        ExceptionMappingAuthenticationFailureHandler exceptionMappingAuthenticationFailureHandle = new ExceptionMappingAuthenticationFailureHandler();
-        exceptionMappingAuthenticationFailureHandle.setDefaultFailureUrl(SysConstant.LOGIN_URL);
-        exceptionMappingAuthenticationFailureHandle.setExceptionMappings(buildExceptionMappings());
-        return exceptionMappingAuthenticationFailureHandle;
-    }
-
-    private Map<String, String> buildExceptionMappings() {
-        Map<String, String> urlMappings = new HashMap<>();
-        urlMappings.put(BadCredentialsException.class.getName(), "/login_fail?error=" + LoginError.BADCREDENTIALS.getType());
-        urlMappings.put(LockedException.class.getName(), "/login_fail?error=" + LoginError.LOCKED.getType());
-        urlMappings.put(AccountExpiredException.class.getName(), "/login_fail?error=" + LoginError.ACCOUNTEXPIRED.getType());
-        urlMappings.put(UsernameNotFoundException.class.getName(), "/login_fail?error=" + LoginError.USERNAMENOTFOUND.getType());
-        return urlMappings;
-    }
 
 }
