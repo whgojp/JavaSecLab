@@ -27,11 +27,25 @@
       "unicode_decimal": 58987
     },
     {
+      "icon_id": "1613452",
+      "name": "验证码",
+      "font_class": "yanzhengma",
+      "unicode": "e604",
+      "unicode_decimal": 58884
+    },
+    {
       "icon_id": "4767091",
       "name": "code",
       "font_class": "code",
       "unicode": "e7fc",
       "unicode_decimal": 59388
+    },
+    {
+      "icon_id": "4936991",
+      "name": "wechat-fill",
+      "font_class": "wechat-fill",
+      "unicode": "e883",
+      "unicode_decimal": 59523
     },
     {
       "icon_id": "5650938",
@@ -97,6 +111,13 @@
       "unicode_decimal": 58973
     },
     {
+      "icon_id": "14401714",
+      "name": "github",
+      "font_class": "github",
+      "unicode": "e66f",
+      "unicode_decimal": 58991
+    },
+    {
       "icon_id": "14440213",
       "name": "黑客",
       "font_class": "anonymity-101",
@@ -109,6 +130,13 @@
       "font_class": "spring",
       "unicode": "e671",
       "unicode_decimal": 58993
+    },
+    {
+      "icon_id": "19097249",
+      "name": "csdn",
+      "font_class": "csdn48",
+      "unicode": "e502",
+      "unicode_decimal": 58626
     },
     {
       "icon_id": "19728554",

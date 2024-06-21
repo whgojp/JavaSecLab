@@ -16,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.ExceptionMappingAuthenticationFailureHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -94,6 +95,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 
         http.formLogin()
                 .loginPage(SysConstant.LOGIN_URL)
+//                .loginProcessingUrl(SysConstant.LOGIN_PROCESS)
                 .successHandler(authenticationSuccessHandler())
                 .failureHandler(customSimpleUrlAuthenticationFailureHandler());
 
@@ -108,10 +110,18 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
 
         // 如果不用验证码，注释这个过滤器即可
-//        http.addFilterBefore(new ValidateCodeFilter(authenticationFailureHandler()), UsernamePasswordAuthenticationFilter.class);
+//        http.addFilterBefore(new ValidateCodeFilter(), UsernamePasswordAuthenticationFilter.class);
+//        http.addFilterAt(usernamePasswordAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
 
     }
+//    private UsernamePasswordCaptchaAuthenticationFilter usernamePasswordAuthenticationFilter() throws Exception {
+//        UsernamePasswordCaptchaAuthenticationFilter authenticationFilter = new UsernamePasswordCaptchaAuthenticationFilter();
+//        authenticationFilter.setAuthenticationSuccessHandler(authenticationSuccessHandler());
+//        authenticationFilter.setAuthenticationFailureHandler(authenticationFailureHandler());
+//        authenticationFilter.setAuthenticationManager(authenticationManager());
+//        return authenticationFilter;
+//    }
 
     // 解决跨域
     public CorsConfigurationSource corsConfigurationSource() {

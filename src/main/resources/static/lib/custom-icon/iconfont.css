@@ -1,6 +1,6 @@
 @font-face {
   font-family: "iconfont"; /* Project id  */
-  src: url('iconfont.ttf?t=1718606841148') format('truetype');
+  src: url('iconfont.ttf?t=1718957876275') format('truetype');
 }
 
 .iconfont {
@@ -10,14 +10,6 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-.iconfont-title {
-  font-family: "iconfont" !important;
-  font-size: 30px;
-  font-style: normal;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
 
 .icon-yanzhengyanzhengma:before {
   content: "\e624";
@@ -31,8 +23,16 @@
   content: "\e66b";
 }
 
+.icon-yanzhengma:before {
+  content: "\e604";
+}
+
 .icon-code:before {
   content: "\e7fc";
+}
+
+.icon-wechat-fill:before {
+  content: "\e883";
 }
 
 .icon-wenjianxiazai:before {
@@ -71,12 +71,20 @@
   content: "\e65d";
 }
 
+.icon-github:before {
+  content: "\e66f";
+}
+
 .icon-anonymity-101:before {
   content: "\e60d";
 }
 
 .icon-spring:before {
   content: "\e671";
+}
+
+.icon-csdn48:before {
+  content: "\e502";
 }
 
 .icon-mulubianli:before {

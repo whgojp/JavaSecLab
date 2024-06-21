@@ -69,7 +69,7 @@
             font-size: 22px
         }
 
-        .layui-form {
+        .layui-form-div {
             width: 288px;
             margin: 0 auto;
             padding-top: 10px;
@@ -106,12 +106,11 @@
             text-align: left;
             margin-bottom: 10px;
             font-size: 16px;
-
         }
 
         input[type=checkbox] {
             float: left;
-            display: block !important;
+            /*display: block !important; */
             margin-top: 5px;
         }
 
@@ -126,18 +125,39 @@
         .quote {
             color: white;
             font-size: 16px;
-            margin-top: 35px;
+            margin-top: 30px;
         }
-        #quote-question{
+
+        #quote-question {
             font-size: 20px;
         }
-        #quote-answer{
+
+        #quote-answer {
             margin-top: 15px;
         }
-        .about-me{
+
+        .about-me {
+            width: 410px;
             position: absolute; /* 子div设置为绝对定位 */
             bottom: 0; /* 从下向上设置，这样它便会靠近底部 */
-            margin-bottom: 15px;
+            /*margin-bottom: 15px;*/
+            color: #000000;
+            font-size: 13px;
+        }
+
+        .about-author {
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .iconfont-title {
+            font-family: "iconfont" !important;
+            font-size: 22px;
+            font-style: normal;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
     </style>
 </head>
@@ -150,14 +170,23 @@
         <div id="current-time"></div>
         <div class="quote">
             <div id="quote-question"></div>
-            <div id="quote-answer"></div>
+            <pre><div id="quote-answer"></div></pre>
         </div>
         <div class="about-me">
-            <div id="description">JavaSecLab-一款……靶场</div>
-            <p>这里是一些icon、博客地址等</p>
-            <p>这里是一些icon、博客地址等</p>
-            <p>这里是一些icon、博客地址等</p>
-            <p>这里是一些icon、博客地址等</p>
+            <div style="font-weight: bold">技术栈： SpringBoot+SpringSecurity+MyBatis+Thymeleaf+Layui</div>
+            <pre><div id="description">  JavaSecLab是一款综合型Java漏洞平台，提供相关漏洞代码、修复代码、RestFul接口，覆盖多种漏洞场景，友好用户交互UI……
+  开发初衷：帮助渗透测试人员理解漏洞原理；甲方安全建设方面，可作为Dev端安全培训演示，帮助研发同学理解漏洞产生与修复；安全研究方面，多种不同漏洞触发写法，可用于XAST工具测试
+</div></pre>
+            <p class="about-author"><a href="https://github.com/whgojp/JavaSecLab" target="_blank"><span
+                    class="iconfont icon-github" style="font-size: 25px"></span></a>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="https://blog.csdn.net/weixin_53009585" target="_blank"><span class="iconfont icon-csdn48"
+                                                                                      style="font-size: 25px"></span></a>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <span class="iconfont icon-wechat-fill"
+                      style="font-size: 25px" id="get-wechat"></span>
+            </p>
+
         </div>
     </div>
 
@@ -173,14 +202,14 @@
         </div>
 
 
-        <form class="layui-form" th:action="@{/login}" method="post">
+        <form class="layui-form-div" th:action="@{/login}" method="post">
             <div class="item">
                 <span class="iconfont icon-icon_username" style="font-size: 25px"></span>
-                <input type="text" name="username" placeholder="请输入用户名">
+                <input type="text" name="username" required placeholder="请输入用户名">
             </div>
             <div class="item">
                 <span class="iconfont icon-password1" style="font-size: 20px"></span>
-                <input style="padding-left: 5px" type="password" name="password" placeholder="请输入密码">
+                <input style="padding-left: 5px" type="password" name="password" required placeholder="请输入密码">
             </div>
 
             <div class="item">
@@ -188,8 +217,8 @@
 
             <input type="text" name="captcha" placeholder="请输入验证码" autocomplete="off"
                    style="padding-left: 5px">
-            <img id="captcha" class="admin-captcha" width="90" height="30" th:src="@{/captcha}"
-                 onclick="this.src='/captcha'">
+        <img id="captcha" class="admin-captcha" width="90" height="30" th:src="@{/captcha}"
+             onclick="this.src='/captcha?' + Math.random()">
             </span>
 
             </div>
@@ -218,6 +247,7 @@
 <script src="/static/lib/particles/particles.js"></script>
 <script src="/static/lib/particles/assert/js/app.js"></script>
 <script src="/static/lib/particles/assert/js/lib/stats.js"></script>
+<script src="/static/lib/layui-v2.6.3/layui.js"></script>
 <script>
     let current_time = formatDate(new Date(), 'YYYY-mm-dd HH:MM:SS WWW QQQQ');
     const curTimeEl = document.getElementById("current-time");
@@ -233,12 +263,39 @@
         return Math.floor(Math.random() * (max - min)) + min;
     }
 
-
-    // document.getElementById("sec-tip").innerHTML = secTip[getRandomInt(0, secTip.length)]
     const quotation = secTip[getRandomInt(0, secTip.length)];
     document.getElementById("quote-question").innerHTML = quotation.question;
     document.getElementById("quote-answer").innerHTML = quotation.answer;
 
+    layui.use(['layer'], function () {
+        var layer = layui.layer;
+
+        // 添加鼠标悬停提示信息
+        $('#get-wechat').hover(function () {
+            layer.tips('🤏恰个V', '#get-wechat', {
+                tips: [1, '#3fa807'],
+                time: 2000
+            });
+        });
+
+        // 点击图标事件
+        layui.use(['layer'], function () {
+            var layer = layui.layer;
+
+            // 点击图标事件
+            $('.icon-wechat-fill').on('click', function () {
+                // 弹出放大图片的层
+                layer.open({
+                    type: 1,
+                    title: false,
+                    closeBtn: 1,
+                    area: ['600px', '800px'], // 宽高可以根据需要调整
+                    shadeClose: true,
+                    content: '<div style="text-align: center;"><img src="/static/images/wechat.png" style="width: 100%; height: 100%;"></div>'
+                });
+            });
+        });
+    });
 
 </script>
 </body>
