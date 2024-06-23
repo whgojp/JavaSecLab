@@ -5,7 +5,7 @@ server:
 spring:
   # 环境 dev|docker|prod
   profiles:
-    active: dev
+    active: docker
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher  #解决swaggerUI不匹配接口
@@ -35,6 +35,12 @@ management:
 logging:
   config: classpath:logback-spring.xml
 
+# mybaits-plus配置
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  # MyBatis Mapper所对应的XML文件位置
+  mapper-locations: /mapper/**/*Mapper.xml
+  global-config:
+    # 关闭MP3.0自带的banner
+    banner: false

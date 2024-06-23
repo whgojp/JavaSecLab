@@ -1,26 +1,39 @@
 version: "3"
-networks:
-  driver-all-network:
-    external: true
-
 services:
-  nps:
-    image: ffdfgdfg/nps:v0.26.10
-    container_name: nps
-    hostname: nps
+  mysql:
+    image: mysql:8.0.33
+    container_name: Container-MYSQL8
     restart: always
     ports:
-      - 80:80
-      - 443:443
-      - 8080:8080
-      - 18024:8024
-      - 8011-8051:8011-8051
-    volumes:
-      - /etc/nps/conf:/conf
-    privileged: true
+      - 3306:3306
     environment:
-      TZ: Asia/Shanghai
-      LANG: en_US.UTF-8
-#    networks:
-#      driver-all-network:
-#        ipv4_address: "172.30.1.2"
+      MYSQL_ROOT_PASSWORD: QWE123qwe
+      MYSQL_DATABASE: JavaSecLab
+    volumes:
+      - ./sql/JavaSecLab.sql:/docker-entrypoint-initdb.d/JavaSecLab.sql
+    networks:
+      - JavaSecLabNet
+
+  JavaSecLab:
+    image: backend:1.0
+    container_name: Container-JavaSecLab
+    restart: always
+    build: .
+    ports:
+      - 8080:8080
+      - 9090:9090
+    environment:
+      - TZ=Asia/Shanghai  # 设置时区为上海（GMT+8）
+    depends_on:
+      - mysql
+    volumes:
+      - ./logs:/logs      # 记录日志信息
+    networks:
+      - JavaSecLabNet
+
+networks:
+  JavaSecLabNet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.66.0/24

@@ -17,6 +17,7 @@ public class User implements Serializable {
     /**
      * 用户名
      */
+    @TableId(type = IdType.AUTO)
     private String username;
 
     /**

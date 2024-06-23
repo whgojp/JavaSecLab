@@ -7,7 +7,6 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-//@Configuration
 //@EnableTransactionManagement
 @MapperScan(basePackages={"top.whgojp.modules.*.mapper","top.whgojp.modules.*.*.mapper"})
 //@ConditionalOnBean(value = DataSource.class)
