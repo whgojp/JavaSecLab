@@ -30,7 +30,7 @@ public class CustomLogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler {
 
         try {
             // 发邮件
-            this.emailPush.send();
+//            this.emailPush.send();
 
         } catch (Exception ex) {
             log.error(ex.getMessage(),ex);

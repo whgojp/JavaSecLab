@@ -1,0 +1,3 @@
+<data>
+    <message>This is a &lt;script&gt;alert('XSS')&lt;/script&gt; payload</message>
+</data>

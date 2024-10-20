@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{common/common::head}"></head>
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <fieldset class="layui-elem-field layui-field-title">
+                    <legend style="color: rgb(30 159 255)">任意文件操作 - 文件上传</legend>
+                    <blockquote class="layui-elem-quote layui-quote-nm"
+                                style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
+                        <pre>任意文件上传：由于对上传文件未作过滤或过滤机制不严（文件后缀或类型），导致恶意用户可以上传脚本文件(jsp、php、asp)，通过上传文件可以达到控制网站权限的目的。</pre>
+                    </blockquote>
+                </fieldset>
+            </div>
+
+            <div class="layui-col-md12" style="margin-top: 10px">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-bug"> 漏洞环境：原生漏洞环境</span></h1>
+                        <div class="layui-tab layui-tab-brief">
+                            <div class="layui-tab-content">
+                                <div class="layui-tab-item layui-show">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <button type="button" class="layui-btn" id="anyFileUpload">
+                                            <i class="layui-icon">&#xe67c;</i>选择文件
+                                        </button>
+                                        <div style="display: flex; align-items: center;">
+                                            <p>可上传任意类型文件</p>
+                                        </div>
+                                        <button type="button" class="layui-btn layui-btn-normal" id="anyFileUploadButton">
+                                            上传文件
+                                        </button>
+                                    </blockquote>
+                                </div>
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre style="color: #28333e;font-size: 15px;">PS：这里其实有个问题，上传jsp脚本文件后，访问并不解析，而是直接下载
+SpringBoot默认不支持jsp文件解析，本想着做jsp和Thymeleaf的同时解析，发现实现起来有点困难(至少现在认为是这样)，当然后续会进行补充调整</pre>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i>测试结果</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre id="anyFileUpload-result" style="color: red;font-size: 15px;"></pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="anyFileUploadCode"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-col-md12" style="margin-top: 10px">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-anquan"> 安全代码：文件上传白名单</span></h1>
+                        <div class="layui-tab layui-tab-brief">
+                            <div class="layui-tab-content">
+                                <div class="layui-tab-item layui-show">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <button type="button" class="layui-btn" id="anyFileUploadWhite">
+                                            <i class="layui-icon">&#xe67c;</i>选择文件
+                                        </button>
+                                        <div style="display: flex; align-items: center;">
+                                            <p>只能上传图片哦！</p>
+                                        </div>
+                                        <button type="button" class="layui-btn layui-btn-normal" id="anyFileUploadWhiteButton">
+                                            上传文件
+                                        </button>
+                                    </blockquote>
+                                </div>
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre style="color: #28333e;font-size: 15px;">
+安全编码建议：
+    1、后端采用白名单对上传文件类型进行限制
+    2、目录权限限制，禁止上传目录具有脚本解析环境
+    3、对上传文件回显相对路径或者不显示路径
+    4、采用云存储桶来存储用户上传的文件
+                                            </pre>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-warning icon-output-safe"></i>测试结果</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre id="anyFileUploadWhite-result" style="color: red;font-size: 15px;"></pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="anyFileUploadWhiteCode"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{common/common::script}"></div>
+<script type="text/javascript">
+    layui.use(['layer', 'miniTab', 'common', 'upload'], function () {
+        var $ = layui.jquery,
+            layer = layui.layer,
+            miniTab = layui.miniTab,
+            common = layui.common,
+            upload = layui.upload;
+
+        miniTab.listen();
+        layer.msg("任意文件类-文件上传");
+
+        function createUploadInstance(config) {
+            return upload.render({
+                elem: config.elem,
+                url: config.url,
+                method: config.method || 'post',
+                accept: config.accept || 'file',
+                auto: config.auto || false,
+                bindAction: config.bindAction,
+                size: config.size || 50 * 1024, // 单位 KB
+                multiple: config.multiple || false,
+                drag: config.drag || true,
+                done: function (res) {
+                    console.log("上传文件成功：" + JSON.stringify(res));
+                    $(config.resultElem).html(res.msg);
+                },
+                error: function () {
+                    console.log("上传文件失败🤔️");
+                }
+            });
+        }
+
+        function createUploadInstanceWhite(config) {
+            return upload.render({
+                elem: config.elem,
+                url: config.url,
+                method: config.method || 'post',
+                exts: config.exts || 'png|jpg|gif|jpeg|bmp|ico',
+                auto: config.auto || false,
+                bindAction: config.bindAction,
+                size: config.size || 50 * 1024, // 单位 KB
+                multiple: config.multiple || false,
+                drag: config.drag || true,
+                done: function (res) {
+                    console.log("上传文件成功：" + JSON.stringify(res));
+                    $(config.resultElem).html(res.msg);
+                },
+                error: function () {
+                    console.log("上传文件失败🤔️");
+                }
+            });
+        }
+
+        createUploadInstance({
+            elem: '#anyFileUpload',
+            url: '/file/upload/anyFIleUpload',
+            bindAction: '#anyFileUploadButton',
+            resultElem: '#anyFileUpload-result'
+        });
+
+        createUploadInstanceWhite({
+            elem: '#anyFileUploadWhite',
+            url: '/file/upload/anyFIleUploadWhiteList',
+            bindAction: '#anyFileUploadWhiteButton',
+            resultElem: '#anyFileUploadWhite-result'
+        });
+
+        var cmConfig = {
+            lineNumbers: true,
+            lineWrapping: false,
+            indentUnit: 4,
+            indentWithTabs: true,
+            theme: 'juejin',
+            styleActiveLine: { nonEmpty: true },
+            fontSize: "18px",
+            mode: "text/x-java"
+        };
+
+        var cmConfigSafe = {
+            lineNumbers: true,
+            lineWrapping: false,
+            indentUnit: 4,
+            indentWithTabs: true,
+            theme: 'juejinsafe',
+            styleActiveLine: { nonEmpty: true },
+            fontSize: "18px",
+            mode: "text/x-java"
+        };
+
+        CodeMirror(document.getElementById("anyFileUploadCode"), Object.assign({}, cmConfig, {
+            value: anyFileUploadCode
+        }));
+
+        CodeMirror(document.getElementById("anyFileUploadWhiteCode"), Object.assign({}, cmConfigSafe, {
+            value: anyFileUploadWhiteCode
+        }));
+
+    });
+</script>
+
+</body>
+</html>

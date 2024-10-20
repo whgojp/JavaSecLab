@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Success Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .success-container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+
+        .success-container h1 {
+            margin-bottom: 20px;
+        }
+
+        .success-container p {
+            margin-bottom: 20px;
+        }
+
+        .success-container a {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        .success-container a:hover {
+            color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="success-container">
+    <h1>Welcome!</h1>
+    <p>You have successfully logged in.</p>
+    <a href="/login">Log out</a>
+</div>
+</body>
+</html>

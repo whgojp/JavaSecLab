@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{common/common::head}"></head>
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <fieldset class="layui-elem-field layui-field-title">
+                    <legend>
+                        <a style="color: rgb(30 159 255)" class="xxe">XXE (XML Enternal Entity Injection)</a>
+                    </legend>
+                    <blockquote class="layui-elem-quote layui-quote-nm"
+                                style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
+                        <pre>  XXE(XML外部实体注入)：由于在解析XML时未限制对外部实体的处理，导致攻击者通过注入恶意XML数据，引发拒绝服务、文件读取、SSRF、命令执行等严重安全问题</pre>
+                        <pre>  漏洞场景：当数据传输的Content-Type为text/xml或application/xml时，可以针对XML格式的请求进行黑盒测试，检测潜在的XXE漏洞。此外，在文件上传功能中，如果使用插件进行文件解析或预览(如上传Excel文件时)，也可能导致文件中的XXE Payload被执行，引发安全风险</pre>
+                    </blockquote>
+                </fieldset>
+            </div>
+
+            <div class="layui-col-md12" style="margin-top: 10px">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-bug"> 漏洞环境：XMLReader</span></h1>
+                        <div class="layui-tab layui-tab-brief">
+                            <div class="layui-tab-content">
+                                <div class="layui-tab-item layui-show">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <p>XMLReader在处理外部实体和DTD，可能会引发安全漏洞</p>
+                                        <a target="_blank" href="/xxe/vulXMLReader?payload=%3c%3f%78%6d%6c%20%76%65%72%73%69%6f%6e%3d%22%31%2e%30%22%20%65%6e%63%6f%64%69%6e%67%3d%22%55%54%46%2d%38%22%3f%3e%3c%21%44%4f%43%54%59%50%45%20%72%6f%6f%74%20%5b%3c%21%45%4e%54%49%54%59%20%78%78%65%20%53%59%53%54%45%4d%20%22%66%69%6c%65%3a%2f%2f%2f%65%74%63%2f%70%61%73%73%77%64%22%3e%5d%3e%3c%72%6f%6f%74%3e%20%20%26%78%78%65%3b%3c%2f%72%6f%6f%74%3e">
+                                            <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
+                                                <span class="iconfont icon-zhihang">Run</span>
+                                            </button>
+                                        </a>
+                                    </blockquote>
+                                </div>
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre style="color: #28333e;font-size: 15px;">代码审计SINK点：
+  1、XMLReader
+  2、SAXReader
+  3、DocumentBuilder
+  4、XMLStreamReader
+  5、SAXBuilder
+  6、SAXParser
+  7、SAXSource
+  8、TransformerFactory
+  9、SAXTransformerFactory
+  10、SchemaFactory
+  11、Unmarshaller
+  12、XPathExpression</pre>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="vulXMLReader"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-col-md12" style="margin-top: 10px">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-bug"> 漏洞环境：SAXParser</span></h1>
+                        <div class="layui-tab layui-tab-brief">
+                            <div class="layui-tab-content">
+                                <div class="layui-tab-item layui-show">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <p>SAXParser是XMLReader的替代品</p>
+                                        <a target="_blank" href="/xxe/vulSAXParser?payload=%3c%3f%78%6d%6c%20%76%65%72%73%69%6f%6e%3d%22%31%2e%30%22%20%65%6e%63%6f%64%69%6e%67%3d%22%55%54%46%2d%38%22%3f%3e%3c%21%44%4f%43%54%59%50%45%20%72%6f%6f%74%20%5b%3c%21%45%4e%54%49%54%59%20%78%78%65%20%53%59%53%54%45%4d%20%22%66%69%6c%65%3a%2f%2f%2f%65%74%63%2f%68%6f%73%74%73%22%3e%5d%3e%3c%72%6f%6f%74%3e%20%20%26%78%78%65%3b%3c%2f%72%6f%6f%74%3e">
+                                            <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
+                                                <span class="iconfont icon-zhihang">Run</span>
+                                            </button>
+                                        </a>
+                                    </blockquote>
+                                </div>
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre style="color: #28333e;font-size: 15px;">  SAXParserFactory默认会禁用DTD和外部实体的声明，以确保解析过程的安全性。通过手动设置这些特性，可以确保在解析XML时避免常见的安全漏洞</pre></div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="vulSAXParser"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{common/common::script}"></div>
+<script type="text/javascript">
+    layui.use(['layer', 'miniTab', 'common', 'upload'], function () {
+        var $ = layui.jquery,
+            layer = layui.layer,
+            miniTab = layui.miniTab;
+
+        miniTab.listen();
+        layer.msg("XXE-XML外部实体注入");
+
+        var cmConfig = {
+            lineNumbers: true,
+            lineWrapping: false,
+            indentUnit: 4,
+            indentWithTabs: true,
+            theme: 'juejin',
+            styleActiveLine: { nonEmpty: true },
+            fontSize: "18px",
+            mode: "text/x-java"
+        };
+
+        CodeMirror(document.getElementById("vulXMLReader"), Object.assign({}, cmConfig, {
+            value: vulXMLReader
+        }));
+        CodeMirror(document.getElementById("vulSAXParser"), Object.assign({}, cmConfig, {
+            value: vulSAXParser
+        }));
+
+
+    });
+
+    $('.xxe').hover(function () {
+        $(this).css('cursor', 'pointer');
+        layer.tips('攻击流程图', this, {
+            tips: [1, '#0051ff'],
+            time: 2000
+        });
+    });
+
+    $('.xxe').on('click', function () {
+        layer.open({
+            type: 1,
+            title: false,
+            closeBtn: 1,
+            area: ['859px', '506px'], // 宽高可以根据需要调整
+            shadeClose: true,
+            content: '<div style="text-align: center;"><img src="/static/images/vul/xxe/xxe.png" style="width: 100%; height: 50%;"></div>'
+        });
+    });
+</script>
+
+</body>
+</html>

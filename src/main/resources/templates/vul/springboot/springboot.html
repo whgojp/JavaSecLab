@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{common/common::head}"></div>
+
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <fieldset class="layui-elem-field layui-field-title">
+                    <legend style="color: rgb(30 159 255)">SpringBoot框架 - 相关漏洞</legend>
+                    <blockquote class="layui-elem-quote layui-quote-nm"
+                                style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
+                        <p>
+                        <pre>  Spring Boot是一个通过自动配置、嵌入式服务器和生产级功能，简化了Spring应用程序开发、配置和部署的框架，使开发者能够快速构建独立且易于部署的Java应用
+  在其生态系统下，也存在一些相关组件的安全隐患，如Swagger UI可能导致敏感接口泄漏，Spring Boot Actuator可能暴露敏感端口，Druid可能面临未授权访问风险，以及Spring Cloud Gateway存在远程代码执行漏洞等</pre>
+                        </p>
+                    </blockquote>
+                </fieldset>
+            </div>
+            <div class="layui-col-md12" style="margin-top: 10px">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-bug"> 漏洞情景：Swagger UI 敏感接口泄漏</span></h1>
+                        <div class="layui-tab layui-tab-brief">
+                            <div class="layui-tab-content">
+
+                                <div class="layui-tab-item layui-show">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <div style="display: flex; align-items: center;">
+                                            <p>点击访问链接：</p>
+                                            <a style="color: red" target="_blank" href="/v3/api-docs">Swagger 接口</a>
+
+                                        </div>
+                                    </blockquote>
+                                </div>
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre style="color: #28333e;font-size: 15px;">  Swagger是一种用于描述API的开源框架，它使用OpenAPI规范来定义API的端点、请求、响应、模式等。Swagger接口泄露漏洞是指在使用Swagger描述API时，由于未正确配置访问控制或未实施安全措施，导致API接口被不授权的人员访问和利用，从而导致系统安全风险</pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code">  缺陷代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="springBootSwagger">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="layui-col-md12" style="margin-top: 10px">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-bug"> 漏洞情景：SpringBoot Actuator 敏感端点泄漏</span></h1>
+                        <div class="layui-tab layui-tab-brief">
+                            <div class="layui-tab-content">
+
+                                <div class="layui-tab-item layui-show">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <div style="display: flex; align-items: center;">
+                                            <p>点击访问链接：</p>
+                                            <a style="color: red" target="_blank" href="/sys/actuator">Actuator 端点</a>
+
+                                        </div>
+                                    </blockquote>
+                                </div>
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre style="color: #28333e;font-size: 15px;">  Spring Boot Actuator 是一个用于监控和管理 Spring Boot 应用程序的功能模块。它提供了一系列生产就绪的功能，帮助你了解应用程序的运行状况，以及在运行时对应用程序进行调整。Actuator 使用了 Spring MVC 来暴露各种 HTTP 或 JMX 端点，通过这些端点你可以获取到应用程序的运行信息，如健康状态、指标、线程 dump、环境变量等</pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code">  缺陷代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="springBootActuator">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="layui-col-md12" style="margin-top: 10px">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-bug"> 漏洞情景：Druid 配置不当</span></h1>
+                        <div class="layui-tab layui-tab-brief">
+                            <div class="layui-tab-content">
+
+                                <div class="layui-tab-item layui-show">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <div style="display: flex; align-items: center;">
+                                            <p>点击访问链接：</p>
+                                            <a style="color: red" target="_blank" href="/druid/index.html">Druid 配置不当</a>
+
+                                        </div>
+                                    </blockquote>
+                                </div>
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre style="color: #28333e;font-size: 15px;">  Apache Druid 是阿里开源的高性能连接池和实时分析分布式数据存储系统，专为大规模时序数据和事件流分析设计，具有快速查询、低延迟写入及横向扩展能力
+  在导入Druid依赖时，没有在application.yml中添加配置(或忘记配置账号密码)，此时Druid可以未授权访问，攻击者可直接获取websession信息，进行session爆破，以及通过weburi获取敏感信息路径，进行Fuzz攻击</pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code">  缺陷代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="springBootDruid">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+
+<div th:replace="~{common/common::script}"></div>
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function () {
+
+        layui.use(['layer', 'miniTab', 'common', 'form'], function () {
+            var $ = layui.jquery,
+                layer = layui.layer,
+                miniTab = layui.miniTab;
+            miniTab.listen();
+            layer.msg("SpringBoot框架-相关漏洞")
+
+
+            var cmConfig = {
+                lineNumbers: true,
+                lineWrapping: false,
+                indentUnit: 4,
+                indentWithTabs: true,
+                theme: 'juejin',
+                styleActiveLine: {nonEmpty: true},
+                fontSize: "18px",
+                mode: "text/x-java"
+            };
+
+            CodeMirror(document.getElementById("springBootSwagger"), Object.assign({}, cmConfig, {
+                value: springBootSwagger
+            }));
+            CodeMirror(document.getElementById("springBootActuator"), Object.assign({}, cmConfig, {
+                value: springBootActuator
+            }));
+            CodeMirror(document.getElementById("springBootDruid"), Object.assign({}, cmConfig, {
+                value: springBootDruid
+            }));
+
+        });
+    });
+
+
+</script>
+
+</body>
+</html>

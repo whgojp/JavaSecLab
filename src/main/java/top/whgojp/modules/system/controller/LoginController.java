@@ -109,7 +109,7 @@ public class LoginController {
         }
 
         // 补充知识 使用局部变量修饰 final 的好处
-        // 1、访问局部变量要比访问成员变量要快
+        // ueditor、访问局部变量要比访问成员变量要快
         // 2、访问局部变量要比每次调用方法去获取对象要快
         // 3、使用final修饰可以避免变量被重新赋值（引用赋值）
         // 4、使用final修饰时，JVM不用去跟踪该引用是否被更改？
@@ -130,6 +130,9 @@ public class LoginController {
     }
 
 
-
+    @RequestMapping("/home")
+    public String homePage() {
+        return "system/home";
+    }
 
 }

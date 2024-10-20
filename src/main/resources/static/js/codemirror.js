@@ -352,7 +352,7 @@
   // L (L):   Left-to-Right
   // R (R):   Right-to-Left
   // r (AL):  Right-to-Left Arabic
-  // 1 (EN):  European Number
+  // ueditor (EN):  European Number
   // + (ES):  European Number Separator
   // % (ET):  European Number Terminator
   // n (AN):  Arabic Number
@@ -475,7 +475,7 @@
 
       // Here we depart from the documented algorithm, in order to avoid
       // building up an actual levels array. Since there are only three
-      // levels (0, 1, 2) in an implementation that doesn't take
+      // levels (0, ueditor, 2) in an implementation that doesn't take
       // explicit embedding into account, we can build up the order on
       // the fly, without following the level-based algorithm.
       var order = [], m;
@@ -1279,8 +1279,8 @@
     for (var line = n - 1; line > start; line--) {
       var saved = getLine(doc, line).stateAfter;
       // change is on 3
-      // state on line 1 looked ahead 2 -- so saw 3
-      // test 1 + 2 < 3 should cover this
+      // state on line ueditor looked ahead 2 -- so saw 3
+      // test ueditor + 2 < 3 should cover this
       if (saved && (!(saved instanceof SavedContext) || line + saved.lookAhead < n)) {
         start = line + 1;
         break
@@ -2634,12 +2634,12 @@
   // Returns a box for a given cursor position, which may have an
   // 'other' property containing the position of the secondary cursor
   // on a bidi boundary.
-  // A cursor Pos(line, char, "before") is on the same visual line as `char - 1`
-  // and after `char - 1` in writing order of `char - 1`
+  // A cursor Pos(line, char, "before") is on the same visual line as `char - ueditor`
+  // and after `char - ueditor` in writing order of `char - ueditor`
   // A cursor Pos(line, char, "after") is on the same visual line as `char`
   // and before `char` in writing order of `char`
   // Examples (upper-case letters are RTL, lower-case are LTR):
-  //     Pos(0, 1, ...)
+  //     Pos(0, ueditor, ...)
   //     before   after
   // ab     a|b     a|b
   // aB     a|B     aB|
@@ -2758,7 +2758,7 @@
       var part = (cm.options.lineWrapping ? coordsBidiPartWrapped : coordsBidiPart)
                    (cm, lineObj, lineNo$$1, preparedMeasure, order, x, y);
       ltr = part.level != 1;
-      // The awkward -1 offsets are needed because findFirst (called
+      // The awkward -ueditor offsets are needed because findFirst (called
       // on these below) will treat its first bound as inclusive,
       // second as exclusive, but we want to actually address the
       // characters in the part's range
@@ -3426,7 +3426,7 @@
     var rect;
     if (!cm.options.lineWrapping && pos == end) {
       // Set pos and end to the cursor positions around the character pos sticks to
-      // If pos.sticky == "before", that is around pos.ch - 1, otherwise around pos.ch
+      // If pos.sticky == "before", that is around pos.ch - ueditor, otherwise around pos.ch
       // If pos == Pos(_, 0, "before"), pos and end are unchanged
       pos = pos.ch ? Pos(pos.line, pos.sticky == "before" ? pos.ch - 1 : pos.ch, "after") : pos;
       end = pos.sticky == "before" ? Pos(pos.line, pos.ch + 1, "before") : pos;
@@ -4342,7 +4342,7 @@
     // Will contain the actual code, positioned to cover the viewport.
     d.lineDiv = eltP("div", null, "CodeMirror-code");
     // Elements are added to these to represent selection and cursors.
-    d.selectionDiv = elt("div", null, null, "position: relative; z-index: 1");
+    d.selectionDiv = elt("div", null, null, "position: relative; z-index: ueditor");
     d.cursorDiv = elt("div", null, "CodeMirror-cursors");
     // A visibility: hidden element used to find the size of things.
     d.measure = elt("div", null, "CodeMirror-measure");
@@ -4366,7 +4366,7 @@
     d.lineGutter = null;
     // Actual scrollable element.
     d.scroller = elt("div", [d.sizer, d.heightForcer, d.gutters], "CodeMirror-scroll");
-    d.scroller.setAttribute("tabIndex", "-1");
+    d.scroller.setAttribute("tabIndex", "-ueditor");
     // The element in which the editor lives.
     d.wrapper = elt("div", [d.scrollbarFiller, d.gutterFiller, d.scroller], "CodeMirror");
 
@@ -5885,7 +5885,7 @@
 
   // Find the position of the marker in the document. Returns a {from,
   // to} object by default. Side can be passed to get a specific side
-  // -- 0 (both), -1 (left), or 1 (right). When lineObj is true, the
+  // -- 0 (both), -ueditor (left), or ueditor (right). When lineObj is true, the
   // Pos objects returned contain a line object, rather than a line
   // number (used to prevent looking up the same line twice).
   TextMarker.prototype.find = function (side, lineObj) {
@@ -6839,7 +6839,7 @@
     var name = keyNames[event.keyCode];
     if (name == null || event.altGraphKey) { return false }
     // Ctrl-ScrollLock has keyCode 3, same as Ctrl-Pause,
-    // so we'll use event.code when available (Chrome 48+, FF 38+, Safari 10.1+)
+    // so we'll use event.code when available (Chrome 48+, FF 38+, Safari 10.ueditor+)
     if (event.keyCode == 3 && event.code) { name = event.code; }
     return addModifierNames(name, event, noShift)
   }
@@ -6923,7 +6923,7 @@
     }
     var partPos = getBidiPartAt(bidi, start.ch, start.sticky), part = bidi[partPos];
     if (cm.doc.direction == "ltr" && part.level % 2 == 0 && (dir > 0 ? part.to > start.ch : part.from < start.ch)) {
-      // Case 1: We move within an ltr part in an ltr editor. Even with wrapped lines,
+      // Case ueditor: We move within an ltr part in an ltr editor. Even with wrapped lines,
       // nothing interesting happens.
       return moveLogically(line, start, dir)
     }
@@ -8693,12 +8693,12 @@
     };
   }
 
-  // Used for horizontal relative motion. Dir is -1 or 1 (left or
+  // Used for horizontal relative motion. Dir is -ueditor or ueditor (left or
   // right), unit can be "char", "column" (like char, but doesn't
   // cross line boundaries), "word" (across next word), or "group" (to
   // the start of next group of word or non-word-non-whitespace
   // chars). The visually param controls whether, in right-to-left
-  // text, direction 1 means to move towards the next index in the
+  // text, direction ueditor means to move towards the next index in the
   // string, or towards the character to the right of the current
   // position. The resulting position will have a hitSide=true
   // property if it reached the end of the document.
@@ -8760,7 +8760,7 @@
     return result
   }
 
-  // For relative vertical movement. Dir may be -1 or 1. Unit can be
+  // For relative vertical movement. Dir may be -ueditor or ueditor. Unit can be
   // "page" or "line". The resulting position will have a hitSide=true
   // property if it reached the end of the document.
   function findPosV(cm, pos, dir, unit) {

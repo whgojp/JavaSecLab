@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+
+        .login-container h1 {
+            margin-bottom: 20px;
+        }
+
+        .login-container div {
+            margin-bottom: 15px;
+        }
+
+        .login-container label {
+            display: block;
+            margin-bottom: 5px;
+            text-align: left;
+        }
+
+        .login-container input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        .login-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .login-container button:hover {
+            background-color: #0056b3;
+        }
+
+        .error-message {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+    <script>
+        function login() {
+            // 硬编码的用户名和密码
+            const hardcodedUsername = "superadmin";
+            const hardcodedPassword = "Admin@1024.com";
+
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            if (username === hardcodedUsername && password === hardcodedPassword) {
+                window.location.href = "/infoLeak/js/loginSuccess";
+            } else {
+                document.getElementById("error").textContent = "用户名或密码错误！";
+            }
+        }
+    </script>
+</head>
+<body>
+<div class="login-container">
+    <h1>登录页面</h1>
+    <form onsubmit="event.preventDefault(); login();">
+        <div>
+            <label for="username">用户名:</label>
+            <input type="text" id="username" name="username">
+        </div>
+        <div>
+            <label for="password">密码:</label>
+            <input type="password" id="password" name="password">
+        </div>
+        <div>
+            <button type="submit">登录</button>
+        </div>
+        <div id="error" class="error-message"></div>
+    </form>
+</div>
+</body>
+</html>

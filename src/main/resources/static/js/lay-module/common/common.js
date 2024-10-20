@@ -5,9 +5,10 @@
  * @Date: 2024/5/19 20:44
  */
 
-layui.define(['form'], function (exports) { //提示：模块也可以依赖其它模块，如：layui.define('layer', callback);
+layui.define(['form','table'], function (exports) { //提示：模块也可以依赖其它模块，如：layui.define('layer', callback);
 
     let form = layui.form;
+    let table = layui.table;
 
     function isValidJSON(text) {
         try {
@@ -53,11 +54,24 @@ layui.define(['form'], function (exports) { //提示：模块也可以依赖其�
         submitPostReq,
         formListenFun: function (layFilter, type, path, resultId, reqType) {
             form.on(`submit(${layFilter})`, function (data) {
-                data.field.type = type;
-                if (reqType === 'post') {
-                    submitPostReq(data.field, path, resultId)
-                } else submitGetReq(data.field, path, resultId);
-                return false;
+                var value = data.field.content;
+
+                // 定义白名单正则表达式
+                var whitelistRegex = /^[a-zA-Z0-9_\s]+$/;
+
+                // 检查输入值是否符合白名单要求
+                if (layFilter==="safe1-CheckUserInput-front" && !whitelistRegex.test(value)) {
+                    layer.msg('输入内容包含非法字符，请检查输入', {icon: 2, offset: '10px'});
+                    return false; // 取消表单提交
+                } else {
+                    data.field.type = type; // 添加类型字段
+                    if (reqType === 'post') {
+                        submitPostReq(data.field, path, resultId);
+                    } else {
+                        submitGetReq(data.field, path, resultId);
+                    }
+                    return false; // 取消表单提交
+                }
             });
         },
         selectListenFun: function (layFilter, resultId) {
@@ -66,21 +80,36 @@ layui.define(['form'], function (exports) { //提示：模块也可以依赖其�
                 $("#" + resultId).val(data.value)
             })
         },
-        //设置token
-        setToken: function (value) {
-            return layui.data('token', {
-                key: 'token',
-                value: value,
+
+        // table同一监听
+        tableListenFun: function (layFilter,path,reqType){
+            table.on(`tool(${layFilter})`, function(obj) {
+                var data = obj.data;
+                if (obj.event === 'delete') {
+                    layer.confirm('确认删除该条记录？', function(index) {
+                        $.ajax({
+                            url: `${path}`,
+                            type: `${reqType}`,
+                            data: { id: data.id },
+                            success: function(res) {
+                                if (res.code === 0) {
+                                    obj.del();
+                                    layer.msg('删除成功', {icon: 1, offset: '10px'});
+                                } else {
+                                    layer.msg('删除失败', {icon: 2, offset: '10px'});
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                console.error('删除请求失败:', error);
+                                layer.msg('删除请求失败，请稍后重试', {icon: 2, offset: '10px'});
+                            }
+                        });
+                        layer.close(index);
+                    });
+                }
             });
-        },
+        }
 
-        //获取token
-        getToken: function () {
-            return layui.data('token').token;
-        },
-
-
-        // codeMirror复用
 
     };
 

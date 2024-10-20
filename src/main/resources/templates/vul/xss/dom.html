@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{common/common::head}"></div>
+
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <fieldset class="layui-elem-field layui-field-title">
+                    <legend><a style="color: rgb(30 159 255)" class="xss-dom">跨站脚本攻击 - DOM型XSS</a></legend>
+                    <blockquote class="layui-elem-quote layui-quote-nm"
+                                style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
+                        <pre>   DOM（Document Object Model）即文档对象模型，是HTML和XML文档的编程接口。
+   DOM型XSS：攻击者利用客户端的DOM环境，通过操纵页面的DOM元素来注入和执行恶意脚本。该攻击不经过服务器和数据库。
+</pre>
+                    </blockquote>
+                </fieldset>
+            </div>
+            <div class="layui-col-md12" style="margin-top: 10px">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-bug">  漏洞环境：多种代码场景</span></h1>
+                        <div class="layui-tab layui-tab-brief">
+                            <ul class="layui-tab-title">
+                                <li class="layui-this">innerHTML</li>
+                                <li>LocalStorage</li>
+                                <li>href跳转</li>
+                            </ul>
+                            <div class="layui-tab-content">
+                                <!-- innerHTML -->
+                                <div class="layui-tab-item layui-show">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" id="vul1-dom-raw-form"
+                                              style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="content" style="width: 300px;" required
+                                                       lay-verify="required" value="123<img src onerror=alert(/xss/)>123" placeholder="请求内容" autocomplete="off"
+                                                       class="layui-input" id="vul1-dom-raw-input">
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <select class="layui-form-select" lay-filter="vul1-dom-raw">
+                                                    <option value="">示例Payload</option>
+                                                    <option value="123&lt;u&gt;A&lt;/u&gt;123">123&lt;u&gt;A&lt;/u&gt;123</option>
+                                                    <option value="123&lt;script&gt;alert(/xss/)&lt;/script&gt;123">
+                                                        123&lt;script&gt;alert(/xss/)&lt;/script&gt;123
+                                                    </option>
+                                                    <option value="123&lt;img src onerror=alert(/xss/)&gt;123">
+                                                        123&lt;img src onerror=alert(/xss/)&gt;123
+                                                    </option>
+                                                    <option value="123&lt;a href=javascript:alert(/xss/)&gt;Click Me&lt;/a&gt;123">
+                                                        123&lt;a href=javascript:alert(/xss/)&gt;Click Me&lt;/a&gt;123
+                                                    </option>
+                                                </select>
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="vul1-dom-raw-submit" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+
+                                <!-- LocalStorage -->
+                                <div class="layui-tab-item">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" id="vul3-dom-raw-form"
+                                              style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="content" style="width: 300px;" required
+                                                       lay-verify="required" value="123<img src onerror=alert(/xss/)>123" placeholder="请求内容" autocomplete="off"
+                                                       class="layui-input" id="vul3-dom-raw-input">
+                                                <p>从LocalStorage中读取数据并插入到DOM中</p>
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="vul3-dom-raw-submit" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+
+                                <!-- 跳转场景 -->
+                                <div class="layui-tab-item">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <div style="display: flex; align-items: center;">
+                                            <p>使用#实现页面跳转，但是因为跳转部分参数可控，可能导致DOM XSS</p>
+                                        </div>
+                                        <div style="display: flex; align-items: center;">
+                                            <a target="_blank" href="/xss/dom/href#javascript:alert(/xss/)">
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </a>
+                                        </div>
+                                    </blockquote>
+                                </div>
+
+                                <!-- Tips -->
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre style="color: #28333e;font-size: 15px;">一些可能导致DOM XSS的SINK点：
+    document.write()
+    document.writeln()
+    document.domain
+    element.innerHTML
+    element.outerHTML
+    element.insertAdjacentHTML
+    element.onevent
+PS：除此之外，还有URL参数注入、DOM属性注入、document.write、eval等场景，后续会进行补充
+</pre>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 测试结果 -->
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i>测试结果
+                                        </div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre id="vul-dom-raw-result" style="color: red;font-size: 15px;"></pre>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code">  缺陷代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="vul1DomRaw">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{common/common::script}"></div>
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function () {
+        layui.use(['layer', 'miniTab', 'common', 'form'], function () {
+            var $ = layui.jquery,
+                layer = layui.layer,
+                miniTab = layui.miniTab,
+                common = layui.common,
+                form = layui.form;
+            miniTab.listen();
+            layer.msg("跨站脚本-DOM型");
+
+            // innerHTML
+            form.on('submit(vul1-dom-raw-submit)', function (data) {
+                var userInput = document.getElementById('vul1-dom-raw-input').value;
+                var outputDiv = document.getElementById('vul-dom-raw-result');
+                outputDiv.innerHTML = userInput;
+                return false;
+            });
+
+            // DOM存储注入
+            form.on('submit(vul3-dom-raw-submit)', function (data) {
+                localStorage.setItem('vul3-dom-raw', document.getElementById('vul3-dom-raw-input').value);
+                var storedData = localStorage.getItem('vul3-dom-raw');
+                document.getElementById('vul-dom-raw-result').innerHTML = storedData;
+                return false;
+            })
+
+            // URL参数注入
+            form.on('submit(vul4-dom-raw-submit)', function (data) {
+                const urlParams = new URLSearchParams(window.location.search);
+                const param = urlParams.get('pacram');
+                if (param) {
+                    document.getElementById('vul-dom-raw-result').innerHTML = param;
+                }
+                return false;
+            })
+
+            // DOM属性注入
+            // form.on('submit(vul4-dom-raw)', function (data) {
+            //     var param = new URLSearchParams(window.location.search).get('input');
+            //     var img = document.createElement('img');
+            //     img.src = param;
+            //     document.body.appendChild(img);
+            // })
+
+            common.selectListenFun("vul1-dom-raw", "vul1-dom-raw-input");
+
+            var cmConfig = {
+                lineNumbers: true,
+                lineWrapping: false,
+                indentUnit: 4,
+                indentWithTabs: true,
+                theme: 'juejin',
+                styleActiveLine: {nonEmpty: true},
+                fontSize: "18px",
+                mode: "text/x-java"
+            };
+
+            CodeMirror(document.getElementById("vul1DomRaw"), Object.assign({}, cmConfig, {
+                value: vul1DomRaw
+            }));
+
+        });
+    });
+
+
+    $('.xss-dom').hover(function () {
+        $(this).css('cursor', 'pointer');
+        layer.tips('攻击流程图', this, {
+            tips: [1, '#0051ff'],
+            time: 2000
+        });
+    });
+
+    $('.xss-dom').on('click', function () {
+        layer.open({
+            type: 1,
+            title: false,
+            closeBtn: 1,
+            area: ['1124px', '554px'], // 宽高可以根据需要调整
+            shadeClose: true,
+            content: '<div style="text-align: center;"><img src="/static/images/vul/xss/dom.png" style="width: 100%; height: 100%;"></div>'
+        });
+    });
+
+</script>
+
+</body>
+</html>

@@ -28,6 +28,7 @@ public class Xss implements Serializable {
      */
     private String content;
 
+    private String ua;
     /**
      * 插入时间
      */

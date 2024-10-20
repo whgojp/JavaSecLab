@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{common/common::head}"></head>
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <fieldset class="layui-elem-field layui-field-title">
+                    <legend style="color: rgb(30, 159, 255)">跨站脚本攻击 - 其他场景</legend>
+                    <blockquote class="layui-elem-quote layui-quote-nm"
+                                style="font-size: 15px; background-color: #a7deefab; box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
+                        <pre>  其他场景：包含模版引擎解析问题、文件上传特殊文件类型、第三方依赖问题(供应链安全)...</pre>
+                    </blockquote>
+                </fieldset>
+            </div>
+
+            <div class="layui-col-md12" style="margin-top: 10px">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-bug"> 漏洞环境：模版引擎解析问题</span></h1>
+                        <div class="layui-tab layui-tab-brief">
+                            <ul class="layui-tab-title">
+                                <li class="layui-this">th:html</li>
+                                <li>th:text</li>
+                            </ul>
+                            <div class="layui-tab-content">
+                                <div class="layui-tab-item layui-show">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" th:action="@{/xss/other/vul2OtherTemplate}" method="get"
+                                              style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="content" style="width: 300px;" required
+                                                       lay-verify="required" value="<script>alert(/xss/)</script>" placeholder="请求内容" autocomplete="off"
+                                                       class="layui-input" id="vul2-other-html-input">
+                                                <input type="hidden" name="type" value="html">
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <select class="layui-form-select" lay-filter="vul2-other-html">
+                                                    <option value="">示例Payload</option>
+                                                    <option value="123&lt;u&gt;A&lt;/u&gt;123">123&lt;u&gt;A&lt;/u&gt;123</option>
+                                                    <option value="123&lt;script&gt;alert(/xss/)&lt;/script&gt;123">123&lt;script&gt;alert(/xss/)&lt;/script&gt;123</option>
+                                                    <option value="123&lt;img src onerror=alert(/xss/)&gt;123">123&lt;img
+                                                        src onerror=alert(/xss/)&gt;123
+                                                    </option>
+                                                    <option value="123&lt;a href=javascript:alert(/xss/)&gt;Click Me&lt;/a&gt;123">
+                                                        123&lt;a href=javascript:alert(/xss/)&gt;Click Me&lt;/a&gt;123
+                                                    </option>
+                                                </select>
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="vul2-other-html" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+
+                                <div class="layui-tab-item">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" th:action="@{/xss/other/vul2OtherTemplate}" method="get"
+                                              style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="content" style="width: 300px;" required
+                                                       lay-verify="required" value="<script>alert(/xss/)</script>" placeholder="请求内容" autocomplete="off"
+                                                       class="layui-input">
+                                                <input type="hidden" name="type" value="text">
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="vul2-other-text" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre style="color: #28333e; font-size: 15px;">th:text用于展示纯文本，会对特殊字符进行转义
+th:utext则不进行转义，直接展示原始HTML内容
+当获取后端传来的参数中带有HTML标签时，th:text不会解析这些标签，而th:utext 会解析并渲染它们。这类似于Vue中的v-text和v-html</pre>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i>测试结果
+                                        </div>
+                                        <div class="layui-card-body layui-text layadmin-text"
+                                             style="color: red; font-size: 15px;">
+                                            <p th:utext="${html}"></p>
+                                            <p th:text="${text}"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="vul2OtherTemplate"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="layui-col-md12" style="margin-top: 10px">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-bug"> 漏洞环境：文件上传导致存储XSS</span></h1>
+                        <div class="layui-tab layui-tab-brief">
+                            <ul class="layui-tab-title">
+                                <li class="layui-this">HTML</li>
+                                <li>SVG</li>
+                                <li>PDF</li>
+                                <li>XML</li>
+                            </ul>
+                            <div class="layui-tab-content">
+                                <div class="layui-tab-item layui-show">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <button type="button" class="layui-btn" id="uploadHTMLFile">
+                                            <i class="layui-icon">&#xe67c;</i>选择文件
+                                        </button>
+                                        <div style="display: flex; align-items: center;">
+                                            <p> 只能上传HTML类型文件哦</p>
+                                        </div>
+                                        <button type="button" class="layui-btn layui-btn-normal" id="uploadHTML">
+                                            上传文件
+                                        </button>
+                                    </blockquote>
+                                </div>
+                                <div class="layui-tab-item">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <button type="button" class="layui-btn" id="uploadSVGFile">
+                                            <i class="layui-icon">&#xe67c;</i>选择文件
+                                        </button>
+                                        <div style="display: flex; align-items: center;">
+                                            <p> 只能上传SVG类型文件哦</p>
+                                        </div>
+                                        <button type="button" class="layui-btn layui-btn-normal" id="uploadSVG">
+                                            上传文件
+                                        </button>
+                                    </blockquote>
+                                </div>
+                                <div class="layui-tab-item">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <button type="button" class="layui-btn" id="uploadPDFFile">
+                                            <i class="layui-icon">&#xe67c;</i>选择文件
+                                        </button>
+                                        <div style="display: flex; align-items: center;">
+                                            <p> 只能上传PDF类型文件哦</p>
+                                        </div>
+                                        <button type="button" class="layui-btn layui-btn-normal" id="uploadPDF">
+                                            上传文件
+                                        </button>
+                                    </blockquote>
+                                </div>
+                                <div class="layui-tab-item">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <button type="button" class="layui-btn" id="uploadXMLFile">
+                                            <i class="layui-icon">&#xe67c;</i>选择文件
+                                        </button>
+                                        <div style="display: flex; align-items: center;">
+                                            <p> 只能上传XML类型文件哦</p>
+                                        </div>
+                                        <button type="button" class="layui-btn layui-btn-normal" id="uploadXML">
+                                            上传文件
+                                        </button>
+                                    </blockquote>
+                                </div>
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre style="color: #28333e; font-size: 15px;">
+除了文件上传导致存储XSS，xml场景下还需要后端进行xml解析
+这里PDF型XSS实际是没有危害的，考虑到合规监管问题，还是放上去了
+PS：除此之外，还有flash等漏洞场景，后续会补充
+                                            </pre>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i>测试结果
+                                        </div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre id="vul1-upload-result" style="color: red; font-size: 15px;"></pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="vul1OtherUpload"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="layui-col-md12" style="margin-top: 10px">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-bug"> 漏洞环境：第三方组件导致XSS-供应链安全</span></h1>
+                        <div class="layui-tab layui-tab-brief">
+                            <ul class="layui-tab-title">
+                                <li class="layui-this">jQuery</li>
+                                <li>Swagger-UI</li>
+                                <li>Ueditor</li>
+                            </ul>
+                            <div class="layui-tab-content">
+                                <div class="layui-tab-item layui-show">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <div style="display: flex; align-items: center;">
+                                            <p> jQuery在版本[1.2,3.5.0)范围内存在多个XSS漏洞
+                                                eg:CVE-2020-11022/CVE-2020-11023</p>
+                                        </div>
+                                        <div style="display: flex; align-items: center;">
+                                            <a target="_blank" href="/xss/other/jquery-xss">
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </a>
+                                        </div>
+                                    </blockquote>
+                                </div>
+
+                                <div class="layui-tab-item">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <div style="display: flex; align-items: center;">
+                                            <p> Swagger-ui在版本内[3.14.1,3.38.0)范围内存在XSS漏洞</p>
+                                        </div>
+                                        <div style="display: flex; align-items: center;">
+                                            <a target="_blank"
+                                               href="/swagger-ui/index.html?configUrl=https://jumpy-floor.surge.sh/test.json#/">
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </a>
+                                        </div>
+                                    </blockquote>
+                                </div>
+
+                                <div class="layui-tab-item">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <div style="display: flex; align-items: center;">
+                                            <p> 考虑到样式冲突问题，将Ueditor编辑器单独隔离出来</p>
+                                        </div>
+                                        <div style="display: flex; align-items: center;">
+                                            <a target="_blank"
+                                               href="/ueditor">
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </a>
+                                        </div>
+                                    </blockquote>
+                                </div>
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre style="color: #28333e; font-size: 15px;">为什么要单独抽出来呢？
+  这里的XSS场景可以看出是由第三方组件导致的，也就引出了所谓的供应链安全(当然不止这些)
+风险识别与修复方案？
+  一般企业在DevOps流水线中会嵌入相关安全扫描环境(SCA、SAST、IAST……)进行应用安全扫描
+  针对供应链安全，可使用专门的SCA工具进行软件成分扫描，升级到修复版本或采用非升级修复方案</pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="vul3SCMSec"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:replace="~{common/common::script}"></script>
+<script src="/lib/ueditor/ueditor.config.js" charset="utf-8"></script>
+<script src="/lib/ueditor/ueditor.all.min.js" charset="utf-8"></script>
+<script src="/lib/ueditor/lang/zh-cn/zh-cn.js" charset="utf-8"></script>
+<script th:inline="none">
+    UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;
+    UE.Editor.prototype.getActionUrl = function (action) {
+        if (action === 'uploadimage') {
+            return '/ueditor/upload';
+        } else {
+            return this._bkGetActionUrl.call(this, action);
+        }
+    }
+
+    var uee = UE.getEditor('ueditorContent', {
+        toolbars: [['fullscreen', 'source', '|', 'undo', 'redo', '|', 'simpleupload', 'insertimage', '|', 'drafts']]
+    });
+</script>
+
+<script>
+    layui.use(['layer', 'miniTab', 'common', 'upload'], function () {
+        var $ = layui.jquery,
+            layer = layui.layer,
+            miniTab = layui.miniTab,
+            common = layui.common,
+            upload = layui.upload;
+
+        miniTab.listen();
+        layer.msg("跨站脚本-其他场景");
+
+        function createUploadInstance(config) {
+            return upload.render({
+                elem: config.elem,
+                url: config.url,
+                method: config.method || 'post',
+                accept: config.accept || 'file',
+                exts: config.exts || 'xml|svg|html|pdf',
+                auto: config.auto || false,
+                bindAction: config.bindAction,
+                size: config.size || 50,
+                multiple: config.multiple || false,
+                drag: config.drag || true,
+                done: function (res) {
+                    console.log("上传文件成功：" + JSON.stringify(res));
+                    $(config.resultElem).html(JSON.parse(JSON.stringify(res)).msg);
+                },
+                error: function (index, upload) {
+                    console.log("上传文件失败🤔️");
+                }
+            });
+        }
+
+        var uploadHTMLFile = createUploadInstance({
+            elem: '#uploadHTMLFile',
+            url: '/xss/other/vul1Upload?type=html',
+            bindAction: '#uploadHTML',
+            resultElem: '#vul1-upload-result',
+            exts: 'html'
+        });
+
+        var uploadXMLFile = createUploadInstance({
+            elem: '#uploadXMLFile',
+            url: '/xss/other/vul1Upload?type=xml',
+            bindAction: '#uploadXML',
+            resultElem: '#vul1-upload-result',
+            exts: 'xml'
+        });
+
+        var uploadSVGFile = createUploadInstance({
+            elem: '#uploadSVGFile',
+            url: '/xss/other/vul1Upload?type=svg',
+            bindAction: '#uploadSVG',
+            resultElem: '#vul1-upload-result',
+            exts: 'svg'
+        });
+
+        var uploadPDFFile = createUploadInstance({
+            elem: '#uploadPDFFile',
+            url: '/xss/other/vul1Upload?type=pdf',
+            bindAction: '#uploadPDF',
+            resultElem: '#vul1-upload-result',
+            exts: 'pdf'
+        });
+
+        common.selectListenFun("vul2-other-html", "vul2-other-html-input");
+
+        var cmConfig = {
+            lineNumbers: true,
+            lineWrapping: false,
+            indentUnit: 4,
+            indentWithTabs: true,
+            theme: 'juejin',
+            styleActiveLine: {nonEmpty: true},
+            fontSize: "18px",
+            mode: "text/x-java"
+        };
+
+        CodeMirror(document.getElementById("vul1OtherUpload"), Object.assign({}, cmConfig, {
+            value: vul1OtherUpload
+        }));
+        CodeMirror(document.getElementById("vul2OtherTemplate"), Object.assign({}, cmConfig, {
+            value: vul2OtherTemplate
+        }));
+        CodeMirror(document.getElementById("vul3SCMSec"), Object.assign({}, cmConfig, {
+            value: vul3SCMSec
+        }));
+
+
+    });
+</script>
+</body>
+</html>

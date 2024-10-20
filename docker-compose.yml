@@ -15,11 +15,12 @@ services:
       - JavaSecLabNet
 
   JavaSecLab:
-    image: backend:1.0
+    image: javaseclab:1.0
     container_name: Container-JavaSecLab
     restart: always
     build: .
     ports:
+      - 80:80
       - 8080:8080
       - 9090:9090
     environment:
@@ -31,9 +32,21 @@ services:
     networks:
       - JavaSecLabNet
 
+  # 密码 admin@portainer.com
+  portainer:
+    image: portainer/portainer-ce
+    container_name: portainer
+    restart: always
+    ports:
+      - 9000:9000
+      - 18001:8080
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - JavaSecLabNet
 networks:
   JavaSecLabNet:
     driver: bridge
     ipam:
       config:
-        - subnet: 192.168.66.0/24
+        - subnet: 192.168.1.0/24

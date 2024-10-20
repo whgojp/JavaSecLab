@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>网络连通性测试</title>
+</head>
+<body>
+<h1>Ping 测试</h1>
+<form method="get" action="/infoLeak/ceShiPage/ping">
+    <label for="ip">IP Address:</label>
+    <input value="127.0.0.1 & whoami" type="text" id="ip" name="ip">
+    <button type="submit">Ping</button>
+</form>
+<pre th:text="${result}"></pre>
+</body>
+</html>

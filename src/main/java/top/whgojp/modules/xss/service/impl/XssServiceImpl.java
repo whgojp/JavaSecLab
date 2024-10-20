@@ -1,7 +1,6 @@
 package top.whgojp.modules.xss.service.impl;
 
 import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.lang.UUID;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +24,8 @@ public class XssServiceImpl extends ServiceImpl<XssMapper, Xss>
     private XssMapper xssMapper;
 
     @Override
-    public int insertOne(String content) {
-        final int code = xssMapper.insertAll(content,DateUtil.now());
+    public int insertOne(String content, String ua) {
+        final int code = xssMapper.insertAll(content,ua,DateUtil.now());
         return code;
     }
 
@@ -34,6 +33,12 @@ public class XssServiceImpl extends ServiceImpl<XssMapper, Xss>
     public List<Xss> selectAll() {
         List<Xss> xssList = xssMapper.selectAll();
         return xssList;
+    }
+
+    @Override
+    public int deleteById(int id) {
+        int i = xssMapper.deleteById(id);
+        return i;
     }
 }
 

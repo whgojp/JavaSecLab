@@ -1,7 +1,7 @@
 {
   "homeInfo": {
     "title": "首页",
-    "href": "page/home.html"
+    "href": "home"
   },
   "logoInfo": {
     "title": "JavaSecLab",
@@ -10,7 +10,7 @@
   },
   "menuInfo": [
     {
-      "title": "常规管理",
+      "title": "常规漏洞",
       "icon": "fa fa-address-book",
       "href": "",
       "target": "_self",
@@ -23,26 +23,40 @@
           "child": [
             {
               "title": "反射型",
-              "href": "page/xss/reflect.html",
+              "href": "",
               "icon": "iconfont icon-R",
-              "target": "_self"
+              "target": "_self",
+              "child": [
+                {
+                  "title": "漏洞环境",
+                  "href": "xss/reflect/vul",
+                  "icon": "iconfont icon-bug",
+                  "target": "_self"
+                },
+                {
+                  "title": "安全环境",
+                  "href": "xss/reflect/safe",
+                  "icon": "iconfont icon-anquan",
+                  "target": "_self"
+                }
+              ]
             },
             {
               "title": "存储型",
-              "href": "page/xss/store.html",
-              "icon": "iconfont icon-S1",
+              "href": "xss/store",
+              "icon": "iconfont icon-S",
               "target": "_self"
             },
             {
               "title": "DOM型",
-              "href": "page/xss/dom.html",
+              "href": "xss/dom",
               "icon": "iconfont icon-dom",
               "target": "_self"
             },
             {
               "title": "其他场景",
-              "href": "page/xss/other.html",
-              "icon": "iconfont icon-qita1",
+              "href": "xss/other",
+              "icon": "iconfont icon-qita",
               "target": "_self"
             }
           ]
@@ -55,64 +69,145 @@
           "child": [
             {
               "title": "JDBC",
-              "href": "page/injection/sqli/jdbc.html",
+              "href": "",
               "icon": "iconfont icon-jdbc",
-              "target": "_self"
+              "target": "_self",
+              "child": [
+                {
+                  "title": "漏洞环境",
+                  "href": "sqli/jdbc/jdbcVul",
+                  "icon": "iconfont icon-bug",
+                  "target": "_self"
+                },
+                {
+                  "title": "安全代码",
+                  "href": "sqli/jdbc/jdbcSafe",
+                  "icon": "iconfont icon-anquan",
+                  "target": "_self"
+                },
+                {
+                  "title": "特殊场景",
+                  "href": "sqli/jdbc/jdbcSpecial",
+                  "icon": "iconfont icon-tesefuwu",
+                  "target": "_self"
+                }
+              ]
             },
             {
               "title": "MyBatis",
-              "href": "page/injection/sqli/mybatis.html",
+              "href": "sqli/mybatis",
               "icon": "iconfont icon-icons8-mybatis",
               "target": "_self"
             },
             {
-              "title": "JPA",
-              "href": "page/injection/sqli/jpa.html",
-              "icon": "iconfont icon-spring",
+              "title": "Hibernate",
+              "href": "sqli/hibernate",
+              "icon": "iconfont icon-Hivebiao",
               "target": "_self"
             },
             {
-              "title": "Hibernate",
-              "href": "page/injection/sqli/hibernate.html",
-              "icon": "iconfont icon-Hivebiao",
+              "title": "JPA",
+              "href": "sqli/jpa",
+              "icon": "iconfont icon-spring",
               "target": "_self"
             }
           ]
         },
         {
-          "title": "任意文件操作",
+          "title": "任意文件",
           "href": "",
-          "icon": "iconfont icon-wenjian",
+          "icon": "iconfont icon-wenjian1",
           "target": "_self",
           "child": [
             {
               "title": "文件上传",
-              "href": "page/welcome-1.html",
+              "href": "file/upload",
               "icon": "iconfont icon-wenjian-shangchuan",
               "target": "_self"
             },
             {
-              "title": "文件删除",
-              "href": "page/welcome-2.html",
-              "icon": "iconfont icon-wenjian-shanchu",
-              "target": "_self"
-            },
-            {
-              "title": "目录遍历",
-              "href": "page/welcome-3.html",
-              "icon": "iconfont icon-mulubianli",
+              "title": "文件读取",
+              "href": "file/read",
+              "icon": "iconfont icon-duqu",
               "target": "_self"
             },
             {
               "title": "文件下载",
-              "href": "page/welcome-3.html",
+              "href": "file/download",
               "icon": "iconfont icon-wenjian-xiazai",
               "target": "_self"
             },
             {
-              "title": "文件包含",
-              "href": "page/welcome-3.html",
-              "icon": "iconfont icon-wenjian-xiazai",
+              "title": "文件删除",
+              "href": "file/delete",
+              "icon": "iconfont icon-wenjian-shanchu",
+              "target": "_self"
+            }
+          ]
+        },
+        {
+          "title": "RCE",
+          "href": "",
+          "icon": "iconfont icon-minglingzhihang",
+          "target": "_self",
+          "child": [
+            {
+              "title": "命令注入",
+              "href": "command",
+              "icon": "iconfont icon-minglingzhihang",
+              "target": "_self"
+            },
+            {
+              "title": "代码注入",
+              "href": "code",
+              "icon": "iconfont icon-minglingzhihang",
+              "target": "_self"
+            }
+          ]
+        },
+        {
+          "title": "SSRF",
+          "href": "ssrf",
+          "icon": "iconfont icon-fuwuqingqiu",
+          "target": "_self"
+        },
+        {
+          "title": "XXE",
+          "href": "",
+          "icon": "iconfont icon-XML",
+          "target": "_self",
+          "child": [
+            {
+              "title": "漏洞环境",
+              "href": "xxe/vul",
+              "icon": "iconfont icon-bug",
+              "target": "_self"
+            },
+            {
+              "title": "安全环境",
+              "href": "xxe/safe",
+              "icon": "iconfont icon-anquan",
+              "target": "_self"
+            }
+          ]
+        },
+
+        {
+          "title": "逻辑漏洞",
+          "href": "",
+          "icon": "iconfont icon-luojiloudongjiance",
+          "target": "_self",
+          "child": [
+            {
+              "title": "越权漏洞(IDOR)",
+              "href": "",
+              "icon": "iconfont icon-redirect",
+              "target": "_self"
+            },
+            {
+              "title": "支付漏洞",
+              "href": "",
+              "icon": "iconfont icon-redirect",
               "target": "_self"
             }
           ]
@@ -120,232 +215,184 @@
         {
           "title": "其他漏洞",
           "href": "",
-          "icon": "iconfont icon-wenjian",
+          "icon": "iconfont icon-qita",
           "target": "_self",
           "child": [
             {
-              "title": "跨源安全问题",
-              "href": "page/other/cross-origin.html",
-              "icon": "iconfont icon-cors",
-              "target": "_self"
-            },
-            {
-              "title": "用户名枚举",
-              "href": "page/welcome-1.html",
-              "icon": "iconfont icon-wenjian-shangchuan",
-              "target": "_self"
-            },
-            {
-              "title": "验证码复用",
-              "href": "page/welcome-2.html",
-              "icon": "iconfont icon-wenjian-shanchu",
-              "target": "_self"
-            },
-            {
-              "title": "弱口令",
-              "href": "page/welcome-3.html",
-              "icon": "iconfont icon-mulubianli",
-              "target": "_self"
-            }
-          ]
-        },
-        {
-          "title": "主页模板",
-          "href": "",
-          "icon": "fa fa-home",
-          "target": "_self",
-          "child": [
-            {
-              "title": "主页一",
-              "href": "page/welcome-1.html",
-              "icon": "fa fa-tachometer",
-              "target": "_self"
-            },
-            {
-              "title": "主页二",
-              "href": "page/welcome-2.html",
-              "icon": "fa fa-tachometer",
-              "target": "_self"
-            },
-            {
-              "title": "主页三",
-              "href": "page/welcome-3.html",
-              "icon": "fa fa-tachometer",
-              "target": "_self"
-            }
-          ]
-        },
-        {
-          "title": "菜单管理",
-          "href": "page/menu.html",
-          "icon": "fa fa-window-maximize",
-          "target": "_self"
-        },
-        {
-          "title": "系统设置",
-          "href": "page/setting.html",
-          "icon": "fa fa-gears",
-          "target": "_self"
-        },
-        {
-          "title": "表格示例",
-          "href": "page/table.html",
-          "icon": "fa fa-file-text",
-          "target": "_self"
-        },
-        {
-          "title": "表单示例",
-          "href": "",
-          "icon": "fa fa-calendar",
-          "target": "_self",
-          "child": [
-            {
-              "title": "普通表单",
-              "href": "page/form.html",
-              "icon": "fa fa-list-alt",
-              "target": "_self"
-            },
-            {
-              "title": "分步表单",
-              "href": "page/form-step.html",
-              "icon": "fa fa-navicon",
-              "target": "_self"
-            }
-          ]
-        },
-        {
-          "title": "异常页面",
-          "href": "",
-          "icon": "fa fa-home",
-          "target": "_self",
-          "child": [
-            {
-              "title": "404页面",
-              "href": "page/404.html",
-              "icon": "fa fa-hourglass-end",
-              "target": "_self"
-            }
-          ]
-        },
-        {
-          "title": "其它界面",
-          "href": "",
-          "icon": "fa fa-snowflake-o",
-          "target": "",
-          "child": [
-            {
-              "title": "按钮示例",
-              "href": "page/button.html",
-              "icon": "fa fa-snowflake-o",
-              "target": "_self"
-            },
-            {
-              "title": "弹出层",
-              "href": "page/layer.html",
-              "icon": "fa fa-shield",
-              "target": "_self"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "title": "组件管理",
-      "icon": "fa fa-lemon-o",
-      "href": "",
-      "target": "_self",
-      "child": [
-        {
-          "title": "图标列表",
-          "href": "page/icon.html",
-          "icon": "fa fa-dot-circle-o",
-          "target": "_self"
-        },
-        {
-          "title": "图标选择",
-          "href": "page/icon-picker.html",
-          "icon": "fa fa-adn",
-          "target": "_self"
-        },
-        {
-          "title": "颜色选择",
-          "href": "page/color-select.html",
-          "icon": "fa fa-dashboard",
-          "target": "_self"
-        },
-        {
-          "title": "下拉选择",
-          "href": "page/table-select.html",
-          "icon": "fa fa-angle-double-down",
-          "target": "_self"
-        },
-        {
-          "title": "文件上传",
-          "href": "page/upload.html",
-          "icon": "fa fa-arrow-up",
-          "target": "_self"
-        },
-        {
-          "title": "富文本编辑器",
-          "href": "page/editor.html",
-          "icon": "fa fa-edit",
-          "target": "_self"
-        },
-        {
-          "title": "省市县区选择器",
-          "href": "page/area.html",
-          "icon": "fa fa-rocket",
-          "target": "_self"
-        }
-      ]
-    },
-    {
-      "title": "其它管理",
-      "icon": "fa fa-slideshare",
-      "href": "",
-      "target": "_self",
-      "child": [
-        {
-          "title": "多级菜单",
-          "href": "",
-          "icon": "fa fa-meetup",
-          "target": "",
-          "child": [
-            {
-              "title": "按钮1",
-              "href": "page/button.html?v=1",
-              "icon": "fa fa-calendar",
+              "title": "URL重定向",
+              "href": "",
+              "icon": "iconfont icon-redirect",
               "target": "_self",
               "child": [
                 {
-                  "title": "按钮2",
-                  "href": "page/button.html?v=2",
-                  "icon": "fa fa-snowflake-o",
-                  "target": "_self",
-                  "child": [
-                    {
-                      "title": "按钮3",
-                      "href": "page/button.html?v=3",
-                      "icon": "fa fa-snowflake-o",
-                      "target": "_self"
-                    },
-                    {
-                      "title": "表单4",
-                      "href": "page/form.html?v=1",
-                      "icon": "fa fa-calendar",
-                      "target": "_self"
-                    }
-                  ]
+                  "title": "漏洞环境",
+                  "href": "other/URLRedirect/vul",
+                  "icon": "iconfont icon-bug",
+                  "target": "_self"
+                },
+                {
+                  "title": "安全环境",
+                  "href": "other/URLRedirect/safe",
+                  "icon": "iconfont icon-anquan",
+                  "target": "_self"
+                }
+              ]
+            },
+            {
+              "title": "XFF伪造",
+              "href": "other/xff",
+              "icon": "iconfont icon-laiyuan",
+              "target": "_self"
+            },
+            {
+              "title": "跨站请求伪造",
+              "href": "other/csrf",
+              "icon": "iconfont icon-kuazhanqingqiuweizao",
+              "target": "_self"
+            },
+            {
+              "title": "跨源安全问题",
+              "href": "",
+              "icon": "iconfont icon-origin",
+              "target": "_self",
+              "child": [
+                {
+                  "title": "CORS",
+                  "href": "other/CrossOrigin/cors",
+                  "icon": "iconfont icon-cors",
+                  "target": "_self"
+                },
+                {
+                  "title": "JSONP",
+                  "href": "other/CrossOrigin/jsonp",
+                  "icon": "iconfont icon-JSON",
+                  "target": "_self"
                 }
               ]
             }
           ]
         },
         {
-          "title": "失效菜单",
-          "href": "page/error.html",
-          "icon": "fa fa-superpowers",
+          "title": "敏感信息泄漏",
+          "href": "",
+          "icon": "iconfont icon-minganxinxi",
+          "target": "_self",
+          "child": [
+            {
+              "title": "JS泄漏",
+              "href": "infoLeak/js",
+              "icon": "iconfont icon-js",
+              "target": "_self"
+            },
+            {
+              "title": "目录遍历",
+              "href": "infoLeak/dirTraversal",
+              "icon": "iconfont icon-catalog",
+              "target": "_self"
+            },
+            {
+              "title": "测试页面",
+              "href": "infoLeak/ceShiPage",
+              "icon": "iconfont icon-ceshiliucheng",
+              "target": "_self"
+            },
+            {
+              "title": "备份文件",
+              "href": "infoLeak/backUp",
+              "icon": "iconfont icon-yasuobao",
+              "target": "_self"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Java专题",
+      "icon": "fa fa-lemon-o",
+      "href": "",
+      "target": "_self",
+      "child": [
+        {
+          "title": "SpringBoot",
+          "href": "springboot",
+          "icon": "iconfont icon-spring",
           "target": "_self"
+        },
+        {
+          "title": "SPEL注入",
+          "href": "spel",
+          "icon": "iconfont icon-spring",
+          "target": "_self"
+        },
+        {
+          "title": "SSTI注入",
+          "href": "ssti",
+          "icon": "iconfont icon-thymeleaf",
+          "target": "_self"
+        },
+        {
+          "title": "反序列化",
+          "href": "",
+          "icon": "iconfont icon-fanxuliehuaJson",
+          "target": "_self",
+          "child": [
+            {
+              "title": "ReadObject",
+              "href": "readObject",
+              "icon": "iconfont icon-fanxuliehuaJson",
+              "target": "_self"
+            },
+            {
+              "title": "SnakeYaml",
+              "href": "snakeYaml",
+              "icon": "iconfont icon-fanxuliehuaJson",
+              "target": "_self"
+            },
+            {
+              "title": "XMLDecoder",
+              "href": "xmlDecoder",
+              "icon": "iconfont icon-fanxuliehuaJson",
+              "target": "_self"
+            }
+          ]
+        },
+        {
+          "title": "组件漏洞",
+          "href": "",
+          "icon": "iconfont icon-zujian",
+          "target": "_self",
+          "child": [
+            {
+              "title": "Fastjson",
+              "href": "fastjson",
+              "icon": "iconfont icon-F",
+              "target": "_self"
+            },
+            {
+              "title": "Jackson",
+              "href": "jackson",
+              "icon": "iconfont icon-J",
+              "target": "_self"
+            },
+            {
+              "title": "XStream",
+              "href": "xstream",
+              "icon": "iconfont icon-X",
+              "target": "_self"
+            },
+            {
+              "title": "Log4j2",
+              "href": "log4j2",
+              "icon": "iconfont icon-L",
+              "target": "_self"
+            },
+            {
+              "title": "Shiro",
+              "href": "shiro",
+              "icon": "iconfont icon-S",
+              "target": "_self"
+            }
+          ]
         }
       ]
     }

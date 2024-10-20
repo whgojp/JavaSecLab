@@ -16,7 +16,7 @@ function formatDate(date, format) {
 	let qut = Math.floor((date.getMonth() + 3) / 3).toString(); // 季度
 	const opt = {
 		'Y+': date.getFullYear().toString(), // 年
-		'm+': (date.getMonth() + 1).toString(), // 月(月份从0开始，要+1)
+		'm+': (date.getMonth() + 1).toString(), // 月(月份从0开始，要+ueditor)
 		'd+': date.getDate().toString(), // 日
 		'H+': date.getHours().toString(), // 时
 		'M+': date.getMinutes().toString(), // 分

@@ -16,9 +16,12 @@ import java.util.List;
 @Repository
 public interface XssMapper extends BaseMapper<Xss> {
 
-    int insertAll(String content,String date);
+    int insertAll(String content,String ua,String date);
 
     List<Xss> selectAll();
+
+    int deleteById(@Param("id") Integer id);
+
 }
 
 

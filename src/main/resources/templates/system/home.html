@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{common/common::head}"></div>
+<style>
+    .layui-card {
+        border: 1px solid #f2f2f2;
+        border-radius: 5px;
+    }
+
+    .icon {
+        margin-right: 10px;
+        color: #1aa094;
+    }
+
+    .custom-a {
+        background-color: #f8f8f8;
+    }
+
+    .icon-blue {
+        color: #1e9fff !important;
+    }
+
+    .layuimini-qiuck-module {
+        text-align: center;
+        margin-top: 10px;
+        padding: 2.5px;
+    }
+
+    .layuimini-qiuck-module a i {
+        display: inline-block;
+        width: 100%;
+        height: 60px;
+        line-height: 60px;
+        text-align: center;
+        border-radius: 2px;
+        font-size: 30px;
+        background-color: #F8F8F8;
+        color: #333;
+        transition: all .3s;
+        -webkit-transition: all .3s;
+    }
+
+    .layuimini-qiuck-module a cite {
+        position: relative;
+        top: 2px;
+        display: block;
+        color: #666;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        font-size: 14px;
+    }
+
+    .layuimini-qiuck-module-five {
+        text-align: center;
+        margin-top: 10px;
+        padding: 1.5px;
+    }
+    .layuimini-qiuck-module-two {
+        text-align: center;
+        margin-top: 10px;
+        padding: 2.5px;
+    }
+
+    .layuimini-qiuck-module-five a i {
+        display: inline-block;
+        width: 80%;
+        height: 60px;
+        line-height: 60px;
+        text-align: center;
+        border-radius: 2px;
+        font-size: 30px;
+        background-color: #F8F8F8;
+        color: #333;
+        transition: all .3s;
+        -webkit-transition: all .3s;
+    }
+    .layuimini-qiuck-module-two a i {
+        display: inline-block;
+        width: 100%;
+        height: 60px;
+        line-height: 60px;
+        text-align: center;
+        border-radius: 2px;
+        font-size: 30px;
+        background-color: #F8F8F8;
+        color: #333;
+        transition: all .3s;
+        -webkit-transition: all .3s;
+    }
+
+    .layuimini-qiuck-module-five a cite {
+        position: relative;
+        top: 2px;
+        display: block;
+        color: #666;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        font-size: 10px;
+    }
+    .layuimini-qiuck-module-two a cite {
+        position: relative;
+        top: 2px;
+        display: block;
+        color: #666;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        font-size: 14px;
+    }
+
+    .custom-a-five {
+        background-color: #f8f8f8;
+        /*width: 80%;*/
+    }
+    .custom-a-two {
+        background-color: #f8f8f8;
+        /*width: 80%;*/
+    }
+
+    .welcome-module-five {
+        width: 100%;
+        height: 70px;
+    }
+    .welcome-module-two {
+        width: 100%;
+        height: 70px;
+    }
+
+    .welcome-module-five .layui-row {
+        display: flex;
+        flex-wrap: wrap; /* 允许换行 */
+        justify-content: space-between; /* 子元素间距均匀 */
+    }
+    .welcome-module-two .layui-row {
+        display: flex;
+        flex-wrap: wrap; /* 允许换行 */
+        justify-content: space-between; /* 子元素间距均匀 */
+    }
+
+    .layuimini-qiuck-module-five {
+        flex: 1 1 18%; /* 使子元素均分宽度，每个占18% */
+        box-sizing: border-box; /* 包含padding和border在内的宽度 */
+        text-align: center;
+        margin-top: 10px;
+        padding: 1.5px;
+    }
+    .layuimini-qiuck-module-two {
+        flex: 1 1 18%; /* 使子元素均分宽度，每个占18% */
+        box-sizing: border-box; /* 包含padding和border在内的宽度 */
+        text-align: center;
+        margin-top: 10px;
+        padding: 1.5px;
+    }
+
+    .welcome-module {
+        width: 100%;
+        height: 70px;
+    }
+
+    .main_btn > p {
+        height: 40px;
+    }
+</style>
+
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md6">
+                <div class="layui-col-md6">
+                    <div class="layui-card">
+                        <div class="layui-card-header">
+                            <span class="iconfont icon-kuazhanjiaobengongji icon icon-blue"></span>
+                            跨站脚本
+                        </div>
+                        <div class="layui-card-body">
+                            <div class="welcome-module">
+                                <div class="layui-row layui-col-space10">
+                                    <div class="layui-col-xs3 layuimini-qiuck-module">
+                                        <div class="custom-a">
+                                            <a href="javascript:;" layuimini-content-href="xss/reflect/vul"
+                                               data-title="反射型">
+                                                <span class="iconfont icon-R"></span>
+                                                <cite>反射型</cite>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="layui-col-xs3 layuimini-qiuck-module">
+                                        <div class="custom-a">
+                                            <a href="javascript:;" layuimini-content-href="xss/store"
+                                               data-title="存储型">
+                                                <span class="iconfont icon-S"></span>
+                                                <cite>存储型</cite>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="layui-col-xs3 layuimini-qiuck-module">
+                                        <div class="custom-a">
+                                            <a href="javascript:;" layuimini-content-href="xss/dom"
+                                               data-title="DOM型">
+                                                <span class="iconfont icon-dom"></span>
+                                                <cite>DOM型</cite>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="layui-col-xs3 layuimini-qiuck-module">
+                                        <div class="custom-a">
+                                            <a href="javascript:;" layuimini-content-href="xss/other"
+                                               data-title="图标列表">
+                                                <span class="iconfont icon-qita"></span>
+                                                <cite>其他场景</cite>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-md6">
+
+                    <div class="layui-card">
+                        <div class="layui-card-header">
+                            <span class="iconfont icon-SQLzhurugongji icon icon-blue"></span>
+                            SQL注入
+                        </div>
+                        <div class="layui-card-body">
+                            <div class="welcome-module">
+                                <div class="layui-row layui-col-space10">
+                                    <div class="layui-col-xs3 layuimini-qiuck-module">
+                                        <div class="custom-a">
+                                            <a href="javascript:;" layuimini-content-href="sqli/jdbc/jdbcVul"
+                                               data-title="JDBC">
+                                                <span class="iconfont icon-jdbc"></span>
+                                                <cite>JDBC</cite>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="layui-col-xs3 layuimini-qiuck-module">
+                                        <div class="custom-a">
+                                            <a href="javascript:;" layuimini-content-href="sqli/mybatis"
+                                               data-title="MyBatis">
+                                                <span class="iconfont icon-icons8-mybatis"></span>
+                                                <cite>MyBatis</cite>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="layui-col-xs3 layuimini-qiuck-module">
+                                        <div class="custom-a">
+                                            <a href="javascript:;" layuimini-content-href="sqli/hibernate"
+                                               data-title="Hibernate">
+                                                <span class="iconfont icon-Hivebiao"></span>
+                                                <cite>Hibernate</cite>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="layui-col-xs3 layuimini-qiuck-module">
+                                        <div class="custom-a">
+                                            <a href="javascript:;" layuimini-content-href="sqli/jpa"
+                                               data-title="JPA">
+                                                <span class="iconfont icon-spring"></span>
+                                                <cite>JPA</cite>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="layui-col-md6">
+
+                    <div class="layui-card">
+                        <div class="layui-card-header">
+                            <span class="iconfont icon-wenjian1 icon icon-blue"></span>
+                            任意文件类
+                        </div>
+                        <div class="layui-card-body">
+                            <div class="welcome-module">
+                                <div class="layui-row layui-col-space10">
+                                    <div class="layui-col-xs3 layuimini-qiuck-module">
+                                        <div class="custom-a">
+                                            <a href="javascript:;" layuimini-content-href="file/upload"
+                                               data-title="文件上传">
+                                                <span class="iconfont icon-wenjian-shangchuan"></span>
+                                                <cite>文件上传</cite>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="layui-col-xs3 layuimini-qiuck-module">
+                                        <div class="custom-a">
+                                            <a href="javascript:;" layuimini-content-href="file/read"
+                                               data-title="文件读取">
+                                                <span class="iconfont icon-duqu"></span>
+                                                <cite>文件读取</cite>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="layui-col-xs3 layuimini-qiuck-module">
+                                        <div class="custom-a">
+                                            <a href="javascript:;" layuimini-content-href="file/download"
+                                               data-title="文件下载">
+                                                <span class="iconfont icon-wenjian-xiazai"></span>
+                                                <cite>文件下载</cite>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="layui-col-xs3 layuimini-qiuck-module">
+                                        <div class="custom-a">
+                                            <a href="javascript:;" layuimini-content-href="file/delete"
+                                               data-title="文件删除">
+                                                <span class="iconfont icon-wenjian-shanchu"></span>
+                                                <cite>文件删除</cite>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="layui-col-md6">
+                    <div class="layui-col-md6">
+                    <div class="layui-card">
+                        <div class="layui-card-header">
+                            <span class="iconfont icon-minglingzhihang icon icon-blue"></span>
+                            RCE
+                        </div>
+
+                        <div class="layui-card-body">
+                            <div class="welcome-module-two">
+                                <div class="layui-row layui-col-space10">
+                                    <div class="layui-col-xs3 layuimini-qiuck-module-two">
+                                        <div class="custom-a-two">
+                                            <a href="javascript:;" layuimini-content-href="command"
+                                               data-title="命令注入">
+                                                <span class="iconfont icon-minglingzhihang"></span>
+                                                <cite>命令注入</cite>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="layui-col-xs3 layuimini-qiuck-module-two">
+                                        <div class="custom-a-two">
+                                            <a href="javascript:;" layuimini-content-href="code"
+                                               data-title="代码注入">
+                                                <span class="iconfont icon-minglingzhihang"></span>
+                                                <cite>代码注入</cite>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    </div>
+                    <div class="layui-col-md6">
+                        <div class="layui-card">
+                            <div class="layui-card-header">
+                                <span class="iconfont icon-qita icon icon-blue"></span>
+
+                            </div>
+
+                            <div class="layui-card-body">
+                                <div class="welcome-module-two">
+                                    <div class="layui-row layui-col-space10">
+                                        <div class="layui-col-xs3 layuimini-qiuck-module-two">
+                                            <div class="custom-a-two">
+                                                <a href="javascript:;" layuimini-content-href="ssrf"
+                                                   data-title="SSRF">
+                                                    <span class="iconfont icon-fuwuqingqiu"></span>
+                                                    <cite>SSRF</cite>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="layui-col-xs3 layuimini-qiuck-module-two">
+                                            <div class="custom-a-two">
+                                                <a href="javascript:;" layuimini-content-href="xxe/vul"
+                                                   data-title="XXE">
+                                                    <span class="iconfont icon-XML"></span>
+                                                    <cite>XXE</cite>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layui-col-md6">
+
+                    <div class="layui-card">
+                        <div class="layui-card-header">
+                            <span class="iconfont icon-qita icon icon-blue"></span>
+                            其他漏洞
+                        </div>
+                        <div class="layui-card-body">
+                            <div class="welcome-module">
+                                <div class="layui-row layui-col-space10">
+                                    <div class="layui-col-xs3 layuimini-qiuck-module">
+                                        <div class="custom-a">
+                                            <a href="javascript:;" layuimini-content-href="other/URLRedirect/vul"
+                                               data-title="URL重定向">
+                                                <span class="iconfont icon-redirect"></span>
+                                                <cite>URL重定向</cite>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="layui-col-xs3 layuimini-qiuck-module">
+                                        <div class="custom-a">
+                                            <a href="javascript:;" layuimini-content-href="other/xff"
+                                               data-title="XFF伪造">
+                                                <span class="iconfont icon-laiyuan"></span>
+                                                <cite>XFF伪造</cite>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="layui-col-xs3 layuimini-qiuck-module">
+                                        <div class="custom-a">
+                                            <a href="javascript:;" layuimini-content-href="other/csrf"
+                                               data-title="跨站请求伪造">
+                                                <span class="iconfont icon-kuazhanqingqiuweizao"></span>
+                                                <cite>跨站请求伪造</cite>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="layui-col-xs3 layuimini-qiuck-module">
+                                        <div class="custom-a">
+                                            <a href="javascript:;" layuimini-content-href="other/CrossOrigin"
+                                               data-title="跨源安全问题">
+                                                <span class="iconfont icon-origin"></span>
+                                                <cite>跨源安全问题</cite>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="layui-col-md6">
+
+                    <div class="layui-card">
+                        <div class="layui-card-header">
+                            <span class="iconfont icon-minganxinxi icon icon-blue"></span>
+                            敏感信息泄漏
+                        </div>
+                        <div class="layui-card-body">
+                            <div class="welcome-module">
+                                <div class="layui-row layui-col-space10">
+                                    <div class="layui-col-xs3 layuimini-qiuck-module">
+                                        <div class="custom-a">
+                                            <a href="javascript:;" layuimini-content-href="infoLeak/js"
+                                               data-title="JS泄漏">
+                                                <span class="iconfont icon-js"></span>
+                                                <cite>JS泄漏</cite>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="layui-col-xs3 layuimini-qiuck-module">
+                                        <div class="custom-a">
+                                            <a href="javascript:;" layuimini-content-href="infoLeak/dirTraversal"
+                                               data-title="目录遍历">
+                                                <span class="iconfont icon-catalog"></span>
+                                                <cite>目录遍历</cite>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="layui-col-xs3 layuimini-qiuck-module">
+                                        <div class="custom-a">
+                                            <a href="javascript:;" layuimini-content-href="infoLeak/ceShiPage"
+                                               data-title="测试页面">
+                                                <span class="iconfont icon-ceshiliucheng"></span>
+                                                <cite>测试页面</cite>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="layui-col-xs3 layuimini-qiuck-module">
+                                        <div class="custom-a">
+                                            <a href="javascript:;" layuimini-content-href="infoLeak/backUp"
+                                               data-title="备份文件">
+                                                <span class="iconfont icon-yasuobao"></span>
+                                                <cite>备份文件</cite>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Java 专题 -->
+                <div class="layui-col-md6">
+
+                    <div class="layui-card">
+                        <div class="layui-card-header">
+                            <span class="iconfont icon-java icon icon-blue"></span>
+                            Java
+                        </div>
+                        <div class="layui-card-body">
+                            <div class="welcome-module">
+                                <div class="layui-row layui-col-space10">
+                                    <div class="layui-col-xs3 layuimini-qiuck-module">
+                                        <div class="custom-a">
+                                            <a href="javascript:;" layuimini-content-href="springboot"
+                                               data-title="SpringBoot">
+                                                <span class="iconfont icon-spring"></span>
+                                                <cite>SpringBoot</cite>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="layui-col-xs3 layuimini-qiuck-module">
+                                        <div class="custom-a">
+                                            <a href="javascript:;" layuimini-content-href="spel"
+                                               data-title="SPEL注入">
+                                                <span class="iconfont icon-spring"></span>
+                                                <cite>SPEL注入</cite>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="layui-col-xs3 layuimini-qiuck-module">
+                                        <div class="custom-a">
+                                            <a href="javascript:;" layuimini-content-href="ssti"
+                                               data-title="SSTI注入">
+                                                <span class="iconfont icon-thymeleaf"></span>
+                                                <cite>SSTI注入</cite>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="layui-col-xs3 layuimini-qiuck-module">
+                                        <div class="custom-a">
+                                            <a href="javascript:;" layuimini-content-href="readObject"
+                                               data-title="反序列化">
+                                                <span class="iconfont icon-fanxuliehuaJson"></span>
+                                                <cite>反序列化</cite>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="layui-col-md6">
+                    <div class="layui-card">
+                        <div class="layui-card-header">
+                            <span class="iconfont icon-zujian icon icon-blue"></span>
+                            组件漏洞
+                        </div>
+                        <div class="layui-card-body">
+                            <div class="welcome-module-five">
+                                <div class="layui-row layui-col-space10">
+                                    <div class="layui-col-xs3 layuimini-qiuck-module-five">
+                                        <div class="custom-a-five">
+                                            <a href="javascript:;" layuimini-content-href="fastjson"
+                                               data-title="Fastjson">
+                                                <span class="iconfont icon-F"></span>
+                                                <cite>Fastjson</cite>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="layui-col-xs3 layuimini-qiuck-module-five">
+                                        <div class="custom-a-five">
+                                            <a href="javascript:;" layuimini-content-href="jackson"
+                                               data-title="Jackson">
+                                                <span class="iconfont icon-J"></span>
+                                                <cite>Jackson</cite>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="layui-col-xs3 layuimini-qiuck-module-five">
+                                        <div class="custom-a-five">
+                                            <a href="javascript:;" layuimini-content-href="xstream"
+                                               data-title="XStream">
+                                                <span class="iconfont icon-X"></span>
+                                                <cite>XStream</cite>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="layui-col-xs3 layuimini-qiuck-module-five">
+                                        <div class="custom-a-five">
+                                            <a href="javascript:;" layuimini-content-href="log4j2"
+                                               data-title="Log4j2">
+                                                <span class="iconfont icon-L"></span>
+                                                <cite>Log4j2</cite>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="layui-col-xs3 layuimini-qiuck-module-five">
+                                        <div class="custom-a-five">
+                                            <a href="javascript:;" layuimini-content-href="shiro"
+                                               data-title="Shiro">
+                                                <span class="iconfont icon-S"></span>
+                                                <cite>Shiro</cite>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="layui-col-md6">
+                <div class="layui-card">
+                    <div class="layui-card-header"><i class="iconfont icon-anonymity-101 icon"></i>关于项目</div>
+                    <div class="layui-card-body layui-text layadmin-text">
+                        <ul>
+                            <li>安全服务方面：帮助安全服务人员理解漏洞原理(产生、修复、审计)</li>
+                            <li>甲方安全方面：可作为开发安全培训演示，友好的交互方式，帮助研发同学更容易理解漏洞</li>
+                            <li>安全研究方面：各种漏洞的不同触发场景，可用于xAST等安全工具测试</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <ul class="layui-timeline">
+                    <li class="layui-timeline-item">
+                        <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                        <div class="layui-timeline-content layui-text">
+                            <h3 class="layui-timeline-title">现在</h3>
+                            <p>逻辑漏洞模块设计、基础漏洞完善……</p>
+                        </div>
+                    </li>
+                    <li class="layui-timeline-item">
+                        <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                        <div class="layui-timeline-content layui-text">
+                            <h3 class="layui-timeline-title">2024-08</h3>
+                            <p>完成跨站脚本、SQL注入、任意文件、SSRF、敏感信息泄漏、SPEL注入、SSTI注入、反序列化、组件漏洞等模块</p>
+                        </div>
+                    </li>
+                    <li class="layui-timeline-item">
+                        <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                        <div class="layui-timeline-content layui-text">
+                            <h3 class="layui-timeline-title">2024-05</h3>
+                            <p>
+                                完成系统技术选型、架构设计、相关靶场项目调研……
+                                <br>技术栈：<b>SpringBoot+Spring Security+MyBatis+Thymeleaf+Layui</b>
+                                <br>这里暂时只做了简单认证实现、权限分级/人员管理等复杂鉴权功能后续待实现……
+                                <br>架构设计：前后端不分离，在通用后端管理框架基础上，添加一个个漏洞模块……
+                                <br>参考项目：<a target="_blank" href="https://github.com/j3ers3/Hello-Java-Sec">Hello-Java-Sec</a> <a target="_blank" href="https://github.com/j3ers3/Hello-Java-Sec">JavaSec</a>
+                            </p>
+                        </div>
+                    </li>
+                    <li class="layui-timeline-item">
+                        <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                        <div class="layui-timeline-content layui-text">
+                            <h3 class="layui-timeline-title">2024-03</h3>
+                            <p>一个想法💡</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{common/common::script}"></div>
+<script>
+    layui.use(['layer', 'miniTab', 'echarts'], function () {
+        var $ = layui.jquery,
+            layer = layui.layer,
+            miniTab = layui.miniTab,
+            echarts = layui.echarts;
+
+        miniTab.listen();
+
+        // echarts 窗口缩放自适应
+        window.onresize = function () {
+            echartsRecords.resize();
+        }
+
+    });
+</script>
+</body>
+</html>

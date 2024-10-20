@@ -11,7 +11,9 @@ import java.util.List;
 * @createDate 2024-06-10 14:56:44
 */
 public interface XssService extends IService<Xss> {
-    int insertOne(String content);
+    int insertOne(String content,String ua);
+
     List<Xss> selectAll();
 
+    int deleteById(int id);
 }

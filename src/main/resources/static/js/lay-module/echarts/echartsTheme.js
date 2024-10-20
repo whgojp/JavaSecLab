@@ -466,7 +466,7 @@ layui.define(function(exports) {
             },
             "dataZoom": {
                 "backgroundColor": "rgba(255,255,255,0)",
-                "dataBackgroundColor": "rgba(222,222,222,1)",
+                "dataBackgroundColor": "rgba(222,222,222,ueditor)",
                 "fillerColor": "rgba(114,230,212,0.25)",
                 "handleColor": "#cccccc",
                 "handleSize": "100%",

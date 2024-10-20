@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{common/common::head}"></head>
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <fieldset class="layui-elem-field layui-field-title">
+                    <legend>
+                        <a style="color: rgb(30 159 255)" class="ssrf">SSRF (Server-Side Request Forgery)</a>
+                    </legend>
+                    <blockquote class="layui-elem-quote layui-quote-nm"
+                                style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
+                        <pre>  服务端请求伪造：服务端提供了从其他服务器获取数据的功能，但没有对目标地址进行过滤和限制，攻击者可以传入任意URL，使服务器请求并返回数据，访问或操纵敏感资源。</pre>
+                        <pre>  漏洞场景：网络请求功能（如在线识图、文档翻译、分享、订阅等)、请求远程服务器资源（如远程URL上传、静态资源图片等）、数据库内置功能（如MongoDB的copyDatabase）、文件处理工具（如ImageMagick、XML处理）、从URL关键字（如source、share、link、src、imageurl、target）中寻找的功能</pre>
+                    </blockquote>
+                </fieldset>
+            </div>
+
+            <div class="layui-col-md12" style="margin-top: 10px">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-bug"> 漏洞环境：原生漏洞环境</span></h1>
+                        <div class="layui-tab layui-tab-brief">
+                            <div class="layui-tab-content">
+                                <div class="layui-tab-item layui-show">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <p>可尝试使用file、http(s)、dict、gopher等协议进行测试</p>
+                                        <a target="_blank" href="/ssrf/vul1-URLConnection?url=file:///etc/passwd">
+                                            <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
+                                                <span class="iconfont icon-zhihang">Run</span>
+                                            </button>
+                                        </a>
+                                    </blockquote>
+                                </div>
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre style="color: #28333e;font-size: 15px;">代码审计SINK点：
+    URL、HttpClient、OkHttpURLConnection、Socket、ImageIO、DriverManager.getConnection、SimpleDriverDataSource.getConnection、HttpURLConnection、RestTemplate、URLConnection、WebClient、JNDI
+Linux：file:///etc/hosts Windows：file:///C:\windows\win.ini</pre>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="vul1URLConnection"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-col-md12" style="margin-top: 10px">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-anquan"> 安全代码：限制协议、白名单</span></h1>
+                        <div class="layui-tab layui-tab-brief">
+                            <div class="layui-tab-content">
+                                <div class="layui-tab-item layui-show">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <p>限制http(s)协议、请求白名单(baidu.com、whgojp.top)</p>
+                                        <a target="_blank" href="/ssrf/safe1-WhiteList?url=http://baidu.com">
+                                            <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
+                                                <span class="iconfont icon-zhihang">Run</span>
+                                            </button>
+                                        </a>
+                                    </blockquote>
+                                </div>
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre style="color: #28333e;font-size: 15px;">安全编码建议：
+    1、URL做白名单处理，域名识别IP，过滤内网IP
+    2、校验返回的内容是否与预期一致
+    3、禁止302跳转，或每跳转一次都进行校验目的地址是否为内网地址或合法地址。
+    4、禁用高危协议：gopher、dict、file、ftp、file等，只允许http/https
+项目主要关注的是漏洞的产生与修复，关于攻击绕过手法(@等分隔符、本地回环地址、短网址、DNS重绑定、八(十六)进制)，这里就不再展开……</pre>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code"> 安全代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="safe1WhiteList"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{common/common::script}"></div>
+<script type="text/javascript">
+    layui.use(['layer', 'miniTab', 'common', 'upload'], function () {
+        var $ = layui.jquery,
+            layer = layui.layer,
+            miniTab = layui.miniTab;
+
+        miniTab.listen();
+        layer.msg("SSRF-服务端请求伪造");
+
+        var cmConfig = {
+            lineNumbers: true,
+            lineWrapping: false,
+            indentUnit: 4,
+            indentWithTabs: true,
+            theme: 'juejin',
+            styleActiveLine: { nonEmpty: true },
+            fontSize: "18px",
+            mode: "text/x-java"
+        };
+
+        var cmConfigSafe = {
+            lineNumbers: true,
+            lineWrapping: false,
+            indentUnit: 4,
+            indentWithTabs: true,
+            theme: 'juejinsafe',
+            styleActiveLine: { nonEmpty: true },
+            fontSize: "18px",
+            mode: "text/x-java"
+        };
+
+        CodeMirror(document.getElementById("vul1URLConnection"), Object.assign({}, cmConfig, {
+            value: vul1URLConnection
+        }));
+
+        CodeMirror(document.getElementById("safe1WhiteList"), Object.assign({}, cmConfigSafe, {
+            value: safe1WhiteList
+        }));
+
+    });
+
+    $('.ssrf').hover(function () {
+        $(this).css('cursor', 'pointer');
+        layer.tips('攻击流程图', this, {
+            tips: [1, '#0051ff'],
+            time: 2000
+        });
+    });
+
+    $('.ssrf').on('click', function () {
+        layer.open({
+            type: 1,
+            title: false,
+            closeBtn: 1,
+            area: ['903px', '529px'], // 宽高可以根据需要调整
+            shadeClose: true,
+            content: '<div style="text-align: center;"><img src="/static/images/vul/ssrf/ssrf.jpg" style="width: 100%; height: 50%;"></div>'
+        });
+    });
+</script>
+
+</body>
+</html>

@@ -430,9 +430,8 @@ layui.define(["jquery", "layer"], function (exports) {
                     '<ul>\n' + bgColorHtml + '</ul>\n' +
                     '</div>\n' +
                     '<div class="more-menu-list">\n' +
-                    '<a class="more-menu-item" href="http://layuimini.99php.cn/docs/index.html" target="_blank"><i class="layui-icon layui-icon-read" style="font-size: 19px;"></i> 开发文档</a>\n' +
-                    '<a class="more-menu-item" href="https://github.com/zhongshaofa/layuimini" target="_blank"><i class="layui-icon layui-icon-tabs" style="font-size: 16px;"></i> 开源地址</a>\n' +
-                    '<a class="more-menu-item" href="http://layuimini.99php.cn" target="_blank"><i class="layui-icon layui-icon-theme"></i> 官方网站</a>\n' +
+                    '<a class="more-menu-item" href="https://blog.csdn.net/weixin_53009585" target="_blank"><span class="iconfont icon-csdn48" style="font-size: 20px"></span> 作者博客</a>\n' +
+                    '<a class="more-menu-item" href="https://github.com/whgojp/JavaSecLab" target="_blank"><span class="iconfont icon-github" style="font-size: 18px"></span> 项目地址</a>\n' +
                     '</div>' +
                     '</div>';
                 layer.open({

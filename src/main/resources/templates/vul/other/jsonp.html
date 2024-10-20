@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{common/common::head}"></div>
+
+<body>
+<div class="layuimini-container">
+  <div class="layuimini-main">
+    <div class="layui-row layui-col-space15">
+      <div class="layui-col-md12">
+        <fieldset class="layui-elem-field layui-field-title">
+          <legend>
+            <a style="color: rgb(30 159 255)" class="CrossOrigin">其他漏洞 - 跨源安全问题</a>
+          </legend>
+          <blockquote class="layui-elem-quote layui-quote-nm"
+                      style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
+            <p>
+            <pre>  同源策略(Same Origin Policy)：浏览器为保护用户信息免受不同源的网页访问，实施同源策略，规定只有在协议、域名、端口号三者相同的情况下，一个网页或脚本才能访问另一个网页的内容。</pre>
+            <pre>  实际上很多场景还是需要进行跨源访问操作(前后端分离、调用第三方接口)，常用的有以下几种跨域解决方法：CORS、JSONP、PostMessge、WebSockets、代理服务器。不过提供便利的同时也伴随着一些安全问题……</pre>
+            </p>
+          </blockquote>
+        </fieldset>
+      </div>
+
+      <div class="layui-col-md12" style="margin-top: 10px">
+        <div class="layui-row layui-col-space15">
+          <div class="layui-col-md6">
+            <h1><span class="iconfont icon-bug"> 漏洞环境：JSONP劫持</span></h1>
+            <div class="layui-tab layui-tab-brief">
+              <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                  <blockquote class="layui-elem-quote main_btn">
+                    <p>JSONP的全称是JSON With Padding，是一种基于JSON格式来解决跨域请求资源的方案</p>
+                    <a target="_blank" href="/other/CrossOrigin/jsonpVul?callback=stealData">
+                      <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
+                        <span class="iconfont icon-zhihang">Run</span>
+                      </button>
+                    </a>
+                  </blockquote>
+                </div>
+
+                <div class="layui-col-md12">
+                  <div class="layui-card">
+                    <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                    <div class="layui-card-body layui-text layadmin-text">
+                                            <pre style="color: #28333e;font-size: 15px;">  JSONP漏洞通常发生在服务器未对请求的callback参数进行严格的合法性校验，导致攻击者可以恶意操控返回的数据格式，窃取敏感信息或执行恶意代码</pre>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="layui-col-md6">
+            <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
+            <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+              <div class="code-editor" id="vulJSONP"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="layui-col-md12" style="margin-top: 10px">
+        <div class="layui-row layui-col-space15">
+          <div class="layui-col-md6">
+            <h1><span class="iconfont icon-anquan"> 安全代码：正则校验callback参数</span></h1>
+            <div class="layui-tab layui-tab-brief">
+              <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                  <blockquote class="layui-elem-quote main_btn">
+                    <p></p>
+                    <a target="_blank" href="/other/CrossOrigin/jsonpSafe?callback=stealData">
+                      <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
+                        <span class="iconfont icon-zhihang">Run</span>
+                      </button>
+                    </a>
+                  </blockquote>
+                </div>
+
+                <div class="layui-col-md12">
+                  <div class="layui-card">
+                    <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                    <div class="layui-card-body layui-text layadmin-text">
+                      <pre style="color: #28333e;font-size: 15px;">安全编码规范：
+    1.回调函数名校验：只允许字母、数字、下划线组合，并使用正则表达式进行格式验证。
+    2.使用白名单：限制允许的回调函数名为预定义的安全列表。
+    3.设置内容类型：将响应类型设置为 application/javascript，防止浏览器误解析为其他类型。
+    4.替换为 CORS：优先使用 CORS 替代 JSONP 解决跨域问题。</pre>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="layui-col-md6">
+            <h1><span class="iconfont icon-code">安全代码</span></h1>
+            <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+              <div class="code-editor" id="safeJSONP"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+</div>
+
+<div th:replace="~{common/common::script}"></div>
+<script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function () {
+
+    layui.use(['layer', 'miniTab', 'common', 'form'], function () {
+      var $ = layui.jquery,
+              layer = layui.layer,
+              miniTab = layui.miniTab,
+              common = layui.common,
+              form = layui.form;
+      miniTab.listen();
+      layer.msg("其他漏洞-跨域资源共享")
+
+      var cmConfig = {
+        lineNumbers: true,
+        lineWrapping: false,
+        indentUnit: 4,
+        indentWithTabs: true,
+        theme: 'juejin',
+        styleActiveLine: {nonEmpty: true},
+        fontSize: "18px",
+        mode: "text/x-java"
+      };
+      var cmConfigSafe = {
+        lineNumbers: true,
+        lineWrapping: false,
+        indentUnit: 4,
+        indentWithTabs: true,
+        theme: 'juejinsafe',
+        styleActiveLine: {nonEmpty: true},
+        fontSize: "18px",
+        mode: "text/x-java"
+      };
+
+      CodeMirror(document.getElementById("vulJSONP"), Object.assign({}, cmConfig, {
+        value: vulJSONP
+      }));
+      CodeMirror(document.getElementById("safeJSONP"), Object.assign({}, cmConfigSafe, {
+        value: safeJSONP
+      }));
+
+      $('.CrossOrigin').hover(function () {
+        $(this).css('cursor', 'pointer');
+        layer.tips('攻击流程图', this, {
+          tips: [1, '#0051ff'],
+          time: 2000
+        });
+      });
+
+      $('.CrossOrigin').on('click', function () {
+        layer.open({
+          type: 1,
+          title: false,
+          closeBtn: 1,
+          area: ['1368px', '488px'],
+          shadeClose: true,
+          content: '<div style="text-align: center;"><img src="/static/images/vul/crossOrigin/sameOrign.png" style="width: 100%; height: 100%;"></div>'
+        });
+      });
+
+    });
+  });
+
+</script>
+
+</body>
+</html>

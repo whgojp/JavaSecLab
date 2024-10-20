@@ -1,14 +1,26 @@
 # Tomcat
 server:
-  port: 8080
+  port: 80
+#  servlet:
+#    context-path: /javaseclab
 
 spring:
-  # 环境 dev|docker|prod
+  # 环境 dev|docker
   profiles:
-    active: docker
+    active: dev
+  thymeleaf:
+    mode: LEGACYHTML5 #模板类型
+    cache: false #缓存
+    encoding: utf-8 #编码
+    prefix: classpath:/templates/
+    suffix: .html
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher  #解决swaggerUI不匹配接口
+#    view:                                  # 设置JSP视图的前缀和后缀
+#      prefix: /WEB-INF/jsp/
+#      suffix: .jsp
+
 swagger:
   enable: true
   title: JavaSecLib后端 API
@@ -20,9 +32,11 @@ swagger:
 management:
   # 端点信息接口使用的端口，为了和主系统接口使用的端口进行分离
   server:
-    port: 9090
+    port: 80
   # 端点健康情况，默认值"never"，设置为"always"可以显示硬盘使用情况和线程情况
   endpoint:
+#    gateway:
+#      enabled: true
     health:
       show-details: always
   # 设置端点暴露的哪些内容，默认["health","info"]，设置"*"代表暴露所有可访问的端点
@@ -44,3 +58,5 @@ mybatis-plus:
   global-config:
     # 关闭MP3.0自带的banner
     banner: false
+
+upload-path: ./upload

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.whgojp.modules.sqli.mapper.SqliMapper">
+
+    <resultMap id="BaseResultMap" type="top.whgojp.modules.sqli.entity.Sqli">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="username" column="username" jdbcType="VARCHAR"/>
+            <result property="password" column="password" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,username,password
+    </sql>
+    <!--    自定义mapper增删改查方法
+    #{value} 在预处理时，会把参数部分用一个占位符 ? 替代，其中 value 表示接受输入参数的名称。能有效解决 SQL 注入问题
+    ${value} 表示使用拼接字符串，将接受到参数的内容不加任何修饰符拼接在 SQL 中，使用${}拼接 sql，将引起 SQL 注入问题。
+    -->
+    <insert id="customInsert">
+        insert into sqli (id,username,password) values (#{id,jdbcType=INTEGER},#{username,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR})
+    </insert>
+
+    <delete id="customDelete">
+        delete from sqli where id = #{id,jdbcType=INTEGER}
+    </delete>
+
+<!--    <update id="customUpdate">-->
+<!--        update sqli set username = #{username,jdbcType=VARCHAR},password=#{password,jdbcType=VARCHAR} where id = #{id,jdbcType=INTEGER}-->
+<!--    </update>-->
+
+<!--    <select id="customSelect" resultType="top.whgojp.modules.sqli.entity.Sqli">-->
+<!--        select * from sqli where id = #{id,jdbcType=INTEGER}-->
+<!--    </select>-->
+
+<!--    Order by下的${}拼接注入问题-->
+    <select id="orderByVul" resultType="top.whgojp.modules.sqli.entity.Sqli">
+        SELECT * FROM sqli
+        <if test="field != null and field != ''">
+            ORDER BY ${field}
+        </if>
+    </select>
+
+<!--    Order by下的#{}写法 排序不生效-->
+    <select id="orderByPrepareStatement" resultType="top.whgojp.modules.sqli.entity.Sqli">
+        SELECT * FROM sqli
+        <if test="field != null and field != ''">
+            ORDER BY #{field}
+        </if>
+    </select>
+<!--    Order by下的安全写法 白名单-->
+    <select id="orderByWriteList" resultType="top.whgojp.modules.sqli.entity.Sqli">
+        SELECT * FROM sqli
+        <if test="field != null and field != ''">
+            <choose>
+                <!-- 排序列名白名单 -->
+                <when test="field == 'id' or field == 'username' or field == 'password'">
+                    ORDER BY ${field}
+                </when>
+                <otherwise>
+                    <!-- 默认使用id进行排序 -->
+                    ORDER BY id
+                </otherwise>
+            </choose>
+        </if>
+    </select>
+<!--  模糊查询-->
+    <select id="likeVul" resultType="top.whgojp.modules.sqli.entity.Sqli">
+        SELECT * FROM sqli WHERE username LIKE '%${keyword}%'
+    </select>
+    <select id="likePrepareStatement" resultType="top.whgojp.modules.sqli.entity.Sqli">
+        SELECT * FROM sqli WHERE username LIKE CONCAT('%', #{keyword}, '%')
+    </select>
+
+    <select id="inVul" resultType="top.whgojp.modules.sqli.entity.Sqli">
+        select * from sqli where id in (${id})
+    </select>
+
+    <select id="inPrepareStatement" resultType="top.whgojp.modules.sqli.entity.Sqli">
+        select * from sqli where id in (#{id})
+    </select>
+    <select id="inSafeForeach" resultType="top.whgojp.modules.sqli.entity.Sqli">
+        SELECT * FROM sqli WHERE id IN
+        <foreach collection="scope" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+</mapper>

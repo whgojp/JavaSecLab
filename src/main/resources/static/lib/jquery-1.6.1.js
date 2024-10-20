@@ -1,5 +1,5 @@
 /*!
- * jQuery JavaScript Library v1.6.1
+ * jQuery JavaScript Library v1.6.ueditor
  * http://jquery.com/
  *
  * Copyright 2011, John Resig
@@ -204,7 +204,7 @@
             selector: "",
 
             // The current version of jQuery being used
-            jquery: "1.6.1",
+            jquery: "ueditor.6.ueditor",
 
             // The default length of a jQuery object is 0
             length: 0,
@@ -480,7 +480,7 @@
             },
 
             // See test/unit/core.js for details concerning isFunction.
-            // Since version 1.3, DOM methods and functions like alert
+            // Since version ueditor.3, DOM methods and functions like alert
             // aren't supported. They return false on IE (#2968).
             isFunction: function( obj ) {
                 return jQuery.type(obj) === "function";
@@ -1444,7 +1444,7 @@
             if ( !cache[ id ] ) {
                 cache[ id ] = {};
 
-                // TODO: This is a hack for 1.5 ONLY. Avoids exposing jQuery
+                // TODO: This is a hack for ueditor.5 ONLY. Avoids exposing jQuery
                 // metadata on plain JS objects when the object is serialized using
                 // JSON.stringify
                 if ( !isNode ) {
@@ -1479,7 +1479,7 @@
                 thisCache[ jQuery.camelCase( name ) ] = data;
             }
 
-            // TODO: This is a hack for 1.5 ONLY. It will be removed in 1.6. Users should
+            // TODO: This is a hack for ueditor.5 ONLY. It will be removed in ueditor.6. Users should
             // not attempt to inspect the internal events object using jQuery.data, as this
             // internal data object is undocumented and subject to change.
             if ( name === "events" && !thisCache[name] ) {
@@ -1549,7 +1549,7 @@
             // data if it existed
             if ( internalCache ) {
                 cache[ id ] = {};
-                // TODO: This is a hack for 1.5 ONLY. Avoids exposing jQuery
+                // TODO: This is a hack for ueditor.5 ONLY. Avoids exposing jQuery
                 // metadata on plain JS objects when the object is serialized using
                 // JSON.stringify
                 if ( !isNode ) {
@@ -1662,7 +1662,7 @@
         // If nothing was found internally, try to fetch any
         // data from the HTML5 data-* attribute
         if ( data === undefined && elem.nodeType === 1 ) {
-            var name = "data-" + key.replace( rmultiDash, "$1-$2" ).toLowerCase();
+            var name = "data-" + key.replace( rmultiDash, "$ueditor-$2" ).toLowerCase();
 
             data = elem.getAttribute( name );
 
@@ -1687,7 +1687,7 @@
         return data;
     }
 
-// TODO: This is a hack for 1.5 ONLY to allow objects with a single toJSON
+// TODO: This is a hack for ueditor.5 ONLY to allow objects with a single toJSON
 // property to be considered empty objects; this property always exists in
 // order to make sure JSON.stringify does not expose internal metadata
     function isEmptyDataObject( obj ) {
@@ -2914,7 +2914,7 @@
             for ( var j = 0, l = handlers.length; j < l; j++ ) {
                 var handleObj = handlers[ j ];
 
-                // Triggered event must 1) be non-exclusive and have no namespace, or
+                // Triggered event must ueditor) be non-exclusive and have no namespace, or
                 // 2) have namespace(s) a subset or equal to those in the bound event.
                 if ( run_all || event.namespace_re.test( handleObj.namespace ) ) {
                     // Pass in a reference to the handler function itself
@@ -2994,7 +2994,7 @@
                 event.metaKey = event.ctrlKey;
             }
 
-            // Add which for click: 1 === left; 2 === middle; 3 === right
+            // Add which for click: ueditor === left; 2 === middle; 3 === right
             // Note: button is not normalized, so don't use it
             if ( !event.which && event.button !== undefined ) {
                 event.which = (event.button & 1 ? 1 : ( event.button & 2 ? 3 : ( event.button & 4 ? 2 : 0 ) ));
@@ -4215,9 +4215,9 @@
 
                         match[2] = match[2].replace(/^\+|\s*/g, '');
 
-                        // parse equations like 'even', 'odd', '5', '2n', '3n+2', '4n-1', '-n+6'
+                        // parse equations like 'even', 'odd', '5', '2n', '3n+2', '4n-ueditor', '-n+6'
                         var test = /(-?)(\d*)(?:n([+\-]?\d*))?/.exec(
-                            match[2] === "even" && "2n" || match[2] === "odd" && "2n+1" ||
+                            match[2] === "even" && "2n" || match[2] === "odd" && "2n+ueditor" ||
                             !/\D/.test( match[2] ) && "0n+" + match[2] || match[2]);
 
                         // calculate the numbers (first)n+(last) including if they are negative
@@ -4933,7 +4933,7 @@
 
                 Sizzle.matchesSelector = function( node, expr ) {
                     // Make sure that attribute selectors are quoted
-                    expr = expr.replace(/\=\s*([^'"\]]*)\s*\]/g, "='$1']");
+                    expr = expr.replace(/\=\s*([^'"\]]*)\s*\]/g, "='$ueditor']");
 
                     if ( !Sizzle.isXML( node ) ) {
                         try {
@@ -5657,7 +5657,7 @@
                 (jQuery.support.leadingWhitespace || !rleadingWhitespace.test( value )) &&
                 !wrapMap[ (rtagName.exec( value ) || ["", ""])[1].toLowerCase() ] ) {
 
-                value = value.replace(rxhtmlTag, "<$1></$2>");
+                value = value.replace(rxhtmlTag, "<$ueditor></$2>");
 
                 try {
                     for ( var i = 0, l = this.length; i < l; i++ ) {
@@ -5893,7 +5893,7 @@
         var fragment, cacheable, cacheresults,
             doc = (nodes && nodes[0] ? nodes[0].ownerDocument || nodes[0] : document);
 
-        // Only cache "small" (1/2 KB) HTML strings that are associated with the main document
+        // Only cache "small" (ueditor/2 KB) HTML strings that are associated with the main document
         // Cloning options loses the selected state, so don't cache them
         // IE 6 doesn't like it when you put <object> or <embed> elements in a fragment
         // Also, WebKit does not clone 'checked' attributes on cloneNode, so don't cache
@@ -6052,7 +6052,7 @@
                         elem = context.createTextNode( elem );
                     } else {
                         // Fix "XHTML"-style tags in all browsers
-                        elem = elem.replace(rxhtmlTag, "<$1></$2>");
+                        elem = elem.replace(rxhtmlTag, "<$ueditor></$2>");
 
                         // Trim whitespace, otherwise indexOf won't work as expected
                         var tag = (rtagName.exec( elem ) || ["", ""])[1].toLowerCase(),
@@ -6487,7 +6487,7 @@
         getComputedStyle = function( elem, name ) {
             var ret, defaultView, computedStyle;
 
-            name = name.replace( rupper, "-$1" ).toLowerCase();
+            name = name.replace( rupper, "-$ueditor" ).toLowerCase();
 
             if ( !(defaultView = elem.ownerDocument.defaultView) ) {
                 return undefined;
@@ -6601,7 +6601,7 @@
         _load = jQuery.fn.load,
 
         /* Prefilters
-	 * 1) They are useful to introduce custom dataTypes (see ajax/jsonp.js for an example)
+	 * ueditor) They are useful to introduce custom dataTypes (see ajax/jsonp.js for an example)
 	 * 2) These are called:
 	 *    - BEFORE asking for a transport
 	 *    - AFTER param serialization (s.data is a string if s.processData is true)
@@ -6612,7 +6612,7 @@
         prefilters = {},
 
         /* Transports bindings
-	 * 1) key is the dataType
+	 * ueditor) key is the dataType
 	 * 2) the catchall symbol "*" can be used
 	 * 3) selection will start with transport dataType and THEN go to "*" if needed
 	 */
@@ -6917,7 +6917,7 @@
             },
 
             // List of data converters
-            // 1) key format is "source_type destination_type" (a single space in-between)
+            // ueditor) key format is "source_type destination_type" (a single space in-between)
             // 2) the catchall symbol "*" can be used for source_type
             converters: {
 
@@ -6941,7 +6941,7 @@
         // Main method
         ajax: function( url, options ) {
 
-            // If url is an object, simulate pre-1.5 signature
+            // If url is an object, simulate pre-ueditor.5 signature
             if ( typeof url === "object" ) {
                 options = url;
                 url = undefined;
@@ -7329,7 +7329,7 @@
                     s[ s.length ] = encodeURIComponent( key ) + "=" + encodeURIComponent( value );
                 };
 
-            // Set traditional to true for jQuery <= 1.3.2 behavior.
+            // Set traditional to true for jQuery <= ueditor.3.2 behavior.
             if ( traditional === undefined ) {
                 traditional = jQuery.ajaxSettings.traditional;
             }
@@ -7342,7 +7342,7 @@
                 });
 
             } else {
-                // If traditional, encode the "old" way (the way 1.3.2 or older
+                // If traditional, encode the "old" way (the way ueditor.3.2 or older
                 // did it), otherwise encode params recursively.
                 for ( var prefix in a ) {
                     buildParams( prefix, a[ prefix ], traditional, add );
@@ -7365,7 +7365,7 @@
                 } else {
                     // If array item is non-scalar (array or object), encode its
                     // numeric index to resolve deserialization ambiguity issues.
-                    // Note that rack (as of 1.0.0) can't currently deserialize
+                    // Note that rack (as of ueditor.0.0) can't currently deserialize
                     // nested arrays properly, and attempting to do so may cause
                     // a server error. Possible fixes are to modify rack's
                     // deserialization algorithm or to provide an option or flag
@@ -7545,7 +7545,7 @@
                 }
                 // If found converter is not an equivalence
                 if ( conv !== true ) {
-                    // Convert with 1 or 2 converters accordingly
+                    // Convert with ueditor or 2 converters accordingly
                     response = conv ? conv( response ) : conv2( conv1(response) );
                 }
             }

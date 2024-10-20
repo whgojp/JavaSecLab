@@ -9,5 +9,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 * @createDate 2024-06-13 20:53:06
 */
 public interface UserService extends IService<User> {
+    User userLogin(String username,String oldPassword);
 
+    // 修改密码
+    int changePassword(String username,String newPass);
 }

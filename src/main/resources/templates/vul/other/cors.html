@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{common/common::head}"></div>
+
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <fieldset class="layui-elem-field layui-field-title">
+                    <legend>
+                        <a style="color: rgb(30 159 255)" class="CrossOrigin">其他漏洞 - 跨源安全问题</a>
+                    </legend>
+                    <blockquote class="layui-elem-quote layui-quote-nm"
+                                style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
+                        <p>
+                        <pre>  同源策略(Same Origin Policy)：浏览器为保护用户信息免受不同源的网页访问，实施同源策略，规定只有在协议、域名、端口号三者相同的情况下，一个网页或脚本才能访问另一个网页的内容。</pre>
+                        <pre>  实际上很多场景还是需要进行跨源访问操作(前后端分离、调用第三方接口)，常用的有以下几种跨域解决方法：CORS、JSONP、PostMessge、WebSockets、代理服务器。不过提供便利的同时也伴随着一些安全问题……</pre>
+                        </p>
+                    </blockquote>
+                </fieldset>
+            </div>
+
+            <div class="layui-col-md12" style="margin-top: 10px">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-bug"> 漏洞环境：CORS漏洞环境</span></h1>
+                        <div class="layui-tab layui-tab-brief">
+                            <div class="layui-tab-content">
+                                <div class="layui-tab-item layui-show">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <p>动态设置Access-Control-Allow-Origin为请求来源，导致潜在的任意跨域访问风险</p>
+                                        <a target="_blank" href="/other/CrossOrigin/corsVul">
+                                            <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
+                                                <span class="iconfont icon-zhihang">Run</span>
+                                            </button>
+                                        </a>
+                                    </blockquote>
+                                </div>
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre style="color: #28333e;font-size: 15px;">  如果服务器配置了不安全的 Access-Control-Allow-Origin（如使用 * 或动态匹配请求的 Origin），并且允许携带凭证（Access-Control-Allow-Credentials: true），攻击者可以在恶意网站发起跨域请求并成功读取服务器响应，导致用户的敏感数据被窃取或恶意操作得以执行。
+  CORS漏洞与其他漏洞(如CSRF或XSS)组合使用时，会大幅提升攻击的破坏力，形成以下主要危害：
+跨域数据窃取、身份盗用和会话劫持、绕过CSRF防御机制、数据操纵与业务逻辑篡改
+ </pre>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="vulCORS"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-col-md12" style="margin-top: 10px">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-anquan"> 安全代码：CrossOrigin白名单</span></h1>
+                        <div class="layui-tab layui-tab-brief">
+                            <div class="layui-tab-content">
+                                <div class="layui-tab-item layui-show">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <p>通过将Access-Control-Allow-Origin限定为可信来源，从而防止潜在的跨域数据泄露风险</p>
+                                        <a target="_blank" href="/other/CrossOrigin/corsSafe">
+                                            <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
+                                                <span class="iconfont icon-zhihang">Run</span>
+                                            </button>
+                                        </a>
+                                    </blockquote>
+                                </div>
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre style="color: #28333e;font-size: 15px;">安全编码规范:
+    1.严格限制允许的来源(Access-Control-Allow-Origin),只允许受信任的域名，禁止使用*通配符，避免动态来源。
+    2.限制可用的HTTP方法和请求头(Access-Control-Allow-Methods和Access-Control-Allow-Headers)，仅允许必要的HTTP请求方法(GET、POST)，限制自定义头部(Access-Control-Allow-Headers)。
+    3.不要信任全部自身子域，减少攻击面
+</pre>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code"> 安全代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="safeCORS"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+
+<div th:replace="~{common/common::script}"></div>
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function () {
+
+        layui.use(['layer', 'miniTab', 'common', 'form'], function () {
+            var $ = layui.jquery,
+                layer = layui.layer,
+                miniTab = layui.miniTab,
+                common = layui.common,
+                form = layui.form;
+            miniTab.listen();
+            layer.msg("其他漏洞-跨域资源共享")
+
+            var cmConfig = {
+                lineNumbers: true,
+                lineWrapping: false,
+                indentUnit: 4,
+                indentWithTabs: true,
+                theme: 'juejin',
+                styleActiveLine: {nonEmpty: true},
+                fontSize: "18px",
+                mode: "text/x-java"
+            };
+            var cmConfigSafe = {
+                lineNumbers: true,
+                lineWrapping: false,
+                indentUnit: 4,
+                indentWithTabs: true,
+                theme: 'juejinsafe',
+                styleActiveLine: {nonEmpty: true},
+                fontSize: "18px",
+                mode: "text/x-java"
+            };
+
+            CodeMirror(document.getElementById("vulCORS"), Object.assign({}, cmConfig, {
+                value: vulCORS
+            }));
+            CodeMirror(document.getElementById("safeCORS"), Object.assign({}, cmConfigSafe, {
+                value: safeCORS
+            }));
+
+            $('.CrossOrigin').hover(function () {
+                $(this).css('cursor', 'pointer');
+                layer.tips('攻击流程图', this, {
+                    tips: [1, '#0051ff'],
+                    time: 2000
+                });
+            });
+
+            $('.CrossOrigin').on('click', function () {
+                layer.open({
+                    type: 1,
+                    title: false,
+                    closeBtn: 1,
+                    area: ['1368px', '488px'],
+                    shadeClose: true,
+                    content: '<div style="text-align: center;"><img src="/static/images/vul/crossOrigin/sameOrign.png" style="width: 100%; height: 100%;"></div>'
+                });
+            });
+
+        });
+    });
+
+</script>
+
+</body>
+</html>

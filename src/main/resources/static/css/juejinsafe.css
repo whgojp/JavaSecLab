@@ -1,0 +1,48 @@
+.cm-s-juejinsafe.CodeMirror {
+    background: #f8f9fa;
+}
+
+.cm-s-juejinsafe .cm-header,
+.cm-s-juejinsafe .cm-def {
+    color: #1ba2f0;
+}
+
+.cm-s-juejinsafe .cm-comment {
+    color: #009e9d;
+}
+
+.cm-s-juejinsafe .cm-quote,
+.cm-s-juejinsafe .cm-link,
+.cm-s-juejinsafe .cm-strong,
+.cm-s-juejinsafe .cm-attribute {
+    color: #fd7741;
+}
+
+.cm-s-juejinsafe .cm-url,
+.cm-s-juejinsafe .cm-keyword,
+.cm-s-juejinsafe .cm-builtin {
+    color: #bb51b8;
+}
+
+.cm-s-juejinsafe .cm-hr {
+    color: #909090;
+}
+
+.cm-s-juejinsafe .cm-tag {
+    color: #107000;
+}
+
+.cm-s-juejinsafe .cm-variable-2 {
+    color: #0050a0;
+}
+
+.cm-s-juejinsafe .CodeMirror-gutters {
+    background: #f8f8f8;
+    border-left: 6px solid rgb(63, 168, 7);
+    color: #333;
+}
+.cm-s-juejinsafe .CodeMirror-gutters-safe {
+    background: #f8f8f8;
+    border-left: 6px solid rgba(0, 255, 4, 0.52);
+    color: #333;
+}

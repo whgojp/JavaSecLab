@@ -10,6 +10,8 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.test.context.BootstrapWith;
 import top.whgojp.Application;
 
+import java.net.URL;
+
 @SpringBootTest(classes = Application.class)
 public class UploadTest {
 
@@ -20,7 +22,7 @@ public class UploadTest {
     @SneakyThrows
     public void test01() {
         // 获取网站根目录
-        String uploadFolder = resourceLoader.getResource("classpath:static/upload/xss/").getFile().getPath();
+        String uploadFolder = resourceLoader.getResource("classpath:/static/upload/xss/").getFile().getPath();
         System.out.println(uploadFolder);
     }
 }

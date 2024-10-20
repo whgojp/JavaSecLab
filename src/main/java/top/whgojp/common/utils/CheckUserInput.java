@@ -2,11 +2,17 @@ package top.whgojp.common.utils;
 
 import org.springframework.stereotype.Component;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * @description 用户输入数据校验
  * @author: whgojp
  * @email: whgojp@foxmail.com
- * @Date: 2024/5/1 14:19
+ * @Date: 2024/5/ueditor 14:19
  */
 @Component
 public class CheckUserInput {
@@ -25,6 +31,7 @@ public class CheckUserInput {
             return message;
         }
     }
+
     public String checkUser(String username, String password) {
         String message = "";
         if (username == null || username.isEmpty()) {
@@ -38,18 +45,19 @@ public class CheckUserInput {
             return message;
         }
     }
+
     public String checkUser(Integer id) {
         String message = "";
         if (id == null) {
-            message="请输入用户id";
+            message = "请输入用户id";
         }
         return message;
     }
 
     /**
-     *  后端白名单过滤
+     * 后端白名单过滤
      */
-    public String checkXssWhiteList(String content){
+    public String checkXssWhiteList(String content) {
 
         return content;
     }
@@ -66,17 +74,73 @@ public class CheckUserInput {
         }
         return false;
     }
+
     /**
      * SQL注入关键词白名单
      */
-    public boolean checkSqlWhiteList(String content){
-        String[] white_list = {"id","user","pass"};
+    public boolean checkSqlWhiteList(String content) {
+        String[] white_list = {"id", "username", "password"};
         for (String s : white_list) {
             if (content.toLowerCase().contains(s)) {
                 return true;
             }
         }
         return false;
+    }
+
+    /**
+     * 文件上传白名单
+     */
+    public boolean checkFileSuffixWhiteList(String suffix) {
+        String[] white_list = {"jpg", "png", "gif","jpeg","bmp","ico"};
+        for (String s : white_list) {
+            if (suffix.toLowerCase().contains(s)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    // 定义 URL 白名单
+    private static final List<String> WhiteUrlList = new ArrayList<>();
+
+    static {
+//        WhiteUrlList.add("baidu.com");
+//        WhiteUrlList.add("bilibili.com");
+        WhiteUrlList.add("csdn.net");
+    }
+    /**
+     * URL跳转过滤
+     */
+    public boolean checkURL(String url) {
+        for (String blackUrl : WhiteUrlList) {
+            if (url.toLowerCase().contains(blackUrl.toLowerCase())) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * ssrf：判断http(s)协议
+     */
+    public boolean isHttp(String url){
+        return url.startsWith("http://") || url.startsWith("https://");
+    }
+    /**
+     * ssrf：请求域名白名单
+     */
+    public boolean ssrfWhiteList(String url) {
+        List<String> urlList = new ArrayList<>(Arrays.asList("baidu.com", "www.baidu.com", "whgojp.top"));
+        try {
+            URI uri = new URI(url.toLowerCase());
+            String host = uri.getHost();
+            return urlList.contains(host);
+        } catch (URISyntaxException e) {
+            System.out.println(e);
+            return false;
+        }
     }
 
 }

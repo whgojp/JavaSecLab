@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{common/common::head}"></div>
+
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <fieldset class="layui-elem-field layui-field-title">
+                    <legend style="color: rgb(30 159 255)">其他漏洞 - XFF (X-Forwarded-For) 伪造</legend>
+                    <blockquote class="layui-elem-quote layui-quote-nm"
+                                style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
+                        <p>
+                            <pre>  XFF伪造：通过篡改HTTP头字段(X-Forwarded-For)隐瞒真实IP地址，危害包括隐藏身份、绕过访问控制和污染日志</pre>
+                        </p>
+                    </blockquote>
+                </fieldset>
+            </div>
+            <div class="layui-col-md12" style="margin-top: 10px">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-bug">  漏洞环境：原生漏洞环境</span></h1>
+                        <div class="layui-tab layui-tab-brief">
+                            <ul class="layui-tab-title">
+                                <li class="layui-this">前后端不分离</li>
+                                <li>模拟前后端分离</li>
+
+                            </ul>
+                            <div class="layui-tab-content">
+                                <div class="layui-tab-item layui-show">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" th:action="@{/other/xff/buffli}" style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <p>客户端直接访问服务端，未添加xff头</p>
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">访问</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+                                <div class="layui-tab-item">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div>
+                                                <label class="layui-form-label">伪造XFF头</label>
+                                                <div class="layui-input-block">
+                                                    <input type="checkbox" name="xff" id="xff" lay-skin="switch"
+                                                           lay-text="ON|OFF">
+                                                </div>
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        id="submit">
+                                                    <span class="iconfont icon-zhihang">访问</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre style="color: #28333e;font-size: 15px;">  前后端不分离：服务端可以通过获取request.getRemoteAddr()获取客户端IP
+  前后端分离：如果请求经过了代理服务器(Nginx、Apache)或者负载均衡，客户端和服务端之间增加了中间层，那么服务端无法直接拿到客户端的IP，request.getRemoteAddr()可能返回的是代理服务器的IP，此时，可以通过HTTP请求头X-Forwarded-For(或其他自定义请求头)来获取客户端IP
+  格式为: X-Forwarded-For:client1,proxy1,proxy2(第一个ip为客户端真实ip，后面的为经过的代理服务器ip。现在大部分的代理都会加上这个请求头)</pre>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code">  缺陷代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="vulXffforgery">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="layui-col-md12" style="margin-top: 10px">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-anquan">  安全环境：可信源IP过滤</span></h1>
+                        <div class="layui-tab layui-tab-brief">
+                            <ul class="layui-tab-title">
+                                <li class="layui-this">模拟前后端分离</li>
+                            </ul>
+                            <div class="layui-tab-content">
+                                <div class="layui-tab-item layui-show">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div>
+                                                <label class="layui-form-label">伪造XFF头</label>
+                                                <div class="layui-input-block">
+                                                    <input type="checkbox" name="xff" id="safeXff" lay-skin="switch"
+                                                           lay-text="ON|OFF">
+                                                </div>
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        id="safeSubmit">
+                                                    <span class="iconfont icon-zhihang">访问</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre style="color: #28333e;font-size: 15px;">安全编码规范：
+    1. 配置可信IP白名单，仅允许可信代理设置或修改该头信息。
+    2. 限制XFF头格式(合法IPv4/IPv6地址、设定最大长度)，防范恶意格式注入与缓冲区溢出攻击。
+    3. 在身份校验和授权中，结合会话标识符、用户令牌等多因素验证，防止伪造导致的认证绕过。</pre>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code">  缺陷代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="safeXffforgery">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+</div>
+
+<div th:replace="~{common/common::script}"></div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#submit").click(function (event) {
+            event.preventDefault(); // 防止表单提交
+            var xff = $("#xff").is(':checked');
+
+            $.ajax({
+                url: "[[@{/other/xff/ffli}]]",
+                type: "get",
+                headers: {
+                    'X-Forwarded-For': "8.8.8.8",
+                },
+                data: {xff: xff},
+                success: function (result) {
+                    // window.location.href = "/other/xff/onlyForGoogle";
+                    document.write(result)
+                },
+                error: function () {
+                    alert("请求发送失败！");
+                }
+            });
+        });
+
+        $("#safeSubmit").click(function (event) {
+            event.preventDefault(); // 防止表单提交
+            var xff = $("#safeXff").is(':checked');
+
+            $.ajax({
+                url: "/other/xff/safe", // 修正Thymeleaf表达式问题
+                type: "get",
+                headers: {
+                    'X-Forwarded-For': "8.8.8.8",
+                },
+                data: {xff: xff},
+                success: function (result) {
+                    // window.location.href = "/other/xff/onlyForGoogle";
+                    document.write(result)
+                },
+                error: function () {
+                    alert("请求发送失败！");
+                }
+            });
+        });
+
+
+        layui.use(['layer', 'miniTab', 'common', 'form'], function () {
+            var $ = layui.jquery,
+                layer = layui.layer,
+                miniTab = layui.miniTab,
+                common = layui.common,
+                form = layui.form;
+            miniTab.listen();
+            layer.msg("其他漏洞-XFF伪造");
+
+
+            var cmConfig = {
+                lineNumbers: true,
+                lineWrapping: false,
+                indentUnit: 4,
+                indentWithTabs: true,
+                theme: 'juejin',
+                styleActiveLine: {nonEmpty: true},
+                fontSize: "18px",
+                mode: "text/x-java"
+            };
+            var cmConfigSafe = {
+                lineNumbers: true,
+                lineWrapping: false,
+                indentUnit: 4,
+                indentWithTabs: true,
+                theme: 'juejinsafe',
+                styleActiveLine: {nonEmpty: true},
+                fontSize: "18px",
+                mode: "text/x-java"
+            };
+
+            CodeMirror(document.getElementById("vulXffforgery"), Object.assign({}, cmConfig, {
+                value: vulXffforgery
+            }));
+            CodeMirror(document.getElementById("safeXffforgery"), Object.assign({}, cmConfigSafe, {
+                value: safeXffforgery
+            }));
+
+        });
+    });
+</script>
+
+</body>
+</html>
