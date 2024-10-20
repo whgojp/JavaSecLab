@@ -1,4 +1,4 @@
-# <img src="./pic/logo.png" alt="logo" style="zoom:5%;" />JavaSecLab 一款综合Java漏洞平台
+# <img src="./pic/logo.png" alt="logo" />JavaSecLab 一款综合Java漏洞平台
 
 <p align="center">
 <a href="https://www.apache.org/licenses/LICENSE-2.0.html"><img src="https://img.shields.io/github/license/alibaba/transmittable-thread-local?color=4D7A97&logo=apache" alt="License"></a>
