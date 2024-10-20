@@ -19,9 +19,6 @@
         <relativePath/>
     </parent>
     <properties>
-<!--        <sonar.host.url>http://localhost:9001</sonar.host.url>-->
-<!--        <sonar.login>admin</sonar.login>-->
-<!--        <sonar.password>sonarqube@sdl.com</sonar.password>-->
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

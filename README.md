@@ -15,7 +15,7 @@
 
 ![image-20241020143155383](./pic/home.png)
 
-
+![show](./pic/show.png)
 
 ## 面向人群
 
