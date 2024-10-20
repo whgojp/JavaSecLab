@@ -9,15 +9,14 @@ import top.whgojp.common.event.LoginLogEvent;
 import top.whgojp.common.push.service.EmailPush;
 import top.whgojp.common.push.service.SmsPush;
 import top.whgojp.common.push.service.WechatPush;
-import top.whgojp.common.utils.IPUtils;
-import top.whgojp.common.utils.SpringContextUtils;
+import top.whgojp.common.utils.IPUtil;
+import top.whgojp.common.utils.SpringContextUtil;
 import top.whgojp.modules.system.entity.Log;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -41,16 +40,16 @@ public class CustomSavedRequestAwareAuthenticationSuccessHandler extends SavedRe
 
         // 登录日志记录
         final Log loginLog = new Log();
-        loginLog.setOptionip(IPUtils.getIpAddr(request));
+        loginLog.setOptionip(IPUtil.getIpAddr(request));
         loginLog.setOptionname("用户登录成功");
         loginLog.setOptionterminal(request.getHeader("User-Agent"));
         loginLog.setUsername(username);
         loginLog.setOptiontime(new Date());
-        SpringContextUtils.publishEvent(new LoginLogEvent(loginLog));
+        SpringContextUtil.publishEvent(new LoginLogEvent(loginLog));
 
         try {
             // 发邮件
-            this.emailPush.send();
+//            this.emailPush.send();
 
         } catch (Exception ex) {
             log.error(ex.getMessage(),ex);

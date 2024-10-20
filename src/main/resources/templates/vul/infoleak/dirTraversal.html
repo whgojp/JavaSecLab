@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{common/common::head}"></div>
+
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <fieldset class="layui-elem-field layui-field-title">
+                    <legend style="color: rgb(30 159 255)">敏感信息泄漏 - 模拟目录遍历场景</legend>
+                    <blockquote class="layui-elem-quote layui-quote-nm"
+                                style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
+                        <p>
+                        <pre>  目录遍历漏洞的原因是Web应用在处理用户输入的文件路径时缺乏适当的验证和规范化，导致攻击者可以通过输入特殊字符（如../）访问到应用程序根目录之外的文件。其危害包括泄露敏感信息（如配置文件、密码文件）、读取未授权文件、执行任意代码等，严重威胁系统安全和数据隐私</pre>
+                        </p>
+                    </blockquote>
+                </fieldset>
+            </div>
+
+            <div class="layui-col-md12" style="margin-top: 10px">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-bug"> 漏洞环境：模拟目录遍历场景</span></h1>
+                        <div class="layui-tab layui-tab-brief">
+                            <div class="layui-tab-content">
+
+                                <div class="layui-tab-item layui-show">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <div style="display: flex; align-items: center;">
+                                            <p>在Java环境中，目录遍历漏洞通常伴随任意文件读取漏洞一起被利用</p>
+                                        </div>
+                                        <div style="display: flex; align-items: center;">
+                                            <a target="_blank"
+                                               href="/infoLeak/dirTraversal/listdir?dir=/">
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;">
+                                                    <span>点击访问</span>
+                                                </button>
+                                            </a>
+                                        </div>
+                                    </blockquote>
+                                </div>
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre style="color: #28333e;font-size: 15px;">/listdir?dir=/，可以尝试插入../从而遍历任意目录</pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code">  缺陷代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="dirTraversal">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="layui-col-md12" style="margin-top: 10px">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-anquan"> 安全环境：敏感字符过滤</span></h1>
+                        <div class="layui-tab layui-tab-brief">
+                            <div class="layui-tab-content">
+
+                                <div class="layui-tab-item layui-show">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <div style="display: flex; align-items: center;">
+                                            <p>进行敏感字符过滤，禁止使用 '.'、';'、'\' 和 '%'</p>
+                                        </div>
+                                        <div style="display: flex; align-items: center;">
+                                            <a target="_blank"
+                                               href="/infoLeak/dirTraversal/safe1listdir?dir=/">
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;">
+                                                    <span>点击访问</span>
+                                                </button>
+                                            </a>
+                                        </div>
+                                    </blockquote>
+                                </div>
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre style="color: #28333e;font-size: 15px;">黑名单过滤不严谨的话，往往可以通过特殊字符/编码进行绕过</pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code">  安全代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="safe1ListDirectory">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="layui-col-md12" style="margin-top: 10px">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-anquan"> 安全环境：限制遍历目录</span></h1>
+                        <div class="layui-tab layui-tab-brief">
+                            <div class="layui-tab-content">
+
+                                <div class="layui-tab-item layui-show">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <div style="display: flex; align-items: center;">
+                                            <p>检查请求的目录是否在规定的跟目录内，可以有效防止目录遍历攻击</p>
+                                        </div>
+                                        <div style="display: flex; align-items: center;">
+                                            <a target="_blank"
+                                               href="/infoLeak/dirTraversal/safe2listdir?dir=/">
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;">
+                                                    <span>点击访问</span>
+                                                </button>
+                                            </a>
+                                        </div>
+                                    </blockquote>
+                                </div>
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre style="color: #28333e;font-size: 15px;">将可遍历目录限制到静态文件目录内</pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code">  安全代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="safe2ListDirectory">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+
+<div th:replace="~{common/common::script}"></div>
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function () {
+
+        layui.use(['layer', 'miniTab', 'common', 'form'], function () {
+            var $ = layui.jquery,
+                layer = layui.layer,
+                miniTab = layui.miniTab,
+                common = layui.common,
+                form = layui.form;
+            miniTab.listen();
+            layer.msg("敏感信息泄漏-目录遍历")
+
+
+            var cmConfig = {
+                lineNumbers: true,
+                lineWrapping: false,
+                indentUnit: 4,
+                indentWithTabs: true,
+                theme: 'juejin',
+                styleActiveLine: {nonEmpty: true},
+                fontSize: "18px",
+                mode: "text/x-java"
+            };
+            var cmConfigSafe = {
+                lineNumbers: true,
+                lineWrapping: false,
+                indentUnit: 4,
+                indentWithTabs: true,
+                theme: 'juejinsafe',
+                styleActiveLine: {nonEmpty: true},
+                fontSize: "18px",
+                mode: "text/x-java"
+            };
+
+
+            CodeMirror(document.getElementById("dirTraversal"), Object.assign({}, cmConfig, {
+                value: dirTraversal
+            }));
+
+            CodeMirror(document.getElementById("safe1ListDirectory"), Object.assign({}, cmConfigSafe, {
+                value: safe1ListDirectory
+            }));
+            CodeMirror(document.getElementById("safe2ListDirectory"), Object.assign({}, cmConfigSafe, {
+                value: safe2ListDirectory
+            }));
+
+        });
+    });
+
+
+</script>
+
+</body>
+</html>

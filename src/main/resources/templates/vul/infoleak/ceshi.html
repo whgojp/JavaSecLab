@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{common/common::head}"></div>
+
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <fieldset class="layui-elem-field layui-field-title">
+                    <legend style="color: rgb(30 159 255)">敏感信息泄漏 - 测试页面</legend>
+                    <blockquote class="layui-elem-quote layui-quote-nm"
+                                style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
+                        <p>
+                        <pre>  测试页面泄漏：开发者有意或无意遗留下的测试页面泄漏，可能导致敏感信息暴露、安全漏洞被利用、权限提升、系统稳定性受影响以及成为网络攻击跳板，从而严重威胁系统的安全性和稳定性</pre>
+                        </p>
+                    </blockquote>
+                </fieldset>
+            </div>
+
+            <div class="layui-col-md12" style="margin-top: 10px">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-bug"> 漏洞情景：网络连通性测试</span></h1>
+                        <div class="layui-tab layui-tab-brief">
+                            <div class="layui-tab-content">
+
+                                <div class="layui-tab-item layui-show">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <div style="display: flex; align-items: center;">
+                                            <p>点击访问链接：</p>
+                                            <a style="color: red" target="_blank" href="/infoLeak/ceShiPage/pingPage">PING页面</a>
+
+                                        </div>
+                                    </blockquote>
+                                </div>
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre style="color: #28333e;font-size: 15px;">   在路由器、交换机等设备中，通常会提供Ping测试页面用于网络连通性测试、故障排查以及网络性能监控。然而，如果在开发Ping测试功能时未进行安全处理，可能会引发命令注入漏洞</pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code">  缺陷代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="infoLeakCeShi">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+
+<div th:replace="~{common/common::script}"></div>
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function () {
+
+        layui.use(['layer', 'miniTab', 'common', 'form'], function () {
+            var $ = layui.jquery,
+                layer = layui.layer,
+                miniTab = layui.miniTab,
+                common = layui.common,
+                form = layui.form;
+            miniTab.listen();
+            layer.msg("敏感信息泄漏-测试页面")
+
+
+            var cmConfig = {
+                lineNumbers: true,
+                lineWrapping: false,
+                indentUnit: 4,
+                indentWithTabs: true,
+                theme: 'juejin',
+                styleActiveLine: {nonEmpty: true},
+                fontSize: "18px",
+                mode: "text/x-java"
+            };
+
+            CodeMirror(document.getElementById("infoLeakCeShi"), Object.assign({}, cmConfig, {
+                value: infoLeakCeShi
+            }));
+
+        });
+    });
+
+
+</script>
+
+</body>
+</html>

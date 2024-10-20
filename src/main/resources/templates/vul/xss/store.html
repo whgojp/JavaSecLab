@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{common/common::head}"></head>
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <fieldset class="layui-elem-field layui-field-title">
+                    <legend><a style="color: rgb(30 159 255)" class="xss-store">跨站脚本攻击 - 存储型XSS</a></legend>
+                    <blockquote class="layui-elem-quote layui-quote-nm"
+                                style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
+                        <pre>  存储型XSS：攻击者将恶意脚本上传到目标网站的数据库，用户访问网站时执行这些恶意脚本，达到攻击目的。该攻击经过服务器和数据库</pre>
+                    </blockquote>
+                </fieldset>
+            </div>
+
+            <div class="layui-col-md12" style="margin-top: 10px">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-bug">  漏洞环境：原生无过滤</span></h1>
+                        <div class="layui-tab-content">
+                            <div class="layui-tab-item layui-show">
+                                <blockquote class="layui-elem-quote main_btn">
+                                    <form class="layui-form" id="vul1-store-raw-form" style="display: flex; justify-content: space-between;">
+                                        <div style="display: flex; align-items: center;">
+                                            <input type="text" name="content" style="width: 300px;" required
+                                                   lay-verify="required" value="<script>alert(/xss/)</script>" placeholder="请求内容" autocomplete="off"
+                                                   class="layui-input" id="vul1-store-raw-input">
+                                        </div>
+                                        <div style="display: flex; align-items: center;">
+                                            <select class="layui-form-select" lay-filter="vul1-store-raw">
+                                                <option value="">示例Payload</option>
+                                                <option value="123&lt;u&gt;A&lt;/u&gt;123">123&lt;u&gt;A&lt;/u&gt;123
+                                                </option>
+                                                <option value="123&lt;script&gt;alert(/xss/)&lt;/script&gt;123">
+                                                    123&lt;script&gt;alert(/xss/)&lt;/script&gt;123
+                                                </option>
+                                                <option value="123&lt;img src onerror=alert(/xss/)&gt;123">
+                                                    123&lt;img src onerror=alert(/xss/)&gt;123
+                                                </option>
+                                                <option value="123&lt;a href=javascript:alert(/xss/)&gt;Click Me&lt;/a&gt;123">
+                                                    123&lt;a href=javascript:alert(/xss/)&gt;Click Me&lt;/a&gt;123
+                                                </option>
+                                            </select>
+                                            <button class="layui-btn layui-btn-normal"
+                                                    style="width: 100px; margin-left: 10px;"
+                                                    lay-filter="vul1-store-raw-submit" lay-submit="">
+                                                <span class="iconfont icon-zhihang">Run</span>
+                                            </button>
+                                        </div>
+                                    </form>
+                                </blockquote>
+                            </div>
+
+                            <div class="layui-col-md12">
+                                <div class="layui-card">
+                                    <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                    <div class="layui-card-body layui-text layadmin-text">
+                                        <pre style="color: #28333e;font-size: 15px;">漏洞场景：
+    用户交互的地方：get、post、headers、反馈与浏览、富文本编辑器、标签插入和自定义
+    数据输出的地方：用户资料、关键词、评论、留言、关键词、标签、说明、文件上传</pre>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md12">
+                                <div class="layui-card">
+                                    <div class="layui-card-header"><i class="fa fa-warning icon-output"></i>测试结果
+                                    </div>
+
+                                    <div style="width: 727.5px">
+                                        <table class="layui-table" lay-size="sm" id="xssStore"
+                                               lay-filter="xssStoreFilter"></table>
+                                        <script type="text/html" id="deleteById">
+                                            <a class="layui-btn layui-btn-danger layui-btn-xs"
+                                               lay-event="delete">删除</a>
+                                        </script>
+                                    </div>
+
+                                    <div class="layui-card-body layui-text layadmin-text">
+                                        <pre id="vul1-store-raw-result" style="color: red;font-size: 15px;"></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code">  缺陷代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="vul1StoreRaw">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="layui-col-md12" style="margin-top: 10px">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-anquan">  安全代码：前端实体转义</span></h1>
+                        <div class="layui-tab-content">
+                            <div class="layui-tab-item layui-show">
+                                <blockquote class="layui-elem-quote main_btn">
+                                    <form class="layui-form" id="safe1-store-EntityEscape-front-form" style="display: flex; justify-content: space-between;">
+                                        <div style="display: flex; align-items: center;">
+                                            <input type="text" name="content" style="width: 300px;" required
+                                                   lay-verify="required"value="<script>alert(/xss/)</script>" placeholder="请求内容" autocomplete="off"
+                                                   class="layui-input" id="safe1-store-EntityEscape-front-input">
+                                        </div>
+                                        <div style="display: flex; align-items: center;">
+                                            <select class="layui-form-select" lay-filter="safe1-store-EntityEscape-front">
+                                                <option value="">示例Payload</option>
+                                                <option value="123&lt;u&gt;A&lt;/u&gt;123">123&lt;u&gt;A&lt;/u&gt;123
+                                                </option>
+                                                <option value="123&lt;script&gt;alert(/xss/)&lt;/script&gt;123">
+                                                    123&lt;script&gt;alert(/xss/)&lt;/script&gt;123
+                                                </option>
+                                                <option value="123&lt;img src onerror=alert(/xss/)&gt;123">
+                                                    123&lt;img src onerror=alert(/xss/)&gt;123
+                                                </option>
+                                                <option value="123&lt;a href=javascript:alert(/xss/)&gt;Click Me&lt;/a&gt;123">
+                                                    123&lt;a href=javascript:alert(/xss/)&gt;Click Me&lt;/a&gt;123
+                                                </option>
+                                            </select>
+                                            <button class="layui-btn layui-btn-normal"
+                                                    style="width: 100px; margin-left: 10px;"
+                                                    lay-filter="safe1-store-EntityEscape-front-submit" lay-submit="">
+                                                <span class="iconfont icon-zhihang">Run</span>
+                                            </button>
+                                        </div>
+                                    </form>
+                                </blockquote>
+                            </div>
+
+                            <div class="layui-col-md12">
+                                <div class="layui-card">
+                                    <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                    <div class="layui-card-body layui-text layadmin-text">
+                                        <pre style="color: #28333e;font-size: 15px;">  前端实体转义就是将可能是包含HTML标签的内容，先中转存储为纯文本，当浏览器进行渲染时，会将纯文本内容中特殊字符进行实体转义(浏览器策略)，确保可以正确展示</pre>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md12">
+                                <div class="layui-card">
+                                    <div class="layui-card-header"><i class="fa fa-warning icon-output-safe"></i>测试结果
+                                    </div>
+
+                                    <div style="width: 727.5px">
+                                        <table class="layui-table" lay-size="sm"
+                                               id="xssStoreSafe" lay-filter="xssStoreSafeFilter"></table>
+                                    </div>
+                                    <script type="text/html" id="deleteById">
+                                        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
+                                    </script>
+
+                                    <div class="layui-card-body layui-text layadmin-text">
+                                        <pre id="safe1-store-EntityEscape-front-result"
+                                             style="color: red;font-size: 15px;"></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code">  安全代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="safe1StoreEntityEscape">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script th:replace="~{common/common::script}"></script>
+<script type="text/javascript">
+    layui.use(['layer', 'miniTab', 'common', 'table', 'form'], function () {
+        var $ = layui.jquery,
+            layer = layui.layer,
+            miniTab = layui.miniTab,
+            common = layui.common,
+            table = layui.table,
+            form = layui.form;
+
+        miniTab.listen();
+        layer.msg("跨站脚本-存储型");
+
+        // 将表单提交替换为AJAX请求
+        form.on('submit(vul1-store-raw-submit)', function (data) {
+            $.ajax({
+                type: 'POST',
+                url: '/xss/store/vul1StoreRaw',
+                data: data.field,
+                success: function(response) {
+                    location.reload(); // 请求成功后刷新页面
+                },
+                error: function(error) {
+                    console.log('Error:', error);
+                }
+            });
+            return false; // 阻止表单默认提交
+        });
+
+        form.on('submit(safe1-store-EntityEscape-front-submit)', function (data) {
+            $.ajax({
+                type: 'POST',
+                url: '/xss/store/vul1StoreRaw',
+                data: data.field,
+                success: function(response) {
+                    location.reload(); // 请求成功后刷新页面
+                },
+                error: function(error) {
+                    console.log('Error:', error);
+                }
+            });
+            return false; // 阻止表单默认提交
+        });
+
+        common.selectListenFun("vul1-store-raw", "vul1-store-raw-input");
+        common.selectListenFun("safe1-store-EntityEscape-front", "safe1-store-EntityEscape-front-input");
+
+        common.tableListenFun("xssStoreFilter", "/xss/store/deleteOne", "POST");
+        common.tableListenFun("xssStoreSafeFilter", "/xss/store/deleteOne", "POST");
+
+        var cmConfig = {
+            lineNumbers: true,
+            lineWrapping: false,
+            indentUnit: 4,
+            indentWithTabs: true,
+            theme: 'juejin',
+            styleActiveLine: {nonEmpty: true},
+            fontSize: "18px",
+            mode: "text/x-java"
+        };
+        var cmConfigSafe = {
+            lineNumbers: true,
+            lineWrapping: false,
+            indentUnit: 4,
+            indentWithTabs: true,
+            theme: 'juejinsafe',
+            styleActiveLine: {nonEmpty: true},
+            fontSize: "18px",
+            mode: "text/x-java"
+        };
+
+        CodeMirror(document.getElementById("vul1StoreRaw"), Object.assign({}, cmConfig, {
+            value: vul1StoreRaw
+        }));
+
+        CodeMirror(document.getElementById("safe1StoreEntityEscape"), Object.assign({}, cmConfigSafe, {
+            value: safe1StoreEntityEscape
+        }));
+
+        // 渲染表格
+        table.render({
+            elem: '#xssStore',
+            url: '/xss/store/getXssList', // 表单数据的接口
+            height: 200,
+            page: true,
+            cols: [
+                [
+                    {field: 'id', title: 'ID', sort: true, width: '60', fixed: 'left'},
+                    {field: 'content', title: 'Content', width: '200'},
+                    {field: 'ua', title: 'User-Agent', width: '200'},
+                    {field: 'date', title: 'Date', width: '170'},
+                    {fixed: 'right', title: '删除', toolbar: '#deleteById', width: 86} // 添加操作列
+                ]
+            ],
+            parseData: function (res) { //res 即为原始返回的数据
+                return {
+                    "code": res.code, //解析接口状态
+                    "msg": res.msg, //解析提示文本
+                    "count": res.data.total, //解析数据长度
+                    "data": res.data.records //解析数据列表
+                };
+            }
+        });
+
+        table.render({
+            elem: '#xssStoreSafe',
+            url: '/xss/store/getXssList', // 表单数据的接口
+            height: 200,
+            page: true,
+            cols: [
+                [
+                    {field: 'id', title: 'ID', sort: true, width: '60', fixed: 'left'},
+                    {
+                        field: 'content', title: 'Content', width: '200', templet: function (d) {
+                            return escapeHtml(d.content);
+                        }
+                    },
+                    {
+                        field: 'ua', title: 'User-Agent', width: '200', templet: function (d) {
+                            return escapeHtml(d.ua);
+                        }
+                    },
+                    {field: 'date', title: 'Date', width: '170'},
+                    {fixed: 'right', title: '删除', toolbar: '#deleteById', width: 86} // 添加操作列
+                ]
+            ],
+            parseData: function (res) {
+                return {
+                    "code": res.code,
+                    "msg": res.msg,
+                    "count": res.data.total,
+                    "data": res.data.records
+                };
+            }
+        });
+
+        // HTML 实体转义函数
+        function escapeHtml(html) {
+            var text = document.createElement("textarea");
+            text.textContent = html;
+            return text.innerHTML;
+        }
+
+        $('.xss-store').hover(function () {
+            $(this).css('cursor', 'pointer');
+            layer.tips('攻击流程图', this, {
+                tips: [1, '#0051ff'],
+                time: 2000
+            });
+        });
+
+        $('.xss-store').on('click', function () {
+            layer.open({
+                type: 1,
+                title: false,
+                closeBtn: 1,
+                area: ['877px', '663px'], // 宽高可以根据需要调整
+                shadeClose: true,
+                content: '<div style="text-align: center;"><img src="/static/images/vul/xss/store.jpg" style="width: 100%; height: 50%;"></div>'
+            });
+        });
+    });
+</script>
+</body>
+</html>

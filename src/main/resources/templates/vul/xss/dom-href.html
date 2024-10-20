@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{common/common::head}"></div>
+<head>
+    <title>Dom型XSS-href跳转demo</title>
+</head>
+<body>
+<div class="layui-container">
+    <div class="layui-row">
+        <div class="layui-col-md-offset1 layui-col-md10">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <h1>Dom型XSS-href跳转demo</h1>
+                </div>
+                <div class="layui-card-body">
+                    <p>
+                        hash 属性是一个可读可写的字符串，该字符串是 URL 的锚部分（从 # 号开始的部分）。当其作为可控参数传入eval()时则会存在DOM型XSS漏洞。
+                        通过 <code>location.hash</code> 的方式，将参数写在 <code>#</code> 号后，既能让JS读取到该参数，
+                        又不让该参数传入到服务器，从而避免了WAF的检测。
+                    </p>
+                    <p>
+                        变量<code>hash</code>作为可控部分，并带入url中，变量<code>hash</code>控制的是<code>#</code>之后的部分，
+                        可以使用伪协议<code>#javascript:alert(1)</code>。常见的几种伪协议有<code>javascript:</code>、
+                        <code>vbscript:</code>、<code>data:</code>等。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var hash = location.hash;
+    if(hash){
+        var url = hash.substring(1);
+        console.log(url);
+        location.href = url;
+    }
+</script>
+</body>
+</html>

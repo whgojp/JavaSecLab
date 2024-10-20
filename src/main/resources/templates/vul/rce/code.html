@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{common/common::head}"></head>
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <fieldset class="layui-elem-field layui-field-title">
+                    <legend>
+                        <a style="color: rgb(30 159 255)" class="ssrf">RCE - 远程代码执行</a>
+                    </legend>
+                    <blockquote class="layui-elem-quote layui-quote-nm"
+                                style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
+                        <pre>   RCE(Remote Code Execution)，可以分为:命令注入(Command Injection)、代码注入(Code Injection)</pre>
+                    </blockquote>
+                </fieldset>
+            </div>
+
+            <div class="layui-col-md12" style="margin-top: 10px">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-bug"> 漏洞环境：Groovy代码注入</span></h1>
+                        <div class="layui-tab layui-tab-brief">
+                            <div class="layui-tab-content">
+                                <div class="layui-tab-item layui-show">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <input type="text" name="payload" style="width: 300px;" required
+                                                   lay-verify="required" value='"whoami".execute()' autocomplete="off"
+                                                   class="layui-input" id="vul-groovy-input">
+                                            <div style="display: flex; align-items: center;">
+                                                <select class="layui-form-select" lay-filter="vul-groovy-select">
+                                                    <option value="">示例Payload</option>
+                                                    <option value="'open -a Calculator'.execute()">弹计算器-mac</option>
+                                                    <option value="'calc'.execute()">弹计算器-win</option>
+                                                </select>
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="vul-groovy-button" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre style="color: #28333e;font-size: 15px;">  Groovy是一种基于JVM的动态语言，语法简洁，支持闭包、动态类型和Java互操作性，常用于脚本开发和自动化任务
+  Groovy代码注入漏洞通常是由于未对用户输入进行适当的验证和过滤，导致恶意输入被直接执行为 Groovy脚本的一部分</pre>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i>测试结果
+                                        </div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre id="vul-groovy-result"
+                                                 style="color: red;font-size: 15px;"></pre>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="vulGroovy"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="layui-col-md12" style="margin-top: 10px">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-anquan"> 安全环境：Groovy脚本白名单</span></h1>
+                        <div class="layui-tab layui-tab-brief">
+                            <div class="layui-tab-content">
+                                <div class="layui-tab-item layui-show">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <input type="text" name="payload" style="width: 300px;" required
+                                                   lay-verify="required" value='"whoami".execute()' autocomplete="off"
+                                                   class="layui-input" id="safe-groovy-input">
+                                            <div style="display: flex; align-items: center;">
+                                                <select class="layui-form-select" lay-filter="safe-groovy-select">
+                                                    <option value="">示例Payload</option>
+                                                    <option value="'open -a Calculator'.execute()">弹计算器-mac</option>
+                                                    <option value="'calc'.execute()">弹计算器-win</option>
+                                                </select>
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="safe-groovy-button" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre style="color: #28333e;font-size: 15px;">  使用白名单或预定义的脚本模板来限制执行的范围,例如只允许执行whoami、id、ls命令</pre>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i>测试结果
+                                        </div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre id="safe-groovy-result"
+                                                 style="color: red;font-size: 15px;"></pre>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="safeGroovy"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{common/common::script}"></div>
+<script type="text/javascript">
+    layui.use(['layer', 'miniTab', 'common', 'form'], function () {
+        var $ = layui.jquery,
+            layer = layui.layer,
+            miniTab = layui.miniTab,
+            common = layui.common,
+            form = layui.form;
+        miniTab.listen();
+        layer.msg("RCE - 远程代码执行");
+
+        common.formListenFun("vul-groovy-button", "", "/code/vulGroovy", "vul-groovy-result", "get");
+        common.selectListenFun("vul-groovy-select", "vul-groovy-input");
+
+        common.formListenFun("safe-groovy-button", "", "/code/safeGroovy", "safe-groovy-result", "get");
+        common.selectListenFun("safe-groovy-select", "safe-groovy-input");
+
+
+
+        var cmConfig = {
+            lineNumbers: true,
+            lineWrapping: false,
+            indentUnit: 4,
+            indentWithTabs: true,
+            theme: 'juejin',
+            styleActiveLine: {nonEmpty: true},
+            fontSize: "18px",
+            mode: "text/x-java"
+        };
+
+        var cmConfigSafe = {
+            lineNumbers: true,
+            lineWrapping: false,
+            indentUnit: 4,
+            indentWithTabs: true,
+            theme: 'juejinsafe',
+            styleActiveLine: {nonEmpty: true},
+            fontSize: "18px",
+            mode: "text/x-java"
+        };
+
+        CodeMirror(document.getElementById("vulGroovy"), Object.assign({}, cmConfig, {
+            value: vulGroovy
+        }));
+        CodeMirror(document.getElementById("safeGroovy"), Object.assign({}, cmConfigSafe, {
+            value: safeGroovy
+        }));
+
+    });
+
+</script>
+
+</body>
+</html>

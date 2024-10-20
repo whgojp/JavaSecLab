@@ -6,7 +6,7 @@ layui.define(['table', 'jquery', 'form'], function (exports) {
         table = layui.table,
         form = layui.form;
     var tableSelect = function () {
-        this.v = '1.1.0';
+        this.v = 'ueditor.ueditor.0';
     };
 
     /**

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{common/common::head}"></div>
+
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <fieldset class="layui-elem-field layui-field-title">
+                    <legend>
+                        <a style="color: rgb(30 159 255)" class="deserialize">反序列化 - SnakeYaml</a>
+                    </legend>
+                    <blockquote class="layui-elem-quote layui-quote-nm"
+                                style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
+                        <p>
+                        <pre>   SnakeYAML是一个用于解析和生成YAML格式数据的流行Java库，支持YAML1.1和1.2规范，能够实现YAML与Java对象之间的序列化和反序列化</pre>
+                        <pre>   漏洞原理：yaml反序列化时可以通过!!+全类名指定反序列化的类，反序列化过程中会实例化该类，可以通过构造ScriptEngineManager payload并利用SPI机制通过URLClassLoader或者其他payload如JNDI方式远程加载实例化恶意类从而实现任意代码执行</pre>
+                        </p>
+                    </blockquote>
+                </fieldset>
+            </div>
+
+            <div class="layui-col-md12" style="margin-top: 10px">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-bug"> 漏洞环境：SnakeYaml</span></h1>
+                        <div class="layui-tab layui-tab-brief">
+                            <div class="layui-tab-content">
+                                <div class="layui-tab-item layui-show">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <p>   漏洞利用参考：<a target="_blank" href="https://github.com/artsploit/yaml-payload">https://github.com/artsploit/yaml-payload</a> </p>
+                                        <a target="_blank" href="/snakeYaml/vulSnakeYaml">
+                                            <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
+                                                <span class="iconfont icon-zhihang">Run</span>
+                                            </button>
+                                        </a>
+                                    </blockquote>
+                                </div>
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre style="color: #28333e;font-size: 15px;">反序列化流程:
+  1、导入依赖：使用Maven/Gradle项目时，首先添加SnakeYAML的依赖
+  2、创建Yaml实例：使用Yaml类的实例来处理反序列化。可以通过无参构造函数创建，也可以通过传递一个Constructor来定制化反序列化的方式(如使用SafeConstructor提高安全性)
+  3、调用load()方法：使用Yaml实例的load()方法，将YAML字符串或输入流转换为相应的Java对象
+  4、处理反序列化后的对象：根据实际业务需求对反序列化后的对象进行处理</pre>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="vulSnakeYaml"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-col-md12" style="margin-top: 10px">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-anquan"> 安全环境：SafeConstructor安全构造</span></h1>
+                        <div class="layui-tab layui-tab-brief">
+                            <div class="layui-tab-content">
+                                <div class="layui-tab-item layui-show">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <p>使用SafeConstructor()进行安全构造</p>
+                                        <a target="_blank" href="/snakeYaml/safeSnakeYaml">
+                                            <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
+                                                <span class="iconfont icon-zhihang">Run</span>
+                                            </button>
+                                        </a>
+                                    </blockquote>
+                                </div>
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre style="color: #28333e;font-size: 15px;">   SafeConstructor是SnakeYAM 提供的一个安全构造器，用于防止反序列化漏洞，确保只反序列化基本类型和安全的对象</pre>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code"> 安全代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="safeSnakeYaml"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+</div>
+
+<div th:replace="~{common/common::script}"></div>
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function () {
+
+        layui.use(['layer', 'miniTab', 'common', 'form'], function () {
+            var $ = layui.jquery,
+                layer = layui.layer,
+                miniTab = layui.miniTab,
+                common = layui.common,
+                form = layui.form;
+
+            miniTab.listen();
+            layer.msg("反序列化 - SnakeYaml");
+
+            common.formListenFun("vul-SnakeYaml-submit", "", "/snakeYaml/vulSnakeYaml", "vul-SnakeYaml-result", "post");
+            common.selectListenFun("vul-SnakeYaml-select", "vul-SnakeYaml-input");
+
+            common.formListenFun("safe-SnakeYaml-submit", "", "/snakeYaml/safeSnakeYaml", "safe-SnakeYaml-result", "post");
+            common.selectListenFun("safe-SnakeYaml-select", "safe-SnakeYaml-input");
+
+            var cmConfig = {
+                lineNumbers: true,
+                lineWrapping: false,
+                indentUnit: 4,
+                indentWithTabs: true,
+                theme: 'juejin',
+                styleActiveLine: {nonEmpty: true},
+                fontSize: "18px",
+                mode: "text/x-java"
+            };
+            var cmConfigSafe = {
+                lineNumbers: true,
+                lineWrapping: false,
+                indentUnit: 4,
+                indentWithTabs: true,
+                theme: 'juejinsafe',
+                styleActiveLine: {nonEmpty: true},
+                fontSize: "18px",
+                mode: "text/x-java"
+            };
+
+            CodeMirror(document.getElementById("vulSnakeYaml"), Object.assign({}, cmConfig, {
+                value: vulSnakeYaml
+            }));
+            CodeMirror(document.getElementById("safeSnakeYaml"), Object.assign({}, cmConfigSafe, {
+                value: safeSnakeYaml
+            }));
+
+        });
+
+        $('.deserialize').hover(function () {
+            $(this).css('cursor', 'pointer');
+            layer.tips('漏洞原理', this, {
+                tips: [1, '#0051ff'],
+                time: 2000
+            });
+        });
+
+        $('.deserialize').on('click', function () {
+            layer.open({
+                type: 1,
+                title: false,
+                closeBtn: 1,
+                area: ['781px', '440px'], // 宽高可以根据需要调整
+                shadeClose: true,
+                content: '<div style="text-align: center;"><img src="/static/images/vul/components/deserialize.jpg" style="width: 100%; height: 50%;"></div>'
+            });
+        });
+
+    });
+</script>
+
+</body>
+</html>

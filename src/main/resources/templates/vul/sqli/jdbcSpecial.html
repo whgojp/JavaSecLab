@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{common/common::head}"></div>
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <div class="layui-row layui-col-space15">
+
+            <div class="layui-col-md12">
+                <fieldset class="layui-elem-field layui-field-title">
+                    <legend><a style="color: rgb(30 159 255)" class="sqli-jdbc">SQL注入攻击 - JDBC</a></legend>
+                    <blockquote class="layui-elem-quote layui-quote-nm"
+                                style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
+                        <p>
+                        <pre>   SQL 注入是一种常见的 Web 应用程序安全漏洞，攻击者利用这种漏洞通过在输入字段中插入恶意 SQL 语句来执行非授权的数据库操作。这可能导致数据泄露、数据损坏或者完整性受损。</pre>
+                        </p>
+                        <p>
+                        <pre>   JDBC（Java Database Connectivity）是一套用于在 Java 程序中操作关系型数据库的 API。它提供了一种标准的 Java 方法来连接和执行 SQL 查询，从而实现与数据库的交互。</pre>
+                        </p>
+                    </blockquote>
+                </fieldset>
+            </div>
+
+            <div class="layui-col-md12" style="margin-top: 10px">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-tesefuwu">  特殊场景：预编译下，order by下的sql注入问题</span></h1>
+                        <div class="layui-tab layui-tab-brief">
+                            <ul class="layui-tab-title">
+                                <li class="layui-this">拼接注入</li>
+                                <li>预编译写法</li>
+                                <li>白名单过滤</li>
+                            </ul>
+                            <div class="layui-tab-content">
+                                <div class="layui-tab-item layui-show">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="field" style="width: 150px;" required
+                                                       lay-verify="required" value="username and updatexml(1,concat(0x7e,(SELECT user()),0x7e),1)#" placeholder="排序字段" autocomplete="off"
+                                                       class="layui-input" id="special1-OrderBy-raw-field">
+                                                <p>可选排序字段 id、username、password</p>
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <select class="layui-form-select"
+                                                        style="background-color: #5eb878;!important;" lay-filter="special1-OrderBy-raw-select">
+                                                    <option value="">示例Payload</option>
+                                                    <option value="(SELECT (CASE WHEN (3713=3713) THEN 0x757365726e616d65 ELSE (SELECT 4750 UNION SELECT 2020) END))">布尔注入</option>
+                                                    <option value="username;SELECT SLEEP(5)#">延时注入</option>
+                                                    <option value="username;SELECT SLEEP(5)#">堆叠注入</option>
+                                                    <option value="username and updatexml(1,concat(0x7e,(SELECT user()),0x7e),1)#">xpath注入</option>
+                                                </select>
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="special1-OrderBy-raw" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+                                <div class="layui-tab-item">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="field" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="排序字段" autocomplete="off"
+                                                       class="layui-input">
+                                                <p>预编译下 ordery by排序失效 使用默认排序</p>
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="special1-OrderBy-prepareStatement" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+                                <div class="layui-tab-item">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="field" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="排序字段" autocomplete="off"
+                                                       class="layui-input">
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="special1-OrderBy-writeList" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre style="color: #28333e;font-size: 12px;">
+SQL语句执行顺序:
+	FROM: 指定查询的数据表，开始查询过程。
+	JOIN: 执行表的关联操作（如果有），将不同表中相关的行组合在一起。
+	WHERE: 对行进行筛选，只选择符合指定条件的行。
+	GROUP BY: 按照指定的列对结果进行分组，通常与聚合函数（如SUM、AVG等）一起使用。
+	HAVING: 对分组后的结果进行筛选，类似于WHERE，但作用于分组后的结果集。
+	SELECT: 选择要查询的列或表达式，生成最终的结果集。
+	DISTINCT: 对结果集进行去重操作，仅保留唯一的行。
+	ORDER BY: 对结果集按照指定的列进行排序操作，可以是升序或降序。
+	LIMIT: 对结果集进行分页操作，限制返回的行数。
+                                            </pre>
+                                        </div>
+                                    </div>
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i>测试结果</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre id="special1-OrderBy-result"
+                                                 style="color: red;font-size: 15px;"></pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code">  相关代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="special1OrderBy">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="layui-col-md12" style="margin-top: 10px">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-tesefuwu">  特殊场景：使用%和模糊查询-like</span></h1>
+                        <div class="layui-tab layui-tab-brief">
+                            <ul class="layui-tab-title">
+                                <li class="layui-this">拼接注入</li>
+                                <li>预编译写法</li>
+                            </ul>
+                            <div class="layui-tab-content">
+                                <div class="layui-tab-item layui-show">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="keyword" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="查找关键词" autocomplete="off"
+                                                       class="layui-input" id="special2-Like-raw-keyword">
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <select class="layui-form-select"
+                                                        style="background-color: #5eb878;!important;"lay-filter="special2-Like-raw-select">
+                                                    <option value="">示例Payload</option>
+                                                    <option value="1' AND (SELECT 4804 FROM (SELECT(SLEEP(5)))iBHa) AND '1'='1">延时注入</option>
+                                                    <option value="1' AND ELT(5753=5753,6782) AND '1'='1">布尔盲注</option>
+                                                    <option value="1' AND GTID_SUBSET(CONCAT(0x71706a7a71,(SELECT (ELT(7170=7170,1))),0x7171717071),7170) AND '1'='1">报错注入</option>
+                                                    <option value="1' and updatexml(1,concat(0x7e,(SELECT user()),0x7e),1) AND '1'='1">xpath注入</option>
+                                                </select>
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="special2-Like-raw" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+
+                                <div class="layui-tab-item">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="keyword" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="查找关键词" autocomplete="off"
+                                                       class="layui-input">
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="special2-Like-prepareStatement" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i>测试结果</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre id="special2-Like-result"
+                                                 style="color: red;font-size: 15px;"></pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code">  相关代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="special2Like">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="layui-col-md12" style="margin-top: 10px">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-tesefuwu">  特殊场景：limit 注入</span></h1>
+                        <div class="layui-tab layui-tab-brief">
+                            <ul class="layui-tab-title">
+                                <li class="layui-this">拼接注入</li>
+                                <li>预编译写法</li>
+                            </ul>
+                            <div class="layui-tab-content">
+                                <div class="layui-tab-item layui-show">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="size" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="查询数量" autocomplete="off"
+                                                       class="layui-input" id="special3-Limit-raw-size">
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <select class="layui-form-select"
+                                                        style="background-color: #5eb878;!important;"lay-filter="special3-Limit-raw-select">
+                                                    <option value="">示例Payload</option>
+                                                    <option value="1' AND (SELECT 4804 FROM (SELECT(SLEEP(5)))iBHa) AND '1'='1">延时注入</option>
+                                                    <option value="1' AND ELT(5753=5753,6782) AND '1'='1">布尔盲注</option>
+                                                    <option value="1' AND GTID_SUBSET(CONCAT(0x71706a7a71,(SELECT (ELT(7170=7170,1))),0x7171717071),7170) AND '1'='1">报错注入</option>
+                                                    <option value="1' and updatexml(1,concat(0x7e,(SELECT user()),0x7e),1) AND '1'='1">xpath注入</option>
+                                                </select>
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="special3-Limit-raw" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+
+                                <div class="layui-tab-item">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="size" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="查询数量" autocomplete="off"
+                                                       class="layui-input">
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="special3-Limit-prepareStatement" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i>测试结果</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre id="special3-Limit-result"
+                                                 style="color: red;font-size: 15px;"></pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code">  相关代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="special3Limit">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div th:replace="~{common/common::script}"></div>
+
+<script type="text/javascript">
+    layui.use(['layer', 'miniTab', 'common'], function () {
+        var $ = layui.jquery,
+            layer = layui.layer,
+            miniTab = layui.miniTab,
+            common = layui.common;
+        miniTab.listen();
+        layer.msg("SQL注入-JDBC")
+
+        common.formListenFun("special1-OrderBy-raw", "raw", "/sqli/jdbc/special1-OrderBy", "special1-OrderBy-result","get");
+        common.formListenFun("special1-OrderBy-prepareStatement", "prepareStatement", "/sqli/jdbc/special1-OrderBy", "special1-OrderBy-result","get");
+        common.formListenFun("special1-OrderBy-writeList", "writeList", "/sqli/jdbc/special1-OrderBy", "special1-OrderBy-result","get");
+        common.selectListenFun("special1-OrderBy-raw-select", "special1-OrderBy-raw-field");
+
+        common.formListenFun("special2-Like-raw", "raw", "/sqli/jdbc/special2-Like", "special2-Like-result","get");
+        common.formListenFun("special2-Like-prepareStatement", "prepareStatement", "/sqli/jdbc/special2-Like", "special2-Like-result","get");
+        common.selectListenFun("special2-Like-raw-select", "special2-Like-raw-keyword");
+
+        common.formListenFun("special3-Limit-raw", "raw", "/sqli/jdbc/special3-Limit", "special3-Limit-result","get");
+        common.formListenFun("special3-Limit-prepareStatement", "prepareStatement", "/sqli/jdbc/special3-Limit", "special3-Limit-result","get");
+        common.selectListenFun("special3-Limit-raw-select", "special3-Limit-raw-size");
+
+        var cmConfig = {
+            lineNumbers: true,
+            lineWrapping: false,
+            indentUnit: 4,
+            indentWithTabs: true,
+            theme: 'juejin',
+            styleActiveLine: {nonEmpty: true},
+            fontSize: "18px",
+            mode: "text/x-java"
+        };
+
+        CodeMirror(document.getElementById("special1OrderBy"), Object.assign({}, cmConfig, {
+            value: special1OrderBy
+        }));
+        CodeMirror(document.getElementById("special2Like"), Object.assign({}, cmConfig, {
+            value: special2Like
+        }));
+        CodeMirror(document.getElementById("special3Limit"), Object.assign({}, cmConfig, {
+            value: special3Limit
+        }));
+
+
+    });
+
+</script>
+
+</body>
+</html>

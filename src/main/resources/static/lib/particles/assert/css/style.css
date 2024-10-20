@@ -90,6 +90,6 @@ canvas{
   width: 100%;
   height: 100%;
   background: linear-gradient(to bottom, #6fa8dc, #b3e0ff); /* 使用线性渐变创建淡蓝色效果 */
-  /*background: radial-gradient(ellipse at top left, rgba(105, 155, 200, 1) 0%, rgba(181, 197, 216, 1) 57%);*/
+  /*background: radial-gradient(ellipse at top left, rgba(105, 155, 200, ueditor) 0%, rgba(181, 197, 216, ueditor) 57%);*/
   z-index: 1; /* 根据需要调整 */
 }

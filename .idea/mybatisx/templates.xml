@@ -6,7 +6,7 @@
         <option name="generateConfig">
           <GenerateConfig>
             <option name="annotationType" value="MYBATIS_PLUS3" />
-            <option name="basePackage" value="top.whgojp.modules.system" />
+            <option name="basePackage" value="top.whgojp.modules.sqli" />
             <option name="basePath" value="src/main/java" />
             <option name="classNameStrategy" value="camel" />
             <option name="encoding" value="UTF-8" />
@@ -68,8 +68,8 @@
             <option name="tableUIInfoList">
               <list>
                 <TableUIInfo>
-                  <option name="className" value="Log" />
-                  <option name="tableName" value="log" />
+                  <option name="className" value="Sqli" />
+                  <option name="tableName" value="sqli" />
                 </TableUIInfo>
               </list>
             </option>

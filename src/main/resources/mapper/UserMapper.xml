@@ -12,4 +12,17 @@
     <sql id="Base_Column_List">
         username,password
     </sql>
+    <select id="selectByUsernameAndPassword" resultType="top.whgojp.modules.system.entity.User">
+        select
+        *
+        from user
+        where
+        username = #{username,jdbcType=VARCHAR}
+        AND password = #{password,jdbcType=VARCHAR}
+    </select>
+    <update id="updatePasswordByUsername">
+        update user
+        set password = #{password,jdbcType=VARCHAR}
+        where username = #{username,jdbcType=VARCHAR}
+    </update>
 </mapper>

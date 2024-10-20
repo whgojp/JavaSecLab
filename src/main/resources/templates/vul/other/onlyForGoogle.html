@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>onlyForGoogle</title>
+</head>
+<body>
+<h1>only For 8.8.8.8</h1>
+<p th:text="'你的ip为: ' + ${clientIP}+'; 仅允许 8.8.8.8 访问'"></p>
+
+<!-- 显示敏感信息 -->
+<p th:text="${sensitiveInfo}"></p>
+</body>
+</html>

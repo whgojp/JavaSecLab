@@ -4,23 +4,20 @@
  * @email:  whgojp@foxmail.com
  * @Date: 2024/5/18 16:09
  */
-
-const baseURL = 'http://localhost:8080';
-
-//  const baseURL = "";
-
-const timeout = 3000;
+const timeout = 10000;  // 延长至10s 方便测试延时注入
 
 // requet ajax
 function request (url, method, data = {}, contentType, back){
     $.ajax({
-        url: baseURL + url,
+        url:  url,
         type: method,
         data: data,
         cache: false,
         timeout: timeout,
         contentType: contentType,
-        dataType: "json",
+        xhrFields: {
+            withCredentials: true,
+        },
         success: function(res, textStatus, xhr){
             console.log(this.type+' 请求成功：', {
                 url: this.url,

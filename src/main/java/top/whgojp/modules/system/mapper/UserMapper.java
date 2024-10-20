@@ -1,4 +1,6 @@
 package top.whgojp.modules.system.mapper;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 import org.springframework.stereotype.Repository;
 import top.whgojp.modules.system.entity.User;
@@ -12,6 +14,10 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 */
 @Repository
 public interface UserMapper extends BaseMapper<User> {
+
+    User selectByUsernameAndPassword(@Param("username") String username, @Param("password") String password);
+
+    int updatePasswordByUsername(@Param("username") String username,@Param("password") String password);
 
 }
 

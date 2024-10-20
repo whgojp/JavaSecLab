@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:se="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- 配置文件 -->
+    <script type="text/javascript" charset="utf-8" src="/lib/ueditor/ueditor.config.js"></script>
+    <!-- 编辑器源码文件 -->
+    <script type="text/javascript" charset="utf-8" src="/lib/ueditor/ueditor.all.min.js"></script>
+    <!-- 中文 -->
+    <script type="text/javascript" charset="utf-8" src="/lib/ueditor/lang/zh-cn/zh-cn.js"></script>
+</head>
+
+<body>
+<div>
+    <script id="ueditorContent" name="content" style="min-height: 200px"></script>
+</div>
+</body>
+
+<!-- 实例化编辑器 -->
+<script type="text/javascript" th:inline="none">
+    UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;
+    console.log(UE.Editor.prototype.getActionUrl)
+    console.log(UE.Editor.prototype._bkGetActionUrl)
+    UE.Editor.prototype.getActionUrl = function(action) {
+        if (action === 'uploadimage') {
+            return '/ueditor/upload';// 此路径跟ueditor.config.js中的服务器统一请求接口路径一样，在同一个controller中
+            // return 'http://localhost:8090/upLoadImg';//自定义别的请求接口的需要加上IP和端口
+        } else {
+            return this._bkGetActionUrl.call(this, action);
+        }
+    }
+
+    var uee = UE.getEditor('ueditorContent', {
+        toolbars: [[
+            'fullscreen', 'source', '|', 'undo', 'redo', '|',
+            'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'superscript', 'subscript', 'removeformat', 'formatmatch', 'autotypeset', 'blockquote', 'pasteplain', '|', 'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc', '|',
+            'rowspacingtop', 'rowspacingbottom', 'lineheight', '|',
+            'customstyle', 'paragraph', 'fontfamily', 'fontsize', '|',
+            'directionalityltr', 'directionalityrtl', 'indent', '|',
+            'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|', 'touppercase', 'tolowercase', '|',
+            'link', 'unlink', 'anchor', '|', 'imagenone', 'imageleft', 'imageright', 'imagecenter', '|',
+            'simpleupload', 'insertimage', '|',
+            'map', 'pagebreak', 'template', 'background', '|',
+            'horizontal', 'date', 'time', 'spechars', '|',
+            'inserttable', 'deletetable', 'insertparagraphbeforetable', 'insertrow', 'deleterow', 'insertcol', 'deletecol', 'mergecells', 'mergeright', 'mergedown', 'splittocells', 'splittorows', 'splittocols', 'charts', '|',
+            'preview', 'searchreplace', '/',
+            'drafts'
+        ]]
+    });
+</script>
+
+</html>

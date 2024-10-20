@@ -18,7 +18,7 @@
 	<!-- 彩色日志格式 -->
 	<property name="CONSOLE_LOG_PATTERN" value="${CONSOLE_LOG_PATTERN:-%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
 
-	<!--1. 输出到控制台-->
+	<!--ueditor. 输出到控制台-->
 	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
 		<!--此日志appender是为开发使用，只配置最底级别，控制台输出的日志级别是大于或等于此级别的日志信息-->
 		<!--<filter class="ch.qos.logback.classic.filter.ThresholdFilter">-->
@@ -32,7 +32,7 @@
 	</appender>
 
 	<!--2. 输出到文档-->
-	<!-- 2.1 level为 DEBUG 日志，时间滚动输出 -->
+	<!-- 2.ueditor level为 DEBUG 日志，时间滚动输出 -->
 	<appender name="DEBUG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<!-- 正在记录的日志文档的路径及文档名 -->
 		<file>${log.path}/${datetime}/debug.log</file>
@@ -166,7 +166,7 @@
     -->
 
 	<!-- 4. 最终的策略 -->
-	<!-- 4.1 开发环境:打印控制台-->
+	<!-- 4.ueditor 开发环境:打印控制台-->
 	<!--  <springProfile name="dev">-->
 	<logger name="net.ourway" level="debug"/><!-- 修改此处扫描包名 -->
 	<!--  </springProfile>-->

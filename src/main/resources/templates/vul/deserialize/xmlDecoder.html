@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{common/common::head}"></div>
+
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <fieldset class="layui-elem-field layui-field-title">
+                    <legend>
+                        <a style="color: rgb(30 159 255)" class="deserialize">反序列化 - XMLDecoder</a>
+                    </legend>
+                    <blockquote class="layui-elem-quote layui-quote-nm"
+                                style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
+                        <p>
+                        <pre>   XMLDecoder是Java标准库中提供的一个类，用于将XML格式的数据反序列化为Java对象。它是JavaBeans机制的一部分，能够将符合JavaBeans规范的XML文件解析为Java对象</pre>
+                        </p>
+                    </blockquote>
+                </fieldset>
+            </div>
+
+            <div class="layui-col-md12" style="margin-top: 10px">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-bug"> 漏洞环境：xmlDecoder.readObject()</span></h1>
+                        <div class="layui-tab layui-tab-brief">
+                            <div class="layui-tab-content">
+                                <div class="layui-tab-item layui-show">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form"
+                                              style="display: flex; justify-content: space-between;">
+                                            <input type="text" name="payload" style="width: 450px;"
+                                                   value="open -a Calculator"
+                                                   class="layui-input" id="vul-XmlDecoder-input">
+                                            <div style="display: flex; align-items: center;">
+                                                <select class="layui-form-select" lay-filter="vul-XmlDecoder-select">
+                                                    <option value="">示例Payload</option>
+                                                    <option value="open -a Calculator">MAC弹计算器</option>
+                                                    <option value="cmd /c calc">
+                                                        WIN弹计算器
+                                                    </option>
+                                                </select>
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="vul-XmlDecoder-submit" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre style="color: #28333e;font-size: 15px;">  用户输入被构建为包含ProcessBuilder对象的XML结构，并传入命令数组。生成的XML被XMLDecoder解析，反序列化后通过ProcessBuilder执行命令</pre>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i>测试结果
+                                        </div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre id="vul-XmlDecoder-result" style="color: red;font-size: 15px;"></pre>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="vulXmlDecoder"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+</div>
+
+<div th:replace="~{common/common::script}"></div>
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function () {
+
+        layui.use(['layer', 'miniTab', 'common', 'form'], function () {
+            var $ = layui.jquery,
+                layer = layui.layer,
+                miniTab = layui.miniTab,
+                common = layui.common,
+                form = layui.form;
+
+            miniTab.listen();
+            layer.msg("反序列化 - XmlDecoder");
+
+            common.formListenFun("vul-XmlDecoder-submit", "", "/xmlDecoder/vulXmlDecoder", "vul-XmlDecoder-result", "post");
+            common.selectListenFun("vul-XmlDecoder-select", "vul-XmlDecoder-input");
+
+            common.formListenFun("safe-XmlDecoder-submit", "", "/xmlDecoder/safeXmlDecoder", "safe-XmlDecoder-result", "post");
+            common.selectListenFun("safe-XmlDecoder-select", "safe-XmlDecoder-input");
+
+            var cmConfig = {
+                lineNumbers: true,
+                lineWrapping: false,
+                indentUnit: 4,
+                indentWithTabs: true,
+                theme: 'juejin',
+                styleActiveLine: {nonEmpty: true},
+                fontSize: "18px",
+                mode: "text/x-java"
+            };
+            var cmConfigSafe = {
+                lineNumbers: true,
+                lineWrapping: false,
+                indentUnit: 4,
+                indentWithTabs: true,
+                theme: 'juejinsafe',
+                styleActiveLine: {nonEmpty: true},
+                fontSize: "18px",
+                mode: "text/x-java"
+            };
+
+            CodeMirror(document.getElementById("vulXmlDecoder"), Object.assign({}, cmConfig, {
+                value: vulXmlDecoder
+            }));
+            CodeMirror(document.getElementById("safeXmlDecoder"), Object.assign({}, cmConfigSafe, {
+                value: safeXmlDecoder
+            }));
+
+        });
+
+        $('.deserialize').hover(function () {
+            $(this).css('cursor', 'pointer');
+            layer.tips('漏洞原理', this, {
+                tips: [1, '#0051ff'],
+                time: 2000
+            });
+        });
+
+        $('.deserialize').on('click', function () {
+            layer.open({
+                type: 1,
+                title: false,
+                closeBtn: 1,
+                area: ['781px', '440px'], // 宽高可以根据需要调整
+                shadeClose: true,
+                content: '<div style="text-align: center;"><img src="/static/images/vul/components/deserialize.jpg" style="width: 100%; height: 50%;"></div>'
+            });
+        });
+
+    });
+</script>
+
+</body>
+</html>

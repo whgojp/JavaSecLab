@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>前端 CSP 防护示例</title>
+<!--    下面👇这段关键代码-->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://apis.example.com; style-src 'self' https://fonts.googleapis.com; img-src 'self' data: https://*.example.com;">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        .code {
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<h1>前端 CSP（内容安全策略）防护示例(可对照源代码分析🧐)</h1>
+<p>内容安全策略（CSP）是一种重要的安全措施，用于防止跨站脚本攻击（XSS）等安全漏洞。</p>
+<p>在本示例中，设置了以下 CSP 策略：</p>
+<div class="code">
+    default-src 'self'; <br>
+    script-src 'self' https://apis.example.com; <br>
+    style-src 'self' https://fonts.googleapis.com; <br>
+    img-src 'self' data: https://*.example.com;
+</div>
+
+<h2>示例演示</h2>
+<p>尝试在下面的代码中执行一些可能受到 CSP 限制的操作：</p>
+
+<!-- 恶意脚本，尝试弹出窗口 -->
+<div th:text="'<script>prompt(123);</script>'"></div>
+<script>prompt('这段代码应该会被 CSP 拦截');</script>
+
+<!-- 恶意脚本，尝试读取 cookie -->
+<div th:text="'<script>alert(document.cookie)</script>'"></div>
+<script>alert(document.cookie)</script>
+
+<h2>结论</h2>
+<p>通过适当配置 CSP，可以限制页面可以加载的资源来源，从而减少潜在的安全风险。请注意，在实际部署中，应根据具体应用需求和安全评估定制 CSP 设置。</p>
+</body>
+</html>
