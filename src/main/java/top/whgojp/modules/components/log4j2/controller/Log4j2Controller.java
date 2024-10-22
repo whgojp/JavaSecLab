@@ -5,6 +5,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.apache.commons.text.StringEscapeUtils;
 
 
 /**
@@ -32,6 +33,17 @@ public class Log4j2Controller {
         logger.error(payload);
         return "[+]Log4j2反序列化："+payload;
     }
+
+    @PostMapping("/safe")
+    @ResponseBody
+    public String safeLog4j2(@RequestParam("payload") String payload) {
+        payload = StringEscapeUtils.escapeHtml4(payload);
+
+        System.out.println("[+]Log4j2反序列化："+payload);
+        logger.error(payload);
+        return "[+]Log4j2反序列化："+payload;
+    }
+
 
 
 }

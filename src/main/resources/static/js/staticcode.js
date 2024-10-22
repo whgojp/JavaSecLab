@@ -1723,7 +1723,12 @@ const safeXstreamWhiteList = "@RequestMapping(\"/safe-WhiteList\")\n" +
     "    return \"组件漏洞-Xstream Safe-WhiteList\";\n" +
     "}\n"
 
-const vulLog4j2 = "vulLog4j2"
+const vulLog4j2 = "@PostMapping(\"/vul\")\n" +
+    "@ResponseBody\n" +
+    "public String vulLog4j2(@RequestParam(\"payload\") String payload) {\n" +
+    "\tlogger.error(payload);\t//此处解析${}从而触发漏洞\n" +
+    "\treturn \"[+]Log4j2反序列化：\"+payload;\n" +
+    "}"
 const safeLog4j2 = "safeLog4j2"
 
 const vulShiro = "@GetMapping(\"/getAESKey\")\n" +

