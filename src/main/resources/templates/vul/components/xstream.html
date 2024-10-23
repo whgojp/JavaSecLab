@@ -26,7 +26,7 @@
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
-                                        <p>漏洞环境</p>
+                                        <p>点击跳转后需要自行构造触发payload</p>
                                         <a target="_blank" href='/xstream/vul'>
                                             <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
                                                 <span class="iconfont icon-zhihang">Run</span>
@@ -35,14 +35,14 @@
                                     </blockquote>
                                 </div>
 
-                                <div class="layui-col-md12">
-                                    <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
-                                        <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">测试Payload：{"test":{"@type":"java.net.Inet4Address","val":"dnslog.com"}}</pre>
-                                        </div>
-                                    </div>
-                                </div>
+<!--                                <div class="layui-col-md12">-->
+<!--                                    <div class="layui-card">-->
+<!--                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>-->
+<!--                                        <div class="layui-card-body layui-text layadmin-text">-->
+<!--                                            <pre style="color: #28333e;font-size: 15px;">测试Payload：{"test":{"@type":"java.net.Inet4Address","val":"dnslog.com"}}</pre>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
 
                             </div>
                         </div>
@@ -64,25 +64,13 @@
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
-                                        <p>白名单过滤</p>
-                                        <a target="_blank" href='/fastjson/safe-BlackList'>
+                                        <p>黑名单过滤</p>
+                                        <a target="_blank" href='/xstream/safe-BlackList'>
                                             <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
                                                 <span class="iconfont icon-zhihang">Run</span>
                                             </button>
                                         </a>
                                     </blockquote>
-                                </div>
-
-                                <div class="layui-col-md12">
-                                    <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
-                                        <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">安全编码规范：
-	1、使用@ResponseBody或@RestController修饰
-	2、使用redirect:或forward:修饰
-	3、设置为HttpServletResponse</pre>
-                                        </div>
-                                    </div>
                                 </div>
 
                             </div>
@@ -107,7 +95,7 @@
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
                                         <p>白名单过滤</p>
-                                        <a target="_blank" href='/fastjson/safe-WhiteList'>
+                                        <a target="_blank" href='/xstream/safe-WhiteList'>
                                             <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
                                                 <span class="iconfont icon-zhihang">Run</span>
                                             </button>
@@ -120,9 +108,8 @@
                                         <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
                                         <div class="layui-card-body layui-text layadmin-text">
                                             <pre style="color: #28333e;font-size: 15px;">安全编码规范：
-	1、使用@ResponseBody或@RestController修饰
-	2、使用redirect:或forward:修饰
-	3、设置为HttpServletResponse</pre>
+  1、升级方案：升级Xstream组件到1.4.17或最新版本
+  2、非升级修复：1.4.10后可启动默认安全配置 setupDefaultSecurity()</pre>
                                         </div>
                                     </div>
                                 </div>

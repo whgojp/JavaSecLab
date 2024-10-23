@@ -30,13 +30,24 @@ public class XstreamController {
         return "vul/components/xstream";
     }
 
+//    @RequestMapping("/vul")
+//    @ResponseBody
+//    public String vulXstream(@RequestBody String content) {
+//        log.info("组件漏洞-Xstream\n"+"Payload:"+content);
+//        XStream xs = new XStream();
+//        xs.fromXML(content);
+//        return "组件漏洞-Xstream Vul";
+//    }
+
     @RequestMapping("/vul")
     @ResponseBody
     public String vulXstream(@RequestBody String content) {
-        log.info("组件漏洞-Xstream\n"+"Payload:"+content);
+        log.info("组件漏洞-Xstream\n" + "Payload:" + content);
         XStream xs = new XStream();
-        xs.fromXML(content);
-        return "组件漏洞-Xstream Vul";
+        Object result = xs.fromXML(content);  // 反序列化得到的对象
+
+        // 检查反序列化后的结果并返回相关信息
+        return "组件漏洞-Xstream Vul, 反序列化结果: \n" + result.toString();
     }
 
     @RequestMapping("/safe-BlackList")
@@ -63,6 +74,7 @@ public class XstreamController {
         return "组件漏洞-Xstream Safe-WhiteList";
     }
 
+    // CVE-2020-26259 任意文件删除示例
     public static void main(String[] args) {
         String xml_poc = "<map>\n" +
                 "  <entry>\n" +

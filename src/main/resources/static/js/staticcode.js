@@ -1693,9 +1693,11 @@ const safeFastjson = "@PostMapping(\"/safe\")\n" +
 const vulXstream = "@RequestMapping(\"/vul\")\n" +
     "@ResponseBody\n" +
     "public String vulXstream(@RequestBody String content) {\n" +
-    "    XStream xs = new XStream();\n" +
-    "    xs.fromXML(content);\n" +
-    "    return \"XStream Vul\";\n" +
+    "\tXStream xs = new XStream();\n" +
+    "\tObject result = xs.fromXML(content);  // 反序列化得到的对象\n" +
+    "\n" +
+    "\t// 检查反序列化后的结果并返回相关信息\n" +
+    "\treturn \"组件漏洞-Xstream Vul, 反序列化结果: \\n\" + result.toString();\n" +
     "}"
 
 const safeXstreamBlackList = "@RequestMapping(\"/safe-BlackList\")\n" +
