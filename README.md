@@ -11,17 +11,25 @@
 ----------------------------------------
 
 ## 项目介绍
-​	JavaSecLab是一款综合型Java漏洞平台，提供相关缺陷代码、修复代码、漏洞场景、审计SINK点、安全编码规范，覆盖多种漏洞场景，友好用户交互UI…… 
+​	JavaSecLab是一款综合型Java漏洞平台，提供相关漏洞缺陷代码、修复代码、漏洞场景、审计SINK点、安全编码规范，覆盖多种漏洞场景，友好用户交互UI…… 
 
 ![image-20241020143155383](./pic/home.png)
 
 ![show](./pic/show.png)
+
+![show](./pic/show2.png)
 
 ## 面向人群
 
 - 安全服务方面：帮助安全服务人员理解漏洞原理(产生、修复、审计)
 - 甲方安全方面：可作为开发安全培训演示，友好的交互方式，帮助研发同学更容易理解漏洞
 - 安全研究方面：各种漏洞的不同触发场景，可用于xAST等安全工具测试
+
+## 在线环境体验
+
+http://whgojp.top/
+
+账号密码：admin/admin
 
 ## 项目灵感
 
@@ -64,7 +72,7 @@ git clone https://github.com/whgojp/JavaSecLab.git
 
    执行 sql/JavaSecLab.sql 文件
 
-   修改配置文件application.yml active为prod(项目默认为docker)
+   修改配置文件application.yml active为dev(项目默认为docker 如果搭建的过程中出现数据库连接错误 师傅们可以注意下这里)
 
    ```yaml
    spring:
@@ -110,15 +118,18 @@ docker-compose -p javaseclab up -d
 
 本项目遵循 [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0) 协议，详细的许可证内容请参见项目中的 [LICENSE](./LICENSE) 文件。
 
-## 一些Tips🤔
+## 一些Tips🙋
 
 1. 安全问题：由于是漏洞靶场，因此不建议搭建在公网上使用
+1. 项目中的安全修复代码仅供参考，实际业务中漏洞修复起来可能要复杂的多……
+1. **问题/建议反馈：如果遇到一些项目问题或者更好的建议，欢迎各位师傅可以提Issue或加我微信进行反馈**
+1. **看到这里，师傅觉得项目有用的话，麻烦动动手点个star吧，非常感谢🙏**
 
 ## 关于作者
 
 作者博客：https://blog.csdn.net/weixin_53009585
 
-作者微信
-
-![image-20241020143410723](./pic/wechat.png)
-
+作者微信：
+<div style="text-align: center;">
+    <img src="./pic/wechat.png" alt="description" width="271" height="366" />
+</div>
