@@ -190,7 +190,7 @@ payload生成：java -jar ysoserial-all.jar CommonsCollections5 "open -a Calcula
                                     <div class="layui-card">
                                         <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">ValidatingObjectInputStream：这是Apache Commons IO 提供的一个类，它允许在反序列化时指定可以接受的类或拒绝的类。通过accept/reject(Class) 方法，可以指定只允许/拒绝某些类进行反序列化。</pre>
+                                            <pre style="color: #28333e;font-size: 15px;">  ValidatingObjectInputStream：这是Apache Commons IO 提供的一个类，它允许在反序列化时指定可以接受的类或拒绝的类。通过accept/reject(Class) 方法，可以指定只允许/拒绝某些类进行反序列化。</pre>
                                         </div>
                                     </div>
                                 </div>
@@ -238,13 +238,13 @@ payload生成：java -jar ysoserial-all.jar CommonsCollections5 "open -a Calcula
             miniTab.listen();
             layer.msg("反序列化 - ReadObject");
 
-            common.formListenFun("vul-ReadObject-submit", "", "/readObject/vulReadObject", "vul-ReadObject-result", "get");
+            common.formListenFun("vul-ReadObject-submit", "", "/readObject/vul", "vul-ReadObject-result", "get");
             common.selectListenFun("vul-ReadObject-select", "vul-ReadObject-input");
 
-            common.formListenFun("safe-ReadObject1-submit", "", "/readObject/safeReadObject1", "safe-ReadObject1-result", "get");
+            common.formListenFun("safe-ReadObject1-submit", "", "/readObject/safe1", "safe-ReadObject1-result", "get");
             common.selectListenFun("safe-ReadObject1-select", "safe-ReadObject1-input");
 
-            common.formListenFun("safe-ReadObject2-submit", "", "/readObject/safeReadObject2", "safe-ReadObject2-result", "get");
+            common.formListenFun("safe-ReadObject2-submit", "", "/readObject/safe2", "safe-ReadObject2-result", "get");
             common.selectListenFun("safe-ReadObject2-select", "safe-ReadObject2-input");
 
             var cmConfig = {

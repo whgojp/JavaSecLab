@@ -29,20 +29,21 @@ public class SnakeYamlController {
         return "vul/deserialize/snakeYaml";
     }
 
-    @RequestMapping("/vulSnakeYaml")
+    @RequestMapping("/vul")
     @ResponseBody
-    public R vulSnakeYaml(String payload) {
+    public R vul(String payload) {
         Yaml y = new Yaml();
         y.load(payload);
         return R.ok("[+]Java反序列化：SnakeYaml原生漏洞");
     }
 
-    @PostMapping("/safeSnakeYaml")
-    public R safeSnakeYaml(String payload) {
+    @PostMapping("/safe")
+    @ResponseBody
+    public R safe(String payload) {
         try {
             Yaml y = new Yaml(new SafeConstructor());
             y.load(payload);
-            return R.ok("[-]Java反序列化：SnakeYaml安全构造");
+            return R.ok("[+]Java反序列化：SnakeYaml安全构造");
         } catch (Exception e) {
             return R.error("[-]Java反序列化：SnakeYaml反序列化失败");
         }

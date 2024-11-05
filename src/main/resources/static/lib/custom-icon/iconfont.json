@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "5694709",
+      "name": "DOS攻击",
+      "font_class": "DOSgongji",
+      "unicode": "e646",
+      "unicode_decimal": 58950
+    },
+    {
       "icon_id": "3876218",
       "name": "origin",
       "font_class": "origin",

@@ -269,6 +269,12 @@
                   "target": "_self"
                 }
               ]
+            },
+            {
+              "title": "Dos攻击",
+              "href": "other/dos",
+              "icon": "iconfont icon-DOSgongji",
+              "target": "_self"
             }
           ]
         },

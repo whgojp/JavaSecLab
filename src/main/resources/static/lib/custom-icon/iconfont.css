@@ -1,6 +1,6 @@
 @font-face {
   font-family: "iconfont"; /* Project id 4658507 */
-  src: url('iconfont.woff2?t=1728298940524') format('woff2');
+  src: url('iconfont.woff2?t=1730127690071') format('woff2');
 }
 
 .iconfont {
@@ -9,6 +9,10 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-DOSgongji:before {
+  content: "\e646";
 }
 
 .icon-origin:before {

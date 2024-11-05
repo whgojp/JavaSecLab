@@ -14,7 +14,7 @@
                     <blockquote class="layui-elem-quote layui-quote-nm"
                                 style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
                         <p>
-                        <pre>   XMLDecoder是Java标准库中提供的一个类，用于将XML格式的数据反序列化为Java对象。它是JavaBeans机制的一部分，能够将符合JavaBeans规范的XML文件解析为Java对象</pre>
+                        <pre>  XMLDecoder是Java标准库中提供的一个类，用于将XML格式的数据反序列化为Java对象。它是JavaBeans机制的一部分，能够将符合JavaBeans规范的XML文件解析为Java对象</pre>
                         </p>
                     </blockquote>
                 </fieldset>
@@ -83,6 +83,70 @@
                 </div>
             </div>
 
+            <div class="layui-col-md12" style="margin-top: 10px">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-anquan"> 安全代码：使用SAX替换XMLDecoder</span></h1>
+                        <div class="layui-tab layui-tab-brief">
+                            <div class="layui-tab-content">
+                                <div class="layui-tab-item layui-show">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form"
+                                              style="display: flex; justify-content: space-between;">
+                                            <input type="text" name="payload" style="width: 450px;"
+                                                   value="open -a Calculator"
+                                                   class="layui-input" id="safe-XmlDecoder-input">
+                                            <div style="display: flex; align-items: center;">
+                                                <select class="layui-form-select" lay-filter="safe-XmlDecoder-select">
+                                                    <option value="">示例Payload</option>
+                                                    <option value="open -a Calculator">MAC弹计算器</option>
+                                                    <option value="cmd /c calc">
+                                                        WIN弹计算器
+                                                    </option>
+                                                </select>
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="safe-XmlDecoder-submit" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre style="color: #28333e;font-size: 15px;">SAX:事件驱动的特性和内存管理方式，更加安全，适合处理不受信任的数据
+XMLDecoder:由于反序列化过程的性质，存在较高的安全风险，建议仅在处理可信数据时使用</pre>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i>测试结果
+                                        </div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre id="safe-XmlDecoder-result" style="color: red;font-size: 15px;"></pre>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code"> 安全代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="safeXmlDecoder"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
 
         </div>
     </div>
@@ -103,10 +167,10 @@
             miniTab.listen();
             layer.msg("反序列化 - XmlDecoder");
 
-            common.formListenFun("vul-XmlDecoder-submit", "", "/xmlDecoder/vulXmlDecoder", "vul-XmlDecoder-result", "post");
+            common.formListenFun("vul-XmlDecoder-submit", "", "/xmlDecoder/vul", "vul-XmlDecoder-result", "post");
             common.selectListenFun("vul-XmlDecoder-select", "vul-XmlDecoder-input");
 
-            common.formListenFun("safe-XmlDecoder-submit", "", "/xmlDecoder/safeXmlDecoder", "safe-XmlDecoder-result", "post");
+            common.formListenFun("safe-XmlDecoder-submit", "", "/xmlDecoder/safe", "safe-XmlDecoder-result", "post");
             common.selectListenFun("safe-XmlDecoder-select", "safe-XmlDecoder-input");
 
             var cmConfig = {

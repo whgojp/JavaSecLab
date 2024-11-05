@@ -36,7 +36,7 @@ public class SPELController {
     @ResponseBody
     @ApiImplicitParam(name = "ex", value = "表达式", dataType = "String", paramType = "query", dataTypeClass = String.class)
     @GetMapping("/vul-raw")
-    public R spelVul(@ApiParam(name = "ex", value = "表达式", required = true) @RequestParam String ex) {
+    public R vul(@ApiParam(name = "ex", value = "表达式", required = true) @RequestParam String ex) {
         // 创建SpEL解析器，ExpressionParser接口用于表示解析器，SpelExpressionParser为默认实现
         ExpressionParser parser = new SpelExpressionParser();
 //        Expression expression = parser.parseExpression(ex);
@@ -47,20 +47,20 @@ public class SPELController {
         Expression exp = parser.parseExpression(ex);
         // 通过上下文计算表达式的值，并将结果转换为字符串
         String result = exp.getValue(evaluationContext).toString();
-        log.info("[漏洞代码]SPEL表达式注入："+ex);
+        log.info("[+]SPEL表达式注入："+ex);
         return R.ok(result);
     }
 
     @ResponseBody
     @ApiImplicitParam(name = "ex", value = "表达式", dataType = "String", paramType = "query", dataTypeClass = String.class)
     @GetMapping("/safe")
-    public R spelSafe(@ApiParam(name = "ex", value = "表达式", required = true) @RequestParam String ex) {
+    public R safe(@ApiParam(name = "ex", value = "表达式", required = true) @RequestParam String ex) {
         // 使用 SimpleEvaluationContext 限制表达式功能(Java类型引用、构造函数调用、Bean引用)，防止危险的操作
         ExpressionParser parser = new SpelExpressionParser();
         EvaluationContext simpleContext = SimpleEvaluationContext.forReadOnlyDataBinding().build();
         Expression exp = parser.parseExpression(ex);
         String result = exp.getValue(simpleContext).toString();
-        log.info("[安全代码]SPEL表达式注入："+ex);
+        log.info("[-]SPEL表达式注入："+ex);
         return R.ok(result);
     }
 

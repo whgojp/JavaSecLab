@@ -14,8 +14,8 @@
                     <blockquote class="layui-elem-quote layui-quote-nm"
                                 style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
                         <p>
-                        <pre>   SnakeYAML是一个用于解析和生成YAML格式数据的流行Java库，支持YAML1.1和1.2规范，能够实现YAML与Java对象之间的序列化和反序列化</pre>
-                        <pre>   漏洞原理：yaml反序列化时可以通过!!+全类名指定反序列化的类，反序列化过程中会实例化该类，可以通过构造ScriptEngineManager payload并利用SPI机制通过URLClassLoader或者其他payload如JNDI方式远程加载实例化恶意类从而实现任意代码执行</pre>
+                        <pre>  SnakeYAML是一个用于解析和生成YAML格式数据的流行Java库，支持YAML1.1和1.2规范，能够实现YAML与Java对象之间的序列化和反序列化</pre>
+                        <pre>  漏洞原理：yaml反序列化时可以通过!!+全类名指定反序列化的类，反序列化过程中会实例化该类，可以通过构造ScriptEngineManager payload并利用SPI机制通过URLClassLoader或者其他payload如JNDI方式远程加载实例化恶意类从而实现任意代码执行</pre>
                         </p>
                     </blockquote>
                 </fieldset>
@@ -30,7 +30,7 @@
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
                                         <p>   漏洞利用参考：<a target="_blank" href="https://github.com/artsploit/yaml-payload">https://github.com/artsploit/yaml-payload</a> </p>
-                                        <a target="_blank" href="/snakeYaml/vulSnakeYaml">
+                                        <a target="_blank" href="/snakeYaml/vul">
                                             <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
                                                 <span class="iconfont icon-zhihang">Run</span>
                                             </button>
@@ -73,7 +73,7 @@
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
                                         <p>使用SafeConstructor()进行安全构造</p>
-                                        <a target="_blank" href="/snakeYaml/safeSnakeYaml">
+                                        <a target="_blank" href="/snakeYaml/safe">
                                             <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
                                                 <span class="iconfont icon-zhihang">Run</span>
                                             </button>
@@ -122,12 +122,6 @@
 
             miniTab.listen();
             layer.msg("反序列化 - SnakeYaml");
-
-            common.formListenFun("vul-SnakeYaml-submit", "", "/snakeYaml/vulSnakeYaml", "vul-SnakeYaml-result", "post");
-            common.selectListenFun("vul-SnakeYaml-select", "vul-SnakeYaml-input");
-
-            common.formListenFun("safe-SnakeYaml-submit", "", "/snakeYaml/safeSnakeYaml", "safe-SnakeYaml-result", "post");
-            common.selectListenFun("safe-SnakeYaml-select", "safe-SnakeYaml-input");
 
             var cmConfig = {
                 lineNumbers: true,

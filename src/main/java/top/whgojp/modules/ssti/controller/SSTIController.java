@@ -41,7 +41,7 @@ public class SSTIController {
     @ApiOperation(value = "漏洞环境：Thymeleaf模板注入", notes = "如果参数未经过滤，攻击者可以注入恶意模板参数，执行任意代码。")
     @ApiImplicitParam(name = "para", value = "用户输入参数", dataType = "String", paramType = "query", dataTypeClass = String.class)
     @GetMapping("/vul1-thymeleaf")
-    public String sstiVul(@ApiParam(name = "para", value = "用户输入参数", required = true) @RequestParam String para, Model model) {
+    public String vul1(@ApiParam(name = "para", value = "用户输入参数", required = true) @RequestParam String para, Model model) {
 //        model.addAttribute("para", para);
 //        return "vul/ssti/vul"; // 将参数 para 传递到模板 "vul/ssti/template"
 
@@ -49,17 +49,17 @@ public class SSTIController {
         return "/vul/ssti/" + para;
     }
     @GetMapping("/vul2-thymeleaf/{path}")
-    public void sstiVul2(@PathVariable String path) {
+    public void vul2(@PathVariable String path) {
         log.info("SSTI注入："+path);
     }
     @GetMapping("/vul3-thymeleaf")
-    public String sstiVul3(@ApiParam(name = "para", value = "用户输入参数", required = true) @RequestParam String para, Model model) {
+    public String vul3(@ApiParam(name = "para", value = "用户输入参数", required = true) @RequestParam String para, Model model) {
         model.addAttribute("templateContent", para);
         return "vul/ssti/vul"; // 将参数 para 传递到模板 "vul/ssti/vul"
     }
 
     @GetMapping("/safe-thymeleaf")
-    public String sstiSafe(@ApiParam(name = "para", value = "用户输入参数", required = true) @RequestParam String para, Model model) {
+    public String safe1(@ApiParam(name = "para", value = "用户输入参数", required = true) @RequestParam String para, Model model) {
         List<String> white_list = new ArrayList<>(Arrays.asList("vul", "ssti"));
         if (white_list.contains(para)){
             return "vul/ssti" + para;
@@ -68,7 +68,7 @@ public class SSTIController {
         }
     }
     @GetMapping("/safe2/{path}")
-    public void sstiSafe2(@PathVariable String path, HttpServletResponse response) {
+    public void safe2(@PathVariable String path, HttpServletResponse response) {
         log.info("SSTI注入："+path);
     }
 

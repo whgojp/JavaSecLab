@@ -9,17 +9,18 @@
             <div class="layui-col-md12">
                 <fieldset class="layui-elem-field layui-field-title">
                     <legend>
-                        <a style="color: rgb(30 159 255)" class="fastjson">组件漏洞 - Jackson反序列化</a>
+                        <a style="color: rgb(30 159 255)" class="jackson">组件漏洞 - Jackson反序列化</a>
                     </legend>
                     <blockquote class="layui-elem-quote layui-quote-nm"
                                 style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
                         <p>
-                        <pre>   Jackson是一个强大而高效的Java库，类似于Fastjson，可以方便地在Java对象和JSON之间进行转换</pre>
-                        <pre>   在Jackson 2.9及之前版本中，启用Default Typing或使用@JsonTypeInfo注解时，存在反序列化漏洞的风险</pre>
+                        <pre>  Jackson是一个强大而高效的Java库，类似于Fastjson，可以方便地在Java对象和JSON之间进行转换</pre>
+                        <pre>  在Jackson 2.9及之前版本中，启用Default Typing或使用@JsonTypeInfo注解时，存在反序列化漏洞的风险</pre>
                         </p>
                     </blockquote>
                 </fieldset>
             </div>
+
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
@@ -28,40 +29,14 @@
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
-                                        <form class="layui-form" id="vul-form"
-                                              style="display: flex; justify-content: space-between;">
-                                            <input type="text" style="width: 450px;"
-                                                   value='{"test":{"@type":"java.net.Inet4Address","val":"dnslog.com"}}'
-                                                   autocomplete="off"
-                                                   class="layui-input" id="vul-input">
-                                            <div style="display: flex; align-items: center;">
-                                                <button class="layui-btn layui-btn-normal"
-                                                        style="width: 100px; margin-left: 10px;"
-                                                        lay-filter="vul-fastjson-submit" lay-submit="">
-                                                    <span class="iconfont icon-zhihang">Run</span>
-                                                </button>
-                                            </div>
-                                        </form>
+                                        <p>点击跳转后需要自行构造触发payload</p>
+                                        <a target="_blank" href='/jackson/vul'>
+                                            <button class="layui-btn layui-btn-normal"
+                                                    style="width: 100px; margin-left: 10px;">
+                                                <span class="iconfont icon-zhihang">Run</span>
+                                            </button>
+                                        </a>
                                     </blockquote>
-                                </div>
-
-                                <div class="layui-col-md12">
-                                    <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
-                                        <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">   这里通过DNS盲打来检测应用是否存在Fastjson反序列化漏洞(不代表漏洞可以被利用)。具体利用通常需要借助RMI、JNDI等协议，攻击者通过这些协议可以进一步触发远程代码执行等攻击行为</pre>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="layui-col-md12">
-                                    <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i>测试结果
-                                        </div>
-                                        <div class="layui-card-body layui-text layadmin-text">
-                                            <pre id="vul-fastjson" style="color: red;font-size: 15px;"></pre>
-                                        </div>
-                                    </div>
                                 </div>
 
                             </div>
@@ -71,7 +46,7 @@
                     <div class="layui-col-md6">
                         <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
-                            <div class="code-editor" id="vulFastjson"></div>
+                            <div class="code-editor" id="vulJackson"></div>
                         </div>
                     </div>
                 </div>
@@ -79,25 +54,18 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-anquan"> 安全环境</span></h1>
+                        <h1><span class="iconfont icon-anquan"> 安全环境：禁止开启DefaultTyping</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
-                                        <form class="layui-form" id="safe-fastjson-form"
-                                              style="display: flex; justify-content: space-between;">
-                                            <input type="text" style="width: 450px;"
-                                                   value='{"test":{"@type":"java.net.Inet4Address","val":"dnslog.com"}}'
-                                                   autocomplete="off"
-                                                   class="layui-input" id="safe-fastjson-input">
-                                            <div style="display: flex; align-items: center;">
-                                                <button class="layui-btn layui-btn-normal"
-                                                        style="width: 100px; margin-left: 10px;"
-                                                        lay-filter="safe-fastjson-submit" lay-submit="">
-                                                    <span class="iconfont icon-zhihang">Run</span>
-                                                </button>
-                                            </div>
-                                        </form>
+                                        <p>禁止开启DefaultTyping功能</p>
+                                        <a target="_blank" href='/jackson/safe'>
+                                            <button class="layui-btn layui-btn-normal"
+                                                    style="width: 100px; margin-left: 10px;">
+                                                <span class="iconfont icon-zhihang">Run</span>
+                                            </button>
+                                        </a>
                                     </blockquote>
                                 </div>
 
@@ -105,21 +73,9 @@
                                     <div class="layui-card">
                                         <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">安全编码规范:
-    1、升级版本至1.2.83及以上
-    2、禁用AutoType或者是设置特定类白名单进行反序列化
-    3、使用SafeMode模式
-    4、使用@JSONType注解限制类的反序列化</pre>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="layui-col-md12">
-                                    <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i>测试结果
-                                        </div>
-                                        <div class="layui-card-body layui-text layadmin-text">
-                                            <pre id="safe-fastjson" style="color: red;font-size: 15px;"></pre>
+                                            <pre style="color: #28333e;font-size: 15px;">安全编码规范：
+  1、升级方案：升级Jackson组件到或最新版本
+  2、非升级修复：1.4.10后可启动默认安全配置 setupDefaultSecurity()</pre>
                                         </div>
                                     </div>
                                 </div>
@@ -131,7 +87,7 @@
                     <div class="layui-col-md6">
                         <h1><span class="iconfont icon-code"> 安全代码</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
-                            <div class="code-editor" id="safeFastjson"></div>
+                            <div class="code-editor" id="safeJackson"></div>
                         </div>
                     </div>
                 </div>
@@ -178,50 +134,15 @@
                 mode: "text/x-java"
             };
 
-            CodeMirror(document.getElementById("vulFastjson"), Object.assign({}, cmConfig, {
-                value: vulFastjson
+            CodeMirror(document.getElementById("vulJackson"), Object.assign({}, cmConfig, {
+                value: vulJackson
             }));
-            CodeMirror(document.getElementById("safeFastjson"), Object.assign({}, cmConfigSafe, {
-                value: safeFastjson
+            CodeMirror(document.getElementById("safeJackson"), Object.assign({}, cmConfigSafe, {
+                value: safeJackson
             }));
-
-            // 表单提交的通用函数
-            function handleFormSubmit(url, inputSelector, outputSelector) {
-                var content = $(inputSelector).val();
-                if (content.length === 0) {
-                    layer.msg("输入内容不能为空！");
-                    return false; // 阻止表单提交
-                }
-
-                $.ajax({
-                    url: url,
-                    type: "POST",
-                    contentType: "application/json",
-                    data: content, // 直接发送输入的内容
-                    success: function (result) {
-                        console.log(result)
-                        $(outputSelector).empty();
-                        $(outputSelector).append(result);
-                    },
-                    error: function () {
-                        layer.alert("请求发送失败！");
-                    },
-                });
-
-                return false; // 阻止表单默认提交行为
-            }
-
-            form.on('submit(vul-fastjson-submit)', function (data) {
-                return handleFormSubmit("[[@{/fastjson/vul}]]", "#vul-input", "#vul-fastjson");
-            });
-
-            form.on('submit(safe-fastjson-submit)', function (data) {
-                return handleFormSubmit("[[@{/fastjson/safe}]]", "#safe-fastjson-input", "#safe-fastjson");
-            });
-
         });
 
-        $('.fastjson').hover(function () {
+        $('.jackson').hover(function () {
             $(this).css('cursor', 'pointer');
             layer.tips('攻击流程图', this, {
                 tips: [1, '#0051ff'],
@@ -229,7 +150,7 @@
             });
         });
 
-        $('.fastjson').on('click', function () {
+        $('.jackson').on('click', function () {
             layer.open({
                 type: 1,
                 title: false,

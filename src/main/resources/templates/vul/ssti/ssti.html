@@ -13,7 +13,7 @@
                                 style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
                         <p>
                         <pre>   SSTI(Server Side Template Injection)：模板引擎是一种通过将模板中的占位符替换为实际数据来动态生成内容的工具，如HTML页面、邮件等。它简化了视图层的设计，但如果未对用户输入进行有效校验，可能导致安全风险如任意代码执行</pre>
-                        <pre>   Java中常用的模板引擎有Freemarker、Velocity、Thymeleaf等</pre>
+                        <pre>   Java中常用的模板引擎有Freemarker、Velocity、Thymeleaf等,在这里以Thymeleaf引擎为例</pre>
                         </p>
                     </blockquote>
                 </fieldset>
@@ -87,7 +87,7 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-bug"> 漏洞环境：thymeleaf模版注入</span></h1>
+                        <h1><span class="iconfont icon-anquan"> 安全代码：thymeleaf模版注入</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <ul class="layui-tab-title">
                                 <li class="layui-this">白名单</li>
@@ -97,7 +97,7 @@
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
-                                        <p>白名单过滤</p>
+                                        <p>基于白名单的路径校验</p>
                                         <a target="_blank" href="/ssti/safe-thymeleaf?para=__$%7bnew%20java.util.Scanner(T(java.lang.Runtime).getRuntime().exec(%27id%27).getInputStream()).next()%7d__::.x">
                                             <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
                                                 <span class="iconfont icon-zhihang">Run</span>
@@ -108,7 +108,7 @@
 
                                 <div class="layui-tab-item">
                                     <blockquote class="layui-elem-quote main_btn">
-                                        <p>将参数设置为HttpServletResponse后,不会发生视图名称解析</p>
+                                        <p>控制器返回为void，方法参数设置为HttpServletResponse后,Spring MVC会跳过视图解析过程</p>
                                         <a target="_blank" href="ssti/safe2/__$%7bnew%20java.util.Scanner(T(java.lang.Runtime).getRuntime().exec(%27id%27).getInputStream()).next()%7d__::.x">
                                             <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
                                                 <span class="iconfont icon-zhihang">Run</span>
@@ -122,9 +122,10 @@
                                         <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
                                         <div class="layui-card-body layui-text layadmin-text">
                                             <pre style="color: #28333e;font-size: 15px;">安全编码规范：
-	1、使用@ResponseBody或@RestController修饰
-	2、使用redirect:或forward:修饰
-	3、设置为HttpServletResponse</pre>
+  1、避免用户输入直接作为模板名称或路径
+  2、对所有动态内容进行严格校验和转义，包括模板变量
+  3、选择支持自动转义的安全模板引擎（如Thymeleaf的th:text）
+  4、使用白名单限制动态渲染的模板，控制可访问的模板范围</pre>
                                         </div>
                                     </div>
                                 </div>
@@ -134,7 +135,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
+                        <h1><span class="iconfont icon-code"> 安全代码</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="sstiSafe"></div>
                         </div>

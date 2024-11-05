@@ -30,9 +30,9 @@ public class ReadObjectController {
         return "vul/deserialize/readObject";
     }
 
-    @RequestMapping("/vulReadObject")
+    @RequestMapping("/vul")
     @ResponseBody
-    public R vulReadObject(String payload) {
+    public R vul(String payload) {
         System.setProperty("org.apache.commons.collections.enableUnsafeSerialization", "true");
         log.info("Java反序列化："+payload);
         try {
@@ -47,9 +47,9 @@ public class ReadObjectController {
             return R.error("[-]请输入正确的Payload！\n"+e.getMessage());
         }
     }
-    @RequestMapping("/safeReadObject1")
+    @RequestMapping("/safe1")
     @ResponseBody
-    public R safeReadObject1(String payload) {
+    public R safe1(String payload) {
         // 安全措施：禁用不安全的反序列化
         System.setProperty("org.apache.commons.collections.enableUnsafeSerialization", "false");
         log.info("Java反序列化："+payload);
@@ -65,9 +65,9 @@ public class ReadObjectController {
             return R.error("[-]请输入正确的Payload！\n"+e.getMessage());
         }
     }
-    @RequestMapping("/safeReadObject2")
+    @RequestMapping("/safe2")
     @ResponseBody
-    public R safeReadObject2(String payload) {
+    public R safe2(String payload) {
         log.info("Java反序列化："+payload);
         try {
             payload = payload.replace(" ", "+");

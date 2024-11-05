@@ -3,13 +3,12 @@ package top.whgojp.common.config;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.*;
 import top.whgojp.common.constant.SysConstant;
 
 /**
- * @description <功能描述>
+ * @description 自定义静态资源的访问路径、文件映射
  * @author: whgojp
  * @email: whgojp@foxmail.com
  * @Date: 2024/5/23 18:58

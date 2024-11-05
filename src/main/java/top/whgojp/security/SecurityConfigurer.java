@@ -74,6 +74,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
         permitAll.add(SysConstant.LOGIN_PROCESS);
         permitAll.add(SysConstant.LOGOUT_URL);
         permitAll.add(SysConstant.JWT_AUTH);
+        permitAll.add("/eureka/**");
         permitAll.add("/file/**");
         permitAll.add("/static/images/**");
         permitAll.add("/static/lib/**");

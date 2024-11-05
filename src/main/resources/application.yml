@@ -7,7 +7,7 @@ server:
 spring:
   # 环境 dev|docker
   profiles:
-    active: dev
+    active: docker
   thymeleaf:
     mode: LEGACYHTML5 #模板类型
     cache: false #缓存

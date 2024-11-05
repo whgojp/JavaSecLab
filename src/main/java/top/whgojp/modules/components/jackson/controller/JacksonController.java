@@ -28,46 +28,43 @@ public class JacksonController {
         return "vul/components/jackson";
     }
 
-    @PostMapping("/vul")
-    @ResponseBody
-    public String vulJackson(@RequestBody String content) {
+    @RequestMapping("/vul")
+    public String vul(@RequestBody String content) {
         try {
-            return new ObjectMapper()
-                    .enableDefaultTyping()
-                    .writeValueAsString(
-                            new ObjectMapper().enableDefaultTyping().readValue(content, Object.class)
-                    );
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.enableDefaultTyping(); // 启用多态类型处理
+
+            // 反序列化接收的JSON数据，触发漏洞
+            Object obj = mapper.readValue(content, Object.class);
+            return "[+]Jackson 反序列化: " + obj.toString();
         } catch (Exception e) {
-            return "Jackson RCE Error";
+            e.printStackTrace();
+            return "[-]Jackson反序列化失败";
         }
     }
 
 
     @PostMapping("/safe")
     @ResponseBody
-    public String safeJackson(@RequestBody String content) {
+    public String safeJackson(@RequestBody String payload) {
         try {
-            // 使用安全的 ObjectMapper 配置
             ObjectMapper mapper = new ObjectMapper();
-            // 禁用潜在的危险功能
-            mapper.disableDefaultTyping();
-            // 安全配置：只允许反序列化指定类型（如自定义的类或简单数据类型）
+
+            // 启用安全的类型验证
             mapper.activateDefaultTyping(
                     LaissezFaireSubTypeValidator.instance,
                     ObjectMapper.DefaultTyping.NON_FINAL
             );
-            // 示例：仅允许特定的受信任类反序列化（可以根据需求自定义）
             mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
 
-            // 将 JSON 字符串安全地反序列化为指定的 POJO 类型
-            Map<String, Object> safePayload = mapper.readValue(content, new TypeReference<Map<String, Object>>() {});
+            // 反序列化传入的JSON数据
+            Map<String, Object> safePayload = mapper.readValue(payload, Map.class);
             return mapper.writeValueAsString(safePayload);
         } catch (Exception e) {
             e.printStackTrace();
             return "Jackson Safe Deserialization Error";
         }
     }
-
 
 
     /**
