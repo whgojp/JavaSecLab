@@ -17,7 +17,6 @@
 
 ![show](./pic/show.png)
 
-![show](./pic/show2.png)
 
 ## 面向人群
 
