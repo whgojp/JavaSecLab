@@ -4,7 +4,7 @@
 <p align="center">
 <a href="https://www.apache.org/licenses/LICENSE-2.0.html"><img src="https://img.shields.io/github/license/alibaba/transmittable-thread-local?color=4D7A97&logo=apache" alt="License"></a>
 <img src="https://img.shields.io/badge/Release-DEV-brightgreen.svg" alt="Release">
-<a href="https://github.com/whgojp/JavaSecLab"><img src="https://img.shields.io/badge/Version-1.0-red.svg" alt="Version"></a>
+<a href="https://github.com/whgojp/JavaSecLab"><img src="https://img.shields.io/badge/Version-1.1-red.svg" alt="Version"></a>
 <a href="https://blog.csdn.net/weixin_53009585"><img src="https://img.shields.io/badge/Developed%20by-whgojp-blue.svg" alt="Developed by whgojp"></a>
 </p>
 
