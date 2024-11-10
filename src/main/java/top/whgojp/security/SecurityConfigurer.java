@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
 import org.springframework.web.cors.CorsConfiguration;
@@ -20,7 +21,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import top.whgojp.common.config.AuthIgnoreConfig;
 import top.whgojp.common.constant.SysConstant;
 import top.whgojp.common.filter.ValidateCodeFilter;
-import top.whgojp.common.push.service.EmailPush;
 import top.whgojp.security.detail.CustomUserDetailsService;
 import top.whgojp.security.handler.CustomLogoutSuccessHandler;
 import top.whgojp.security.handler.CustomSavedRequestAwareAuthenticationSuccessHandler;
@@ -43,8 +43,6 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Autowired
     private CustomSessionInformationExpiredStrategy sessionInformationExpiredStrategy;
 
-    @Autowired
-    private EmailPush emailPush;
 
     @Bean
     @Override
@@ -101,7 +99,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 //        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
         // 如果不需要验证码校验登录 可以注释掉该行
-//        http.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class);
 
         // 如果不用验证码，注释这个过滤器即可
 //        http.addFilterAt(usernamePasswordAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
@@ -154,7 +152,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     public AuthenticationSuccessHandler authenticationSuccessHandler() {
         CustomSavedRequestAwareAuthenticationSuccessHandler customSavedRequestAwareAuthenticationSuccessHandler = new CustomSavedRequestAwareAuthenticationSuccessHandler();
         customSavedRequestAwareAuthenticationSuccessHandler.setDefaultTargetUrl("/index");
-        customSavedRequestAwareAuthenticationSuccessHandler.setEmailPush(emailPush);
+//        customSavedRequestAwareAuthenticationSuccessHandler.setEmailPush(emailPush);
 //        customSavedRequestAwareAuthenticationSuccessHandler.setSmsService(smsService);
 //        customSavedRequestAwareAuthenticationSuccessHandler.setWeChatService(wechatService);
         return customSavedRequestAwareAuthenticationSuccessHandler;
@@ -169,7 +167,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     public LogoutSuccessHandler customLogoutSuccessHandler() {
         CustomLogoutSuccessHandler customLogoutSuccessHandler = new CustomLogoutSuccessHandler();
         customLogoutSuccessHandler.setDefaultTargetUrl(SysConstant.LOGIN_URL);
-        customLogoutSuccessHandler.setEmailPush(emailPush);
+//        customLogoutSuccessHandler.setEmailPush(emailPush);
 
         return customLogoutSuccessHandler;
     }
@@ -177,7 +175,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     public AuthenticationFailureHandler customSimpleUrlAuthenticationFailureHandler() {
         CustomSimpleUrlAuthenticationFailureHandler customSimpleUrlAuthenticationFailureHandler = new CustomSimpleUrlAuthenticationFailureHandler();
         customSimpleUrlAuthenticationFailureHandler.setDefaultFailureUrl(SysConstant.LOGIN_URL);
-        customSimpleUrlAuthenticationFailureHandler.setEmailPush(emailPush);
+//        customSimpleUrlAuthenticationFailureHandler.setEmailPush(emailPush);
 
         return customSimpleUrlAuthenticationFailureHandler;
     }

@@ -35,9 +35,9 @@ public class DirTraversalController {
         return "vul/infoleak/dirTraversal";
     }
 
-    @GetMapping("/listdir")
+    @GetMapping("/vul")
     @ResponseBody
-    public String listDirectory(@RequestParam String dir) {
+    public String vul(@RequestParam String dir) {
         String staticFolderPath = sysConstant.getStaticFolder();
         File baseDir = new File(staticFolderPath);
         File requestedDir = new File(baseDir, dir);
@@ -91,10 +91,10 @@ public class DirTraversalController {
         return response.toString();
     }
 
-    @GetMapping("/safe1listdir")
+    @GetMapping("/safe1")
     @ResponseBody
     @SneakyThrows
-    public String safe1ListDirectory(@RequestParam String dir) {
+    public String safe1(@RequestParam String dir) {
         String staticFolderPath = sysConstant.getStaticFolder();
         File baseDir = new File(staticFolderPath);
 
@@ -155,9 +155,9 @@ public class DirTraversalController {
         response.append("</html>");
         return response.toString();
     }
-    @GetMapping("/safe2listdir")
+    @GetMapping("/safe2")
     @ResponseBody
-    public String safe2ListDirectory(@RequestParam String dir) {
+    public String safe2(@RequestParam String dir) {
         String staticFolderPath = sysConstant.getStaticFolder();
         File baseDir = new File(staticFolderPath);
         File requestedDir = new File(baseDir, dir);

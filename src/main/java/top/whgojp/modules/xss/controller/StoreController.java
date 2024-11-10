@@ -46,10 +46,10 @@ public class StoreController extends AbstractController{
     }
 
     @ApiOperation(value = "漏洞环境：原生无过滤", notes = "原生漏洞环境,未加任何过滤，将用户输入存储到数据库中")
-    @RequestMapping("/vul1StoreRaw")
+    @RequestMapping("/vul")
     @ResponseBody
     @ApiImplicitParam(name = "content", value = "请求参数", dataType = "String", paramType = "query", dataTypeClass = String.class)
-    public R vul1StoreRaw(@ApiParam(name = "content", value = "请求参数", required = true) @RequestParam String content,HttpServletRequest request) {
+    public R vul(@ApiParam(name = "content", value = "请求参数", required = true) @RequestParam String content,HttpServletRequest request) {
         log.info("存储型XSS：" + content);
         String ua = request.getHeader("User-Agent");
         final int code = xssService.insertOne(content,ua);

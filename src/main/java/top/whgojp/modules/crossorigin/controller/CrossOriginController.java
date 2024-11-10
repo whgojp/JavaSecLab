@@ -1,4 +1,4 @@
-package top.whgojp.modules.other.controller;
+package top.whgojp.modules.crossorigin.controller;
 
 import io.jsonwebtoken.io.IOException;
 import io.swagger.annotations.Api;
@@ -18,19 +18,19 @@ import javax.servlet.http.HttpServletResponse;
  * @Date: 2024/6/6 20:46
  */
 @Slf4j
-@Api(value = "CrossOriginController", tags = "其他漏洞-CORS")
+@Api(value = "CrossOriginController", tags = "跨域安全问题")
 @Controller
 //@CrossOrigin(origins = "*")
-@RequestMapping("/other/CrossOrigin")
+@RequestMapping("/crossorigin")
 public class CrossOriginController {
 
     @RequestMapping("/cors")
     public String cors() {
-        return "vul/other/cors";
+        return "vul/crossorigin/cors";
     }
     @RequestMapping("/jsonp")
     public String jsonp() {
-        return "vul/other/jsonp";
+        return "vul/crossorigin/jsonp";
     }
 
     @GetMapping("/corsVul")

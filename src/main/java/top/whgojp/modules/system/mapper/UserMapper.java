@@ -19,6 +19,11 @@ public interface UserMapper extends BaseMapper<User> {
 
     int updatePasswordByUsername(@Param("username") String username,@Param("password") String password);
 
+    // 水平越权
+    User getAllByUsername(@Param("username") String username);
+
+    // 垂直越权
+
 }
 
 

@@ -34,10 +34,10 @@ public class DeleteController {
     }
 
     @ApiOperation(value = "漏洞环境：任意文件删除", notes = "原生漏洞环境，未做任何限制")
-    @RequestMapping("/deleteFile")
+    @RequestMapping("/vul")
     @ResponseBody
     @SneakyThrows
-    public String vulArbitraryFileDeletion(@RequestParam("filePath") String filePath) {
+    public String vul(@RequestParam("filePath") String filePath) {
         String currentPath = System.getProperty("user.dir");
         log.info("当前路径："+currentPath);
         File file = new File(filePath);
@@ -55,10 +55,10 @@ public class DeleteController {
     @Autowired
     private SysConstant sysConstant;
     @ApiOperation(value = "安全环境：限制文件删除", notes = "仅允许删除特定目录中的文件")
-    @RequestMapping("/safeDeleteFile")
+    @RequestMapping("/safe")
     @ResponseBody
     @SneakyThrows
-    public String safeFileDelete(@RequestParam("fileName") String fileName) {
+    public String safe(@RequestParam("fileName") String fileName) {
         String baseDir = sysConstant.getUploadFolder(); // 限制删除文件所在目录为 /static/upload/下
         File file = new File(baseDir, fileName);
         boolean deleted = false;

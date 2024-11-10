@@ -33,10 +33,10 @@ public class SsrfController {
     }
 
     @ApiOperation(value = "漏洞环境：服务端请求伪造", notes = "原生漏洞环境，未做任何限制，可调用URLConnection发起任意请求，探测内网服务、读取文件")
-    @GetMapping("/vul1-URLConnection")
+    @GetMapping("/vul")
     @ResponseBody
     @ApiImplicitParam(name = "url", value = "请求参数", dataType = "String", paramType = "query", dataTypeClass = String.class)
-    public String vul1URLConnection(@ApiParam(name = "url", value = "请求参数", required = true) @RequestParam String url) {
+    public String vul(@ApiParam(name = "url", value = "请求参数", required = true) @RequestParam String url) {
         try {
             URL u = new URL(url);
             URLConnection conn = u.openConnection();    // 这里以URLConnection作为演示
@@ -59,10 +59,10 @@ public class SsrfController {
     private CheckUserInput checkUserInput;
 
     @ApiOperation(value = "安全代码：请求白名单过滤", notes = "判断协议，对请求URL做白名单过滤")
-    @GetMapping("/safe1-WhiteList")
+    @GetMapping("/safe")
     @ResponseBody
     @ApiImplicitParam(name = "url", value = "请求参数", dataType = "String", paramType = "query", dataTypeClass = String.class)
-    public String safe1WhiteList(@ApiParam(name = "url", value = "请求参数", required = true) @RequestParam String url) {
+    public String safe(@ApiParam(name = "url", value = "请求参数", required = true) @RequestParam String url) {
         if (!checkUserInput.isHttp(url)) {
             return "检测到不是http(s)协议！";
         } else if (!checkUserInput.ssrfWhiteList(url)) {

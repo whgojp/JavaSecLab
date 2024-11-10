@@ -21,7 +21,7 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-anquan"> 安全代码：用户输入验证和过滤</span></h1>
+                        <h1><span class="iconfont icon-anquan"> 安全环境：用户输入验证和过滤</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <ul class="layui-tab-title">
                                 <li class="layui-this">前端白名单</li>
@@ -105,7 +105,7 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-anquan"> 安全代码：内容安全策略-CSP防护</span></h1>
+                        <h1><span class="iconfont icon-anquan"> 安全环境：内容安全策略-CSP防护</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <ul class="layui-tab-title">
                                 <li class="layui-this">前端Meta配置</li>
@@ -126,7 +126,7 @@
                                 <div class="layui-tab-item">
                                     <blockquote class="layui-elem-quote main_btn">
                                         <p>后端通过配置Content-Security-Policy响应头</p>
-                                        <a target="_blank" href="/xss/reflect/safe2CSP?content=可结合响应包分析🤔️123<u>A</u>123<script>alert(/xss/)</script>123">
+                                        <a target="_blank" href="/xss/reflect/safe2?content=可结合响应包分析🤔️123<u>A</u>123<script>alert(/xss/)</script>123">
                                             <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
                                                 <span class="iconfont icon-zhihang">Run</span>
                                             </button>
@@ -165,7 +165,7 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-anquan"> 安全代码：特殊字符实体转义</span></h1>
+                        <h1><span class="iconfont icon-anquan"> 安全环境：特殊字符实体转义</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <ul class="layui-tab-title">
                                 <li class="layui-this">Manual自定义</li>
@@ -251,7 +251,7 @@ PS：这里前端实体编码Demo放到了存储型XSS模块中
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-anquan"> 安全代码：HttpOnly配置</span></h1>
+                        <h1><span class="iconfont icon-anquan"> 安全环境：HttpOnly配置</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
@@ -333,15 +333,15 @@ PS：这里前端实体编码Demo放到了存储型XSS模块中
         layer.msg("跨站脚本-反射型");
 
         // 提交前做个前端校验 校验成功才发送请求
-        common.formListenFun("safe1-CheckUserInput-front", "frontEnd", "/xss/reflect/safe1CheckUserInput", "safe1-CheckUserInput-result", "get");
-        common.formListenFun("safe1-CheckUserInput-back", "backEnd", "/xss/reflect/safe1CheckUserInput", "safe1-CheckUserInput-result", "get");
+        common.formListenFun("safe1-CheckUserInput-front", "frontEnd", "/xss/reflect/safe1", "safe1-CheckUserInput-result", "get");
+        common.formListenFun("safe1-CheckUserInput-back", "backEnd", "/xss/reflect/safe1", "safe1-CheckUserInput-result", "get");
         common.selectListenFun("safe1-CheckUserInput-front", "safe1-CheckUserInput-front-input");
 
-        common.formListenFun("safe3-EntityEscape", "manual", "/xss/reflect/safe3EntityEscape", "safe3-EntityEscape-result", "get");
-        common.formListenFun("safe3-EntityEscape", "spring", "/xss/reflect/safe3EntityEscape", "safe3-EntityEscape-result", "get");
+        common.formListenFun("safe3-EntityEscape", "manual", "/xss/reflect/safe3", "safe3-EntityEscape-result", "get");
+        common.formListenFun("safe3-EntityEscape", "spring", "/xss/reflect/safe3", "safe3-EntityEscape-result", "get");
         common.selectListenFun("safe3-EntityEscape", "safe3-EntityEscape-input");
 
-        common.formListenFun("safe4-HttpOnly", "", "/xss/reflect/safe4HttpOnly", "safe4-HttpOnly-result", "get");
+        common.formListenFun("safe4-HttpOnly", "", "/xss/reflect/safe4", "safe4-HttpOnly-result", "get");
         common.selectListenFun("safe4-HttpOnly", "safe4-HttpOnly-input");
 
         var cmConfigSafe = {

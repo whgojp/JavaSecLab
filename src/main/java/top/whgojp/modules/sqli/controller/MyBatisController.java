@@ -42,7 +42,7 @@ public class MyBatisController {
     }
 
     @ApiOperation(value = "安全代码：MyBatis-正常业务场景代码-原生方法", notes = "简单业务场景代码-增删改查使用MyBatis自带方法")
-    @PostMapping("/safe1-nativeMethod")
+    @PostMapping("/safe1")
     @ResponseBody
     @ApiImplicitParams({
             @ApiImplicitParam(name = "type", value = "操作类型", required = true, dataType = "String", paramType = "query", dataTypeClass = String.class),
@@ -50,7 +50,7 @@ public class MyBatisController {
             @ApiImplicitParam(name = "username", value = "用户名", required = false, dataType = "String", paramType = "query", dataTypeClass = String.class),
             @ApiImplicitParam(name = "password", value = "密码", required = false, dataType = "String", paramType = "query", dataTypeClass = String.class)
     })
-    public R safe1NativeMethod(
+    public R safe1(
             @ApiParam(name = "type", value = "操作类型", required = true) @RequestParam String type,
             @ApiParam(name = "id", value = "用户ID") @RequestParam(required = false) Integer id,
             @ApiParam(name = "username", value = "用户名") @RequestParam(required = false) String username,
@@ -97,7 +97,7 @@ public class MyBatisController {
 
     // 简单的业务可以还可以使用自带的方法 当业务复杂时 需要自定义sql语句 就有可能存在sql注入
     @ApiOperation(value = "安全代码：MyBatis-正常业务场景代码-自定义方法", notes = "复杂业务场景代码-增删改查使用自定义方法")
-    @PostMapping("/safe2-customMethod")
+    @PostMapping("/safe2")
     @ResponseBody
     @ApiImplicitParams({
             @ApiImplicitParam(name = "type", value = "操作类型", required = true, dataType = "String", paramType = "query", dataTypeClass = String.class),
@@ -105,7 +105,7 @@ public class MyBatisController {
             @ApiImplicitParam(name = "username", value = "用户名", required = false, dataType = "String", paramType = "query", dataTypeClass = String.class),
             @ApiImplicitParam(name = "password", value = "密码", required = false, dataType = "String", paramType = "query", dataTypeClass = String.class)
     })
-    public R safe2CustomMethod(
+    public R safe2(
             @ApiParam(name = "type", value = "操作类型", required = true) @RequestParam String type,
             @ApiParam(name = "id", value = "用户ID") @RequestParam(required = false) Integer id,
             @ApiParam(name = "username", value = "用户名") @RequestParam(required = false) String username,

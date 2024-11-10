@@ -12,10 +12,8 @@
                     <blockquote class="layui-elem-quote layui-quote-nm"
                                 style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
                         <p>
-                        <pre>   SQL 注入是一种常见的 Web 应用程序安全漏洞，攻击者利用这种漏洞通过在输入字段中插入恶意 SQL 语句来执行非授权的数据库操作。这可能导致数据泄露、数据损坏或者完整性受损。</pre>
-                        </p>
-                        <p>
-                        <pre>   JDBC（Java Database Connectivity）是一套用于在 Java 程序中操作关系型数据库的 API。它提供了一种标准的 Java 方法来连接和执行 SQL 查询，从而实现与数据库的交互。</pre>
+                        <pre>  SQL注入是一种常见的Web应用程序安全漏洞，攻击者利用这种漏洞通过在输入字段中插入恶意SQL语句来执行非授权的数据库操作。这可能导致数据泄露、数据损坏或者完整性受损</pre>
+                        <pre>  JDBC(Java Database Connectivity)是一套用于在Java程序中操作关系型数据库的API。它提供了一种标准的Java方法来连接和执行SQL查询，从而实现与数据库的交互</pre>
                         </p>
                     </blockquote>
                 </fieldset>
@@ -45,7 +43,7 @@
                                                 <select class="layui-form-select"
                                                         style="background-color: #5eb878;!important;" lay-filter="special1-OrderBy-raw-select">
                                                     <option value="">示例Payload</option>
-                                                    <option value="(SELECT (CASE WHEN (3713=3713) THEN 0x757365726e616d65 ELSE (SELECT 4750 UNION SELECT 2020) END))">布尔注入</option>
+                                                    <option value="(SELECT (CASE WHEN (3713=3714) THEN 0x757365726e616d65 ELSE (SELECT 4750 UNION SELECT 2020) END))">布尔注入</option>
                                                     <option value="username;SELECT SLEEP(5)#">延时注入</option>
                                                     <option value="username;SELECT SLEEP(5)#">堆叠注入</option>
                                                     <option value="username and updatexml(1,concat(0x7e,(SELECT user()),0x7e),1)#">xpath注入</option>
@@ -127,7 +125,7 @@ SQL语句执行顺序:
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code">  相关代码</span></h1>
+                        <h1><span class="iconfont icon-code">  漏洞代码</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="special1OrderBy">
                             </div>
@@ -151,7 +149,7 @@ SQL语句执行顺序:
                                         <form class="layui-form" style="display: flex; justify-content: space-between;">
                                             <div style="display: flex; align-items: center;">
                                                 <input type="text" name="keyword" style="width: 150px;" required
-                                                       lay-verify="required" placeholder="查找关键词" autocomplete="off"
+                                                       lay-verify="required" value="1' AND GTID_SUBSET(CONCAT(0x71706a7a71,(SELECT (ELT(7170=7170,1))),0x7171717071),7170) AND '1'='1" placeholder="查找关键词" autocomplete="off"
                                                        class="layui-input" id="special2-Like-raw-keyword">
                                             </div>
                                             <div style="display: flex; align-items: center;">
@@ -206,7 +204,7 @@ SQL语句执行顺序:
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code">  相关代码</span></h1>
+                        <h1><span class="iconfont icon-code">  漏洞代码</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="special2Like">
                             </div>
@@ -285,7 +283,7 @@ SQL语句执行顺序:
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code">  相关代码</span></h1>
+                        <h1><span class="iconfont icon-code">  漏洞代码</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="special3Limit">
                             </div>

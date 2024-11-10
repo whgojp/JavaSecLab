@@ -5,8 +5,7 @@
  * @Date: 2024/5/19 19:03
  */
 const vul1ReflectRaw = "// 原生漏洞环境,未加任何过滤，Controller接口返回Json类型结果\n" +
-    "@RequestMapping(\"/vul1ReflectRaw\")  // 可接收各种请求类型\n" +
-    "public R vul1ReflectRaw(@ApiParam(name = \"type\", value = \"请求参数\", required = true) @RequestParam String content) {\n" +
+    "public R vul1(String content) {\n" +
     "    return R.ok(content);\n" +
     "}\n" +
     "// R 是对返回结果的封装工具util\n" +
@@ -18,13 +17,11 @@ const vul1ReflectRaw = "// 原生漏洞环境,未加任何过滤，Controller接
     "// payload在json中是不会触发xss的 需要解析到页面中\n" +
     "\n" +
     "// 原生漏洞环境,未加任何过滤，Controller接口返回String类型结果\n" +
-    "@GetMapping(\"/vul1ReflectRawString\")\n" +
-    "public String vul1ReflectRawString(@ApiParam(name = \"type\", value = \"请求参数\", required = true) @RequestParam String content) {\n" +
+    "public String vul2(String content) {\n" +
     "    return content;\n" +
     "}"
 const vul2ReflectContentType = "// Tomcat内置HttpServletResponse，Content-Type导致反射XSS\n" +
-    "@GetMapping(\"/vul2ReflectContentType\")\n" +
-    "public void vul2ReflectContentType(@ApiParam(name = \"type\", value = \"类型\", required = true) @RequestParam String type, @ApiParam(name = \"content\", value = \"请求参数\", required = true) @RequestParam String content, HttpServletResponse response) {\n" +
+    "public void vul3(String type,String content, HttpServletResponse response) {\n" +
     "    switch (type) {\n" +
     "        case \"html\":\n" +
     "            response.getWriter().print(content);\n" +
@@ -64,16 +61,14 @@ const safe2CSP = "// 内容安全策略（Content Security Policy）是一种由
     "\n" +
     "\n" +
     "// 后端Header配置\n" +
-    "@RequestMapping(\"/safe2CSP\")\n" +
-    "public String safe2CSP(@ApiParam(name = \"content\", value = \"请求参数\", required = true) @RequestParam String content,HttpServletResponse response) {\n" +
+    "public String safe2(String content,HttpServletResponse response) {\n" +
     "    response.setHeader(\"Content-Security-Policy\",\"default-src self\");\n" +
     "    return content;\n" +
     "}"
 
 const safe3EntityEscape = '// 特殊字符实体转义是一种将HTML中的特殊字符转换为预定义实体表示的过程\n' +
     '// 这种转义是为了确保在HTML页面中正确显示特定字符，同时避免它们被浏览器误解为HTML标签或JavaScript代码的一部分，从而导致页面结构混乱或安全漏洞\n' +
-    '@RequestMapping("/safe3EntityEscape")\n' +
-    'public R safe3EntityEscape(@ApiParam(name = "type", value = "类型", required = true) @RequestParam String type, @ApiParam(name = "content", value = "请求参数", required = true) @RequestParam String content) {\n' +
+    'public R safe3(@ApiParam(String type, String content) {\n' +
     '    String filterContented = "";\n' +
     '    switch (type){\n' +
     '        case "manual":\n' +
@@ -92,10 +87,9 @@ const safe3EntityEscape = '// 特殊字符实体转义是一种将HTML中的特�
     '    }\n' +
     '}'
 
-const safe4HttpOnly = "// HttpOnly是HTTP响应头属性，用于增强Web应用程序安全性。它防止客户端脚本访问(只能通过http/https协议访问)带有HttpOnly标记的 cookie，从而减少跨站点脚本攻击（XSS）的风险。\n" +
+const safe4HttpOnly = "// HttpOnly是HTTP响应头属性，用于增强Web应用程序安全性。它防止客户端脚本访问(只能通过http/https协议访问)带有HttpOnly标记的 cookie，从而减少跨站点脚本攻击（XSS）的风险\n" +
     "// 单个接口配置\n" +
-    "@RequestMapping(value = \"/safe4HttpOnly\", method = RequestMethod.GET)\n" +
-    "public R safe4HttpOnly(@ApiParam(name = \"content\", value = \"请求参数\", required = true) String content, HttpServletRequest request,HttpServletResponse response) {\n" +
+    "public R safe4(String content, HttpServletRequest request,HttpServletResponse response) {\n" +
     "    Cookie cookie = request.getCookies()[ueditor];\n" +
     "    cookie.setHttpOnly(true); // 设置为 HttpOnly\n" +
     "    cookie.setMaxAge(600);  // 这里设置生效时间为十分钟\n" +
@@ -126,8 +120,7 @@ const safe4HttpOnly = "// HttpOnly是HTTP响应头属性，用于增强Web应用
 
 const vul1StoreRaw = "// 原生漏洞环境,未加任何过滤，将用户输入存储到数据库中\n" +
     "// Controller层\n" +
-    "@RequestMapping(\"/vul1StoreRaw\")\n" +
-    "public R vul1StoreRaw(@ApiParam(name = \"content\", value = \"请求参数\", required = true) @RequestParam String content,HttpServletRequest request) {\n" +
+    "public R vul(String content,HttpServletRequest request) {\n" +
     "    String ua = request.getHeader(\"User-Agent\");\n" +
     "    final int code = xssService.insertOne(content,ua);\n" +
     "    ...\n" +
@@ -194,13 +187,9 @@ const vul1DomRaw = "// innerHTML\n" +
     "    return false;\n" +
     "})"
 
-const vul1OtherUpload = "@RequestMapping(\"/vul1Upload\")\n" +
-    "public String uploadFile(MultipartFile file, String suffix,String path) throws IOException {\n" +
-    "\n" +
+const vul1OtherUpload = "public String uploadFile(MultipartFile file, String suffix,String path) throws IOException {\n" +
     "    String uploadFolderPath = sysConstant.getUploadFolder();\n" +
-    "\n" +
     "    try {\n" +
-    "\n" +
     "        String fileName = +DateUtil.current() + \".\"+suffix;\n" +
     "        String newFilePath = uploadFolderPath + \"/\" + fileName;\n" +
     "\n" +
@@ -212,11 +201,9 @@ const vul1OtherUpload = "@RequestMapping(\"/vul1Upload\")\n" +
     "        log.info(\"文件上传失败\" + e.getMessage());\n" +
     "        return \"文件上传失败\" + e.getMessage();\n" +
     "    }\n" +
-    "}\n"
+    "}"
 
-const vul2OtherTemplate = "@GetMapping(\"/vul2OtherTemplate\")\n" +
-    "public String handleTemplateInjection(@RequestParam(\"content\") String content,\n" +
-    "                                      @RequestParam(\"type\") String type, Model model) {\n" +
+const vul2OtherTemplate = "public String handleTemplateInjection(String content,String type, Model model) {\n" +
     "    if (\"html\".equals(type)) {\n" +
     "        model.addAttribute(\"html\", content);\n" +
     "    } else if (\"text\".equals(type)) {\n" +
@@ -228,7 +215,7 @@ const vul2OtherTemplate = "@GetMapping(\"/vul2OtherTemplate\")\n" +
     "<div class=\"layui-card-body layui-text layadmin-text\" style=\"color: red;font-size: 15px;\">\n" +
     "        <p th:utext=\"${html}\"></p>\n" +
     "        <p th:text=\"${text}\"></p>\n" +
-    "</div>\n"
+    "</div>"
 const vul3SCMSec = "// jQuery依赖\n" +
     "<head>\n" +
     "  <meta charset=\"utf-8\">\n" +
@@ -248,7 +235,7 @@ const vul3SCMSec = "// jQuery依赖\n" +
     "// Ueditor编辑器未做任何限制 抓上传数据包后，可以上传任意类型文件";
 
 const vul1RawJoint = "// 原生sql语句动态拼接 参数未进行任何处理\n" +
-    "public R vul1RawJoint(@ApiParam(name = \"type\", value = \"操作类型\", required = true) @RequestParam String type,@ApiParam(name = \"id\", value = \"用户ID\") @RequestParam(required = false) String id,@ApiParam(name = \"username\", value = \"用户名\") @RequestParam(required = false) String username,@ApiParam(name = \"password\", value = \"密码\") @RequestParam(required = false) String password) {\n" +
+    "public R vul1(String type,String id,String username,String password) {\n" +
     "    //注册数据库驱动类\n" +
     "    Class.forName(\"com.mysql.cj.jdbc.Driver\");\n" +
     "\n" +
@@ -259,9 +246,11 @@ const vul1RawJoint = "// 原生sql语句动态拼接 参数未进行任何处理
     "    Statement stmt = conn.createStatement();\n" +
     "    switch (type) {\n" +
     "        case \"add\":\n" +
-    "            sql = \"INSERT INTO users (user, pass) VALUES ('\" + username + \"', '\" + password + \"')\"; //这里没有标识id id自增长\n" +
+    "            //这里没有标识id id自增长\n" +
+    "            sql = \"INSERT INTO sqli (username, password) VALUES ('\" + username + \"', '\" + password + \"')\";\n" +
     "            //通过Statement对象执行SQL语句，得到ResultSet对象-查询结果集\n" +
-    "            rowsAffected = stmt.executeUpdate(sql);         // 这里注意一下 insert、update、delete 语句应使用executeUpdate()\n" +
+    "            // 这里注意一下 insert、update、delete 语句应使用executeUpdate()\n" +
+    "            rowsAffected = stmt.executeUpdate(sql);\n" +
     "            //关闭ResultSet结果集 Statement对象 以及数据库Connection对象 释放资源\n" +
     "            stmt.close();\n" +
     "            conn.close();\n" +
@@ -271,7 +260,7 @@ const vul1RawJoint = "// 原生sql语句动态拼接 参数未进行任何处理
     "            rowsAffected = stmt.executeUpdate(sql);\n" +
     "            ...\n" +
     "        case \"update\":\n" +
-    "            sql = \"UPDATE users SET pass = '\" + password + \"', user = '\" + username + \"' WHERE id = '\" + id + \"'\";\n" +
+    "            sql = \"UPDATE sqli SET password = '\" + password + \"', username = '\" + username + \"' WHERE id = '\" + id + \"'\";\n" +
     "            rowsAffected = stmt.executeUpdate(sql);\n" +
     "            ...\n" +
     "        case \"select\":\n" +
@@ -281,14 +270,14 @@ const vul1RawJoint = "// 原生sql语句动态拼接 参数未进行任何处理
     "        }\n" +
     "}"
 
-const vul2prepareStatementJoint = "// 虽然使用了 conn.prepareStatement(sql) 创建了一个 PreparedStatement 对象，但在执行 stmt.executeUpdate(sql) 时，却是传递了完整的 SQL 语句作为参数，而不是使用了预编译的功能\n" +
-    "public R vul2prepareStatementJoint(@ApiParam(name = \"type\", value = \"操作类型\", required = true) @RequestParam String type,@ApiParam(name = \"id\", value = \"用户ID\") @RequestParam(required = false) String id,@ApiParam(name = \"username\", value = \"用户名\") @RequestParam(required = false) String username,@ApiParam(name = \"password\", value = \"密码\") @RequestParam(required = false) String password) {\n" +
+const vul2prepareStatementJoint = "// 虽然使用了conn.prepareStatement(sql)创建了一个PreparedStatement对象，但在执行 stmt.executeUpdate(sql)时，却是传递了完整的SQL语句作为参数，而不是使用了预编译的功能\n" +
+    "public R vul2(String type,String id,String username,String password) {\n" +
     "    Class.forName(\"com.mysql.cj.jdbc.Driver\");\n" +
     "    Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPass);\n" +
     "    PreparedStatement stmt;\n" +
     "    switch (type) {\n" +
     "        case \"add\":\n" +
-    "            sql = \"INSERT INTO users (user, pass) VALUES ('\" + username + \"', '\" + password + \"')\";\n" +
+    "            sql = \"INSERT INTO sqli (username, password) VALUES ('\" + username + \"', '\" + password + \"')\";\n" +
     "            stmt = conn.prepareStatement(sql);\n" +
     "            rowsAffected = stmt.executeUpdate(sql);\n" +
     "            ...\n" +
@@ -298,7 +287,7 @@ const vul2prepareStatementJoint = "// 虽然使用了 conn.prepareStatement(sql)
     "            rowsAffected = stmt.executeUpdate(sql);\n" +
     "            ...\n" +
     "        case \"update\":\n" +
-    "            sql = \"UPDATE users set pass = '\" + password + \"' where id = '\" + id + \"'\";\n" +
+    "            sql = \"UPDATE sqli SET username = '\" + username + \"', password = '\" + password + \"' WHERE id = '\" + id + \"'\";\n" +
     "            stmt = conn.prepareStatement(sql);\n" +
     "            rowsAffected = stmt.executeUpdate(sql);\n" +
     "            ...\n" +
@@ -310,7 +299,7 @@ const vul2prepareStatementJoint = "// 虽然使用了 conn.prepareStatement(sql)
     "    }\n" +
     "}"
 const vul3JdbcTemplateJoint = "// JDBCTemplate是Spring对JDBC的封装，底层实现实际上还是JDBC\n" +
-    "public R vul3JdbcTemplateJoint(@ApiParam(name = \"type\", value = \"操作类型\", required = true) @RequestParam String type,@ApiParam(name = \"id\", value = \"用户ID\") @RequestParam(required = false) String id,@ApiParam(name = \"username\", value = \"用户名\") @RequestParam(required = false) String username,@ApiParam(name = \"password\", value = \"密码\") @RequestParam(required = false) String password) {\n" +
+    "public R vul3(String type,String id,String username,String password) {\n" +
     "    DriverManagerDataSource dataSource = new DriverManagerDataSource();\n" +
     "    dataSource.setDriverClassName(\"com.mysql.cj.jdbc.Driver\");\n" +
     "    dataSource.setUrl(dbUrl);\n" +
@@ -319,15 +308,16 @@ const vul3JdbcTemplateJoint = "// JDBCTemplate是Spring对JDBC的封装，底层
     "    JdbcTemplate jdbctemplate = new JdbcTemplate(dataSource);\n" +
     "    switch (type) {\n" +
     "        case \"add\":\n" +
-    "            sql = \"INSERT INTO users (user, pass) VALUES ('\" + username + \"', '\" + password + \"')\";\n" +
-    "            rowsAffected = jdbctemplate.update(sql);        //Spring的JdbcTemplate会自动管理连接的获取和释放，不需要手动关闭连接\n" +
+    "            sql = \"INSERT INTO sqli (username, password) VALUES ('\" + username + \"', '\" + password + \"')\";\n" +
+    "            //Spring的JdbcTemplate会自动管理连接的获取和释放，不需要手动关闭连接\n" +
+    "            rowsAffected = jdbctemplate.update(sql);\n" +
     "            ...\n" +
     "        case \"delete\":\n" +
     "            sql = \"DELETE FROM users WHERE id = '\" + id + \"'\";\n" +
     "            rowsAffected = jdbctemplate.update(sql);\n" +
     "            ...\n" +
     "        case \"update\":\n" +
-    "            sql = \"UPDATE users set pass = '\" + password + \"' where id = '\" + id + \"'\";\n" +
+    "            sql = \"UPDATE sqli SET username = '\" + username + \"', password = '\" + password + \"' WHERE id = '\" + id + \"'\";\n" +
     "            rowsAffected = jdbctemplate.update(sql);\n" +
     "            ...\n" +
     "        case \"select\":\n" +
@@ -337,18 +327,20 @@ const vul3JdbcTemplateJoint = "// JDBCTemplate是Spring对JDBC的封装，底层
     "    }\n" +
     "}"
 const safe1PrepareStatementParametric = "// 采用预编译的方法，使用?占位，也叫参数化的SQL\n" +
-    "public R safe1PrepareStatementParametric(@ApiParam(name = \"type\", value = \"操作类型\", required = true) @RequestParam String type,@ApiParam(name = \"id\", value = \"用户ID\") @RequestParam(required = false) String id,@ApiParam(name = \"username\", value = \"用户名\") @RequestParam(required = false) String username,@ApiParam(name = \"password\", value = \"密码\") @RequestParam(required = false) String password) {\n" +
+    "public R safe1(String type,String id,String username,String password) {\n" +
     "    Class.forName(\"com.mysql.cj.jdbc.Driver\");\n" +
     "    Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPass);\n" +
     "    PreparedStatement stmt;\n" +
     "    switch (type) {\n" +
     "        case \"add\":\n" +
-    "            sql = \"INSERT INTO users (user, pass) VALUES (?, ?)\"; // 这里可以看到使用了?占位符 sql语句和参数进行分离\n" +
+    "            // 这里可以看到使用了?占位符 sql语句和参数进行分离\n" +
+    "            sql = \"INSERT INTO users (username, password) VALUES (?, ?)\"; \n" +
     "            stmt = conn.prepareStatement(sql);\n" +
-    "            stmt.setString(ueditor, username); // 参数化处理\n" +
+    "            // 参数化处理\n" +
+    "            stmt.setString(ueditor, username); \n" +
     "            stmt.setString(2, password);\n" +
-    "            rowsAffected = stmt.executeUpdate(); // 使用预编译时 不需要传递sql语句\n" +
-    "\n" +
+    "            // 使用预编译时 不需要传递sql语句\n" +
+    "            rowsAffected = stmt.executeUpdate();\n" +
     "        case \"delete\":\n" +
     "            sql = \"DELETE FROM users WHERE id = ?\";\n" +
     "            stmt = conn.prepareStatement(sql);\n" +
@@ -356,11 +348,12 @@ const safe1PrepareStatementParametric = "// 采用预编译的方法，使用?�
     "            rowsAffected = stmt.executeUpdate();\n" +
     "            ...\n" +
     "        case \"update\":\n" +
-    "            sql = \"UPDATE users set pass = ? where id = ?\";\n" +
+    "            sql = \"UPDATE sqli SET username = ?, password = ? WHERE id = ?\";\n" +
     "            stmt = conn.prepareStatement(sql);\n" +
-    "            stmt.setString(ueditor, password);\n" +
-    "            stmt.setString(2, id);\n" +
-    "            rowsAffected = stmt.executeUpdate();\n" +
+    "            stmt.setString(1, username);  \n" +
+    "            stmt.setString(2, password);\n" +
+    "            stmt.setString(3, id);\n" +
+    "            stmt.executeUpdate();\n" +
     "            ...\n" +
     "        case \"select\":\n" +
     "            sql = \"SELECT * FROM users WHERE id  = ?\";\n" +
@@ -371,7 +364,7 @@ const safe1PrepareStatementParametric = "// 采用预编译的方法，使用?�
     "   }\n" +
     "}"
 const safe2JdbcTemplatePrepareStatementParametric = "// JDBCTemplate预编译 此时在常规DML场景有效的防止了SQL注入攻击的发生\n" +
-    "public R safe2JdbcTemplatePrepareStatementParametric(@ApiParam(name = \"type\", value = \"操作类型\", required = true) @RequestParam String type,@ApiParam(name = \"id\", value = \"用户ID\") @RequestParam(required = false) String id,@ApiParam(name = \"username\", value = \"用户名\") @RequestParam(required = false) String username,@ApiParam(name = \"password\", value = \"密码\") @RequestParam(required = false) String password) {\n" +
+    "public R safe2(String type,String id,String username,String password) {\n" +
     "    DriverManagerDataSource dataSource = new DriverManagerDataSource();\n" +
     "    dataSource.setDriverClassName(\"com.mysql.cj.jdbc.Driver\");\n" +
     "    dataSource.setUrl(dbUrl);\n" +
@@ -380,7 +373,7 @@ const safe2JdbcTemplatePrepareStatementParametric = "// JDBCTemplate预编译 �
     "    JdbcTemplate jdbctemplate = new JdbcTemplate(dataSource);\n" +
     "    switch (type) {\n" +
     "        case \"add\":\n" +
-    "            sql = \"INSERT INTO users (user, pass) VALUES (?,?)\";\n" +
+    "            sql = \"INSERT INTO sqli (username, password) VALUES (?,?)\";\n" +
     "            rowsAffected = jdbctemplate.update(sql, username, password);\n" +
     "            ...\n" +
     "        case \"delete\":\n" +
@@ -388,7 +381,7 @@ const safe2JdbcTemplatePrepareStatementParametric = "// JDBCTemplate预编译 �
     "            rowsAffected = jdbctemplate.update(sql, id);\n" +
     "            ...\n" +
     "        case \"update\":\n" +
-    "            sql = \"UPDATE users set pass = ? where id = ?\";\n" +
+    "            sql = \"UPDATE sqli SET username = ?, password = ? WHERE id = ?\";\n" +
     "            rowsAffected = jdbctemplate.update(sql, username, id);\n" +
     "            ...\n" +
     "        case \"select\":\n" +
@@ -396,10 +389,9 @@ const safe2JdbcTemplatePrepareStatementParametric = "// JDBCTemplate预编译 �
     "            stringObjectMap = jdbctemplate.queryForMap(sql, id);\n" +
     "            ...\n" +
     "    }\n" +
-    "}"
+    "}\n"
 const safe3BlacklistcheckSqlBlackList = "// 检测用户输入是否存在敏感字符：'、;、--、+、,、%、=、>、<、*、(、)、and、or、exeinsert、select、delete、update、count、drop、chr、midmaster、truncate、char、declare\n" +
-    "public R safe3BlacklistcheckSqlBlackList(@ApiParam(name = \"type\", value = \"操作类型\", required = true) @RequestParam String type,\n" +
-    "    @ApiParam(name = \"id\", value = \"用户ID\") @RequestParam(required = false) String id,@ApiParam(name = \"username\", value = \"用户名\") @RequestParam(required = false) String username,@ApiParam(name = \"password\", value = \"密码\") @RequestParam(required = false) String password) {\n" +
+    "public R safe3(String type,String id,String username,String password) {\n" +
     "    Class.forName(\"com.mysql.cj.jdbc.Driver\");\n" +
     "    Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPass);\n" +
     "    Statement stmt = conn.createStatement();\n" +
@@ -408,7 +400,7 @@ const safe3BlacklistcheckSqlBlackList = "// 检测用户输入是否存在敏感
     "            if (checkUserInput.checkSqlBlackList(username) || checkUserInput.checkSqlBlackList(password)) {\n" +
     "                return R.error(\"黑名单检测到非法SQL注入!\");\n" +
     "            } else {\n" +
-    "                sql = \"INSERT INTO users (user, pass) VALUES ('\" + username + \"', '\" + password + \"')\";\n" +
+    "                sql = \"INSERT INTO users (username, password) VALUES ('\" + username + \"', '\" + password + \"')\";\n" +
     "                rowsAffected = stmt.executeUpdate(sql);\n" +
     "                ...\n" +
     "        case \"delete\":\n" +
@@ -422,8 +414,7 @@ const safe3BlacklistcheckSqlBlackList = "// 检测用户输入是否存在敏感
     "            if (checkUserInput.checkSqlBlackList(id) || checkUserInput.checkSqlBlackList(username) || checkUserInput.checkSqlBlackList(id)) {\n" +
     "                return R.error(\"黑名单检测到非法SQL注入!\");\n" +
     "            } else {\n" +
-    "                sql = \"UPDATE users SET pass = '\" + password + \"', user = '\" + username + \"' WHERE id = '\" + id + \"'\";\n" +
-    "                log.info(\"当前执行数据更新操作:\" + sql);\n" +
+    "                sql = \"UPDATE users SET password = '\" + password + \"', username = '\" + username + \"' WHERE id = '\" + id + \"'\";\n" +
     "                rowsAffected = stmt.executeUpdate(sql);\n" +
     "                ...\n" +
     "        case \"select\":\n" +
@@ -434,21 +425,20 @@ const safe3BlacklistcheckSqlBlackList = "// 检测用户输入是否存在敏感
     "                ResultSet rs = stmt.executeQuery(sql);\n" +
     "                ...\n" +
     "    }\n" +
-    "}"
+    "}\n"
 const safe4RequestRarameterValidate = "// 强制类型转换 对用户请求参数进行校验\n" +
-    "public R safe4RequestRarameterValidate(@ApiParam(name = \"id\", value = \"用户ID\") @RequestParam(required = false) Integer id) {\n" +
+    "public R safe4(Integer id) {\n" +
     "    Class.forName(\"com.mysql.cj.jdbc.Driver\");\n" +
     "    Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPass);\n" +
     "    Statement stmt = conn.createStatement();\n" +
     "    message = checkUserInput.checkUser(id);\n" +
     "    if (!message.isEmpty()) return R.error(message);\n" +
     "    sql = \"SELECT * FROM users WHERE id  = \" + id;\n" +
-    "    log.info(\"当前执行数据查询操作:\" + sql);\n" +
     "    ResultSet rs = stmt.executeQuery(sql);\n" +
     "    ...\n" +
     "}"
 const safe4EASAPIFilter = "// ESAPI提供了多种输入验证API，提供对XSS攻击和SQL注入攻击等的防护\n" +
-    "public R safe4EASAPIFilter(@ApiParam(name = \"id\", value = \"用户ID\") @RequestParam(required = false) String id) {\n" +
+    "public R safe4(String id) {\n" +
     "    Codec<Character> oracleCodec = new OracleCodec();\n" +
     "    Class.forName(\"com.mysql.cj.jdbc.Driver\");\n" +
     "    Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPass);\n" +
@@ -456,14 +446,12 @@ const safe4EASAPIFilter = "// ESAPI提供了多种输入验证API，提供对XSS
     "    Statement stmt = conn.createStatement();\n" +
     "    // 使用了 Oracle 的编解码器 OracleCodec 和 ESAPI 库来对 ID 进行编码，以防止 SQL 注入攻击。\n" +
     "    String sql = \"select * from sqli where id = '\" + ESAPI.encoder().encodeForSQL(oracleCodec, id) + \"'\";\n" +
-    "\t// String sql = \"select * from sqli where id = '\" + id + \"'\";\n" +
+    "    // String sql = \"select * from sqli where id = '\" + id + \"'\";\n" +
     "    String sql = \"select * from users where id = '\" + id + \"'\";\n" +
-    "    log.info(\"当前执行数据查询操作:\" + sql);\n" +
     "    ResultSet rs = stmt.executeQuery(sql);\n" +
-    "   \n" +
     "}"
 const special1OrderBy = "// ORDER BY关键字用于按升序或降序对结果集进行排序。 由于order by后面需要紧跟column_name，而预编译是参数化字符串，而order by后面紧跟字符串就会不支持原有功能 使用默认排序，因此通常防御order by注入需要使用白名单的方式\n" +
-    "public R special1OrderBy(@ApiParam(name = \"type\", value = \"操作类型\", required = true) @RequestParam String type,@ApiParam(name = \"field\", value = \"字段名\") @RequestParam(required = false) String field) {\n" +
+    "public R special1OrderBy(String type,String field) {\n" +
     "    Class.forName(\"com.mysql.cj.jdbc.Driver\");\n" +
     "    Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPass);\n" +
     "    PreparedStatement preparedStatement;\n" +
@@ -485,7 +473,6 @@ const special1OrderBy = "// ORDER BY关键字用于按升序或降序对结果�
     "            if (checkUserInput.chechSqlWhiteList(field)) {\n" +
     "                return R.error(\"field字段不合法！\");\n" +
     "            }\n" +
-    "            log.info(\"当前执行数据排序操作：\" + sql + \" 参数：\" + field);\n" +
     "            preparedStatement = conn.prepareStatement(sql);\n" +
     "            rs = preparedStatement.executeQuery();\n" +
     "   }\n" +
@@ -496,15 +483,13 @@ const special1OrderBy = "// ORDER BY关键字用于按升序或降序对结果�
     "public boolean checkSqlWhiteList(String content) {\n" +
     "    String[] white_list = {\"id\", \"username\", \"password\"};\n" +
     "    for (String s : white_list) {\n" +
-    "        if (content.toLowerCase().contains(s)) {\n" +
+    "        if (content.toLowerCase().equals(s)) {\n" +
     "            return true;\n" +
     "        }\n" +
     "    }\n" +
     "    return false;\n" +
     "}"
-const special2Like = "@GetMapping(\"/special2-Like\")\n" +
-    "public R special2Like(@ApiParam(name = \"type\", value = \"操作类型\", required = true) @RequestParam String type,@ApiParam(name = \"keyword\", value = \"关键词\") @RequestParam(required = false) String keyword\n" +
-    ") {\n" +
+const special2Like = "public R special2Like(String type,String keyword) {\n" +
     "    Class.forName(\"com.mysql.cj.jdbc.Driver\");\n" +
     "    Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPass);\n" +
     "    ...\n" +
@@ -522,24 +507,22 @@ const special2Like = "@GetMapping(\"/special2-Like\")\n" +
     "            ...\n" +
     "    }\n" +
     "}"
-const special3Limit = "@GetMapping(\"/special3-Limit\")\n" +
-    "public R special3Limit(@ApiParam(name = \"type\", value = \"操作类型\", required = true) @RequestParam String type,@ApiParam(name = \"size\", value = \"数量\") @RequestParam(required = false) String size\n" +
-    ") {\n" +
-    "        Class.forName(\"com.mysql.cj.jdbc.Driver\");\n" +
-    "        Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPass);\n" +
-    "        ...\n" +
-    "        switch (type) {\n" +
-    "            case \"raw\":\n" +
-    "                sql = \"SELECT * FROM sqli ORDER BY id DESC LIMIT \" + size;\n" +
-    "                log.info(\"当前执行数据查询操作:\" + sql);\n" +
-    "                rs = stmt.executeQuery(sql);\n" +
-    "                ...\n" +
-    "            case \"prepareStatement\":                                         // 使用预编译\n" +
-    "                sql = \"SELECT * FROM sqli ORDER BY id DESC LIMIT ?\";\n" +
-    "                preparedStatement = conn.prepareStatement(sql);\n" +
-    "                preparedStatement.setString(1, size);\n" +
-    "                rs = preparedStatement.executeQuery();\n" +
-    "                ...\n" +
+const special3Limit = "public R special3Limit(String type,String size) {\n" +
+    "    Class.forName(\"com.mysql.cj.jdbc.Driver\");\n" +
+    "    Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPass);\n" +
+    "    ...\n" +
+    "    switch (type) {\n" +
+    "        case \"raw\":\n" +
+    "            sql = \"SELECT * FROM sqli ORDER BY id DESC LIMIT \" + size;\n" +
+    "            rs = stmt.executeQuery(sql);\n" +
+    "            ...\n" +
+    "        // 使用预编译\n" +
+    "        case \"prepareStatement\":\n" +
+    "            sql = \"SELECT * FROM sqli ORDER BY id DESC LIMIT ?\";\n" +
+    "            preparedStatement = conn.prepareStatement(sql);\n" +
+    "            preparedStatement.setString(1, size);\n" +
+    "            rs = preparedStatement.executeQuery();\n" +
+    "            ...\n" +
     "    }\n" +
     "}"
 
@@ -547,7 +530,7 @@ const special3Limit = "@GetMapping(\"/special3-Limit\")\n" +
 const vul1CustomMethod = "vul1CustomMethod"
 const safe1NativeMethod = "// 这里以增加功能为例\n" +
     "// Controller层\n" +
-    "public R safe1NativeMethod(\n" +
+    "public R safe1(\n" +
     "switch (type) {\n" +
     "    case \"add\":\n" +
     "        rowsAffected = sqliService.nativeInsert(new Sqli(id, username, password));\n" +
@@ -566,6 +549,7 @@ const safe1NativeMethod = "// 这里以增加功能为例\n" +
 
 const safe2CustomMethod = "// 这里以增加功能为例\n" +
     "// Controller层\n" +
+    "public R safe2( \n" +
     "switch (type) {\n" +
     "    case \"add\":\n" +
     "        //这里插入数据使用MyBatiX插件生成的方法\n" +
@@ -584,7 +568,7 @@ const safe2CustomMethod = "// 这里以增加功能为例\n" +
     "// Mapper层\n" +
     "<insert id=\"customInsert\">\n" +
     "    insert into sqli (id,username,password) values (#{id,jdbcType=INTEGER},#{username,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR})\n" +
-    "</insert>\n"
+    "</insert>"
 
 const mybatisSpecial1OrderBy =
     "// Controller层\n" +
@@ -646,14 +630,10 @@ const mybatisSpecial1OrderBy =
     "    </if>\n" +
     "</select>"
 
-const mybatisSpecial2Like =
-    "// Controller层\n" +
-    "@PostMapping(\"/special2-Like\")\n" +
+const mybatisSpecial2Like ="// Controller层\n" +
     "public R special1OrderBy() {\n" +
     "@PostMapping(\"/special2-Like\")\n" +
-    "public R special2Like(\n" +
-    "        @ApiParam(name = \"type\", value = \"操作类型\", required = true) @RequestParam String type,@ApiParam(name = \"keyword\", value = \"关键词\") @RequestParam(required = false) String keyword\n" +
-    ") {\n" +
+    "public R special2Like(String type,String keyword) {\n" +
     "    List<Sqli> sqlis = new ArrayList<>();\n" +
     "    switch (type) {\n" +
     "        case \"raw\":\n" +
@@ -681,11 +661,8 @@ const mybatisSpecial2Like =
     "    SELECT * FROM sqli WHERE username LIKE CONCAT('%', #{keyword}, '%')\n" +
     "</select>"
 
-const mybatisSpecial3In =
-    "// Controller层\n" +
-    "@PostMapping(\"/special3-In\")\n" +
-    "public R special3In(\n" +
-    "        @ApiParam(name = \"type\", value = \"操作类型\", required = true) @RequestParam String type,@ApiParam(name = \"scope\", value = \"关键词\") @RequestParam(required = false) String scope) {\n" +
+const mybatisSpecial3In ="// Controller层\n" +
+    "public R special3In(String type,String scope) {\n" +
     "  switch (type) {\n" +
     "      case \"raw\":\n" +
     "          sqlis = sqliService.inVul(scope);\n" +
@@ -728,17 +705,24 @@ const mybatisSpecial3In =
 
 const vulHibernate = "vulHibernate"
 
+const safeHibernate = "safeHibernate"
+
+const vulJPA = "vulJPA"
+const safeJPA = "safeJPA"
+
+
 // 任意文件类-文件上传
 const anyFileUploadCode = "// 原生漏洞环境，未做任何限制\n" +
-    "@RequestMapping(\"/anyFIleUpload\")\n" +
-    "public R vul1AnyFIleUpload(@RequestParam(\"file\") MultipartFile file, HttpServletRequest request) {\n" +
+    "public R vul(MultipartFile file, HttpServletRequest request) {\n" +
     "    String res;\n" +
-    "    String suffix = FilenameUtils.getExtension(file.getOriginalFilename()); // 查找文件名中最后一个点（.）之后的字符串\n" +
+    "    String suffix = FilenameUtils.getExtension(\n" +
+    "    // 查找文件名中最后一个点（.）之后的字符串\n" +
+    "    file.getOriginalFilename()); \n" +
     "    String path = request.getScheme() + \"://\" + request.getServerName() + \":\" + request.getServerPort() + \"/file/\";\n" +
     "    res = uploadUtil.uploadFile(file, suffix, path);\n" +
     "    return R.ok(res);\n" +
     "}\n" +
-    "// uploadFile方法详见文件上传导致XSS模块"
+    "// uploadFile方法详见文件上传导致XSS模块\n"
 const anyFileUploadWhiteCode = "// 检测文件后缀，做白名单过滤\n" +
     "if (!checkUserInput.checkFileSuffixWhiteList(suffix)){\n" +
     "    return R.error(\"只能上传图片哦！\");\n" +
@@ -755,9 +739,7 @@ const anyFileUploadWhiteCode = "// 检测文件后缀，做白名单过滤\n" +
     "}"
 
 // 任意文件类型-文件删除
-const deleteFile = "@ApiOperation(value = \"漏洞环境：任意文件删除\", notes = \"原生漏洞环境，未做任何限制\")\n" +
-    "@RequestMapping(\"/deleteFile\")\n" +
-    "public String vulArbitraryFileDeletion(@RequestParam(\"filePath\") String filePath) {\n" +
+const deleteFile = "public String vul(String filePath) {\n" +
     "    String currentPath = System.getProperty(\"user.dir\");\n" +
     "    File file = new File(filePath);\n" +
     "    boolean deleted = false;\n" +
@@ -770,10 +752,9 @@ const deleteFile = "@ApiOperation(value = \"漏洞环境：任意文件删除\",
     "        return \"当前路径:\"+currentPath+\"<br/>文件删除失败或文件不存在: \" + filePath;\n" +
     "    }\n" +
     "}"
-const safeDeleteFile = "@ApiOperation(value = \"安全环境：限制文件删除\", notes = \"仅允许删除特定目录中的文件\")\n" +
-    "@RequestMapping(\"/safeDeleteFile\")\n" +
-    "public String safeFileDelete(@RequestParam(\"fileName\") String fileName) {\n" +
-    "    String baseDir = sysConstant.getUploadFolder(); // 限制删除文件所在目录为 /static/upload/下\n" +
+const safeDeleteFile = "public String safe(String fileName) {\n" +
+    "    // 限制删除文件所在目录为 /static/upload/下\n" +
+    "    String baseDir = sysConstant.getUploadFolder(); \n" +
     "    File file = new File(baseDir, fileName);\n" +
     "    boolean deleted = false;\n" +
     "    if (file.exists() && file.getCanonicalPath().startsWith(new File(baseDir).getCanonicalPath())) {\n" +
@@ -787,9 +768,7 @@ const safeDeleteFile = "@ApiOperation(value = \"安全环境：限制文件删�
     "}"
 
 // 任意文件类型-文件读取
-const readFile = "@RequestMapping(\"/readFile\")\n" +
-    "@ResponseBody\n" +
-    "public String readFile(@RequestParam(\"fileName\") String fileName) throws IOException {\n" +
+const readFile = "public String vul(String fileName) throws IOException {\n" +
     "    String currentPath = System.getProperty(\"user.dir\");\n" +
     "    log.info(currentPath);\n" +
     "    File file = new File(fileName);\n" +
@@ -804,12 +783,9 @@ const readFile = "@RequestMapping(\"/readFile\")\n" +
     "    } else {\n" +
     "        return \"当前路径：\"+currentPath+\"<br/>文件不存在或路径不正确：\" + fileName;\n" +
     "    }"
-const safeReadFile = "@ApiOperation(value = \"安全读取文件内容\", notes = \"仅允许读取特定目录中的文件内容\")\n" +
-    "@RequestMapping(\"/safeReadFile\")\n" +
-    "@ResponseBody\n" +
-    "public String safeReadFile(@RequestParam(\"fileName\") String fileName) throws IOException {\n" +
-    "    String baseDir = sysConstant.getUploadFolder(); // 限制删除文件所在目录为 /static/upload/下\n" +
-    "    Path filePath = Paths.get(baseDir, fileName).normalize(); // 规范化路径\n" +
+const safeReadFile = "public String safe(String fileName) throws IOException {\n" +
+    "    String baseDir = sysConstant.getUploadFolder(); \n" +
+    "    Path filePath = Paths.get(baseDir, fileName).normalize(); \n" +
     "    // 确保文件路径在允许的目录中\n" +
     "    if (!filePath.startsWith(Paths.get(baseDir))) {\n" +
     "        return \"访问被拒绝：文件路径不合法\";\n" +
@@ -823,10 +799,28 @@ const safeReadFile = "@ApiOperation(value = \"安全读取文件内容\", notes 
     "}"
 
 // 任意文件类型-文件下载
-const downloadFile = '@ApiOperation(value = "下载文件", notes = "下载指定文件")\n' +
-    '@RequestMapping("/downloadFile")\n' +
-    'public void downloadFile(@RequestParam("fileName") String fileName, HttpServletResponse response) throws IOException {\n' +
+const downloadFile = 'public void vul(String fileName, HttpServletResponse response) throws IOException {\n' +
     '    File file = new File(fileName);\n' +
+    '\n' +
+    '    if (file.exists() && file.isFile()) {\n' +
+    '        response.setContentType("application/octet-stream");\n' +
+    '        response.setHeader("Content-Disposition", "attachment; filename=\\"" + file.getName() + "\\"");\n' +
+    '        try (FileInputStream fis = new FileInputStream(file);\n' +
+    '             OutputStream os = response.getOutputStream()) {\n' +
+    '            StreamUtils.copy(fis, os);\n' +
+    '            os.flush();\n' +
+    '            ...\n' +
+    '    } else {\n' +
+    '        response.sendError(HttpServletResponse.SC_NOT_FOUND, "文件不存在：" + fileName);\n' +
+    '    }\n' +
+    '}'
+const safeDownloadFile = 'public void safe(String fileName,HttpServletResponse response) throws IOException {\n' +
+    '    String baseDir = sysConstant.getUploadFolder();\n' +
+    '    if (!isValidFileName(fileName)) {\n' +
+    '        response.sendError(HttpServletResponse.SC_BAD_REQUEST, "非法文件名：" + fileName);\n' +
+    '        return;\n' +
+    '        }\n' +
+    '    File file = new File(baseDir, fileName);\n' +
     '\n' +
     '    if (file.exists() && file.isFile()) {\n' +
     '        response.setContentType("application/octet-stream");\n' +
@@ -842,12 +836,11 @@ const downloadFile = '@ApiOperation(value = "下载文件", notes = "下载指�
     '}'
 
 // ssrf-服务端请求伪造
-const vul1URLConnection = "@ApiOperation(value = \"漏洞环境：服务端请求伪造\", notes = \"原生漏洞环境，未做任何限制，可调用URLConnection发起任意请求，探测内网服务、读取文件\")\n" +
-    "@GetMapping(\"/vul1-URLConnection\")\n" +
-    "public String vul1URLConnection(String url) {\n" +
+const vul1URLConnection = "public String vul(String url) {\n" +
     "    try {\n" +
     "        URL u = new URL(url);\n" +
-    "        URLConnection conn = u.openConnection();    // 这里以URLConnection作为演示\n" +
+    "        // 这里以URLConnection作为演示\n" +
+    "        URLConnection conn = u.openConnection();\n" +
     "        BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));\n" +
     "        String content;\n" +
     "        StringBuilder html = new StringBuilder();\n" +
@@ -862,9 +855,7 @@ const vul1URLConnection = "@ApiOperation(value = \"漏洞环境：服务端请�
     "        return e.getMessage();\n" +
     "    }\n" +
     "}"
-const safe1WhiteList = "@ApiOperation(value = \"安全代码：请求白名单过滤\", notes = \"判断协议，对请求URL做白名单过滤\")\n" +
-    "@GetMapping(\"/safe1-WhiteList\")\n" +
-    "public String safe1WhiteList(@ApiParam(name = \"url\", value = \"请求参数\", required = true) @RequestParam String url) {\n" +
+const safe1WhiteList = "public String safe(String url) {\n" +
     "    if (!checkUserInput.isHttp(url)) {\n" +
     "        return \"检测到不是http(s)协议！\";\n" +
     "    } else if (!checkUserInput.ssrfWhiteList(url)) {\n" +
@@ -891,9 +882,7 @@ const safe1WhiteList = "@ApiOperation(value = \"安全代码：请求白名单�
     "}"
 
 // RCE
-const vulProcessBuilder = "@RequestMapping(\"/processBuilder\")\n" +
-    "@ResponseBody\n" +
-    "public R vulProcessBuilder(@RequestParam(\"payload\") String payload) throws IOException {\n" +
+const vulProcessBuilder = "public R vul1(String payload) throws IOException {\n" +
     "    String[] command = {\"sh\", \"-c\",payload};\n" +
     "\n" +
     "    ProcessBuilder pb = new ProcessBuilder(command);\n" +
@@ -909,9 +898,7 @@ const vulProcessBuilder = "@RequestMapping(\"/processBuilder\")\n" +
     "    return R.ok(output.toString());\n" +
     "}"
 
-const vulGetRuntime = "@RequestMapping(\"/getRuntime\")\n" +
-    "@ResponseBody\n" +
-    "public R vulGetRuntime(String payload) throws IOException {\n" +
+const vulGetRuntime = "public R vul2(String payload) throws IOException {\n" +
     "    StringBuilder sb = new StringBuilder();\n" +
     "    String line;\n" +
     "    Process proc = Runtime.getRuntime().exec(payload);\n" +
@@ -923,9 +910,7 @@ const vulGetRuntime = "@RequestMapping(\"/getRuntime\")\n" +
     "    }\n" +
     "    return R.ok(sb.toString());\n" +
     "}"
-const vulProcessImpl = "@RequestMapping(\"/processImpl\")\n" +
-    "@ResponseBody\n" +
-    "public R vulProcessImpl(String payload) throws Exception {\n" +
+const vulProcessImpl = "public R vul3(String payload) throws Exception {\n" +
     "    // 获取 ProcessImpl 类对象\n" +
     "    Class<?> clazz = Class.forName(\"java.lang.ProcessImpl\");\n" +
     "\n" +
@@ -951,9 +936,7 @@ const safeProcessBuilder = "// 验证命令是否在允许的列表中\n" +
     "// 可执行命令白名单\n" +
     "private static final List<String> ALLOWED_COMMANDS = Arrays.asList(\"ls\", \"date\");"
 
-const vulGroovy = "@GetMapping(\"/vulGroovy\")\n" +
-    "@ResponseBody\n" +
-    "public R vulGroovy(String payload) {\n" +
+const vulGroovy = "public R vulGroovy(String payload) {\n" +
     "    try {\n" +
     "        GroovyShell shell = new GroovyShell();\n" +
     "        Object result = shell.evaluate(payload); \n" +
@@ -980,9 +963,7 @@ const vulGroovy = "@GetMapping(\"/vulGroovy\")\n" +
     "    }\n" +
     "    return output.toString();\n" +
     "}"
-const safeGroovy = '@GetMapping("/safeGroovy")\n' +
-    '@ResponseBody\n' +
-    'public R safeGroovy(String payload) {\n' +
+const safeGroovy = 'public R safeGroovy(String payload) {\n' +
     '    List<String> trustedScripts = Arrays.asList(\n' +
     '            "\\"id\\".execute()",\n' +
     '            "\\"ls\\".execute()",\n' +
@@ -1007,13 +988,11 @@ const safeGroovy = '@GetMapping("/safeGroovy")\n' +
     '}\n' +
     'private boolean isTrustedScript(String script, List<String> trustedScripts) {\n' +
     '    return trustedScripts.contains(script);\n' +
-    '}\n'
+    '}'
 
 // XXE
 
-const vulXMLReader = "@RequestMapping(value = \"/vulXMLReader\")\n" +
-    "@ResponseBody\n" +
-    "public String vulXMLReader(@RequestParam String payload) {\n" +
+const vulXMLReader = "public String vul1(String payload) {\n" +
     "    try {\n" +
     "        XMLReader xmlReader = XMLReaderFactory.createXMLReader();\n" +
     "        StringWriter stringWriter = new StringWriter();\n" +
@@ -1035,9 +1014,7 @@ const vulXMLReader = "@RequestMapping(value = \"/vulXMLReader\")\n" +
     "    }\n" +
     "}"
 
-const vulSAXParser = "@RequestMapping(value = \"/vulSAXParser\")\n" +
-    "@ResponseBody\n" +
-    "public String vulSAXParser(@RequestParam String payload) {\n" +
+const vulSAXParser = "public String vul2(String payload) {\n" +
     "    try {\n" +
     "        SAXParserFactory factory = SAXParserFactory.newInstance();\n" +
     "        SAXParser parser = factory.newSAXParser();\n" +
@@ -1049,9 +1026,7 @@ const vulSAXParser = "@RequestMapping(value = \"/vulSAXParser\")\n" +
     "    }\n" +
     "}"
 
-const safeXMLReader = "@RequestMapping(value = \"/safeXMLReader\")\n" +
-    "@ResponseBody\n" +
-    "public String safeXMLReader(@RequestParam String payload) {\n" +
+const safeXMLReader = "public String safe1(String payload) {\n" +
     "    try {\n" +
     "        XMLReader xmlReader = XMLReaderFactory.createXMLReader();\n" +
     "        // 禁用外部实体引用，防止XXE攻击\n" +
@@ -1065,9 +1040,7 @@ const safeXMLReader = "@RequestMapping(value = \"/safeXMLReader\")\n" +
     "        return e.getMessage();\n" +
     "    }\n" +
     "}"
-const safeBlackList = "@RequestMapping(value = \"/safeBlackList\")\n" +
-    "@ResponseBody\n" +
-    "public String safeBlackList(@RequestParam String payload) {\n" +
+const safeBlackList = "public String safe2(String payload) {\n" +
     "    String[] black_list = {\"ENTITY\", \"DOCTYPE\"};\n" +
     "    for (String keyword : black_list) {\n" +
     "        if (payload.toUpperCase().contains(keyword)) {\n" +
@@ -1077,64 +1050,81 @@ const safeBlackList = "@RequestMapping(value = \"/safeBlackList\")\n" +
     "    return \"[-]XML内容安全\";\n" +
     "}"
 
-// 水洞系列
+// 漏洞漏洞
+
+// 越权漏洞
+const vulHorizon = "public String vul(){\n" +
+    "\tString currentUsername = SecurityContextHolder.getContext().getAuthentication().getName();\n" +
+    "\tif (\"admin\".equals(currentUsername)) {\n" +
+    "\t\treturn \"common/401\";\n" +
+    "\t}else return \"/vul/logic/idor/admin\";\n" +
+    "}"
+const safeHorizon = "public R safe(String username){\n" +
+    "    // 获取当前登录的用户名\n" +
+    "    String currentUsername = SecurityContextHolder.getContext().getAuthentication().getName();\n" +
+    "    // 检查当前请求的用户名是否和登录用户名一致\n" +
+    "    if (!username.equals(currentUsername)) {\n" +
+    "        return R.error(\"您没有权限查看该用户的资料,当前登录用户：\"+currentUsername);\n" +
+    "    }\n" +
+    "    // 查询用户信息\n" +
+    "    User user = userMapper.getAllByUsername(username);\n" +
+    "    if (user != null) {\n" +
+    "        return R.ok(\"用户名：\"+user.getUsername()+\" 密码：\"+user.getPassword());\n" +
+    "    } else {\n" +
+    "        return R.error(\"用户名不存在\");\n" +
+    "    }\n" +
+    "}"
+
+// 支付漏洞
+
+
+// 其他漏洞
 const vul1SpringMvcRedirect = "// 基于Spring MVC的重定向方式\n" +
     "// 通过返回带有 redirect: 前缀的字符串来实现重定向。\n" +
-    "@GetMapping(\"/redirect\")\n" +
-    "public String vul1SpringMvc(@RequestParam(\"url\") String url) {\n" +
+    "public String vul1(@RequestParam(\"url\") String url) {\n" +
     "    return \"redirect:\" + url;   // Spring MVC写法 302临时重定向\n" +
     "}\n" +
     "\n" +
     "// 通过返回 ModelAndView 对象并指定 redirect: 前缀来实现重定向。\n" +
-    "@RequestMapping(\"/redirectWithModelAndView\")\n" +
-    "public ModelAndView vul1ModelAndView(@RequestParam(\"url\") String url) {\n" +
+    "public ModelAndView vul2(@RequestParam(\"url\") String url) {\n" +
     "    return new ModelAndView(\"redirect:\" + url); // Spring MVC写法 使用ModelAndView 302临时重定向\n" +
     "}";
 
 const vul2ServletRedirect = "// 基于Servlet标准的重定向方式\n" +
     "// 通过设置响应状态码和头部信息实现重定向。\n" +
-    "@RequestMapping(\"/setHeader\")\n" +
-    "@ResponseBody\n" +
-    "public static void vul2setHeader(HttpServletRequest request, HttpServletResponse response) {\n" +
+    "public static void vul2(HttpServletRequest request, HttpServletResponse response) {\n" +
     "    String url = request.getParameter(\"url\");\n" +
     "    response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY); // 301永久重定向\n" +
     "    response.setHeader(\"Location\", url);\n" +
     "}\n" +
     "\n" +
     "// 通过调用 HttpServletResponse.sendRedirect() 实现重定向。\n" +
-    "@RequestMapping(\"/sendRedirect\")\n" +
-    "@ResponseBody\n" +
-    "public static void vul2sendRedirect(HttpServletRequest request, HttpServletResponse response) throws IOException {\n" +
+    "public static void vul3(HttpServletRequest request, HttpServletResponse response) throws IOException {\n" +
     "    String url = request.getParameter(\"url\");\n" +
     "    response.sendRedirect(url); // 302临时重定向\n" +
     "}";
 
 const vul3SpringRedirect = "// 基于Spring注解和状态码的重定向方式\n" +
     "// 使用ResponseEntity设置状态码实现重定向\n" +
-    "@RequestMapping(\"/responseEntityRedirect\")\n" +
-    "@ResponseBody\n" +
-    "public ResponseEntity<Void> responseEntityRedirect(@RequestParam(\"url\") String url) {\n" +
+    "public ResponseEntity<Void> vul5(@RequestParam(\"url\") String url) {\n" +
     "    HttpHeaders headers = new HttpHeaders();\n" +
     "    headers.setLocation(URI.create(url));\n" +
     "    return new ResponseEntity<>(headers, HttpStatus.FOUND); // 302临时重定向\n" +
     "}\n" +
     "\n" +
     "// 通过注解设置状态码实现重定向\n" +
-    "@GetMapping(\"/annotationRedirect\")\n" +
     "@ResponseStatus(HttpStatus.FOUND) // 302临时重定向\n" +
-    "public void annotationRedirect(HttpServletRequest request, HttpServletResponse response) throws IOException {\n" +
+    "public void vul6(HttpServletRequest request, HttpServletResponse response) throws IOException {\n" +
     "    String url = request.getParameter(\"url\");\n" +
     "    response.setHeader(\"Location\", url);\n" +
     "}";
 const safe1Forward = "// 内部跳转\n" +
-    "@RequestMapping(\"/forward\")\n" +
-    "@ResponseBody\n" +
-    "public static void safe1Forward(HttpServletRequest request, HttpServletResponse response) {\n" +
+    "public static void safe1(HttpServletRequest request, HttpServletResponse response) {\n" +
     "    String url = request.getParameter(\"url\");\n" +
     "    RequestDispatcher rd = request.getRequestDispatcher(url);\n" +
     "    try {\n" +
+    "        // 做了内部转发\n" +
     "        rd.forward(request, response);\n" +
-    "        log.info(\"做了内部转发……\");\n" +
     "    } catch (Exception e) {\n" +
     "        e.printStackTrace();\n" +
     "    }\n" +
@@ -1158,8 +1148,7 @@ const safe2CheckUrl = '// 定义 URL 白名单\n' +
     '    }\n' +
     '    return true;\n' +
     '}\n';
-const vulXffforgery = "@RequestMapping(\"/buffli\")\n" +
-    "public String buffli(HttpServletRequest request, Model model) {\n" +
+const vulXffforgery = "public String vul1(HttpServletRequest request, Model model) {\n" +
     "    // 前后端不分离 使用request.getRemoteHost()获取客户端IP\n" +
     "    final String remoteHost = request.getRemoteHost();\n" +
     "    boolean isClientIP8888 = \"8.8.8.8\".equals(remoteHost);\n" +
@@ -1171,8 +1160,7 @@ const vulXffforgery = "@RequestMapping(\"/buffli\")\n" +
     "    return \"vul/other/onlyForGoogle\";\n" +
     "}\n" +
     "\n" +
-    "@RequestMapping(\"/ffli\")\n" +
-    "public String ffli(HttpServletRequest request, HttpServletResponse response, Model model, String xff) {\n" +
+    "public String vul2(HttpServletRequest request, HttpServletResponse response, Model model, String xff) {\n" +
     "    // 前后端分离 模拟通过X-Forwarded-For头获取客户端IP\n" +
     "    String remoteHost = \"\";\n" +
     "    if (xff.equals(\"true\")) {\n" +
@@ -1190,8 +1178,7 @@ const vulXffforgery = "@RequestMapping(\"/buffli\")\n" +
     "    return \"vul/other/onlyForGoogle\";\n" +
     "}";
 
-const safeXffforgery = "@RequestMapping(\"/safe\")\n" +
-    "public String safe(HttpServletRequest request, HttpServletResponse response, Model model, String xff){\n" +
+const safeXffforgery = "public String safe(HttpServletRequest request, HttpServletResponse response, Model model, String xff){\n" +
     "    ...\n" +
     "    if (!isTrustedProxy(remoteHost)){\n" +
     "        model.addAttribute(\"clientIP\", request.getRemoteAddr());\n" +
@@ -1205,9 +1192,7 @@ const safeXffforgery = "@RequestMapping(\"/safe\")\n" +
     "    return Arrays.asList(\"127.0.0.1\", \"192.168.1.1\", \"10.0.0.1\").contains(ip);\n" +
     "}"
 
-const vulCsrf = "@RequestMapping(\"/vul\")\n" +
-    "@ResponseBody\n" +
-    "public R vulCsrf(String receiver, String amount, @AuthenticationPrincipal UserDetails userDetails){\n" +
+const vulCsrf = "public R vul(String receiver, String amount, @AuthenticationPrincipal UserDetails userDetails){\n" +
     "    String currentUser = userDetails.getUsername();\n" +
     "    Map<String, Object> result = new HashMap<>();\n" +
     "    result.put(\"currentUser\", currentUser);\n" +
@@ -1215,9 +1200,7 @@ const vulCsrf = "@RequestMapping(\"/vul\")\n" +
     "    result.put(\"amount\", amount);\n" +
     "    return R.ok(result);\n" +
     "}"
-const safeCsrfToken = "@GetMapping(\"/safe\")\n" +
-    "@ResponseBody\n" +
-    "public Map<String, Object> safeCsrf(@RequestParam(\"receiver\") String receiver,@RequestParam(\"amount\") String amount,@AuthenticationPrincipal UserDetails userDetails,@RequestParam(\"csrfToken\") String csrfToken,HttpSession session) {\n" +
+const safeCsrfToken = "public Map<String, Object> safeCsrf(String receiver,String amount,@AuthenticationPrincipal UserDetails userDetails,String csrfToken,HttpSession session) {\n" +
     "    String currentUser = userDetails.getUsername();\n" +
     "\n" +
     "    String sessionToken = (String) session.getAttribute(\"csrfToken\");\n" +
@@ -1233,9 +1216,7 @@ const safeCsrfToken = "@GetMapping(\"/safe\")\n" +
     "    result.put(\"csrfToken\", csrfToken);\n" +
     "    return result;\n" +
     "}"
-const safeCsrfReferer = "@GetMapping(\"/safe2\")\n" +
-    "@ResponseBody\n" +
-    "public Map<String, Object> safeCsrf(HttpServletRequest request, @RequestParam(\"receiver\") String receiver, @RequestParam(\"amount\") String amount, @AuthenticationPrincipal UserDetails userDetails, HttpSession session) {\n" +
+const safeCsrfReferer = "public Map<String, Object> safe2(HttpServletRequest request,String receiver,String amount, @AuthenticationPrincipal UserDetails userDetails, HttpSession session) {\n" +
     "    String currentUser = userDetails.getUsername();\n" +
     "    Map<String, Object> result = new HashMap<>();\n" +
     "    String referer = request.getHeader(\"referer\");\n" +
@@ -1251,9 +1232,7 @@ const safeCsrfReferer = "@GetMapping(\"/safe2\")\n" +
     "}"
 
 // 跨域安全问题
-const vulCORS = "@GetMapping(\"/corsVul\")\n" +
-    "@ResponseBody\n" +
-    "public String corsVul(HttpServletRequest request, HttpServletResponse response) {\n" +
+const vulCORS = "public String vul(HttpServletRequest request, HttpServletResponse response) {\n" +
     "    String origin = request.getHeader(\"origin\");\n" +
     "\n" +
     "    if (origin != null) {\n" +
@@ -1270,19 +1249,16 @@ const vulCORS = "@GetMapping(\"/corsVul\")\n" +
     "}"
 
 const safeCORS = "@CrossOrigin(origins = {\"http://127.0.0.1:8080\", \"https://127.0.0.1:8080\"}, allowCredentials = \"true\")\n" +
-    "@GetMapping(\"/corsSafe\")\n" +
-    "@ResponseBody\n" +
-    "public String corsSafe(HttpServletRequest request, HttpServletResponse response) {\n" +
+    "public String safe(HttpServletRequest request, HttpServletResponse response) {\n" +
     "    // 记录安全 CORS 请求来源\n" +
     "    String origin = request.getHeader(\"origin\");\n" +
     "    // 允许携带凭证，但前提是 `Access-Control-Allow-Origin` 与可信来源匹配\n" +
     "    response.setHeader(\"Access-Control-Allow-Credentials\", \"true\");\n" +
     "\n" +
     "    return \"配置CORS可信源白名单\";\n" +
-    "}"
+    "}\n"
 
-const vulJSONP = '@GetMapping("/jsonpVul")\n' +
-    'public void jsonpVul(HttpServletRequest request, HttpServletResponse response) throws IOException, java.io.IOException {\n' +
+const vulJSONP = 'public void vul(HttpServletRequest request, HttpServletResponse response) throws IOException, java.io.IOException {\n' +
     '    String callback = request.getParameter("callback");\n' +
     '    String sensitiveData = "{\\"username\\":\\"admin\\",\\"password\\":\\"Admin123\\"}";\n' +
     '\n' +
@@ -1301,7 +1277,7 @@ const safeJSONP = "// 校验回调函数名是否合法\n" +
     "    return;\n" +
     "}"
 
-const vulDos = "public void vul(@RequestParam Integer width, @RequestParam Integer height, HttpServletResponse response) throws IOException {\n" +
+const vulDos = "public void vul(Integer width,Integer height,HttpServletResponse response) throws IOException {\n" +
     "    response.setContentType(\"image/jpeg\");\n" +
     "    response.setHeader(\"Pragma\", \"no-cache\");\n" +
     "    response.setHeader(\"Cache-Control\", \"no-cache\");\n" +
@@ -1313,7 +1289,65 @@ const vulDos = "public void vul(@RequestParam Integer width, @RequestParam Integ
     "        throw new RuntimeException(e);\n" +
     "    }\n" +
     "}"
-const vul2Dos = ""
+const vul2Dos = "// 如果解压出的文件是ZIP文件，则递归解压\n" +
+    "if (entry.getName().endsWith(\".zip\")) {\n" +
+    "    // 创建临时文件来存储这个ZIP\n" +
+    "    File tempFile = File.createTempFile(\"unzip\", \".zip\");\n" +
+    "    try (FileOutputStream fos = new FileOutputStream(tempFile)) {\n" +
+    "        byte[] buffer = new byte[1024];\n" +
+    "        int length;\n" +
+    "        while ((length = zipInputStream.read(buffer)) != -1) {\n" +
+    "            fos.write(buffer, 0, length);\n" +
+    "        }\n" +
+    "    }\n" +
+    "    // 递归解压这个新的ZIP文件\n" +
+    "    unzip(tempFile, currentDepth + 1, maxDepth);\n" +
+    "    // 解压完成后删除临时文件\n" +
+    "    tempFile.delete();\n" +
+    "} "
+
+const vulXpath = "public R vul(String username,String password) {\n" +
+    "    try {\n" +
+    "        // 构造XML数据\n" +
+    "        String xmlData = \"<users><user><username>admin</username><password>password</password></user></users>\";\n" +
+    "        \n" +
+    "\t\t// 解析XML文档\n" +
+    "        DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();\n" +
+    "        Document doc = builder.parse(new InputSource(new StringReader(xmlData)));\n" +
+    "\n" +
+    "        // 构造XPath表达式（存在注入漏洞）\n" +
+    "        XPath xpath = XPathFactory.newInstance().newXPath();\n" +
+    "        String expression = \"/users/user[username='\" + username + \"' and password='\" + password + \"']\";\n" +
+    "        NodeList nodes = (NodeList) xpath.evaluate(expression, doc, XPathConstants.NODESET);\n" +
+    "        if (nodes.getLength() > 0) {\n" +
+    "            return R.ok(\"用户名和密码验证通过！\");\n" +
+    "        } else {\n" +
+    "            return R.ok(\"用户名或密码错误！\");\n" +
+    "        }\n" +
+    "        ...\n" +
+    "}"
+const safeXpath = "public R safe(String username,String password) {\n" +
+    "    try {\n" +
+    "        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();\n" +
+    "        DocumentBuilder builder = factory.newDocumentBuilder();\n" +
+    "        String xml = \"<users><user><username>admin</username><password>password</password></user></users>\";\n" +
+    "        Document doc = builder.parse(new InputSource(new StringReader(xml)));\n" +
+    "\n" +
+    "        // 使用StringEscapeUtils.escapeXml10()方法对用户输入进行XML实体转义\n" +
+    "        String escapedUsername = StringEscapeUtils.escapeXml10(username);\n" +
+    "        String escapedPassword = StringEscapeUtils.escapeXml10(password);\n" +
+    "\n" +
+    "        XPath xpath = XPathFactory.newInstance().newXPath();\n" +
+    "        String expression = \"/users/user[username='\" + escapedUsername + \"' and password='\" + escapedPassword + \"']\";\n" +
+    "        NodeList nodes = (NodeList) xpath.evaluate(expression, doc, XPathConstants.NODESET);\n" +
+    "\n" +
+    "        if (nodes.getLength() > 0) {\n" +
+    "            return R.ok(\"用户名和密码验证通过！欢迎：\" + escapedUsername);\n" +
+    "        } else {\n" +
+    "            return R.error(\"认证失败：用户名或密码错误\");\n" +
+    "        }\n" +
+    "        ...\n" +
+    "}\n"
 
 // js泄漏-硬编码
 const hardCoding = "function login() {\n" +
@@ -1415,9 +1449,7 @@ const springBootDruid = "druid:\n" +
     "#        config:\n" +
     "#          multi-statement-allow: false"
 
-const dirTraversal = '@GetMapping("/listdir")\n' +
-    '@ResponseBody\n' +
-    'public String listDirectory(@RequestParam String dir) {\n' +
+const dirTraversal = 'public String listDirectory(String dir) {\n' +
     '    String staticFolderPath = sysConstant.getStaticFolder();\n' +
     '    File baseDir = new File(staticFolderPath);\n' +
     '    File requestedDir = new File(baseDir, dir);\n' +
@@ -1439,12 +1471,9 @@ const dirTraversal = '@GetMapping("/listdir")\n' +
     '                response.append(file.getName()).append("/\\">").append(file.getName()).append("/</a>");\n' +
     '    ...\n' +
     '    return response.toString();\n' +
-    '}';
+    '}'
 
-const safe1ListDirectory = '@GetMapping("/safe1listdir")\n' +
-    '@ResponseBody\n' +
-    '@SneakyThrows\n' +
-    'public String safe1ListDirectory(@RequestParam String dir) {\n' +
+const safe1ListDirectory = 'public String safe1(String dir) {\n' +
     '    String staticFolderPath = sysConstant.getStaticFolder();\n' +
     '    File baseDir = new File(staticFolderPath);\n' +
     '\n' +
@@ -1456,11 +1485,9 @@ const safe1ListDirectory = '@GetMapping("/safe1listdir")\n' +
     '    }\n' +
     '    File requestedDir = new File(baseDir, dir);\n' +
     '    ...\n' +
-    '}';
+    '}'
 
-const safe2ListDirectory = "@GetMapping(\"/safelistdir\")\n" +
-    "@ResponseBody\n" +
-    "public String safeListDirectory(@RequestParam String dir) {\n" +
+const safe2ListDirectory = "public String safe2(String dir) {\n" +
     "    String staticFolderPath = sysConstant.getStaticFolder();\n" +
     "    File baseDir = new File(staticFolderPath);\n" +
     "    File requestedDir = new File(baseDir, dir);\n" +
@@ -1474,8 +1501,7 @@ const safe2ListDirectory = "@GetMapping(\"/safelistdir\")\n" +
     "    return \"Error resolving directory path.\";\n" +
     "}\n" +
     "...";
-const infoLeakCeShi = "@GetMapping(\"/ping\")\n" +
-    "public String ping(@RequestParam(name = \"ip\", required = false) String ip, Model model) {\n" +
+const infoLeakCeShi = "public String ping(String ip, Model model) {\n" +
     "    String result = \"\";\n" +
     "    if (ip != null && !ip.isEmpty()) {\n" +
     "        try {\n" +
@@ -1495,15 +1521,15 @@ const infoLeakCeShi = "@GetMapping(\"/ping\")\n" +
     "        } catch (Exception e) {\n" +
     "            result = \"Error: \" + e.getMessage();\n" +
     "    ...\n" +
-    "}";
+    "}\n";
 
 // java专题 SPEL注入
-const spelVul = "public R vul(@ApiParam(name = \"ex\", value = \"表达式\", required = true) @RequestParam String ex) {\n" +
+const spelVul = "public R vul(String ex) {\n" +
     "    // 创建SpEL解析器，ExpressionParser接口用于表示解析器，SpelExpressionParser为默认实现\n" +
     "    ExpressionParser parser = new SpelExpressionParser();\n" +
     "    \n" +
-    "//        Expression expression = parser.parseExpression(ex);\n" +
-    "//        String result =  expression.getValue().toString();\n" +
+    "    // Expression expression = parser.parseExpression(ex);\n" +
+    "    // String result =  expression.getValue().toString();\n" +
     "    \n" +
     "    // 构造上下文 上下文其实就是设置好某些变量的值，执行表达式时根据这些设置好的内容区获取值 在不配置的情况下具有默认类型的上下文\n" +
     "    EvaluationContext evaluationContext = new StandardEvaluationContext();\n" +
@@ -1516,19 +1542,19 @@ const spelVul = "public R vul(@ApiParam(name = \"ex\", value = \"表达式\", re
     "    return R.ok(result);\n" +
     "}"
 
-const spelSafe = "public R safe(@ApiParam(name = \"ex\", value = \"表达式\", required = true) @RequestParam String ex) {\n" +
+const spelSafe = "public R safe(String ex) {\n" +
     "    ExpressionParser parser = new SpelExpressionParser();\n" +
     "    \n" +
-    "\t// 使用 SimpleEvaluationContext 限制表达式功能(Java类型引用、构造函数调用、Bean引用)，防止危险的操作\n" +
+    "    // 使用 SimpleEvaluationContext 限制表达式功能(Java类型引用、构造函数调用、Bean引用)，防止危险的操作\n" +
     "    EvaluationContext simpleContext = SimpleEvaluationContext.forReadOnlyDataBinding().build();\n" +
     "    \n" +
-    "\tExpression exp = parser.parseExpression(ex);\n" +
+    "    Expression exp = parser.parseExpression(ex);\n" +
     "    \n" +
-    "\tString result = exp.getValue(simpleContext).toString();\n" +
+    "    String result = exp.getValue(simpleContext).toString();\n" +
     "    return R.ok(result);\n" +
-    "}"
+    "}\n"
 
-const sstiVul = "public String vul1(@ApiParam(name = \"para\", value = \"用户输入参数\", required = true) @RequestParam String para, Model model) {\n" +
+const sstiVul = "public String vul1(@RequestParam String para, Model model) {\n" +
     "    // 用户输入直接拼接到模板路径，可能导致SSTI（服务器端模板注入）漏洞\n" +
     "    return \"/vul/ssti/\" + para;\n" +
     "}\n" +
@@ -1551,8 +1577,7 @@ const sstiVul = "public String vul1(@ApiParam(name = \"para\", value = \"用户�
     "    <artifactId>spring-boot-starter-thymeleaf</artifactId>\n" +
     "    <version>2.4.1</version>\n" +
     "</dependency>\n"
-const sstiSafe = "@GetMapping(\"/safe-thymeleaf\")\n" +
-    "public String safe1(@ApiParam(name = \"para\", value = \"用户输入参数\", required = true) @RequestParam String para, Model model) {\n" +
+const sstiSafe = "public String safe1(String para, Model model) {\n" +
     "    List<String> white_list = new ArrayList<>(Arrays.asList(\"vul\", \"ssti\"));\n" +
     "    if (white_list.contains(para)){\n" +
     "        return \"vul/ssti\" + para;\n" +
@@ -1673,9 +1698,7 @@ const safeXmlDecoder = 'public R safe(@RequestParam String payload) {\n' +
     '    }\n' +
     '}'
 
-const vulFastjson = "@PostMapping(\"/vul\")\n" +
-    "@ResponseBody\n" +
-    "public String vulFastjson(@RequestBody String content) {\n" +
+const vulFastjson = "public String vul(@RequestBody String content) {\n" +
     "    try {\n" +
     "        JSONObject jsonObject = JSON.parseObject(content);\n" +
     "        return jsonObject.toString();\n" +
@@ -1689,9 +1712,7 @@ const vulFastjson = "@PostMapping(\"/vul\")\n" +
     "    <artifactId>fastjson</artifactId>\n" +
     "    <version>1.2.37</version>\n" +
     "</dependency>"
-const safeFastjson = "@PostMapping(\"/safe\")\n" +
-    "@ResponseBody\n" +
-    "public String safeFastjson(@RequestBody String content) {\n" +
+const safeFastjson = "public String safe(@RequestBody String content) {\n" +
     "    try {\n" +
     "        // 1、禁用 AutoType\n" +
     "        ParserConfig.getGlobalInstance().setAutoTypeSupport(false);\n" +
@@ -1713,8 +1734,7 @@ const safeFastjson = "@PostMapping(\"/safe\")\n" +
     "    <version>1.2.83版本以上</version>\n" +
     "</dependency>"
 
-const vulJackson = "@RequestMapping(\"/vul\")\n" +
-    "public String vul(@RequestBody String content) {\n" +
+const vulJackson = "public String vul(@RequestBody String content) {\n" +
     "    try {\n" +
     "        ObjectMapper mapper = new ObjectMapper();\n" +
     "        mapper.enableDefaultTyping(); // 启用多态类型处理\n" +
@@ -1728,9 +1748,7 @@ const vulJackson = "@RequestMapping(\"/vul\")\n" +
     "    }\n" +
     "}"
 
-const safeJackson = "@PostMapping(\"/safe\")\n" +
-    "@ResponseBody\n" +
-    "public String safeJackson(@RequestBody String payload) {\n" +
+const safeJackson = "public String safe(@RequestBody String payload) {\n" +
     "    try {\n" +
     "        ObjectMapper mapper = new ObjectMapper();\n" +
     "\n" +
@@ -1750,18 +1768,15 @@ const safeJackson = "@PostMapping(\"/safe\")\n" +
     "    }\n" +
     "}"
 
-const vulXstream = "@RequestMapping(\"/vul\")\n" +
-    "@ResponseBody\n" +
-    "public String vulXstream(@RequestBody String content) {\n" +
-    "\tXStream xs = new XStream();\n" +
-    "\tObject result = xs.fromXML(content);  // 反序列化得到的对象\n" +
+const vulXstream = "public String vul(@RequestBody String content) {\n" +
+    "    XStream xs = new XStream();\n" +
+    "    Object result = xs.fromXML(content);  // 反序列化得到的对象\n" +
     "\n" +
-    "\t// 检查反序列化后的结果并返回相关信息\n" +
-    "\treturn \"组件漏洞-Xstream Vul, 反序列化结果: \\n\" + result.toString();\n" +
+    "    // 检查反序列化后的结果并返回相关信息\n" +
+    "    return \"组件漏洞-Xstream Vul, 反序列化结果: \\n\" + result.toString();\n" +
     "}"
 
-const safeXstreamBlackList = "@RequestMapping(\"/safe-BlackList\")\n" +
-    "public String safeXstreamBlackList(@RequestBody String content) {\n" +
+const safeXstreamBlackList = "public String safe1(@RequestBody String content) {\n" +
     "    XStream xstream = new XStream();\n" +
     "    // 首先清除默认设置，然后进行自定义设置\n" +
     "    xstream.addPermission(NoTypePermission.NONE);\n" +
@@ -1771,8 +1786,7 @@ const safeXstreamBlackList = "@RequestMapping(\"/safe-BlackList\")\n" +
     "    return \"组件漏洞-Xstream Safe-BlackList\";\n" +
     "}"
 
-const safeXstreamWhiteList = "@RequestMapping(\"/safe-WhiteList\")\n" +
-    "public String safeXstreamWhiteList(@RequestBody String content) {\n" +
+const safeXstreamWhiteList = "public String safe2(@RequestBody String content) {\n" +
     "    XStream xstream = new XStream();\n" +
     "     // 首先清除默认设置，然后进行自定义设置\n" +
     "    xstream.addPermission(NoTypePermission.NONE);\n" +
@@ -1783,19 +1797,28 @@ const safeXstreamWhiteList = "@RequestMapping(\"/safe-WhiteList\")\n" +
     "    // 添加自定义的类列表\n" +
     "    xstream.addPermission(new ExplicitTypePermission(new Class[]{Date.class}));\n" +
     "    return \"组件漏洞-Xstream Safe-WhiteList\";\n" +
-    "}\n"
-
-const vulLog4j2 = "@PostMapping(\"/vul\")\n" +
-    "@ResponseBody\n" +
-    "public String vulLog4j2(@RequestParam(\"payload\") String payload) {\n" +
-    "\tlogger.error(payload);\t//此处解析${}从而触发漏洞\n" +
-    "\treturn \"[+]Log4j2反序列化：\"+payload;\n" +
     "}"
+
+const vulLog4j2 = "public String vul(String payload) {\n" +
+    "    //此处解析${}从而触发漏洞\n" +
+    "    logger.error(payload);  \n" +
+    "    return \"[+]Log4j2反序列化：\"+payload;\n" +
+    "}\n" +
+    "\n" +
+    "<dependency>\n" +
+    "    <groupId>org.apache.logging.log4j</groupId>\n" +
+    "    <artifactId>log4j-core</artifactId>\n" +
+    "    <version>2.8.2</version>\n" +
+    "</dependency>\n" +
+    "\n" +
+    "<dependency>\n" +
+    "    <groupId>org.apache.logging.log4j</groupId>\n" +
+    "    <artifactId>log4j-api</artifactId>\n" +
+    "    <version>2.8.2</version>\n" +
+    "</dependency>"
 const safeLog4j2 = "safeLog4j2"
 
-const vulShiro = "@GetMapping(\"/getAESKey\")\n" +
-    "@ResponseBody\n" +
-    "public R getShiroKey(){\n" +
+const vulShiro = "public R getShiroKey(){\n" +
     "    try{\n" +
     "        byte[] key = new CookieRememberMeManager().getCipherKey();\n" +
     "        return R.ok(\"Shiro AES密钥硬编码为：\"+new String(Base64.getEncoder().encode(key)));\n" +

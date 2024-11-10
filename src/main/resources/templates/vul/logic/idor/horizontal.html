@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="~{common/common::head}"></div>
+</head>
+
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <!-- DoS攻击部分 -->
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <fieldset class="layui-elem-field layui-field-title">
+                    <legend>
+                        <a class="idor" style="color: rgb(30 159 255)">逻辑漏洞 - 越权漏洞</a>
+                    </legend>
+                    <blockquote class="layui-elem-quote layui-quote-nm" style="background-color: #a7deefab;">
+                        <p>
+                        <pre>  IDOR(不安全的直接对象引用)：通过修改请求中的对象标识符(如用户ID、文件名)绕过授权检查，访问或操作本不属于自己的资源</pre>
+                        <pre>  水平越权：攻击者通过修改请求中的标识符(如用户ID)访问同级别的其他用户资源，绕过权限控制</pre>
+                        </p>
+                    </blockquote>
+                </fieldset>
+            </div>
+
+            <div class="layui-col-md12" style="margin-top: 10px">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-bug"> 漏洞环境：水平遍历用户信息</span></h1>
+                        <div class="layui-tab layui-tab-brief">
+                            <div class="layui-tab-content">
+                                <div class="layui-tab-item layui-show">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <input type="text" name="username" style="width: 300px;" required
+                                                   lay-verify="required" value="test" autocomplete="off"
+                                                   class="layui-input" id="vul-horizontal-input">
+                                            <div style="display: flex; align-items: center;">
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="vul-horizontal-button" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre style="color: #28333e;font-size: 15px;">涉及权限处：cookie，url和post处id类名，功能点，文件名都可能存在越权漏洞</pre>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i>测试结果
+                                        </div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre id="vul-horizontal-result"
+                                                 style="color: red;font-size: 15px;"></pre>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="vulHorizon"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="layui-col-md12" style="margin-top: 10px">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-anquan"> 安全环境：验证Session</span></h1>
+                        <div class="layui-tab layui-tab-brief">
+                            <div class="layui-tab-content">
+                                <div class="layui-tab-item layui-show">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <input type="text" name="username" style="width: 300px;" required
+                                                   lay-verify="required" value="test" autocomplete="off"
+                                                   class="layui-input" id="safe-horizontal-input">
+                                            <div style="display: flex; align-items: center;">
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="safe-horizontal-button" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre style="color: #28333e;font-size: 15px;">安全编码规范:
+  1、从可信存储获取账号信息：账号信息应从可信来源获取，如Session、JWT Token或OAuth Token，避免从不可信的请求参数、Cookie中直接提取用户身份信息
+  2、使用不可推测的标识符：避免使用容易预测的标识符（如自增ID），使用不可推测的标识符（如UUID、随机字符串）来防止越权访问
+  3、最小权限原则：每个用户或进程应仅拥有其完成任务所需的最小权限，避免授予不必要的权限或过多的权限</pre>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-warning icon-output-safe"></i>测试结果
+                                        </div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre id="safe-horizontal-result"
+                                                 style="color: red;font-size: 15px;"></pre>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code"> 安全代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="safeHorizon"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{common/common::script}"></div>
+
+<script type="text/javascript">
+    layui.use(['layer', 'miniTab', 'common', 'form'], function () {
+        var $ = layui.jquery,
+            layer = layui.layer,
+            miniTab = layui.miniTab,
+            common = layui.common,
+            form = layui.form,
+            upload = layui.upload;
+
+        common.formListenFun("vul-horizontal-button", "", "/logic/idor/getUserInfo", "vul-horizontal-result", "get");
+        common.formListenFun("safe-horizontal-button", "", "/logic/idor/safe", "safe-horizontal-result", "get");
+
+
+        miniTab.listen();
+        layer.msg("其他漏洞-越权漏洞");
+
+        var cmConfig = {
+            lineNumbers: true,
+            lineWrapping: false,
+            indentUnit: 4,
+            indentWithTabs: true,
+            theme: 'juejin',
+            styleActiveLine: { nonEmpty: true },
+            fontSize: "18px",
+            mode: "text/x-java"
+        };
+
+        var cmConfigSafe = {
+            lineNumbers: true,
+            lineWrapping: false,
+            indentUnit: 4,
+            indentWithTabs: true,
+            theme: 'juejinsafe',
+            styleActiveLine: {nonEmpty: true},
+            fontSize: "18px",
+            mode: "text/x-java"
+        };
+
+        CodeMirror(document.getElementById("vulHorizon"), Object.assign({}, cmConfig, { value: vulHorizon }));
+        CodeMirror(document.getElementById("safeHorizon"), Object.assign({}, cmConfigSafe, { value: safeHorizon }));
+
+        $('.idor').hover(function () {
+            $(this).css('cursor', 'pointer');
+            layer.tips('漏洞示意图', this, {
+                tips: [1, '#0051ff'],
+                time: 2000
+            });
+        });
+
+        $('.idor').on('click', function () {
+            layer.open({
+                type: 1,
+                title: false,
+                closeBtn: 1,
+                area: ['572px', '450px'],
+                shadeClose: true,
+                content: '<div style="text-align: center;"><img src="/static/images/vul/idor/idor.png" style="width: 100%; height: 100%;"></div>'
+            });
+        });
+    });
+
+</script>
+
+</body>
+</html>

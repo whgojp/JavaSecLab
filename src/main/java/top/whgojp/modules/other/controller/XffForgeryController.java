@@ -41,8 +41,8 @@ public class XffForgeryController {
         return "获取到的IP：" + remoteHost;
     }
 
-    @RequestMapping("/buffli")
-    public String buffli(HttpServletRequest request, Model model) {
+    @RequestMapping("/vul1")
+    public String vul1(HttpServletRequest request, Model model) {
         // 前后端不分离 使用request.getRemoteAddr()获取客户端IP
         final String remoteHost = request.getRemoteAddr();
         boolean isClientIP8888 = "8.8.8.8".equals(remoteHost);
@@ -63,8 +63,8 @@ public class XffForgeryController {
         return "vul/other/onlyForGoogle";
     }
 
-    @RequestMapping("/ffli")
-    public String ffli(HttpServletRequest request, HttpServletResponse response, Model model, String xff) {
+    @RequestMapping("/vul2")
+    public String vul2(HttpServletRequest request, HttpServletResponse response, Model model, String xff) {
 
         // 前后端分离 模拟通过X-Forwarded-For头获取客户端IP
         String remoteHost = "";

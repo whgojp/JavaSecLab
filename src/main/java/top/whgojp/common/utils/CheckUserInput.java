@@ -81,7 +81,7 @@ public class CheckUserInput {
     public boolean checkSqlWhiteList(String content) {
         String[] white_list = {"id", "username", "password"};
         for (String s : white_list) {
-            if (content.toLowerCase().contains(s)) {
+            if (content.toLowerCase().equals(s)) {
                 return true;
             }
         }

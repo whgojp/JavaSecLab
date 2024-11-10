@@ -29,7 +29,7 @@ public class FastjsonController {
 
     @PostMapping("/vul")
     @ResponseBody
-    public String vulFastjson(@RequestBody String content) {
+    public String vul(@RequestBody String content) {
         try {
             JSONObject jsonObject = JSON.parseObject(content);
             return jsonObject.toString();
@@ -40,7 +40,7 @@ public class FastjsonController {
 
     @PostMapping("/safe")
     @ResponseBody
-    public String safeFastjson(@RequestBody String content) {
+    public String safe(@RequestBody String content) {
         try {
             // 1、禁用 AutoType
             ParserConfig.getGlobalInstance().setAutoTypeSupport(false);

@@ -101,13 +101,13 @@
             },
             {
               "title": "Hibernate",
-              "href": "sqli/hibernate",
+              "href": "",
               "icon": "iconfont icon-Hivebiao",
               "target": "_self"
             },
             {
               "title": "JPA",
-              "href": "sqli/jpa",
+              "href": "",
               "icon": "iconfont icon-spring",
               "target": "_self"
             }
@@ -146,26 +146,6 @@
           ]
         },
         {
-          "title": "RCE",
-          "href": "",
-          "icon": "iconfont icon-minglingzhihang",
-          "target": "_self",
-          "child": [
-            {
-              "title": "命令注入",
-              "href": "command",
-              "icon": "iconfont icon-minglingzhihang",
-              "target": "_self"
-            },
-            {
-              "title": "代码注入",
-              "href": "code",
-              "icon": "iconfont icon-minglingzhihang",
-              "target": "_self"
-            }
-          ]
-        },
-        {
           "title": "SSRF",
           "href": "ssrf",
           "icon": "iconfont icon-fuwuqingqiu",
@@ -191,7 +171,52 @@
             }
           ]
         },
-
+        {
+          "title": "CSRF",
+          "href": "csrf",
+          "icon": "iconfont icon-kuazhanqingqiuweizao",
+          "target": "_self"
+        },
+        {
+          "title": "跨源安全",
+          "href": "",
+          "icon": "iconfont icon-origin",
+          "target": "_self",
+          "child": [
+            {
+              "title": "CORS",
+              "href": "crossorigin/cors",
+              "icon": "iconfont icon-cors",
+              "target": "_self"
+            },
+            {
+              "title": "JSONP",
+              "href": "crossorigin/jsonp",
+              "icon": "iconfont icon-JSON",
+              "target": "_self"
+            }
+          ]
+        },
+        {
+          "title": "RCE",
+          "href": "",
+          "icon": "iconfont icon-minglingzhihang",
+          "target": "_self",
+          "child": [
+            {
+              "title": "命令注入",
+              "href": "command",
+              "icon": "iconfont icon-minglingzhihang",
+              "target": "_self"
+            },
+            {
+              "title": "代码注入",
+              "href": "code",
+              "icon": "iconfont icon-minglingzhihang",
+              "target": "_self"
+            }
+          ]
+        },
         {
           "title": "逻辑漏洞",
           "href": "",
@@ -201,13 +226,27 @@
             {
               "title": "越权漏洞(IDOR)",
               "href": "",
-              "icon": "iconfont icon-redirect",
-              "target": "_self"
+              "icon": "iconfont icon-quanxian",
+              "target": "_self",
+              "child": [
+                {
+                  "title": "水平越权",
+                  "href": "logic/idor/horizontal",
+                  "icon": "iconfont icon-24gl-swapHorizontal3",
+                  "target": "_self"
+                },
+                {
+                  "title": "垂直越权",
+                  "href": "logic/idor/vertical",
+                  "icon": "iconfont icon-24gl-swapVertical3",
+                  "target": "_self"
+                }
+              ]
             },
             {
               "title": "支付漏洞",
               "href": "",
-              "icon": "iconfont icon-redirect",
+              "icon": "iconfont icon-zhifu",
               "target": "_self"
             }
           ]
@@ -245,35 +284,15 @@
               "target": "_self"
             },
             {
-              "title": "跨站请求伪造",
-              "href": "other/csrf",
-              "icon": "iconfont icon-kuazhanqingqiuweizao",
-              "target": "_self"
-            },
-            {
-              "title": "跨源安全问题",
-              "href": "",
-              "icon": "iconfont icon-origin",
-              "target": "_self",
-              "child": [
-                {
-                  "title": "CORS",
-                  "href": "other/CrossOrigin/cors",
-                  "icon": "iconfont icon-cors",
-                  "target": "_self"
-                },
-                {
-                  "title": "JSONP",
-                  "href": "other/CrossOrigin/jsonp",
-                  "icon": "iconfont icon-JSON",
-                  "target": "_self"
-                }
-              ]
-            },
-            {
               "title": "Dos攻击",
               "href": "other/dos",
               "icon": "iconfont icon-DOSgongji",
+              "target": "_self"
+            },
+            {
+              "title": "XPATH注入",
+              "href": "other/xpath",
+              "icon": "iconfont icon-XPath",
               "target": "_self"
             }
           ]

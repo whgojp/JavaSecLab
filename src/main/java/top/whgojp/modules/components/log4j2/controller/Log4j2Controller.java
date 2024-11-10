@@ -28,7 +28,7 @@ public class Log4j2Controller {
 
     @PostMapping("/vul")
     @ResponseBody
-    public String vulLog4j2(@RequestParam("payload") String payload) {
+    public String vul(@RequestParam("payload") String payload) {
         System.out.println("[+]Log4j2反序列化："+payload);
         logger.error(payload);
         return "[+]Log4j2反序列化："+payload;
@@ -36,7 +36,7 @@ public class Log4j2Controller {
 
     @PostMapping("/safe")
     @ResponseBody
-    public String safeLog4j2(@RequestParam("payload") String payload) {
+    public String safe(@RequestParam("payload") String payload) {
         payload = StringEscapeUtils.escapeHtml4(payload);
 
         System.out.println("[+]Log4j2反序列化："+payload);

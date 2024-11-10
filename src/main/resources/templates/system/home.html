@@ -56,6 +56,7 @@
         margin-top: 10px;
         padding: 1.5px;
     }
+
     .layuimini-qiuck-module-two {
         text-align: center;
         margin-top: 10px;
@@ -75,6 +76,7 @@
         transition: all .3s;
         -webkit-transition: all .3s;
     }
+
     .layuimini-qiuck-module-two a i {
         display: inline-block;
         width: 100%;
@@ -99,6 +101,7 @@
         white-space: nowrap;
         font-size: 10px;
     }
+
     .layuimini-qiuck-module-two a cite {
         position: relative;
         top: 2px;
@@ -114,6 +117,7 @@
         background-color: #f8f8f8;
         /*width: 80%;*/
     }
+
     .custom-a-two {
         background-color: #f8f8f8;
         /*width: 80%;*/
@@ -123,6 +127,7 @@
         width: 100%;
         height: 70px;
     }
+
     .welcome-module-two {
         width: 100%;
         height: 70px;
@@ -133,6 +138,7 @@
         flex-wrap: wrap; /* 允许换行 */
         justify-content: space-between; /* 子元素间距均匀 */
     }
+
     .welcome-module-two .layui-row {
         display: flex;
         flex-wrap: wrap; /* 允许换行 */
@@ -146,6 +152,7 @@
         margin-top: 10px;
         padding: 1.5px;
     }
+
     .layuimini-qiuck-module-two {
         flex: 1 1 18%; /* 使子元素均分宽度，每个占18% */
         box-sizing: border-box; /* 包含padding和border在内的宽度 */
@@ -326,44 +333,10 @@
 
                 <div class="layui-col-md6">
                     <div class="layui-col-md6">
-                    <div class="layui-card">
-                        <div class="layui-card-header">
-                            <span class="iconfont icon-minglingzhihang icon icon-blue"></span>
-                            RCE
-                        </div>
-
-                        <div class="layui-card-body">
-                            <div class="welcome-module-two">
-                                <div class="layui-row layui-col-space10">
-                                    <div class="layui-col-xs3 layuimini-qiuck-module-two">
-                                        <div class="custom-a-two">
-                                            <a href="javascript:;" layuimini-content-href="command"
-                                               data-title="命令注入">
-                                                <span class="iconfont icon-minglingzhihang"></span>
-                                                <cite>命令注入</cite>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="layui-col-xs3 layuimini-qiuck-module-two">
-                                        <div class="custom-a-two">
-                                            <a href="javascript:;" layuimini-content-href="code"
-                                               data-title="代码注入">
-                                                <span class="iconfont icon-minglingzhihang"></span>
-                                                <cite>代码注入</cite>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    </div>
-                    <div class="layui-col-md6">
                         <div class="layui-card">
                             <div class="layui-card-header">
-                                <span class="iconfont icon-qita icon icon-blue"></span>
-
+                                <span class="iconfont icon-minglingzhihang icon icon-blue"></span>
+                                RCE
                             </div>
 
                             <div class="layui-card-body">
@@ -371,19 +344,53 @@
                                     <div class="layui-row layui-col-space10">
                                         <div class="layui-col-xs3 layuimini-qiuck-module-two">
                                             <div class="custom-a-two">
-                                                <a href="javascript:;" layuimini-content-href="ssrf"
-                                                   data-title="SSRF">
-                                                    <span class="iconfont icon-fuwuqingqiu"></span>
-                                                    <cite>SSRF</cite>
+                                                <a href="javascript:;" layuimini-content-href="command"
+                                                   data-title="命令注入">
+                                                    <span class="iconfont icon-minglingzhihang"></span>
+                                                    <cite>命令注入</cite>
                                                 </a>
                                             </div>
                                         </div>
                                         <div class="layui-col-xs3 layuimini-qiuck-module-two">
                                             <div class="custom-a-two">
-                                                <a href="javascript:;" layuimini-content-href="xxe/vul"
-                                                   data-title="XXE">
-                                                    <span class="iconfont icon-XML"></span>
-                                                    <cite>XXE</cite>
+                                                <a href="javascript:;" layuimini-content-href="code"
+                                                   data-title="代码注入">
+                                                    <span class="iconfont icon-minglingzhihang"></span>
+                                                    <cite>代码注入</cite>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="layui-col-md6">
+                        <div class="layui-card">
+                            <div class="layui-card-header">
+                                <span class="iconfont icon-luojiloudongjiance icon icon-blue"></span>
+                                逻辑漏洞
+                            </div>
+                            <div class="layui-card-body">
+                                <div class="welcome-module-two">
+                                    <div class="layui-row layui-col-space10">
+                                        <div class="layui-col-xs3 layuimini-qiuck-module-two">
+                                            <div class="custom-a-two">
+                                                <a href="javascript:;" layuimini-content-href="logic/idor/horizontal"
+                                                   data-title="越权漏洞">
+                                                    <span class="iconfont icon-24gl-swapHorizontal3"></span>
+                                                    <cite>越权漏洞</cite>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="layui-col-xs3 layuimini-qiuck-module-two">
+                                            <div class="custom-a-two">
+                                                <a href="javascript:;"
+                                                   layuimini-content-href="logic/idor/horizontal/pay"
+                                                   data-title="支付漏洞">
+                                                    <span class="iconfont icon-zhifu"></span>
+                                                    <cite>支付漏洞</cite>
                                                 </a>
                                             </div>
                                         </div>
@@ -394,6 +401,59 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="layui-col-md6">
+
+                    <div class="layui-card">
+                        <div class="layui-card-header">
+                            <span class="iconfont icon-qita icon icon-blue"></span>
+                        </div>
+                        <div class="layui-card-body">
+                            <div class="welcome-module">
+                                <div class="layui-row layui-col-space10">
+                                    <div class="layui-col-xs3 layuimini-qiuck-module">
+                                        <div class="custom-a">
+                                            <a href="javascript:;" layuimini-content-href="ssrf"
+                                               data-title="SSRF">
+                                                <span class="iconfont icon-fuwuqingqiu"></span>
+                                                <cite>SSRF</cite>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="layui-col-xs3 layuimini-qiuck-module">
+                                        <div class="custom-a">
+                                            <a href="javascript:;" layuimini-content-href="xxe/vul"
+                                               data-title="XXE">
+                                                <span class="iconfont icon-XML"></span>
+                                                <cite>XXE</cite>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="layui-col-xs3 layuimini-qiuck-module">
+                                        <div class="custom-a">
+                                            <a href="javascript:;" layuimini-content-href="csrf"
+                                               data-title="CSRF">
+                                                <span class="iconfont icon-kuazhanqingqiuweizao"></span>
+                                                <cite>CSRF</cite>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="layui-col-xs3 layuimini-qiuck-module">
+                                        <div class="custom-a">
+                                            <a href="javascript:;" layuimini-content-href="crossorigin/cors"
+                                               data-title="跨源安全">
+                                                <span class="iconfont icon-origin"></span>
+                                                <cite>跨源安全</cite>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
 
                 <div class="layui-col-md6">
 
@@ -425,19 +485,19 @@
                                     </div>
                                     <div class="layui-col-xs3 layuimini-qiuck-module">
                                         <div class="custom-a">
-                                            <a href="javascript:;" layuimini-content-href="other/csrf"
-                                               data-title="跨站请求伪造">
-                                                <span class="iconfont icon-kuazhanqingqiuweizao"></span>
-                                                <cite>跨站请求伪造</cite>
+                                            <a href="javascript:;" layuimini-content-href="other/dos"
+                                               data-title="拒绝服务">
+                                                <span class="iconfont icon-DOSgongji"></span>
+                                                <cite>拒绝服务</cite>
                                             </a>
                                         </div>
                                     </div>
                                     <div class="layui-col-xs3 layuimini-qiuck-module">
                                         <div class="custom-a">
-                                            <a href="javascript:;" layuimini-content-href="other/CrossOrigin"
-                                               data-title="跨源安全问题">
-                                                <span class="iconfont icon-origin"></span>
-                                                <cite>跨源安全问题</cite>
+                                            <a href="javascript:;" layuimini-content-href="other/xpath"
+                                               data-title="XPATH注入">
+                                                <span class="iconfont icon-XPath"></span>
+                                                <cite>XPATH注入</cite>
                                             </a>
                                         </div>
                                     </div>
@@ -632,15 +692,17 @@
                     <li class="layui-timeline-item">
                         <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
                         <div class="layui-timeline-content layui-text">
-                            <h3 class="layui-timeline-title">现在</h3>
-                            <p>逻辑漏洞模块设计、基础漏洞完善……</p>
+                            <h3 class="layui-timeline-title">V1.1</h3>
+                            <p>平台页面UI：简化对应缺陷/安全代码、优化DashBoard页面<br>
+                            新增漏洞模块：IDOR(水平/垂直越权)、拒绝服务、XPATH注入</p>
                         </div>
                     </li>
                     <li class="layui-timeline-item">
                         <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
                         <div class="layui-timeline-content layui-text">
-                            <h3 class="layui-timeline-title">2024-08</h3>
-                            <p>完成跨站脚本、SQL注入、任意文件、SSRF、敏感信息泄漏、SPEL注入、SSTI注入、反序列化、组件漏洞等模块</p>
+                            <h3 class="layui-timeline-title">V1.0</h3>
+                            <p>
+                                完成跨站脚本、SQL注入、任意文件、SSRF、XXE、CSRF、CORS、JSONP、RCE、URL重定向、XFF伪造、敏感信息泄漏、SPEL注入、SSTI注入、反序列化、组件漏洞等模块</p>
                         </div>
                     </li>
                     <li class="layui-timeline-item">
@@ -652,7 +714,8 @@
                                 <br>技术栈：<b>SpringBoot+Spring Security+MyBatis+Thymeleaf+Layui</b>
                                 <br>这里暂时只做了简单认证实现、权限分级/人员管理等复杂鉴权功能后续待实现……
                                 <br>架构设计：前后端不分离，在通用后端管理框架基础上，添加一个个漏洞模块……
-                                <br>参考项目：<a target="_blank" href="https://github.com/j3ers3/Hello-Java-Sec">Hello-Java-Sec</a> <a target="_blank" href="https://github.com/j3ers3/Hello-Java-Sec">JavaSec</a>
+                                <br>参考项目：<a target="_blank" href="https://github.com/j3ers3/Hello-Java-Sec">Hello-Java-Sec</a>
+                                <a target="_blank" href="https://github.com/j3ers3/Hello-Java-Sec">JavaSec</a>
                             </p>
                         </div>
                     </li>

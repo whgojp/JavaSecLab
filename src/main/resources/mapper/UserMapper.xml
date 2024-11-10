@@ -25,4 +25,9 @@
         set password = #{password,jdbcType=VARCHAR}
         where username = #{username,jdbcType=VARCHAR}
     </update>
+    <select id="getAllByUsername" resultType="top.whgojp.modules.system.entity.User">
+        select *
+        from user
+        where username = #{username,jdbcType=VARCHAR}
+    </select>
 </mapper>

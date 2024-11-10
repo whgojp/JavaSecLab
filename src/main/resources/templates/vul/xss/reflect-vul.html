@@ -73,7 +73,7 @@
                                 <div class="layui-tab-item">
                                     <blockquote class="layui-elem-quote main_btn">
                                         <p>Controller接口返回的数据是String类型</p>
-                                        <a target="_blank" href="/xss/reflect/vul1ReflectRawString?content=%3Cscript%3Ealert(/xss/)%3C/script%3E">
+                                        <a target="_blank" href="/xss/reflect/vul2?content=%3Cscript%3Ealert(/xss/)%3C/script%3E">
                                             <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
                                                 <span class="iconfont icon-zhihang">Run</span>
                                             </button>
@@ -133,7 +133,7 @@
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
                                         <p>text/plain：浏览器在获取到这种文件时并不会对其进行处理，将文件设置为纯文本的形式</p>
-                                        <a target="_blank" href="/xss/reflect/vul2ReflectContentType?type=plain&content=123<script>alert(/xss/)</script>123">
+                                        <a target="_blank" href="/xss/reflect/vul3?type=plain&content=123<script>alert(/xss/)</script>123">
                                             <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
                                                 <span class="iconfont icon-zhihang">Run</span>
                                             </button>
@@ -144,7 +144,7 @@
                                 <div class="layui-tab-item">
                                     <blockquote class="layui-elem-quote main_btn">
                                         <p>text/html：浏览器在获取到这种文件时会自动调用html的解析器对文件进行相应的处理</p>
-                                        <a target="_blank" href="/xss/reflect/vul2ReflectContentType?type=html&content=123<script>alert(/xss/)</script>123">
+                                        <a target="_blank" href="/xss/reflect/vul3?type=html&content=123<script>alert(/xss/)</script>123">
                                             <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
                                                 <span class="iconfont icon-zhihang">Run</span>
                                             </button>
@@ -191,8 +191,8 @@ Content-Type属性指定响应的HTTP内容类型。如果未指定ContentType�
         miniTab.listen();
         layer.msg("跨站脚本-反射型");
 
-        common.formListenFun("vul1-reflect-raw-get", "", "/xss/reflect/vul1ReflectRaw", "vul1-reflect-raw-result", "get");
-        common.formListenFun("vul1-reflect-raw-post", "", "/xss/reflect/vul1ReflectRaw", "vul1-reflect-raw-result", "post");
+        common.formListenFun("vul1-reflect-raw-get", "", "/xss/reflect/vul1", "vul1-reflect-raw-result", "get");
+        common.formListenFun("vul1-reflect-raw-post", "", "/xss/reflect/vul1", "vul1-reflect-raw-result", "post");
         common.selectListenFun("vul1-reflect-raw-get", "vul1-reflect-raw-get-input");
 
         var cmConfig = {

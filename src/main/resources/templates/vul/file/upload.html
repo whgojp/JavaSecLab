@@ -10,7 +10,7 @@
                     <legend style="color: rgb(30 159 255)">任意文件操作 - 文件上传</legend>
                     <blockquote class="layui-elem-quote layui-quote-nm"
                                 style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
-                        <pre>任意文件上传：由于对上传文件未作过滤或过滤机制不严（文件后缀或类型），导致恶意用户可以上传脚本文件(jsp、php、asp)，通过上传文件可以达到控制网站权限的目的。</pre>
+                        <pre>  任意文件上传：由于对上传文件未作过滤或过滤机制不严（文件后缀或类型），导致恶意用户可以上传脚本文件(jsp、php、asp)，通过上传文件可以达到控制网站权限的目的</pre>
                     </blockquote>
                 </fieldset>
             </div>
@@ -69,7 +69,7 @@ SpringBoot默认不支持jsp文件解析，本想着做jsp和Thymeleaf的同时�
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-anquan"> 安全代码：文件上传白名单</span></h1>
+                        <h1><span class="iconfont icon-anquan"> 安全环境：文件上传白名单</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
@@ -91,7 +91,7 @@ SpringBoot默认不支持jsp文件解析，本想着做jsp和Thymeleaf的同时�
                                         <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
                                         <div class="layui-card-body layui-text layadmin-text">
                                             <pre style="color: #28333e;font-size: 15px;">
-安全编码建议：
+安全编码规范：
     1、后端采用白名单对上传文件类型进行限制
     2、目录权限限制，禁止上传目录具有脚本解析环境
     3、对上传文件回显相对路径或者不显示路径
@@ -114,7 +114,7 @@ SpringBoot默认不支持jsp文件解析，本想着做jsp和Thymeleaf的同时�
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
+                        <h1><span class="iconfont icon-code"> 安全代码</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="anyFileUploadWhiteCode"></div>
                         </div>
@@ -181,14 +181,14 @@ SpringBoot默认不支持jsp文件解析，本想着做jsp和Thymeleaf的同时�
 
         createUploadInstance({
             elem: '#anyFileUpload',
-            url: '/file/upload/anyFIleUpload',
+            url: '/file/upload/vul',
             bindAction: '#anyFileUploadButton',
             resultElem: '#anyFileUpload-result'
         });
 
         createUploadInstanceWhite({
             elem: '#anyFileUploadWhite',
-            url: '/file/upload/anyFIleUploadWhiteList',
+            url: '/file/upload/safe',
             bindAction: '#anyFileUploadWhiteButton',
             resultElem: '#anyFileUploadWhite-result'
         });

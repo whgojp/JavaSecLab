@@ -58,7 +58,6 @@ public class HibernateController {
 
         Session session = sessionFactory.getCurrentSession(); // 获取当前 Session
         String message;
-
         try {
             switch (type) {
                 case "add":  // 插入操作，存在SQL注入风险点
@@ -122,6 +121,10 @@ public class HibernateController {
     }
 
 
+    @GetMapping("/safe")
+    public R safe(){
+        return R.ok();
+    }
 
 
 }

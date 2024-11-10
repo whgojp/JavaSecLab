@@ -47,9 +47,9 @@ public class XXEController {
     public String xxeSafe() {
         return "vul/xxe/xxe-safe";
     }
-    @RequestMapping(value = "/vulXMLReader")
+    @RequestMapping(value = "/vul1")
     @ResponseBody
-    public String vulXMLReader(@RequestParam String payload) {
+    public String vul1(@RequestParam String payload) {
         try {
             XMLReader xmlReader = XMLReaderFactory.createXMLReader();
             StringWriter stringWriter = new StringWriter();
@@ -75,9 +75,9 @@ public class XXEController {
     /**
      * javax.xml.parsers.SAXParser 是 XMLReader 的替代品，它提供了更多的安全措施，例如默认禁用 DTD 和外部实体的声明，如果需要使用 DTD 或外部实体，可以手动启用它们，并使用相应的安全措施
      */
-    @RequestMapping(value = "/vulSAXParser")
+    @RequestMapping(value = "/vul2")
     @ResponseBody
-    public String vulSAXParser(@RequestParam String payload) {
+    public String vul2(@RequestParam String payload) {
         try {
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser parser = factory.newSAXParser();
@@ -206,9 +206,9 @@ public class XXEController {
 //    }
 
 
-    @RequestMapping(value = "/safeXMLReader")
+    @RequestMapping(value = "/safe1")
     @ResponseBody
-    public String safeXMLReader(@RequestParam String payload) {
+    public String safe1(@RequestParam String payload) {
         try {
             XMLReader xmlReader = XMLReaderFactory.createXMLReader();
             // 禁用外部实体引用，防止XXE攻击
@@ -234,9 +234,9 @@ public class XXEController {
         }
     }
 
-    @RequestMapping(value = "/safeBlackList")
+    @RequestMapping(value = "/safe2")
     @ResponseBody
-    public String safeBlackList(@RequestParam String payload) {
+    public String safe2(@RequestParam String payload) {
         String[] black_list = {"ENTITY", "DOCTYPE"};
         for (String keyword : black_list) {
             if (payload.toUpperCase().contains(keyword)) {

@@ -11,7 +11,7 @@
  Target Server Version : 80200 (8.2.0)
  File Encoding         : 65001
 
- Date: 26/08/2024 19:15:41
+ Date: 10/11/2024 13:17:18
 */
 
 SET NAMES utf8mb4;
@@ -63,32 +63,13 @@ CREATE TABLE `sqli` (
   `username` varchar(255) COLLATE utf8mb4_general_ci NOT NULL COMMENT '用户名',
   `password` varchar(255) COLLATE utf8mb4_general_ci NOT NULL COMMENT '密码',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=730 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of sqli
 -- ----------------------------
 BEGIN;
-INSERT INTO `sqli` (`id`, `username`, `password`) VALUES (706, '321', 'qwe');
-INSERT INTO `sqli` (`id`, `username`, `password`) VALUES (707, '2', '1');
-INSERT INTO `sqli` (`id`, `username`, `password`) VALUES (708, '1', '21');
-INSERT INTO `sqli` (`id`, `username`, `password`) VALUES (713, '1', '1');
-INSERT INTO `sqli` (`id`, `username`, `password`) VALUES (714, 'qwe', 'qwe');
-INSERT INTO `sqli` (`id`, `username`, `password`) VALUES (715, '1', '1\' AND GTID_SUBSET(CONCAT(0x71706a7a71,(SELECT (ELT(7170=7170,1))),0x7171717071),7170) AND \'1\'=\'1');
-INSERT INTO `sqli` (`id`, `username`, `password`) VALUES (716, '1', '1\' and updatexml(1,concat(0x7e,(SELECT user()),0x7e),1) AND \'1\'=\'1');
-INSERT INTO `sqli` (`id`, `username`, `password`) VALUES (717, '1', '1\' and updatexml(1,concat(0x7e,(SELECT user()),0x7e),1) AND \'1\'=\'1');
-INSERT INTO `sqli` (`id`, `username`, `password`) VALUES (718, '1', '1');
-INSERT INTO `sqli` (`id`, `username`, `password`) VALUES (719, 'test', '1\' and updatexml(1,concat(0x7e,(SELECT user()),0x7e),1) AND \'1\'=\'1');
-INSERT INTO `sqli` (`id`, `username`, `password`) VALUES (720, 'test', '1\' and updatexml(1,concat(0x7e,(SELECT user()),0x7e),1) AND \'1\'=\'1');
-INSERT INTO `sqli` (`id`, `username`, `password`) VALUES (721, 'test', '1\' and updatexml(1,concat(0x7e,(SELECT user()),0x7e),1) AND \'1\'=\'1');
-INSERT INTO `sqli` (`id`, `username`, `password`) VALUES (722, 'test', '1\' and updatexml(1,concat(0x7e,(SELECT user()),0x7e),1) AND \'1\'=\'1');
-INSERT INTO `sqli` (`id`, `username`, `password`) VALUES (723, 'test', '1\' and updatexml(1,concat(0x7e,(SELECT user()),0x7e),1) AND \'1\'=\'1');
-INSERT INTO `sqli` (`id`, `username`, `password`) VALUES (724, 'test', '1\' and updatexml(1,concat(0x7e,(SELECT user()),0x7e),1) AND \'1\'=\'1');
-INSERT INTO `sqli` (`id`, `username`, `password`) VALUES (725, 'test', '1\' and updatexml(1,concat(0x7e,(SELECT user()),0x7e),1) AND \'1\'=\'1');
-INSERT INTO `sqli` (`id`, `username`, `password`) VALUES (726, '1', '1\' and updatexml(1,concat(0x7e,(SELECT user()),0x7e),1) AND \'1\'=\'1');
-INSERT INTO `sqli` (`id`, `username`, `password`) VALUES (727, '1', '1\' and updatexml(1,concat(0x7e,(SELECT user()),0x7e),1) AND \'1\'=\'1');
-INSERT INTO `sqli` (`id`, `username`, `password`) VALUES (728, '1', '1\' and updatexml(1,concat(0x7e,(SELECT user()),0x7e),1) AND \'1\'=\'1');
-INSERT INTO `sqli` (`id`, `username`, `password`) VALUES (729, '1', '1\' and updatexml(1,concat(0x7e,(SELECT user()),0x7e),1) AND \'1\'=\'1');
+INSERT INTO `sqli` (`id`, `username`, `password`) VALUES (1, 'test', 'test');
 COMMIT;
 
 -- ----------------------------
@@ -105,9 +86,9 @@ CREATE TABLE `user` (
 -- Records of user
 -- ----------------------------
 BEGIN;
-INSERT INTO `user` (`username`, `password`) VALUES ('1', '1');
 INSERT INTO `user` (`username`, `password`) VALUES ('123', '123');
 INSERT INTO `user` (`username`, `password`) VALUES ('admin', 'admin');
+INSERT INTO `user` (`username`, `password`) VALUES ('test', 'test');
 COMMIT;
 
 -- ----------------------------
@@ -120,7 +101,7 @@ CREATE TABLE `xss` (
   `ua` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'User-Agent',
   `date` varchar(255) COLLATE utf8mb4_general_ci NOT NULL COMMENT '插入时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=74 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of xss

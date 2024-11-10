@@ -36,9 +36,9 @@ public class CommandController {
         return "vul/rce/command";
     }
 
-    @RequestMapping("/processBuilder")
+    @RequestMapping("/vul1")
     @ResponseBody
-    public R vulProcessBuilder(@RequestParam("payload") String payload) throws IOException {
+    public R vul1(@RequestParam("payload") String payload) throws IOException {
         String[] command = {"sh", "-c", payload};
 
         ProcessBuilder pb = new ProcessBuilder(command);
@@ -55,9 +55,9 @@ public class CommandController {
         return R.ok(output.toString());
     }
 
-    @RequestMapping("/getRuntime")
+    @RequestMapping("/vul2")
     @ResponseBody
-    public R vulGetRuntime(String payload) throws IOException {
+    public R vul2(String payload) throws IOException {
         StringBuilder sb = new StringBuilder();
         String line;
         Process proc = Runtime.getRuntime().exec(payload);
@@ -70,9 +70,9 @@ public class CommandController {
         return R.ok(sb.toString());
     }
 
-    @RequestMapping("/processImpl")
+    @RequestMapping("/vul3")
     @ResponseBody
-    public R vulProcessImpl(String payload) throws Exception {
+    public R vul3(String payload) throws Exception {
         // 获取 ProcessImpl 类对象
         Class<?> clazz = Class.forName("java.lang.ProcessImpl");
 
@@ -95,9 +95,9 @@ public class CommandController {
     // 可执行命令白名单
     private static final List<String> ALLOWED_COMMANDS = Arrays.asList("ls", "date");
 
-    @RequestMapping("/safeProcessBuilder")
+    @RequestMapping("/safe")
     @ResponseBody
-    public R safeProcessBuilder(@RequestParam("payload") String payload) throws IOException {
+    public R safe(@RequestParam("payload") String payload) throws IOException {
         // 验证命令是否在允许的列表中
         if (!ALLOWED_COMMANDS.contains(payload)) {
             return R.error("不允许执行该命令！");

@@ -15,7 +15,7 @@ services:
       - JavaSecLabNet
 
   JavaSecLab:
-    image: javaseclab:1.0
+    image: javaseclab:1.1
     container_name: Container-JavaSecLab
     restart: always
     build: .

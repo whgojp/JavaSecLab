@@ -35,7 +35,7 @@ public class SPELController {
     @ApiOperation(value = "漏洞环境：原生漏洞环境", notes = "当参数未经过滤时，攻击者可以注入恶意的SPEL表达式，执行任意代码")
     @ResponseBody
     @ApiImplicitParam(name = "ex", value = "表达式", dataType = "String", paramType = "query", dataTypeClass = String.class)
-    @GetMapping("/vul-raw")
+    @GetMapping("/vul")
     public R vul(@ApiParam(name = "ex", value = "表达式", required = true) @RequestParam String ex) {
         // 创建SpEL解析器，ExpressionParser接口用于表示解析器，SpelExpressionParser为默认实现
         ExpressionParser parser = new SpelExpressionParser();

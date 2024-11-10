@@ -100,7 +100,7 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-anquan">  安全代码：前端实体转义</span></h1>
+                        <h1><span class="iconfont icon-anquan">  安全环境：前端实体转义</span></h1>
                         <div class="layui-tab-content">
                             <div class="layui-tab-item layui-show">
                                 <blockquote class="layui-elem-quote main_btn">
@@ -198,7 +198,7 @@
         form.on('submit(vul1-store-raw-submit)', function (data) {
             $.ajax({
                 type: 'POST',
-                url: '/xss/store/vul1StoreRaw',
+                url: '/xss/store/vul',
                 data: data.field,
                 success: function(response) {
                     location.reload(); // 请求成功后刷新页面
@@ -213,7 +213,7 @@
         form.on('submit(safe1-store-EntityEscape-front-submit)', function (data) {
             $.ajax({
                 type: 'POST',
-                url: '/xss/store/vul1StoreRaw',
+                url: '/xss/store/vul',
                 data: data.field,
                 success: function(response) {
                     location.reload(); // 请求成功后刷新页面

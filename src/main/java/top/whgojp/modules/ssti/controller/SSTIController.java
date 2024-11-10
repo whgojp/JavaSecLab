@@ -40,7 +40,7 @@ public class SSTIController {
 
     @ApiOperation(value = "漏洞环境：Thymeleaf模板注入", notes = "如果参数未经过滤，攻击者可以注入恶意模板参数，执行任意代码。")
     @ApiImplicitParam(name = "para", value = "用户输入参数", dataType = "String", paramType = "query", dataTypeClass = String.class)
-    @GetMapping("/vul1-thymeleaf")
+    @GetMapping("/vul1")
     public String vul1(@ApiParam(name = "para", value = "用户输入参数", required = true) @RequestParam String para, Model model) {
 //        model.addAttribute("para", para);
 //        return "vul/ssti/vul"; // 将参数 para 传递到模板 "vul/ssti/template"
@@ -48,17 +48,17 @@ public class SSTIController {
         // 用户输入直接拼接到模板路径，可能导致SSTI（服务器端模板注入）漏洞
         return "/vul/ssti/" + para;
     }
-    @GetMapping("/vul2-thymeleaf/{path}")
+    @GetMapping("/vul2/{path}")
     public void vul2(@PathVariable String path) {
         log.info("SSTI注入："+path);
     }
-    @GetMapping("/vul3-thymeleaf")
+    @GetMapping("/vul3")
     public String vul3(@ApiParam(name = "para", value = "用户输入参数", required = true) @RequestParam String para, Model model) {
         model.addAttribute("templateContent", para);
         return "vul/ssti/vul"; // 将参数 para 传递到模板 "vul/ssti/vul"
     }
 
-    @GetMapping("/safe-thymeleaf")
+    @GetMapping("/safe1")
     public String safe1(@ApiParam(name = "para", value = "用户输入参数", required = true) @RequestParam String para, Model model) {
         List<String> white_list = new ArrayList<>(Arrays.asList("vul", "ssti"));
         if (white_list.contains(para)){

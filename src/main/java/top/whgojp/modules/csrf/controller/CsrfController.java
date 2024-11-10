@@ -1,9 +1,8 @@
-package top.whgojp.modules.other.controller;
+package top.whgojp.modules.csrf.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpRequest;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -14,31 +13,30 @@ import top.whgojp.common.utils.R;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
 /**
- * @description 其他漏洞-跨站请求伪造
+ * @description 跨站请求伪造
  * @author: whgojp
  * @email: whgojp@foxmail.com
  * @Date: 2024/7/12 22:12
  */
 @Slf4j
-@Api(value = "CsrfController", tags = "其他漏洞-跨站请求伪造")
+@Api(value = "CsrfController", tags = "跨站请求伪造")
 @Controller
 @CrossOrigin(origins = "*")
-@RequestMapping("/other/csrf")
+@RequestMapping("/csrf")
 public class CsrfController {
     @ApiOperation("")
     @RequestMapping("")
     public String csrf() {
-        return "vul/other/csrf";
+        return "vul/csrf/csrf";
     }
     @RequestMapping("/vul")
     @ResponseBody
-    public R vulCsrf(String receiver, String amount, @AuthenticationPrincipal UserDetails userDetails){
+    public R vul(String receiver, String amount, @AuthenticationPrincipal UserDetails userDetails){
         String currentUser = userDetails.getUsername();
         Map<String, Object> result = new HashMap<>();
         result.put("currentUser", currentUser);
@@ -80,9 +78,9 @@ public class CsrfController {
         return result;
     }
 
-    @GetMapping("/safe")
+    @GetMapping("/safe1")
     @ResponseBody
-    public Map<String, Object> safeCsrf(@RequestParam("receiver") String receiver,@RequestParam("amount") String amount,@AuthenticationPrincipal UserDetails userDetails,@RequestParam("csrfToken") String csrfToken,HttpSession session) {
+    public Map<String, Object> safe1(@RequestParam("receiver") String receiver,@RequestParam("amount") String amount,@AuthenticationPrincipal UserDetails userDetails,@RequestParam("csrfToken") String csrfToken,HttpSession session) {
         String currentUser = userDetails.getUsername();
 
         String sessionToken = (String) session.getAttribute("csrfToken");
@@ -101,7 +99,7 @@ public class CsrfController {
 
     @GetMapping("/safe2")
     @ResponseBody
-    public Map<String, Object> safeCsrf(HttpServletRequest request, @RequestParam("receiver") String receiver, @RequestParam("amount") String amount, @AuthenticationPrincipal UserDetails userDetails, HttpSession session) {
+    public Map<String, Object> safe2(HttpServletRequest request, @RequestParam("receiver") String receiver, @RequestParam("amount") String amount, @AuthenticationPrincipal UserDetails userDetails, HttpSession session) {
         String currentUser = userDetails.getUsername();
         Map<String, Object> result = new HashMap<>();
         String referer = request.getHeader("referer");

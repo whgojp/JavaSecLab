@@ -6,6 +6,41 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "35946286",
+      "name": "XPath",
+      "font_class": "XPath",
+      "unicode": "eca5",
+      "unicode_decimal": 60581
+    },
+    {
+      "icon_id": "1249081",
+      "name": "支付",
+      "font_class": "zhifu",
+      "unicode": "e615",
+      "unicode_decimal": 58901
+    },
+    {
+      "icon_id": "26392189",
+      "name": "权限",
+      "font_class": "quanxian",
+      "unicode": "e61a",
+      "unicode_decimal": 58906
+    },
+    {
+      "icon_id": "7597977",
+      "name": "24gl-swapHorizontal3",
+      "font_class": "24gl-swapHorizontal3",
+      "unicode": "eb73",
+      "unicode_decimal": 60275
+    },
+    {
+      "icon_id": "7597983",
+      "name": "24gl-swapVertical3",
+      "font_class": "24gl-swapVertical3",
+      "unicode": "eb75",
+      "unicode_decimal": 60277
+    },
+    {
       "icon_id": "5694709",
       "name": "DOS攻击",
       "font_class": "DOSgongji",

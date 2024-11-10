@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<div th:replace="~{common/common::head}"></div>
+<head>
+    <div th:replace="~{common/common::head}"></div>
+</head>
 
 <body>
 <div class="layuimini-container">
     <div class="layuimini-main">
+        <!-- DoS攻击部分 -->
         <div class="layui-row layui-col-space15">
             <div class="layui-col-md12">
                 <fieldset class="layui-elem-field layui-field-title">
                     <legend>
-                        <a style="color: rgb(30 159 255)" class="dos">其他漏洞 - Dos攻击</a>
+                        <a class="dos" style="color: rgb(30 159 255)">其他漏洞 - Dos攻击</a>
                     </legend>
-                    <blockquote class="layui-elem-quote layui-quote-nm"
-                                style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
+                    <blockquote class="layui-elem-quote layui-quote-nm" style="background-color: #a7deefab;">
                         <p>
                         <pre>  DoS攻击：由单一来源发起，旨在使目标服务不可用，通常规模较小，易于防御</pre>
                         <pre>  DDoS攻击：由多个来源协同发起，产生巨量流量，导致大规模服务中断，防御难度较大</pre>
@@ -20,7 +22,9 @@
                     </blockquote>
                 </fieldset>
             </div>
-            <div class="layui-col-md12" style="margin-top: 10px">
+
+            <!-- 漏洞环境部分：验证码参数可控 -->
+            <div class="layui-col-md12">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
                         <h1><span class="iconfont icon-bug">  漏洞环境：验证码参数可控</span></h1>
@@ -28,26 +32,12 @@
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
-                                        <p>图片功能点(二维码/验证码)参数长、宽可控时，造成拒绝服务</p>
+                                        <p>图片功能点(二维码/验证码)参数长、宽可控时，可能导致拒绝服务</p>
                                         <a target="_blank" href="/other/dos/vul?width=10000&height=10000">
-                                            <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
-                                                <span class="iconfont icon-zhihang">Run</span>
-                                            </button>
+                                            <button class="layui-btn layui-btn-normal" style="width: 100px;">Run</button>
                                         </a>
                                     </blockquote>
                                 </div>
-
-
-                                <div class="layui-col-md12">
-                                    <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
-                                        <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">  后端接收前端传来的宽度和高度参数生成二维码，但缺乏有效验证可能导致攻击者输入极大值，造成拒绝服务（DoS）攻击
-  PS：测试时避免使用极大值，避免对正常业务造成影响</pre>
-                                        </div>
-                                    </div>
-                                </div>
-
                             </div>
                         </div>
                     </div>
@@ -55,135 +45,140 @@
                     <div class="layui-col-md6">
                         <h1><span class="iconfont icon-code">  缺陷代码</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
-                            <div class="code-editor" id="vulDos">
+                            <div class="code-editor" id="vulDos"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 漏洞环境：ZIP解压炸弹 -->
+            <div class="layui-col-md12">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-bug"> 漏洞环境：ZIP解压炸弹</span></h1>
+                        <div class="layui-tab layui-tab-brief">
+                            <div class="layui-tab-content">
+                                <div class="layui-tab-item layui-show">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <button type="button" class="layui-btn" id="uploadZipFile">
+                                            <i class="layui-icon">&#xe67c;</i>选择文件
+                                        </button>
+                                        <div style="display: flex; align-items: center;">
+                                            <p> ZIP解压炸弹</p>
+                                        </div>
+                                        <button type="button" class="layui-btn layui-btn-normal" id="uploadZip">上传文件</button>
+                                    </blockquote>
+                                </div>
+
+                                <!-- 提示信息 -->
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i> tips</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre>某些功能点后端会对上传的文件进行解压并且可以递归解压
+测试zip：https://www.bamsoftware.com/hacks/zipbomb/zbsm.zip
+漏洞原理：解压zbxl.zip炸弹以后会出现16个压缩包，每个压缩包又包含16个，循环5次，最后得到16的5次方个文件，也就是1048576个文件，一百多万个最终文件，每个大小为4.3GB</pre>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 测试结果 -->
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i> 测试结果</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre id="vul-result" style="color: red;"></pre>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
 
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="vul2Dos"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-<!--            <div class="layui-col-md12" style="margin-top: 10px">-->
-<!--                <div class="layui-row layui-col-space15">-->
-<!--                    <div class="layui-col-md6">-->
-<!--                        <h1><span class="iconfont icon-bug"> 漏洞环境：ZIP解压炸弹</span></h1>-->
-<!--                        <div class="layui-tab layui-tab-brief">-->
-<!--                            <div class="layui-tab-content">-->
-<!--                                <div class="layui-tab-item layui-show">-->
-<!--                                    <blockquote class="layui-elem-quote main_btn">-->
-<!--                                        <button type="button" class="layui-btn" id="uploadHTMLFile">-->
-<!--                                            <i class="layui-icon">&#xe67c;</i>选择文件-->
-<!--                                        </button>-->
-<!--                                        <div style="display: flex; align-items: center;">-->
-<!--                                            <p> 只能上传HTML类型文件哦</p>-->
-<!--                                        </div>-->
-<!--                                        <button type="button" class="layui-btn layui-btn-normal" id="uploadHTML">-->
-<!--                                            上传文件-->
-<!--                                        </button>-->
-<!--                                    </blockquote>-->
-<!--                                </div>-->
-<!--                                <div class="layui-col-md12">-->
-<!--                                    <div class="layui-card">-->
-<!--                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>-->
-<!--                                        <div class="layui-card-body layui-text layadmin-text">-->
-<!--                                            <pre style="color: #28333e; font-size: 15px;">-->
-<!--除了文件上传导致存储XSS，xml场景下还需要后端进行xml解析-->
-<!--这里PDF型XSS实际是没有危害的，考虑到合规监管问题，还是放上去了-->
-<!--PS：除此之外，还有flash等漏洞场景，后续会补充-->
-<!--                                            </pre>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                                <div class="layui-col-md12">-->
-<!--                                    <div class="layui-card">-->
-<!--                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i>测试结果-->
-<!--                                        </div>-->
-<!--                                        <div class="layui-card-body layui-text layadmin-text">-->
-<!--                                            <pre id="vul1-upload-result" style="color: red; font-size: 15px;"></pre>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-
-<!--                    <div class="layui-col-md6">-->
-<!--                        <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>-->
-<!--                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">-->
-<!--                            <div class="code-editor" id="vul1OtherUpload"></div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-
-<!--                </div>-->
-<!--            </div>-->
-
-
-
         </div>
     </div>
 </div>
-</div>
 
 <div th:replace="~{common/common::script}"></div>
-<script>
-    $(function () {
-        $.ajax({
-            url: '/other/csrf/getCsrfToken',
-            type: 'GET',
-            success: function (data) {
-                $('input[name="csrfToken"]').val(data.csrfToken);
-            },
-            error: function () {
-                console.error('获取csrfToken失败');
-            }
-        });
-    });
-</script>
+
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", function () {
-
         layui.use(['layer', 'miniTab', 'common', 'form'], function () {
             var $ = layui.jquery,
                 layer = layui.layer,
                 miniTab = layui.miniTab,
-                common = layui.common,
-                form = layui.form;
-            miniTab.listen();
-            layer.msg("其他漏洞-跨站请求伪造")
+                form = layui.form,
+                upload = layui.upload;
 
+            miniTab.listen();
+            layer.msg("其他漏洞-拒绝服务攻击");
+
+            // 创建上传实例
+            function createUploadInstance(config) {
+                return upload.render({
+                    elem: config.elem,
+                    url: config.url,
+                    method: config.method || 'post',
+                    accept: config.accept || 'file',
+                    exts: config.exts || 'zip',
+                    auto: config.auto || false,
+                    bindAction: config.bindAction,
+                    size: config.size || 500,
+                    multiple: config.multiple || false,
+                    drag: config.drag || true,
+                    done: function (res) {
+                        console.log("上传文件成功：" + JSON.stringify(res));
+                        $(config.resultElem).html(res.msg);  // 直接访问msg字段，而不是JSON.stringify(res).msg
+                    },
+                    error: function () {
+                        console.log("上传文件失败");
+                    }
+                });
+            }
+
+            var uploadZipFile = createUploadInstance({
+                elem: '#uploadZipFile',
+                url: '/other/dos/vul2',
+                bindAction: '#uploadZip',
+                resultElem: '#vul-result',
+                exts: 'zip'
+            });
+
+
+            // 设置代码编辑器配置
             var cmConfig = {
                 lineNumbers: true,
                 lineWrapping: false,
                 indentUnit: 4,
                 indentWithTabs: true,
                 theme: 'juejin',
-                styleActiveLine: {nonEmpty: true},
-                fontSize: "18px",
-                mode: "text/x-java"
-            };
-            var cmConfigSafe = {
-                lineNumbers: true,
-                lineWrapping: false,
-                indentUnit: 4,
-                indentWithTabs: true,
-                theme: 'juejinsafe',
-                styleActiveLine: {nonEmpty: true},
+                styleActiveLine: { nonEmpty: true },
                 fontSize: "18px",
                 mode: "text/x-java"
             };
 
-            CodeMirror(document.getElementById("vulDos"), Object.assign({}, cmConfig, {
-                value: vulDos
-            }));
+            // 初始化代码编辑器
+            CodeMirror(document.getElementById("vulDos"), Object.assign({}, cmConfig, { value: vulDos }));
+            CodeMirror(document.getElementById("vul2Dos"), Object.assign({}, cmConfig, { value: vul2Dos }));
 
+            // hover 效果
             $('.dos').hover(function () {
                 $(this).css('cursor', 'pointer');
-                layer.tips('Dos与DDos区别', this, {
+                layer.tips('DoS与DDoS区别', this, {
                     tips: [1, '#0051ff'],
                     time: 2000
                 });
             });
 
+            // 点击显示图片
             $('.dos').on('click', function () {
                 layer.open({
                     type: 1,
@@ -194,10 +189,8 @@
                     content: '<div style="text-align: center;"><img src="/static/images/vul/dos/dos.jpeg" style="width: 100%; height: 100%;"></div>'
                 });
             });
-
         });
     });
-
 </script>
 
 </body>

@@ -39,10 +39,10 @@ public class UploadController {
     }
 
     @ApiOperation(value = "漏洞环境：任意文件上传", notes = "原生漏洞环境，未做任何限制")
-    @RequestMapping("/anyFIleUpload")
+    @RequestMapping("/vul")
     @ResponseBody
     @SneakyThrows
-    public R vul1AnyFIleUpload(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
+    public R vul(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
         String res;
         String suffix = FilenameUtils.getExtension(file.getOriginalFilename());
         String path = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/file/";
@@ -50,10 +50,10 @@ public class UploadController {
         return R.ok(res);
     }
     @ApiOperation(value = "安全代码：文件上传白名单", notes = "检测文件后缀，做白名单过滤")
-    @RequestMapping("/anyFIleUploadWhiteList")
+    @RequestMapping("/safe")
     @ResponseBody
     @SneakyThrows
-    public R safe1AnyFIleUploadWhiteList(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
+    public R safe(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
         String res;
         String suffix = FilenameUtils.getExtension(file.getOriginalFilename());
         // 后缀白名单检查

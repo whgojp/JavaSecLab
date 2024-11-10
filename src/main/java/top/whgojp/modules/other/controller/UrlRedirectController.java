@@ -41,56 +41,56 @@ public class UrlRedirectController {
 
     // 基于Spring MVC的重定向方式
     @ApiOperation(value = "漏洞环境：基于Spring MVC的重定向方式", notes = "Spring MVC应用中常见的重定向方式")
-    @GetMapping("/redirect")
-    public String vul1SpringMvc(@RequestParam("url") String url) {
+    @GetMapping("/vul1")
+    public String vul1(@RequestParam("url") String url) {
         return "redirect:" + url;   // Spring MVC写法 302临时重定向
     }
 
     @ApiOperation(value = "漏洞环境：基于Spring MVC的重定向方式", notes = "使用ModelAndView实现的Spring MVC重定向方式")
-    @RequestMapping("/redirectWithModelAndView")
-    public ModelAndView vul1ModelAndView(@RequestParam("url") String url) {
+    @RequestMapping("/vul2")
+    public ModelAndView vul2(@RequestParam("url") String url) {
         return new ModelAndView("redirect:" + url); // Spring MVC写法 使用ModelAndView 302临时重定向
     }
 
     // 基于Servlet标准的重定向方式
     @ApiOperation(value = "漏洞环境：基于Servlet标准的重定向方式", notes = "基于Servlet标准的重定向方式")
-    @RequestMapping("/setHeader")
+    @RequestMapping("/vul3")
     @ResponseBody
-    public static void vul2setHeader(HttpServletRequest request, HttpServletResponse response) {
+    public static void vul3(HttpServletRequest request, HttpServletResponse response) {
         String url = request.getParameter("url");
         response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY); // 301永久重定向
         response.setHeader("Location", url);
     }
 
     @ApiOperation(value = "漏洞环境：基于Servlet标准的重定向方式", notes = "基于Servlet标准的重定向方式")
-    @RequestMapping("/sendRedirect")
+    @RequestMapping("/vul4")
     @ResponseBody
-    public static void vul2sendRedirect(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public static void vul4(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String url = request.getParameter("url");
         response.sendRedirect(url); // 302临时重定向
     }
 
     // 基于Spring注解和状态码的重定向方式
     @ApiOperation(value = "漏洞环境：基于Spring注解和状态码的重定向方式", notes = "使用ResponseEntity设置状态码实现重定向")
-    @RequestMapping("/responseEntityRedirect")
+    @RequestMapping("/vul5")
     @ResponseBody
-    public ResponseEntity<Void> responseEntityRedirect(@RequestParam("url") String url) {
+    public ResponseEntity<Void> vul5(@RequestParam("url") String url) {
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(URI.create(url));
         return new ResponseEntity<>(headers, HttpStatus.FOUND); // 302临时重定向
     }
 
     @ApiOperation(value = "漏洞环境：基于Spring注解和状态码的重定向方式", notes = "通过注解设置状态码实现重定向")
-    @GetMapping("/annotationRedirect")
+    @GetMapping("/vul6")
     @ResponseStatus(HttpStatus.FOUND) // 302临时重定向
-    public void annotationRedirect(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void vul6(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String url = request.getParameter("url");
         response.setHeader("Location", url);
     }
 
-    @RequestMapping("/forward")
+    @RequestMapping("/safe1")
     @ResponseBody
-    public static void safeForward(HttpServletRequest request, HttpServletResponse response) {
+    public static void safe1(HttpServletRequest request, HttpServletResponse response) {
         String url = request.getParameter("url");
         request.setAttribute("message", "正在进行内部转发，请稍候...");
 
@@ -106,9 +106,9 @@ public class UrlRedirectController {
     @Autowired
     private CheckUserInput checkUserInput;
 
-    @RequestMapping("/checkUrl")
+    @RequestMapping("/safe2")
     @ResponseBody
-    public void safe2CheckURL(HttpServletRequest request, HttpServletResponse response)
+    public void safe2(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
         String url = request.getParameter("url");
         if (checkUserInput.checkURL(url)) { // 校验通过

@@ -12,10 +12,8 @@
                     <blockquote class="layui-elem-quote layui-quote-nm"
                                 style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
                         <p>
-                        <pre>   SQL 注入是一种常见的 Web 应用程序安全漏洞，攻击者利用这种漏洞通过在输入字段中插入恶意 SQL 语句来执行非授权的数据库操作。这可能导致数据泄露、数据损坏或者完整性受损。</pre>
-                        </p>
-                        <p>
-                        <pre>   JDBC（Java Database Connectivity）是一套用于在 Java 程序中操作关系型数据库的 API。它提供了一种标准的 Java 方法来连接和执行 SQL 查询，从而实现与数据库的交互。</pre>
+                        <pre>  SQL注入是一种常见的Web应用程序安全漏洞，攻击者利用这种漏洞通过在输入字段中插入恶意SQL语句来执行非授权的数据库操作。这可能导致数据泄露、数据损坏或者完整性受损</pre>
+                        <pre>  JDBC(Java Database Connectivity)是一套用于在Java程序中操作关系型数据库的API。它提供了一种标准的Java方法来连接和执行SQL查询，从而实现与数据库的交互</pre>
                         </p>
                     </blockquote>
                 </fieldset>
@@ -49,7 +47,7 @@
                                                         style="background-color: #5eb878;!important;"lay-filter="vul1-raw-joint-add-select">
                                                     <option value="">示例Payload</option>
                                                     <option value="1' AND (SELECT 4804 FROM (SELECT(SLEEP(5)))iBHa) AND '1'='1">延时注入</option>
-                                                    <option value="1' AND ELT(5753=5753,6782) AND '1'='1">布尔盲注</option>
+                                                    <option value="1' AND ELT(5753=5754,6782) AND '1'='1">布尔盲注</option>
                                                     <option value="1' AND GTID_SUBSET(CONCAT(0x71706a7a71,(SELECT (ELT(7170=7170,1))),0x7171717071),7170) AND '1'='1">报错注入</option>
                                                     <option value="1' and updatexml(1,concat(0x7e,(SELECT user()),0x7e),1) AND '1'='1">xpath注入</option>
                                                 </select>
@@ -173,7 +171,7 @@
                                                         style="background-color: #5eb878;!important;"lay-filter="vul2-prepareStatement-joint-add-select">
                                                     <option value="">示例Payload</option>
                                                     <option value="1' AND (SELECT 4804 FROM (SELECT(SLEEP(5)))iBHa) AND '1'='1">延时注入</option>
-                                                    <option value="1' AND ELT(5753=5753,6782) AND '1'='1">布尔盲注</option>
+                                                    <option value="1' AND ELT(5753=5754,6782) AND '1'='1">布尔盲注</option>
                                                     <option value="1' AND GTID_SUBSET(CONCAT(0x71706a7a71,(SELECT (ELT(7170=7170,1))),0x7171717071),7170) AND '1'='1">报错注入</option>
                                                     <option value="1' and updatexml(1,concat(0x7e,(SELECT user()),0x7e),1) AND '1'='1">xpath注入</option>
                                                 </select>
@@ -298,7 +296,7 @@
                                                         style="background-color: #5eb878;!important;"lay-filter="vul3-JdbcTemplate-joint-add-select">
                                                     <option value="">示例Payload</option>
                                                     <option value="1' AND (SELECT 4804 FROM (SELECT(SLEEP(5)))iBHa) AND '1'='1">延时注入</option>
-                                                    <option value="1' AND ELT(5753=5753,6782) AND '1'='1">布尔盲注</option>
+                                                    <option value="1' AND ELT(5753=5754,6782) AND '1'='1">布尔盲注</option>
                                                     <option value="1' AND GTID_SUBSET(CONCAT(0x71706a7a71,(SELECT (ELT(7170=7170,1))),0x7171717071),7170) AND '1'='1">报错注入</option>
                                                     <option value="1' and updatexml(1,concat(0x7e,(SELECT user()),0x7e),1) AND '1'='1">xpath注入</option>
                                                 </select>
@@ -410,22 +408,22 @@
         miniTab.listen();
         layer.msg("SQL注入-JDBC")
 
-        common.formListenFun("vul1-raw-joint-add", "add", "/sqli/jdbc/a-vul1-raw-joint", "vul1-raw-joint-result","get");
-        common.formListenFun("vul1-raw-joint-delete", "delete", "/sqli/jdbc/a-vul1-raw-joint", "vul1-raw-joint-result","get");
-        common.formListenFun("vul1-raw-joint-update", "update", "/sqli/jdbc/a-vul1-raw-joint", "vul1-raw-joint-result","get");
-        common.formListenFun("vul1-raw-joint-select", "select", "/sqli/jdbc/a-vul1-raw-joint", "vul1-raw-joint-result","get");
+        common.formListenFun("vul1-raw-joint-add", "add", "/sqli/jdbc/vul1", "vul1-raw-joint-result","get");
+        common.formListenFun("vul1-raw-joint-delete", "delete", "/sqli/jdbc/vul1", "vul1-raw-joint-result","get");
+        common.formListenFun("vul1-raw-joint-update", "update", "/sqli/jdbc/vul1", "vul1-raw-joint-result","get");
+        common.formListenFun("vul1-raw-joint-select", "select", "/sqli/jdbc/vul1", "vul1-raw-joint-result","get");
         common.selectListenFun("vul1-raw-joint-add-select", "vul1-raw-joint-add-pass");
 
-        common.formListenFun("vul2-prepareStatement-joint-add", "add", "/sqli/jdbc/a-vul2-prepareStatement-joint", "vul2-prepareStatement-joint-result","get");
-        common.formListenFun("vul2-prepareStatement-joint-delete", "delete", "/sqli/jdbc/a-vul2-prepareStatement-joint", "vul2-prepareStatement-joint-result","get");
-        common.formListenFun("vul2-prepareStatement-joint-update", "update", "/sqli/jdbc/a-vul2-prepareStatement-joint", "vul2-prepareStatement-joint-result","get");
-        common.formListenFun("vul2-prepareStatement-joint-select", "select", "/sqli/jdbc/a-vul2-prepareStatement-joint", "vul2-prepareStatement-joint-result","get");
+        common.formListenFun("vul2-prepareStatement-joint-add", "add", "/sqli/jdbc/vul2", "vul2-prepareStatement-joint-result","get");
+        common.formListenFun("vul2-prepareStatement-joint-delete", "delete", "/sqli/jdbc/vul2", "vul2-prepareStatement-joint-result","get");
+        common.formListenFun("vul2-prepareStatement-joint-update", "update", "/sqli/jdbc/vul2", "vul2-prepareStatement-joint-result","get");
+        common.formListenFun("vul2-prepareStatement-joint-select", "select", "/sqli/jdbc/vul2", "vul2-prepareStatement-joint-result","get");
         common.selectListenFun("vul2-prepareStatement-joint-add-select", "vul2-prepareStatement-joint-add-pass");
 
-        common.formListenFun("vul3-JdbcTemplate-joint-add", "add", "/sqli/jdbc/a-vul3-JdbcTemplate-joint", "vul3-JdbcTemplate-joint-result","get");
-        common.formListenFun("vul3-JdbcTemplate-joint-delete", "delete", "/sqli/jdbc/a-vul3-JdbcTemplate-joint", "vul3-JdbcTemplate-joint-result","get");
-        common.formListenFun("vul3-JdbcTemplate-joint-update", "update", "/sqli/jdbc/a-vul3-JdbcTemplate-joint", "vul3-JdbcTemplate-joint-result","get");
-        common.formListenFun("vul3-JdbcTemplate-joint-select", "select", "/sqli/jdbc/a-vul3-JdbcTemplate-joint", "vul3-JdbcTemplate-joint-result","get");
+        common.formListenFun("vul3-JdbcTemplate-joint-add", "add", "/sqli/jdbc/vul3", "vul3-JdbcTemplate-joint-result","get");
+        common.formListenFun("vul3-JdbcTemplate-joint-delete", "delete", "/sqli/jdbc/vul3", "vul3-JdbcTemplate-joint-result","get");
+        common.formListenFun("vul3-JdbcTemplate-joint-update", "update", "/sqli/jdbc/vul3", "vul3-JdbcTemplate-joint-result","get");
+        common.formListenFun("vul3-JdbcTemplate-joint-select", "select", "/sqli/jdbc/vul3", "vul3-JdbcTemplate-joint-result","get");
         common.selectListenFun("vul3-JdbcTemplate-joint-add-select", "vul3-JdbcTemplate-joint-add-pass");
 
         var cmConfig = {

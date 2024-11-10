@@ -12,7 +12,7 @@
                     </legend>
                     <blockquote class="layui-elem-quote layui-quote-nm"
                                 style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
-                        <pre>   RCE(Remote Code Execution)，可以分为:命令注入(Command Injection)、代码注入(Code Injection)</pre>
+                        <pre>  RCE(Remote Code Execution)，可以分为:命令注入(Command Injection)、代码注入(Code Injection)</pre>
                     </blockquote>
                 </fieldset>
             </div>
@@ -296,16 +296,16 @@
         miniTab.listen();
         layer.msg("RCE - 远程代码执行");
 
-        common.formListenFun("vul-processBuilder-button", "", "/command/processBuilder", "vul-processBuilder-result", "get");
+        common.formListenFun("vul-processBuilder-button", "", "/command/vul1", "vul-processBuilder-result", "get");
         common.selectListenFun("vul-processBuilder-select", "vul-processBuilder-input");
 
-        common.formListenFun("vul-getRuntime-button", "", "/command/getRuntime", "vul-getRuntime-result", "get");
+        common.formListenFun("vul-getRuntime-button", "", "/command/vul2", "vul-getRuntime-result", "get");
         common.selectListenFun("vul-getRuntime-select", "vul-getRuntime-input");
 
-        common.formListenFun("vul-processImpl-button", "", "/command/processImpl", "vul-processImpl-result", "get");
+        common.formListenFun("vul-processImpl-button", "", "/command/vul3", "vul-processImpl-result", "get");
         common.selectListenFun("vul-processImpl-select", "vul-processImpl-input");
 
-        common.formListenFun("safe-processBuilder-button", "", "/command/safeProcessBuilder", "safe-processBuilder-result", "get");
+        common.formListenFun("safe-processBuilder-button", "", "/command/safe", "safe-processBuilder-result", "get");
         common.selectListenFun("safe-processBuilder-select", "safe-processBuilder-input");
 
         var cmConfig = {

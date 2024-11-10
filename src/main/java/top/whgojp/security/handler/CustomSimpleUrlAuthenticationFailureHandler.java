@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import top.whgojp.common.constant.SysConstant;
 import top.whgojp.common.enums.LoginError;
-import top.whgojp.common.push.service.EmailPush;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -29,7 +28,6 @@ public class CustomSimpleUrlAuthenticationFailureHandler extends SimpleUrlAuthen
 
     private String defaultFailureUrl;
 
-    private EmailPush emailPush;
 
 
     @Override
@@ -44,9 +42,6 @@ public class CustomSimpleUrlAuthenticationFailureHandler extends SimpleUrlAuthen
         log.info("IP:{} 于 {} 尝试登录系统失败 失败原因:{}", loginIp, loginDate, exception.getMessage());
 
         try {
-            // 发邮件
-            this.emailPush.send();
-
         } catch (Exception ex) {
             log.error(ex.getMessage(), ex);
         }

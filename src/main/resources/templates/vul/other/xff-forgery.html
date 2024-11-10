@@ -30,7 +30,7 @@
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
-                                        <form class="layui-form" th:action="@{/other/xff/buffli}" style="display: flex; justify-content: space-between;">
+                                        <form class="layui-form" th:action="@{/other/xff/vul1}" style="display: flex; justify-content: space-between;">
                                             <div style="display: flex; align-items: center;">
                                                 <p>客户端直接访问服务端，未添加xff头</p>
                                             </div>
@@ -164,7 +164,7 @@
             var xff = $("#xff").is(':checked');
 
             $.ajax({
-                url: "[[@{/other/xff/ffli}]]",
+                url: "[[@{/other/xff/vul2}]]",
                 type: "get",
                 headers: {
                     'X-Forwarded-For': "8.8.8.8",

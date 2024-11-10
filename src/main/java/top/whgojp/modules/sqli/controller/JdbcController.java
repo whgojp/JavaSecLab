@@ -64,7 +64,7 @@ public class JdbcController {
     }
 
     @ApiOperation(value = "漏洞环境：JDBC-原生SQL语句拼接", notes = "原生sql语句动态拼接 参数未进行任何处理")
-    @GetMapping("/a-vul1-raw-joint")
+    @GetMapping("/vul1")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "type", value = "操作类型", required = true, dataType = "String", paramType = "query", dataTypeClass = String.class),
             @ApiImplicitParam(name = "id", value = "用户ID", dataType = "String", paramType = "query", dataTypeClass = String.class),     // 注意这里id是String类型
@@ -72,7 +72,7 @@ public class JdbcController {
             @ApiImplicitParam(name = "password", value = "密码", dataType = "String", paramType = "query", dataTypeClass = String.class)
     })
     @ResponseBody
-    public R vul1RawJoint(
+    public R vul1(
             @ApiParam(name = "type", value = "操作类型", required = true) @RequestParam String type,
             @ApiParam(name = "id", value = "用户ID") @RequestParam(required = false) String id,
             @ApiParam(name = "username", value = "用户名") @RequestParam(required = false) String username,
@@ -162,7 +162,7 @@ public class JdbcController {
      */
 
     @ApiOperation(value = "漏洞环境：JDBC-预编译拼接", notes = "虽然使用了 conn.prepareStatement(sql) 创建了一个 PreparedStatement 对象，但在执行 stmt.executeUpdate(sql) 时，却是传递了完整的 SQL 语句作为参数，而不是使用了预编译的功能")
-    @GetMapping("/a-vul2-prepareStatement-joint")
+    @GetMapping("/vul2")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "type", value = "操作类型", required = true, dataType = "String", paramType = "query", dataTypeClass = String.class),
             @ApiImplicitParam(name = "id", value = "用户ID", dataType = "String", paramType = "query", dataTypeClass = String.class),
@@ -170,7 +170,7 @@ public class JdbcController {
             @ApiImplicitParam(name = "password", value = "密码", dataType = "String", paramType = "query", dataTypeClass = String.class)
     })
     @ResponseBody
-    public R vul2prepareStatementJoint(
+    public R vul2(
             @ApiParam(name = "type", value = "操作类型", required = true) @RequestParam String type,
             @ApiParam(name = "id", value = "用户ID") @RequestParam(required = false) String id,
             @ApiParam(name = "username", value = "用户名") @RequestParam(required = false) String username,
@@ -205,7 +205,7 @@ public class JdbcController {
                         log.info(message);
                         return R.ok(message);
                     case "update":
-                        sql = "UPDATE sqli set password = '" + password + "' where id = '" + id + "'";
+                        sql = "UPDATE sqli SET username = '" + username + "', password = '" + password + "' WHERE id = '" + id + "'";
                         log.info("当前执行数据更新操作:" + sql);
                         stmt = conn.prepareStatement(sql);
                         rowsAffected = stmt.executeUpdate(sql);
@@ -242,7 +242,7 @@ public class JdbcController {
     }
 
     @ApiOperation(value = "漏洞环境：JdbcTemplate-SQL语句拼接", notes = "JDBCTemplate是Spring对JDBC的封装，底层实现实际上还是JDBC")
-    @GetMapping("/a-vul3-JdbcTemplate-joint")
+    @GetMapping("/vul3")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "type", value = "操作类型", required = true, dataType = "String", paramType = "query", dataTypeClass = String.class),
             @ApiImplicitParam(name = "id", value = "用户ID", dataType = "String", paramType = "query", dataTypeClass = String.class),
@@ -250,7 +250,7 @@ public class JdbcController {
             @ApiImplicitParam(name = "password", value = "密码", dataType = "String", paramType = "query", dataTypeClass = String.class)
     })
     @ResponseBody
-    public R vul3JdbcTemplateJoint(
+    public R vul3(
             @ApiParam(name = "type", value = "操作类型", required = true) @RequestParam String type,
             @ApiParam(name = "id", value = "用户ID") @RequestParam(required = false) String id,
             @ApiParam(name = "username", value = "用户名") @RequestParam(required = false) String username,
@@ -282,7 +282,7 @@ public class JdbcController {
                     log.info(message);
                     return R.ok(message);
                 case "update":
-                    sql = "UPDATE sqli set password = '" + password + "' where id = '" + id + "'";
+                    sql = "UPDATE sqli SET username = '" + username + "', password = '" + password + "' WHERE id = '" + id + "'";
                     log.info("当前执行数据更新操作:" + sql);
                     rowsAffected = jdbctemplate.update(sql);
                     message = (rowsAffected > 0) ? "数据更新成功" : "数据更新失败 用户ID不存在!";
@@ -316,7 +316,7 @@ public class JdbcController {
     }
 
     @ApiOperation(value = "安全代码：JDBC预编译", notes = "采用预编译的方法，使用?占位，也叫参数化的SQL")
-    @GetMapping("/b-safe1-PrepareStatement-Parametric")
+    @GetMapping("/safe1")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "type", value = "操作类型", required = true, dataType = "String", paramType = "query", dataTypeClass = String.class),
             @ApiImplicitParam(name = "id", value = "用户ID", dataType = "String", paramType = "query", dataTypeClass = String.class),
@@ -324,7 +324,7 @@ public class JdbcController {
             @ApiImplicitParam(name = "password", value = "密码", dataType = "String", paramType = "query", dataTypeClass = String.class)
     })
     @ResponseBody
-    public R safe1PrepareStatementParametric(
+    public R safe1(
             @ApiParam(name = "type", value = "操作类型", required = true) @RequestParam String type,
             @ApiParam(name = "id", value = "用户ID") @RequestParam(required = false) String id,
             @ApiParam(name = "username", value = "用户名") @RequestParam(required = false) String username,
@@ -364,11 +364,13 @@ public class JdbcController {
                     log.info(message);
                     return R.ok(message);
                 case "update":
-                    sql = "UPDATE sqli set password = ? where id = ?";
-                    log.info("当前执行数据更新操作:" + sql);
+                    sql = "UPDATE sqli SET username = ?, password = ? WHERE id = ?";
+                    log.info("当前执行数据更新操作: " + sql);
                     stmt = conn.prepareStatement(sql);
-                    stmt.setString(1, password);
-                    stmt.setString(2, id);
+                    stmt.setString(1, username);
+                    stmt.setString(2, password);
+                    stmt.setString(3, id);
+                    stmt.executeUpdate();
 
                     rowsAffected = stmt.executeUpdate();
                     stmt.close();
@@ -404,7 +406,7 @@ public class JdbcController {
     }
 
     @ApiOperation(value = "安全代码：JdbcTemplate预编译", notes = "JDBCTemplate预编译 此时在常规DML场景有效的防止了SQL注入攻击的发生")
-    @GetMapping("/b-safe2-JdbcTemplate-PrepareStatement-Parametric")
+    @GetMapping("/safe2")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "type", value = "操作类型", required = true, dataType = "String", paramType = "query", dataTypeClass = String.class),
             @ApiImplicitParam(name = "id", value = "用户ID", dataType = "String", paramType = "query", dataTypeClass = String.class),
@@ -412,7 +414,7 @@ public class JdbcController {
             @ApiImplicitParam(name = "password", value = "密码", dataType = "String", paramType = "query", dataTypeClass = String.class)
     })
     @ResponseBody
-    public R safe2JdbcTemplatePrepareStatementParametric(
+    public R safe2(
             @ApiParam(name = "type", value = "操作类型", required = true) @RequestParam String type,
             @ApiParam(name = "id", value = "用户ID") @RequestParam(required = false) String id,
             @ApiParam(name = "username", value = "用户名") @RequestParam(required = false) String username,
@@ -444,9 +446,9 @@ public class JdbcController {
                     log.info(message);
                     return R.ok(message);
                 case "update":
-                    sql = "UPDATE sqli set password = ? where id = ?";
+                    sql = "UPDATE sqli SET username = ?, password = ? WHERE id = ?";
                     log.info("当前执行数据更新操作:" + sql);
-                    rowsAffected = jdbctemplate.update(sql, username, id);
+                    rowsAffected = jdbctemplate.update(sql, username,password,id);
                     message = (rowsAffected > 0) ? "数据更新成功" : "数据更新失败 用户ID不存在!";
                     log.info(message);
                     return R.ok(message);
@@ -481,8 +483,8 @@ public class JdbcController {
             @ApiImplicitParam(name = "password", value = "密码", dataType = "String", paramType = "query", dataTypeClass = String.class)
     })
     @ResponseBody
-    @GetMapping("/b-safe3-Blacklist-checkSqlBlackList")
-    public R safe3BlacklistcheckSqlBlackList(
+    @GetMapping("/safe3")
+    public R safe3(
             @ApiParam(name = "type", value = "操作类型", required = true) @RequestParam String type,
             @ApiParam(name = "id", value = "用户ID") @RequestParam(required = false) String id,
             @ApiParam(name = "username", value = "用户名") @RequestParam(required = false) String username,
@@ -573,8 +575,8 @@ public class JdbcController {
             @ApiImplicitParam(name = "id", value = "用户ID", dataType = "Integer", paramType = "query", dataTypeClass = Integer.class)        // 这里使用了Integer类型
     })
     @ResponseBody
-    @GetMapping("/b-safe4-Request-Parameter-Validate")
-    public R safe4RequestRarameterValidate(
+    @GetMapping("/safe4")
+    public R safe4(
             @ApiParam(name = "id", value = "用户ID") @RequestParam(required = false) Integer id) {
         String sql = "";
         try {
@@ -607,9 +609,9 @@ public class JdbcController {
 
     @ApiOperation(value = "安全代码：Web安全框架-采用ESAPI过滤", notes = "ESAPI提供了多种输入验证API，提供对XSS攻击和SQL注入攻击等的防护")
     @ApiImplicitParam(name = "id", value = "用户ID", dataType = "String", paramType = "query", dataTypeClass = String.class)
-    @GetMapping("/b-safe5-EASAPI-Filter")
+    @GetMapping("/safe5")
     @ResponseBody
-    public R safe5EASAPIFilter(@ApiParam(name = "id", value = "用户ID") @RequestParam(required = false) String id) {
+    public R safe5(@ApiParam(name = "id", value = "用户ID") @RequestParam(required = false) String id) {
         try {
             Codec<Character> oracleCodec = new OracleCodec();
             Class.forName("com.mysql.cj.jdbc.Driver");

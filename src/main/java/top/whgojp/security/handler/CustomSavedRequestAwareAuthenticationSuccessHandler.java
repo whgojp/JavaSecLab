@@ -6,9 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import top.whgojp.common.event.LoginLogEvent;
-import top.whgojp.common.push.service.EmailPush;
-import top.whgojp.common.push.service.SmsPush;
-import top.whgojp.common.push.service.WechatPush;
 import top.whgojp.common.utils.IPUtil;
 import top.whgojp.common.utils.SpringContextUtil;
 import top.whgojp.modules.system.entity.Log;
@@ -23,11 +20,11 @@ import java.util.Date;
 @Slf4j
 public class CustomSavedRequestAwareAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
-    private EmailPush emailPush;
-
-    private SmsPush smsPush;
-
-    private WechatPush wechatPush;
+//    private EmailPush emailPush;
+//
+//    private SmsPush smsPush;
+//
+//    private WechatPush wechatPush;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {

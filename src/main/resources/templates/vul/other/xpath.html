@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="~{common/common::head}"></div>
+</head>
+
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <!-- XPATH 注入攻击部分 -->
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <fieldset class="layui-elem-field layui-field-title">
+                    <legend>
+                        <a class="dos" style="color: #1e9fff;">其他漏洞 - XPATH注入</a>
+                    </legend>
+                    <blockquote class="layui-elem-quote layui-quote-nm" style="background-color: #e0f7fa;">
+                        <p>
+                        <pre>  XPath是一种用于查询和操作XML文档的语言，类似于SQL在数据库中的作用，广泛应用于XML解析和数据提取</pre>
+                        <pre>  XPath注入类似于SQL注入，攻击者通过构造特殊的输入操控未过滤的XPath查询，从而访问或篡改XML数据，甚至绕过验证获取敏感信息</pre>
+                        </p>
+                    </blockquote>
+                </fieldset>
+            </div>
+            <div class="layui-col-md12" style="margin-top: 10px;">
+                <div class="layui-row layui-col-space15">
+                    <!-- 漏洞环境部分 -->
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-bug"> 漏洞环境：XPATH注入</span></h1>
+                        <div class="layui-tab layui-tab-brief">
+                            <div class="layui-tab-content">
+                                <div class="layui-tab-item layui-show">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="username" style="width: 150px;" required
+                                                       lay-verify="required" value="admin" placeholder="用户名"
+                                                       autocomplete="off"
+                                                       class="layui-input">
+                                                <input type="text" name="password" style="width: 150px" required
+                                                       lay-verify="required"
+                                                       value=" ' or '1'='1"
+                                                       placeholder="密码" autocomplete="off"
+                                                       class="layui-input">
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="vul-xpath-button" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i> tips
+                                        </div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre style="color: #28333e; font-size: 15px;">类似于SQL注入，可使用"万能密码"</pre>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i> 测试结果
+                                        </div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre id="vul-xpath-result" style="color: red; font-size: 15px;"></pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="vulXpath"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="layui-col-md12" style="margin-top: 10px;">
+                <div class="layui-row layui-col-space15">
+                    <!-- 漏洞环境部分 -->
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-anquan"> 安全环境：StringEscapeUtils实体转义</span></h1>
+                        <div class="layui-tab layui-tab-brief">
+                            <div class="layui-tab-content">
+                                <div class="layui-tab-item layui-show">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="username" style="width: 150px;" required
+                                                       lay-verify="required" value="admin" placeholder="用户名"
+                                                       autocomplete="off"
+                                                       class="layui-input">
+                                                <input type="text" name="password" style="width: 150px" required
+                                                       lay-verify="required"
+                                                       value=" ' or '1'='1"
+                                                       placeholder="密码" autocomplete="off"
+                                                       class="layui-input">
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="safe-xpath-button" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i> tips
+                                        </div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre style="color: #28333e; font-size: 15px;">  StringEscapeUtils.escapeXml10()是Apache Commons Lang方法，用于将 &、<、>、' 和 " 转换为XML 实体，确保字符串安全用于XML文档</pre>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-warning icon-output-safe"></i> 测试结果
+                                        </div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre id="safe-xpath-result" style="color: red; font-size: 15px;"></pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code"> 安全代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="safeXpath"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{common/common::script}"></div>
+
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function () {
+        layui.use(['layer', 'miniTab', 'common', 'form'], function () {
+            var $ = layui.jquery,
+                layer = layui.layer,
+                miniTab = layui.miniTab,
+                common = layui.common,
+                form = layui.form,
+                upload = layui.upload;
+
+            miniTab.listen();
+            layer.msg("其他漏洞 - XPATH注入");
+
+            common.formListenFun("vul-xpath-button", "", "/other/xpath/vul", "vul-xpath-result", "get");
+
+            common.formListenFun("safe-xpath-button", "", "/other/xpath/safe", "safe-xpath-result", "post");
+            var cmConfig = {
+                lineNumbers: true,
+                lineWrapping: false,
+                indentUnit: 4,
+                indentWithTabs: true,
+                theme: 'juejin',
+                styleActiveLine: {nonEmpty: true},
+                fontSize: "18px",
+                mode: "text/x-java"
+            };
+
+            var cmConfigSafe = {
+                lineNumbers: true,
+                lineWrapping: false,
+                indentUnit: 4,
+                indentWithTabs: true,
+                theme: 'juejinsafe',
+                styleActiveLine: {nonEmpty: true},
+                fontSize: "18px",
+                mode: "text/x-java"
+            };
+
+            CodeMirror(document.getElementById("vulXpath"), Object.assign({}, cmConfig, {value: vulXpath}));
+            CodeMirror(document.getElementById("safeXpath"), Object.assign({}, cmConfigSafe, {value: safeXpath}));
+        });
+    });
+</script>
+
+</body>
+</html>

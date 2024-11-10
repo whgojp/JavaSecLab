@@ -41,7 +41,7 @@ public class XstreamController {
 
     @RequestMapping("/vul")
     @ResponseBody
-    public String vulXstream(@RequestBody String content) {
+    public String vul(@RequestBody String content) {
         log.info("组件漏洞-Xstream\n" + "Payload:" + content);
         XStream xs = new XStream();
         Object result = xs.fromXML(content);  // 反序列化得到的对象
@@ -50,8 +50,8 @@ public class XstreamController {
         return "组件漏洞-Xstream Vul, 反序列化结果: \n" + result.toString();
     }
 
-    @RequestMapping("/safe-BlackList")
-    public String safeXstreamBlackList(@RequestBody String content) {
+    @RequestMapping("/safe1")
+    public String safe1(@RequestBody String content) {
         XStream xstream = new XStream();
         // 首先清除默认设置，然后进行自定义设置
         xstream.addPermission(NoTypePermission.NONE);
@@ -60,8 +60,8 @@ public class XstreamController {
         xstream.fromXML(content);
         return "组件漏洞-Xstream Safe-BlackList";
     }
-    @RequestMapping("/safe-WhiteList")
-    public String safeXstreamWhiteList(@RequestBody String content) {
+    @RequestMapping("/safe2")
+    public String safe2(@RequestBody String content) {
         XStream xstream = new XStream();
          // 首先清除默认设置，然后进行自定义设置
         xstream.addPermission(NoTypePermission.NONE);

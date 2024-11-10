@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="~{common/common::head}"></div>
+</head>
+
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <!-- DoS攻击部分 -->
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <fieldset class="layui-elem-field layui-field-title">
+                    <legend>
+                        <a class="idor" style="color: rgb(30 159 255)">逻辑漏洞 - 越权漏洞</a>
+                    </legend>
+                    <blockquote class="layui-elem-quote layui-quote-nm" style="background-color: #a7deefab;">
+                        <p>
+                        <pre>  IDOR(不安全的直接对象引用)：通过修改请求中的对象标识符(如用户ID、文件名)绕过授权检查，访问或操作本不属于自己的资源</pre>
+                        <pre>  垂直越权：通过修改请求中的标识符(用户ID、角色标识等)访问权限更高或更低的资源，绕过权限限制</pre>
+                        </p>
+                    </blockquote>
+                </fieldset>
+            </div>
+
+            <div class="layui-col-md12" style="margin-top: 10px">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-bug"> 漏洞环境：水平遍历用户信息</span></h1>
+                        <div class="layui-tab layui-tab-brief">
+                            <div class="layui-tab-content">
+                                <div class="layui-tab-item layui-show">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <p>这里简单模拟一下垂直越权</p>
+                                        <a target="_blank" href="/logic/idor/vul">
+                                            <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
+                                                <span class="iconfont icon-zhihang">Run</span>
+                                            </button>
+                                        </a>
+                                    </blockquote>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="vulHorizon"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{common/common::script}"></div>
+
+<script type="text/javascript">
+    layui.use(['layer', 'miniTab', 'common', 'form'], function () {
+        var $ = layui.jquery,
+            layer = layui.layer,
+            miniTab = layui.miniTab,
+            common = layui.common,
+            form = layui.form,
+            upload = layui.upload;
+
+        common.formListenFun("vul-horizontal-button", "", "/logic/idor/getUserInfo", "vul-horizontal-result", "get");
+        common.formListenFun("safe-horizontal-button", "", "/logic/idor/safe", "safe-horizontal-result", "get");
+
+
+        miniTab.listen();
+        layer.msg("其他漏洞-越权漏洞");
+
+        var cmConfig = {
+            lineNumbers: true,
+            lineWrapping: false,
+            indentUnit: 4,
+            indentWithTabs: true,
+            theme: 'juejin',
+            styleActiveLine: { nonEmpty: true },
+            fontSize: "18px",
+            mode: "text/x-java"
+        };
+
+        var cmConfigSafe = {
+            lineNumbers: true,
+            lineWrapping: false,
+            indentUnit: 4,
+            indentWithTabs: true,
+            theme: 'juejinsafe',
+            styleActiveLine: {nonEmpty: true},
+            fontSize: "18px",
+            mode: "text/x-java"
+        };
+
+        CodeMirror(document.getElementById("vulHorizon"), Object.assign({}, cmConfig, { value: vulHorizon }));
+        CodeMirror(document.getElementById("safeHorizon"), Object.assign({}, cmConfigSafe, { value: safeHorizon }));
+
+        $('.idor').hover(function () {
+            $(this).css('cursor', 'pointer');
+            layer.tips('漏洞示意图', this, {
+                tips: [1, '#0051ff'],
+                time: 2000
+            });
+        });
+
+        $('.idor').on('click', function () {
+            layer.open({
+                type: 1,
+                title: false,
+                closeBtn: 1,
+                area: ['572px', '450px'],
+                shadeClose: true,
+                content: '<div style="text-align: center;"><img src="/static/images/vul/idor/idor.png" style="width: 100%; height: 100%;"></div>'
+            });
+        });
+    });
+
+</script>
+
+</body>
+</html>

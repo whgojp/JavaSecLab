@@ -26,7 +26,7 @@
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
-                                        <form class="layui-form" th:action="@{/other/URLRedirect/forward}" style="display: flex; justify-content: space-between;">
+                                        <form class="layui-form" th:action="@{/other/URLRedirect/safe1}" style="display: flex; justify-content: space-between;">
                                             <div style="display: flex; align-items: center;">
                                                 <input type="text" name="url" style="width: 300px;" required
                                                        lay-verify="required" value="http://bilibili.com"  placeholder="跳转地址" autocomplete="off"
@@ -84,7 +84,7 @@
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
-                                        <form class="layui-form" th:action="@{/other/URLRedirect/checkUrl}" style="display: flex; justify-content: space-between;">
+                                        <form class="layui-form" th:action="@{/other/URLRedirect/safe2}" style="display: flex; justify-content: space-between;">
                                             <div style="display: flex; align-items: center;">
                                                 <input type="text" name="url" style="width: 300px;" required
                                                        lay-verify="required" value="http://bilibili.com"  placeholder="跳转地址" autocomplete="off"

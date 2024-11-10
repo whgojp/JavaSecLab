@@ -17,7 +17,6 @@
 
 ![show](./pic/show.png)
 
-
 ## 面向人群
 
 - 安全服务方面：帮助安全服务人员理解漏洞原理(产生、修复、审计)
@@ -29,6 +28,8 @@
 http://whgojp.top/
 
 账号密码：admin/admin
+
+> PS：服务器快到期了 不知道还能开多久……
 
 ## 项目灵感
 
@@ -105,12 +106,6 @@ docker-compose -p javaseclab up -d
 
 ![image-20240905225532698](./pic/deploy-docker2.png)
 
-## TodoList
-
-- [ ] 跨站脚本模块实现
-- [ ] SQL注入模块实现
-- [ ] 任意文件类模块实现
-
 ## 开源协议
 
 ​	**When we speak of free software, we are referring to freedom, not price.**
@@ -121,14 +116,16 @@ docker-compose -p javaseclab up -d
 
 1. 安全问题：由于是漏洞靶场，因此不建议搭建在公网上使用
 1. 项目中的安全修复代码仅供参考，实际业务中漏洞修复起来可能要复杂的多……
-1. **问题/建议反馈：如果遇到一些项目问题或者更好的建议，欢迎各位师傅可以提Issue或加我微信进行反馈**
+1. **问题/建议反馈：如果遇到一些项目问题或者更好的建议，欢迎各位师傅可以提Issue或加交流群进行反馈**
 1. **看到这里，师傅觉得项目有用的话，麻烦动动手点个star吧，非常感谢🙏**
 
 ## 关于作者
 
 作者博客：https://blog.csdn.net/weixin_53009585
 
-作者微信：
+**如果师傅同样对开发安全、应用安全、SDL、漏洞靶场等感兴趣的话，欢迎加交流群一起探讨……**
+
 <div style="text-align: center;">
     <img src="./pic/wechat.png" alt="description" width="271" height="366" />
+    <img src="./pic/group.png" alt="description" width="271" height="366" />
 </div>

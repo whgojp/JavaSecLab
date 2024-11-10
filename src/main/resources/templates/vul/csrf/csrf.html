@@ -30,7 +30,7 @@
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
-                                        <form class="layui-form" style="display: flex; justify-content: space-between;" th:action="@{/other/csrf/vul}" target="_blank">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;" th:action="@{/csrf/vul}" target="_blank">
                                             <div style="display: flex; align-items: center;">
                                                 <input type="text" name="receiver" style="width: 150px;" required
                                                        lay-verify="required" value="zhangsan" placeholder="收款人" autocomplete="off"
@@ -80,7 +80,7 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-anquan">  安全代码：CSRF Token防护</span></h1>
+                        <h1><span class="iconfont icon-anquan">  安全环境：CSRF Token防护</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <ul class="layui-tab-title">
                                 <li class="layui-this">转账操作</li>
@@ -88,7 +88,7 @@
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
-                                        <form class="layui-form" style="display: flex; justify-content: space-between;" th:action="@{/other/csrf/safe}" target="_blank">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;" th:action="@{/csrf/safe1}" target="_blank">
                                             <div style="display: flex; align-items: center;">
                                                 <input type="hidden" name="csrfToken" th:value="${csrfToken}"/>
                                                 <input type="text" name="receiver" style="width: 150px;" required
@@ -137,7 +137,7 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-anquan">  安全代码：Referer检测</span></h1>
+                        <h1><span class="iconfont icon-anquan">  安全环境：Referer检测</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <ul class="layui-tab-title">
                                 <li class="layui-this">转账操作</li>
@@ -145,7 +145,7 @@
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
-                                        <form class="layui-form" style="display: flex; justify-content: space-between;" th:action="@{/other/csrf/safe2}" target="_blank">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;" th:action="@{/csrf/safe2}" target="_blank">
                                             <div style="display: flex; align-items: center;">
                                                 <input type="text" name="receiver" style="width: 150px;" required
                                                        lay-verify="required" value="zhangsan" placeholder="收款人" autocomplete="off"
@@ -200,7 +200,7 @@
 <script>
     $(function() {
         $.ajax({
-            url: '/other/csrf/getCsrfToken',
+            url: '/csrf/getCsrfToken',
             type: 'GET',
             success: function(data) {
                 $('input[name="csrfToken"]').val(data.csrfToken);

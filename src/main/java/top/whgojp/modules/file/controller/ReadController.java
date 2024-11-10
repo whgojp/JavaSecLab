@@ -41,9 +41,9 @@ public class ReadController {
 
 
     @ApiOperation(value = "读取文件内容", notes = "读取指定文件的内容")
-    @RequestMapping("/readFile")
+    @RequestMapping("/vul")
     @ResponseBody
-    public String readFile(@RequestParam("fileName") String fileName) throws IOException {
+    public String vul(@RequestParam("fileName") String fileName) throws IOException {
         String currentPath = System.getProperty("user.dir");
         log.info(currentPath);
         File file = new File(fileName);
@@ -64,11 +64,11 @@ public class ReadController {
     private SysConstant sysConstant;
 
     @ApiOperation(value = "安全读取文件内容", notes = "仅允许读取特定目录中的文件内容")
-    @RequestMapping("/safeReadFile")
+    @RequestMapping("/safe")
     @ResponseBody
-    public String safeReadFile(@RequestParam("fileName") String fileName) throws IOException {
-        String baseDir = sysConstant.getUploadFolder(); // 限制删除文件所在目录为 /static/upload/下
-        Path filePath = Paths.get(baseDir, fileName).normalize(); // 规范化路径
+    public String safe(@RequestParam("fileName") String fileName) throws IOException {
+        String baseDir = sysConstant.getUploadFolder();
+        Path filePath = Paths.get(baseDir, fileName).normalize();
         // 确保文件路径在允许的目录中
         if (!filePath.startsWith(Paths.get(baseDir))) {
             return "访问被拒绝：文件路径不合法";

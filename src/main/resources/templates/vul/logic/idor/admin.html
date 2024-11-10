@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>系统管理页面 - 垂直越权演示</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f2f3f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .content-wrapper {
+            max-width: 750px;
+            width: 100%;
+            background-color: #ffffff;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+        }
+        .header {
+            font-size: 26px;
+            font-weight: bold;
+            text-align: center;
+            color: #343a40;
+        }
+        .sub-header {
+            background-color: #e9ecef;
+            padding: 15px;
+            text-align: center;
+            border-radius: 6px;
+            margin-top: 15px;
+            font-size: 18px;
+            color: #495057;
+        }
+        table {
+            margin-top: 20px;
+            color: #495057;
+        }
+        table th, table td {
+            text-align: center;
+            vertical-align: middle;
+        }
+        .table-custom th {
+            background-color: #e3f2fd;
+        }
+    </style>
+</head>
+<body>
+
+<div class="content-wrapper">
+    <div class="header">管理后台</div>
+    <div class="sub-header">访问了管理员权限的页面</div>
+
+    <table class="table table-custom table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>用户名</th>
+            <th>密码</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>1</td>
+            <td>admin</td>
+            <td>******</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>manager</td>
+            <td>******</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>test</td>
+            <td>******</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

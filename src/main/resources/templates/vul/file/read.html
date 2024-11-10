@@ -11,7 +11,7 @@
                     <blockquote class="layui-elem-quote layui-quote-nm"
                                 style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
                         <p>
-                        <pre>   任意文件读取：攻击者通过漏洞在应用程序中未经授权地读取系统上的任意文件，可能导致敏感信息泄露。</pre>
+                        <pre>  任意文件读取：攻击者通过漏洞在应用程序中未经授权地读取系统上的任意文件，可能导致敏感信息泄露</pre>
                         </p>
                     </blockquote>
                 </fieldset>
@@ -27,7 +27,7 @@
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
                                         <p>文件路径没做限制，可使用../遍历任意文件</p>
-                                        <a target="_blank" href="/file/read/readFile?fileName=/etc/hosts">
+                                        <a target="_blank" href="/file/read/vul?fileName=/etc/hosts">
                                             <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
                                                 <span class="iconfont icon-zhihang">Run</span>
                                             </button>
@@ -53,14 +53,14 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-anquan">  安全代码：文件读取白名单</span></h1>
+                        <h1><span class="iconfont icon-anquan">  安全环境：文件读取白名单</span></h1>
                         <div class="layui-tab layui-tab-brief">
 
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
                                         <p>可尝试读取test.txt、text.jsp文件</p>
-                                        <a target="_blank" href="/file/read/safeReadFile?fileName=/etc/hosts">
+                                        <a target="_blank" href="/file/read/safe?fileName=/etc/hosts">
                                             <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
                                                 <span class="iconfont icon-zhihang">Run</span>
                                             </button>
@@ -72,11 +72,11 @@
                                     <div class="layui-card">
                                         <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">安全编码建议：
+                                            <pre style="color: #28333e;font-size: 15px;">安全编码规范：
     1、限制目录访问：将用户的文件操作限制在特定的安全目录内，确保所有路径操作都在该目录下进行。
     2、输入验证和清理：过滤用户输入，防止目录遍历攻击。禁止使用 ..、/、\ 等特殊字符。
-    3、使用白名单策略：只允许符合安全规则的文件类型和格式被下载，限制文件扩展名。
-    4、权限控制：设置文件和目录的访问权限，确保只有授权用户可以进行下载操作。</pre>
+    3、使用白名单策略：只允许符合安全规则的文件类型和格式读取，限制文件扩展名。
+    4、权限控制：设置文件和目录的访问权限，确保只有授权用户可以进行读取操作。</pre>
                                         </div>
                                     </div>
                                 </div>

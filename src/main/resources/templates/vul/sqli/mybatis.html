@@ -12,11 +12,11 @@
                     <blockquote class="layui-elem-quote layui-quote-nm"
                                 style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
                         <p>
-                        <pre>   MyBatis是一款半ORM（对象关系映射）框架，它允许开发者通过简单的XML或注解配置，将原生SQL、存储过程以及高级映射映射到Java对象（POJO）。MyBatis的设计目标是简化数据库操作，避免了几乎所有的JDBC代码和手动设置参数，使得数据持久化操作更加直观和便捷。</pre>
+                        <pre>  MyBatis是一款半ORM（对象关系映射）框架，它允许开发者通过简单的XML或注解配置，将原生SQL、存储过程以及高级映射映射到Java对象（POJO）。MyBatis的设计目标是简化数据库操作，避免了几乎所有的JDBC代码和手动设置参数，使得数据持久化操作更加直观和便捷</pre>
                         </p>
                         <p>
-                        <pre>    #{}: 用于参数的预处理，能够安全地传递参数，并支持 JDBC 类型的指定。
-    ${}: 用于静态 SQL 片段的替换，比如表名、列名等动态确定的部分。</pre>
+                        <pre>   #{}: 用于参数的预处理，能够安全地传递参数，并支持JDBC类型的指定
+   ${}: 用于静态SQL片段的替换，比如表名、列名等动态确定的部分</pre>
                         </p>
                     </blockquote>
                 </fieldset>
@@ -126,7 +126,7 @@
                                 </div>
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i>测试结果</div>
+                                        <div class="layui-card-header"><i class="fa fa-warning icon-output-safe"></i>测试结果</div>
                                         <div class="layui-card-body layui-text layadmin-text">
                                             <pre id="safe1-nativeMethod-result"
                                                  style="color: red;font-size: 15px;"></pre>
@@ -138,7 +138,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code">  缺陷代码</span></h1>
+                        <h1><span class="iconfont icon-code">  安全代码</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="safe1NativeMethod">
                             </div>
@@ -251,7 +251,7 @@
                                 </div>
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i>测试结果</div>
+                                        <div class="layui-card-header"><i class="fa fa-warning icon-output-safe"></i>测试结果</div>
                                         <div class="layui-card-body layui-text layadmin-text">
                                             <pre id="safe2-customMethod-result"
                                                  style="color: red;font-size: 15px;"></pre>
@@ -263,7 +263,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code">  缺陷代码</span></h1>
+                        <h1><span class="iconfont icon-code">  安全代码</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="safe2CustomMethod">
                             </div>
@@ -351,23 +351,6 @@
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
-                                        <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 12px;">
-SQL语句执行顺序:
-	FROM: 指定查询的数据表，开始查询过程。
-	JOIN: 执行表的关联操作（如果有），将不同表中相关的行组合在一起。
-	WHERE: 对行进行筛选，只选择符合指定条件的行。
-	GROUP BY: 按照指定的列对结果进行分组，通常与聚合函数（如SUM、AVG等）一起使用。
-	HAVING: 对分组后的结果进行筛选，类似于WHERE，但作用于分组后的结果集。
-	SELECT: 选择要查询的列或表达式，生成最终的结果集。
-	DISTINCT: 对结果集进行去重操作，仅保留唯一的行。
-	ORDER BY: 对结果集按照指定的列进行排序操作，可以是升序或降序。
-	In: 对结果集进行分页操作，限制返回的行数。
-                                            </pre>
-                                        </div>
-                                    </div>
-                                    <div class="layui-card">
                                         <div class="layui-card-header"><i class="fa fa-warning icon-output"></i>测试结果</div>
                                         <div class="layui-card-body layui-text layadmin-text">
                                             <pre id="special1-OrderBy-result"
@@ -405,7 +388,7 @@ SQL语句执行顺序:
                                         <form class="layui-form" style="display: flex; justify-content: space-between;">
                                             <div style="display: flex; align-items: center;">
                                                 <input type="text" name="keyword" style="width: 150px;" required
-                                                       lay-verify="required" placeholder="查找关键词" autocomplete="off"
+                                                       lay-verify="required" value="1' and updatexml(1,concat(0x7e,(SELECT user()),0x7e),1)#" placeholder="查找关键词" autocomplete="off"
                                                        class="layui-input" id="special2-Like-raw-keyword">
                                             </div>
                                             <div style="display: flex; align-items: center;">
@@ -486,7 +469,7 @@ SQL语句执行顺序:
                                         <form class="layui-form" style="display: flex; justify-content: space-between;">
                                             <div style="display: flex; align-items: center;">
                                                 <input type="text" name="scope" style="width: 150px;" required
-                                                       lay-verify="required" placeholder="范围" autocomplete="off"
+                                                       lay-verify="required" value="1' and updatexml(1,concat(0x7e,(SELECT user()),0x7e),1)#" placeholder="范围" autocomplete="off"
                                                        class="layui-input" id="special3-In-raw-scope">
                                             </div>
                                             <div style="display: flex; align-items: center;">
@@ -584,16 +567,16 @@ SQL语句执行顺序:
         miniTab.listen();
         layer.msg("SQL注入-MyBatis")
 
-        common.formListenFun("safe1-nativeMethod-add", "add", "/sqli/mybatis/safe1-nativeMethod", "safe1-nativeMethod-result","post");
-        common.formListenFun("safe1-nativeMethod-delete", "delete", "/sqli/mybatis/safe1-nativeMethod", "safe1-nativeMethod-result","post");
-        common.formListenFun("safe1-nativeMethod-update", "update", "/sqli/mybatis/safe1-nativeMethod", "safe1-nativeMethod-result","post");
-        common.formListenFun("safe1-nativeMethod-select", "select", "/sqli/mybatis/safe1-nativeMethod", "safe1-nativeMethod-result","post");
+        common.formListenFun("safe1-nativeMethod-add", "add", "/sqli/mybatis/safe1", "safe1-nativeMethod-result","post");
+        common.formListenFun("safe1-nativeMethod-delete", "delete", "/sqli/mybatis/safe1", "safe1-nativeMethod-result","post");
+        common.formListenFun("safe1-nativeMethod-update", "update", "/sqli/mybatis/safe1", "safe1-nativeMethod-result","post");
+        common.formListenFun("safe1-nativeMethod-select", "select", "/sqli/mybatis/safe1", "safe1-nativeMethod-result","post");
         common.selectListenFun("safe1-nativeMethod-add-select", "safe1-nativeMethod-add-pass");
 
-        common.formListenFun("safe2-customMethod-add", "add", "/sqli/mybatis/safe2-customMethod", "safe2-customMethod-result","post");
-        common.formListenFun("safe2-customMethod-delete", "delete", "/sqli/mybatis/safe2-customMethod", "safe2-customMethod-result","post");
-        common.formListenFun("safe2-customMethod-update", "update", "/sqli/mybatis/safe2-customMethod", "safe2-customMethod-result","post");
-        common.formListenFun("safe2-customMethod-select", "select", "/sqli/mybatis/safe2-customMethod", "safe2-customMethod-result","post");
+        common.formListenFun("safe2-customMethod-add", "add", "/sqli/mybatis/safe2", "safe2-customMethod-result","post");
+        common.formListenFun("safe2-customMethod-delete", "delete", "/sqli/mybatis/safe2", "safe2-customMethod-result","post");
+        common.formListenFun("safe2-customMethod-update", "update", "/sqli/mybatis/safe2", "safe2-customMethod-result","post");
+        common.formListenFun("safe2-customMethod-select", "select", "/sqli/mybatis/safe2", "safe2-customMethod-result","post");
         common.selectListenFun("safe2-customMethod-add-select", "safe2-customMethod-add-pass");
 
         common.formListenFun("special1-OrderBy-raw", "raw", "/sqli/mybatis/special1-OrderBy", "special1-OrderBy-result","post");
