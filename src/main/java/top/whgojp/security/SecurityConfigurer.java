@@ -99,10 +99,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 //        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
         // 如果不需要验证码校验登录 可以注释掉该行
-        http.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class);
-
-        // 如果不用验证码，注释这个过滤器即可
-//        http.addFilterAt(usernamePasswordAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+//        http.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class);
 
 
         // 添加session管理器 session失效后跳到登录页

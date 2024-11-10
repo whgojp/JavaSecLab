@@ -94,6 +94,8 @@ url: jdbc:mysql://localhost:13306/JavaSecLab?characterEncoding=utf8&zeroDateTime
 ### Docker部署(推荐)
 
 > 条件：已安装docker和docker-compose
+>
+> docker部署过程中 sql文件没有初始化执行的话(即数据库为空) 需要手动导入下sql文件
 
 ```shell
 mvn clean package -DskipTests

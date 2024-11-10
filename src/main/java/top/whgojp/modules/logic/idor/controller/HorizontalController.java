@@ -23,14 +23,14 @@ import top.whgojp.modules.system.mapper.UserMapper;
 @Api(value = "HorizontalController", tags = "逻辑漏洞-水平越权")
 @Controller
 @CrossOrigin(origins = "*")
-@RequestMapping("/logic/idor")
+@RequestMapping("/logic/idor/horizontal")
 public class HorizontalController {
     @Autowired
     private UserMapper userMapper;
 
-    @RequestMapping("/horizontal")
+    @RequestMapping("")
     public String horizontal(){
-        return "/vul/logic/idor/horizontal";
+        return "vul/logic/idor/horizontal";
     }
 
     @GetMapping("/getUserInfo")

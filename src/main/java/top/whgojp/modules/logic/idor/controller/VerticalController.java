@@ -19,11 +19,11 @@ import top.whgojp.common.utils.R;
 @Api(value = "VerticalController", tags = "逻辑漏洞-垂直越权")
 @Controller
 @CrossOrigin(origins = "*")
-@RequestMapping("/logic/idor")
+@RequestMapping("/logic/idor/vertical")
 public class VerticalController {
-    @RequestMapping("/vertical")
+    @RequestMapping("")
     public String vertical(){
-        return "/vul/logic/idor/vertical";
+        return "vul/logic/idor/vertical";
     }
 
     @GetMapping("/vul")
