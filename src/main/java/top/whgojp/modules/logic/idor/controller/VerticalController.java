@@ -22,16 +22,16 @@ import top.whgojp.common.utils.R;
 @RequestMapping("/logic/idor/vertical")
 public class VerticalController {
     @RequestMapping("")
-    public String vertical(){
+    public String vertical() {
         return "vul/logic/idor/vertical";
     }
 
     @GetMapping("/vul")
-    public String vul(){
-            String currentUsername = SecurityContextHolder.getContext().getAuthentication().getName();
-            if ("admin".equals(currentUsername)) {
-                return "common/401";
-            }else return "/vul/logic/idor/admin";
+    public String vul() {
+        String currentUsername = SecurityContextHolder.getContext().getAuthentication().getName();
+        if ("admin".equals(currentUsername)) {
+            return "/vul/logic/idor/admin";
+        } else return "common/401";
     }
 
 }

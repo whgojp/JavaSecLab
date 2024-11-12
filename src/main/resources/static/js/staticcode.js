@@ -1053,11 +1053,11 @@ const safeBlackList = "public String safe2(String payload) {\n" +
 // 漏洞漏洞
 
 // 越权漏洞
-const vulHorizon = "public String vul(){\n" +
+const vulHorizon = "public String vul() {\n" +
     "\tString currentUsername = SecurityContextHolder.getContext().getAuthentication().getName();\n" +
     "\tif (\"admin\".equals(currentUsername)) {\n" +
-    "\t\treturn \"common/401\";\n" +
-    "\t}else return \"/vul/logic/idor/admin\";\n" +
+    "\t\treturn \"/vul/logic/idor/admin\";\n" +
+    "\t} else return \"common/401\";\n" +
     "}"
 const safeHorizon = "public R safe(String username){\n" +
     "    // 获取当前登录的用户名\n" +
