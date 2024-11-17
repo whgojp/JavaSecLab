@@ -1,12 +1,14 @@
-[//]: # (# <img src="./pic/logo.png" alt="logo" style="zoom:5%;" />JavaSecLab 一款综合Java漏洞平台)
 # JavaSecLab 一款综合Java漏洞平台
 
-<p align="center">
-<a href="https://www.apache.org/licenses/LICENSE-2.0.html"><img src="https://img.shields.io/github/license/alibaba/transmittable-thread-local?color=4D7A97&logo=apache" alt="License"></a>
-<img src="https://img.shields.io/badge/Release-DEV-brightgreen.svg" alt="Release">
-<a href="https://github.com/whgojp/JavaSecLab"><img src="https://img.shields.io/badge/Version-1.1-red.svg" alt="Version"></a>
-<a href="https://blog.csdn.net/weixin_53009585"><img src="https://img.shields.io/badge/Developed%20by-whgojp-blue.svg" alt="Developed by whgojp"></a>
-</p>
+<div style="text-align: center;">
+  <a href="https://www.apache.org/licenses/LICENSE-2.0.html"><img src="https://img.shields.io/github/license/alibaba/transmittable-thread-local?color=4D7A97&logo=apache" alt="License"></a>
+  <img src="https://img.shields.io/badge/Release-DEV-brightgreen.svg" alt="Release">
+  <a href="https://github.com/whgojp/JavaSecLab"><img src="https://img.shields.io/badge/Version-1.2-red.svg" alt="Version"></a>
+  <a href="https://blog.csdn.net/weixin_53009585"><img src="https://img.shields.io/badge/Developed%20by-whgojp-blue.svg" alt="Developed by whgojp"></a>
+  <img src="https://img.shields.io/github/stars/whgojp/JavaSecLab?color=green&style=flat-square" alt="GitHub Repo stars">
+  <img src="https://img.shields.io/github/forks/whgojp/JavaSecLab?style=flat-square" alt="GitHub forks">
+</div>
+
 
 ----------------------------------------
 
@@ -22,6 +24,13 @@
 - 安全服务方面：帮助安全服务人员理解漏洞原理(产生、修复、审计)
 - 甲方安全方面：可作为开发安全培训演示，友好的交互方式，帮助研发同学更容易理解漏洞
 - 安全研究方面：各种漏洞的不同触发场景，可用于xAST等安全工具测试
+
+## 支持漏洞模块
+
+- 跨站脚本攻击、跨站请求伪造、CORS、JSONP、URL重定向、XFF伪造、拒绝服务、XPATH注入
+- SQL注入、任意文件系列、跨服务端请求伪造、XML实体注入、RCE
+- 逻辑漏洞(IDOR、验证码安全、支付安全、并发安全)、敏感信息泄漏系列、登录框对抗系列
+- SPEL注入、SSTI注入、反序列化、组件漏洞
 
 ## 在线环境体验
 
@@ -112,6 +121,10 @@ docker-compose -p javaseclab up -d
 
 本项目遵循 [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0) 协议，详细的许可证内容请参见项目中的 [LICENSE](./LICENSE) 文件。
 
+## 更新记录
+
+项目的详细更新记录请参阅 [CHANGELOG.md](./CHANGELOG.md)
+
 ## 一些Tips🙋
 
 1. 安全问题：由于是漏洞靶场，因此不建议搭建在公网上使用
@@ -129,3 +142,4 @@ docker-compose -p javaseclab up -d
     <img src="./pic/wechat.png" alt="description" width="271" height="366" />
     <img src="./pic/group.png" alt="description" width="271" height="366" />
 </div>
+

@@ -80,7 +80,7 @@
                   "target": "_self"
                 },
                 {
-                  "title": "安全代码",
+                  "title": "安全环境",
                   "href": "sqli/jdbc/jdbcSafe",
                   "icon": "iconfont icon-anquan",
                   "target": "_self"
@@ -248,6 +248,31 @@
               "href": "",
               "icon": "iconfont icon-zhifu",
               "target": "_self"
+            },            {
+              "title": "并发安全",
+              "href": "",
+              "icon": "iconfont icon-gaobingfa",
+              "target": "_self"
+            },
+            {
+              "title": "验证码安全",
+              "href": "",
+              "icon": "iconfont icon-yanzhengma1",
+              "target": "_self",
+              "child": [
+                {
+                  "title": "图形验证码",
+                  "href": "logic/captcha/graphic",
+                  "icon": "iconfont icon-yanzhengma",
+                  "target": "_self"
+                },
+                {
+                  "title": "短信验证码",
+                  "href": "logic/captcha/sms",
+                  "icon": "iconfont icon-duanxin",
+                  "target": "_self"
+                }
+              ]
             }
           ]
         },
@@ -328,7 +353,40 @@
               "target": "_self"
             }
           ]
+        },
+        {
+          "title": "登录框对抗",
+          "href": "",
+          "icon": "iconfont icon-denglukuang",
+          "target": "_self",
+          "child": [
+            {
+              "title": "登录绕过",
+              "href": "",
+              "icon": "iconfont icon-renzhengraoguo",
+              "target": "_self"
+            },
+            {
+              "title": "密码找回",
+              "href": "",
+              "icon": "iconfont icon-mimazhaohui",
+              "target": "_self"
+            },
+            {
+              "title": "JS逆向",
+              "href": "",
+              "icon": "iconfont icon-JS",
+              "target": "_self"
+            },
+            {
+              "title": "jWT伪造",
+              "href": "",
+              "icon": "iconfont icon-quanxianweizao",
+              "target": "_self"
+            }
+          ]
         }
+
       ]
     },
     {

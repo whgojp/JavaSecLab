@@ -1,8 +1,5 @@
-# Tomcat
 server:
   port: 80
-#  servlet:
-#    context-path: /javaseclab
 
 spring:
   # 环境 dev|docker
@@ -59,4 +56,5 @@ mybatis-plus:
     # 关闭MP3.0自带的banner
     banner: false
 
-upload-path: ./upload
+upload:
+  folder: /tmp/upload

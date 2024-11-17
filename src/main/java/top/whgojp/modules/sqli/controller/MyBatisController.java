@@ -40,7 +40,6 @@ public class MyBatisController {
     public String sqliMyBatis() {
         return "vul/sqli/mybatis";
     }
-
     @ApiOperation(value = "安全代码：MyBatis-正常业务场景代码-原生方法", notes = "简单业务场景代码-增删改查使用MyBatis自带方法")
     @PostMapping("/safe1")
     @ResponseBody

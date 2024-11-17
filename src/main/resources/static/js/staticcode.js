@@ -1052,6 +1052,107 @@ const safeBlackList = "public String safe2(String payload) {\n" +
 
 // 漏洞漏洞
 
+// 验证码安全
+const vul1Graphic = "public Boolean verifyCaptcha(String captchaInput, HttpSession session) {\n" +
+    "    String sessionCaptcha = (String) session.getAttribute(\"vulCaptcha\");\n" +
+    "    Long captchaCreationTime = (Long) session.getAttribute(\"captchaCreationTime\");\n" +
+    "    // 如果没有验证码或生成时间，返回失败\n" +
+    "    if (sessionCaptcha == null || captchaCreationTime == null) {\n" +
+    "        return false;\n" +
+    "    }\n" +
+    "    // 验证码有效期为300秒（5分钟）5分钟可以无限制爆破账号密码\n" +
+    "    long captchaExpiryTime = 300 * 1000; // 300秒转换为毫秒\n" +
+    "    // 检查验证码是否过期\n" +
+    "    if (System.currentTimeMillis() - captchaCreationTime > captchaExpiryTime) {\n" +
+    "        session.removeAttribute(\"vulCaptcha\");\n" +
+    "        session.removeAttribute(\"captchaCreationTime\");\n" +
+    "        return false;\n" +
+    "    }\n" +
+    "    // 验证输入的验证码 这里验证失败后也没有清除旧的验证码\n" +
+    "    if (sessionCaptcha.equalsIgnoreCase(captchaInput)) {\n" +
+    "        return true;\n" +
+    "    } else {\n" +
+    "        return false;\n" +
+    "    }\n" +
+    "}"
+const vul2Graphic = "public R vul2(String username, String password, String captcha,HttpSession session) {\n" +
+    "\tString sessionCaptcha = (String) session.getAttribute(\"vulCaptcha\");\n" +
+    "\t// 万能验证码：6666\n" +
+    "\tif (\"6666\".equals(captcha) || (sessionCaptcha != null && sessionCaptcha.equalsIgnoreCase(captcha))) {\n" +
+    "\t\t// 及时清除旧验证码\n" +
+    "\t\tsession.removeAttribute(\"vulCaptcha\");\n" +
+    "\t\tif (REAL_USERNAME.equals(username) && REAL_PASSWORD.equals(password)) {\n" +
+    "\t\t\treturn R.ok(\"账号爆破成功！用户名：\" + username + \",密码：\" + password);\n" +
+    "\t\t}else return R.error(\"账号或密码错误!\");\n" +
+    "\t}else {\n" +
+    "\t\tsession.removeAttribute(\"vulCaptcha\");\n" +
+    "\t\treturn R.error(\"验证码错误！\");\n" +
+    "\t}\n" +
+    "}"
+const vul3Graphic = "public R vul3(String username, String password, String captcha, HttpSession session) {\n" +
+    "\tString sessionCaptcha = (String) session.getAttribute(\"vulCaptcha\");\n" +
+    "\tif (sessionCaptcha != null && sessionCaptcha.equalsIgnoreCase(captcha)) {\n" +
+    "\t\tsession.removeAttribute(\"vulCaptcha\");\n" +
+    "\t\tif (REAL_USERNAME.equals(username) && REAL_PASSWORD.equals(password)) {\n" +
+    "\t\t\treturn R.ok(\"账号爆破成功！用户名：\" + username + \",密码：\" + password);\n" +
+    "\t\t} else return R.error(\"账号或密码错误!\");\n" +
+    "\t} else {\n" +
+    "\t\tsession.removeAttribute(\"vulCaptcha\");\n" +
+    "\t\treturn R.error(\"验证码错误！\");\n" +
+    "\t}\n" +
+    "}"
+const safeGraphic = "public R safe(String username, String password, String captcha, HttpSession session) {\n" +
+    "    String sessionCaptcha = (String) session.getAttribute(\"safeCaptcha\");\n" +
+    "    Long captchaTimestamp = (Long) session.getAttribute(\"captchaTimestamp\");\n" +
+    "    // 验证验证码是否已失效（1分钟有效）\n" +
+    "    if (captchaTimestamp == null || System.currentTimeMillis() - captchaTimestamp > 60 * 1000) {\n" +
+    "        session.removeAttribute(\"safeCaptcha\");\n" +
+    "        session.removeAttribute(\"captchaTimestamp\");\n" +
+    "        return R.error(\"验证码已失效，请重新获取！\");\n" +
+    "    }\n" +
+    "    if (sessionCaptcha != null && sessionCaptcha.equalsIgnoreCase(captcha)) {\n" +
+    "        session.removeAttribute(\"safeCaptcha\");\n" +
+    "        session.removeAttribute(\"captchaTimestamp\");\n" +
+    "        if (REAL_USERNAME.equals(username) && REAL_PASSWORD.equals(password)) {\n" +
+    "            return R.ok(\"登录成功！用户名：\" + username + \",密码：\" + password);\n" +
+    "        } else {\n" +
+    "            return R.error(\"账号或密码错误!\");\n" +
+    "        }\n" +
+    "    } else {\n" +
+    "        session.removeAttribute(\"safeCaptcha\");\n" +
+    "        session.removeAttribute(\"captchaTimestamp\");\n" +
+    "        return R.error(\"验证码错误，请重新输入！\");\n" +
+    "    }\n" +
+    "}\n" +
+    "\n" +
+    "// 设置图形验证码长度6位\n" +
+    "ShearCaptcha shearCaptcha = CaptchaUtil.createShearCaptcha(90, 30, 6, 3);"
+
+const vul1SMS = "public R code(String phone, HttpSession session) {\n" +
+    "    ...\n" +
+    "    Random random = new Random();\n" +
+    "    // 随机生成6位数验证码\n" +
+    "    String captcha = String.valueOf(100000 + random.nextInt(900000));\n" +
+    "    session.setAttribute(\"phone\", phone);\n" +
+    "    session.setAttribute(\"smsCode\", captcha);\n" +
+    "    session.setAttribute(\"captchaTimestamp\", System.currentTimeMillis());\n" +
+    "    // 错误的将短信验证码回显在响应包中\n" +
+    "    return R.ok(\"发送验证码成功！\" + captcha);\n" +
+    "}"
+const vul2SMS = "public R vul2(String phone, String code, @RequestParam(required = false, defaultValue = \"false\") boolean code_verify, HttpSession session) {\n" +
+    "    ...\n" +
+    "    // 校验code_verify字段，如果为true则验证登录成功\n" +
+    "    if (code_verify){\n" +
+    "        return R.ok(\"验证通过！用户：\"+phone);\n" +
+    "    }\n" +
+    "    if (!sessionCaptcha.equals(code)) {\n" +
+    "        return R.error(\"验证码错误，请重新输入！\");\n" +
+    "    }\n" +
+    "    ...\n" +
+    "    return R.ok(\"验证通过！用户：\"+phone);\n" +
+    "}"
+
+
 // 越权漏洞
 const vulHorizon = "public String vul() {\n" +
     "\tString currentUsername = SecurityContextHolder.getContext().getAuthentication().getName();\n" +

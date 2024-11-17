@@ -6,6 +6,69 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "1299598",
+      "name": "密码找回",
+      "font_class": "mimazhaohui",
+      "unicode": "e610",
+      "unicode_decimal": 58896
+    },
+    {
+      "icon_id": "3646140",
+      "name": "登录框",
+      "font_class": "denglukuang",
+      "unicode": "e637",
+      "unicode_decimal": 58935
+    },
+    {
+      "icon_id": "4499404",
+      "name": "高并发",
+      "font_class": "gaobingfa",
+      "unicode": "e65b",
+      "unicode_decimal": 58971
+    },
+    {
+      "icon_id": "6246308",
+      "name": "JS",
+      "font_class": "JS",
+      "unicode": "e651",
+      "unicode_decimal": 58961
+    },
+    {
+      "icon_id": "26480672",
+      "name": "认证绕过",
+      "font_class": "renzhengraoguo",
+      "unicode": "e98c",
+      "unicode_decimal": 59788
+    },
+    {
+      "icon_id": "27452152",
+      "name": "权限伪造",
+      "font_class": "quanxianweizao",
+      "unicode": "e611",
+      "unicode_decimal": 58897
+    },
+    {
+      "icon_id": "657478",
+      "name": "短信",
+      "font_class": "duanxin",
+      "unicode": "e647",
+      "unicode_decimal": 58951
+    },
+    {
+      "icon_id": "1435248",
+      "name": "验证码",
+      "font_class": "yanzhengma",
+      "unicode": "e636",
+      "unicode_decimal": 58934
+    },
+    {
+      "icon_id": "15726977",
+      "name": "验证码",
+      "font_class": "yanzhengma1",
+      "unicode": "e657",
+      "unicode_decimal": 58967
+    },
+    {
       "icon_id": "35946286",
       "name": "XPath",
       "font_class": "XPath",

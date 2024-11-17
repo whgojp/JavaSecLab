@@ -105,7 +105,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
         // 添加session管理器 session失效后跳到登录页
         http.sessionManagement()
                 .invalidSessionUrl(SysConstant.LOGIN_URL)
-                .maximumSessions(1)
+                .maximumSessions(10)
                 .expiredSessionStrategy(sessionInformationExpiredStrategy);
 
         http.formLogin()

@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="~{common/common::head}"></div>
+</head>
+
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <fieldset class="layui-elem-field layui-field-title">
+                    <legend>
+                        <a style="color: rgb(30 159 255)">逻辑漏洞 - 图形验证码安全</a>
+                    </legend>
+                    <blockquote class="layui-elem-quote layui-quote-nm" style="background-color: #a7deefab;">
+                        <p>
+                        <pre>  在如今的各类系统中，验证码成为了常见的安全验证手段,然而验证码同样存在诸多安全问题,这里把验证码安全分成图形验证码安全、短信验证码安全</pre>
+                        <pre>  图形验证码安全：失效验证码、万能验证码、验证码可识别、验证码Dos(详见拒绝服务模块)</pre>
+                        </p>
+                    </blockquote>
+                </fieldset>
+            </div>
+
+            <div class="layui-col-md12" style="margin-top: 10px">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-bug"> 漏洞环境：验证码失效</span></h1>
+                        <div class="layui-tab layui-tab-brief">
+                            <div class="layui-tab-content">
+                                <div class="layui-tab-item layui-show">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="username" style="width: 120px;" required
+                                                       lay-verify="required" placeholder="用户名" value="admin"
+                                                       autocomplete="off"
+                                                       class="layui-input">
+                                                <input type="text" name="password" style="width: 120px;" required
+                                                       lay-verify="required" placeholder="密码" autocomplete="off"
+                                                       class="layui-input">
+                                                <input type="text" name="captcha" style="width: 120px;" required
+                                                       lay-verify="required" placeholder="验证码" autocomplete="off"
+                                                       class="layui-input">
+                                                <img name="captcha" class="admin-captcha" width="90" height="30"
+                                                     th:src="@{/logic/captcha/graphic/img}"
+                                                     onclick="this.src='/logic/captcha/graphic/img?' + Math.random()">
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="vul1-graphic-button" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+
+                                </div>
+
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre style="color: #28333e;font-size: 15px;">  验证码失效：验证码应具备合理的时效性，但如果有效期设置过长，可能导致验证码在一段时间内被重用或滥用。此外，如果验证码校验失败后未及时清除旧的验证码记录，都有可能带来安全隐患</pre>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i>测试结果
+                                        </div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre id="vul1-graphic-result"
+                                                 style="color: red;font-size: 15px;"></pre>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="vul1Graphic"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="layui-col-md12" style="margin-top: 10px">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-bug"> 漏洞环境：万能验证码</span></h1>
+                        <div class="layui-tab layui-tab-brief">
+                            <div class="layui-tab-content">
+                                <div class="layui-tab-item layui-show">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="username" style="width: 120px;" required
+                                                       lay-verify="required" placeholder="用户名" value="admin"
+                                                       autocomplete="off"
+                                                       class="layui-input">
+                                                <input type="text" name="password" style="width: 120px;" required
+                                                       lay-verify="required" placeholder="密码" autocomplete="off"
+                                                       class="layui-input">
+                                                <input type="text" name="captcha" style="width: 120px;" required
+                                                       lay-verify="required" placeholder="验证码" autocomplete="off"
+                                                       class="layui-input">
+                                                <img name="captcha" class="admin-captcha" width="90" height="30"
+                                                     th:src="@{/logic/captcha/graphic/img}"
+                                                     onclick="this.src='/logic/captcha/graphic/img?' + Math.random()">
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="vul2-graphic-button" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+
+                                </div>
+
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre style="color: #28333e;font-size: 15px;">  万能验证码：研发人员为了测试方便，常会设置固定的万能验证码（如6666、123456、888888等）。但在业务上线后，由于疏忽未及时清除这些设置，从而造成验证码"可绕过"</pre>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i>测试结果
+                                        </div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre id="vul2-graphic-result"
+                                                 style="color: red;font-size: 15px;"></pre>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="vul2Graphic"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="layui-col-md12" style="margin-top: 10px">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-bug"> 漏洞环境：验证码可识别</span></h1>
+                        <div class="layui-tab layui-tab-brief">
+                            <div class="layui-tab-content">
+                                <div class="layui-tab-item layui-show">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="username" style="width: 120px;" required
+                                                       lay-verify="required" placeholder="用户名" value="admin"
+                                                       autocomplete="off"
+                                                       class="layui-input">
+                                                <input type="text" name="password" style="width: 120px;" required
+                                                       lay-verify="required" placeholder="密码" autocomplete="off"
+                                                       class="layui-input">
+                                                <input type="text" name="captcha" style="width: 120px;" required
+                                                       lay-verify="required" placeholder="验证码" autocomplete="off"
+                                                       class="layui-input">
+                                                <img name="captcha" class="admin-captcha" width="90" height="30"
+                                                     th:src="@{/logic/captcha/graphic/img}"
+                                                     onclick="this.src='/logic/captcha/graphic/img?' + Math.random()">
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="vul3-graphic-button" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+
+                                </div>
+
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre style="color: #28333e;font-size: 15px;">验证码可识别：4位数验证码可通过ocr工具进行识别爆破
+项目地址：https://github.com/sml2h3/ddddocr
+教程：https://www.52pojie.cn/thread-1944555-1-1.html
+</pre>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i>测试结果
+                                        </div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre id="vul3-graphic-result"
+                                                 style="color: red;font-size: 15px;"></pre>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="vul3Graphic"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="layui-col-md12" style="margin-top: 10px">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-anquan"> 安全环境：多因素校验</span></h1>
+                        <div class="layui-tab layui-tab-brief">
+                            <div class="layui-tab-content">
+                                <div class="layui-tab-item layui-show">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="username" style="width: 120px;" required
+                                                       lay-verify="required" placeholder="用户名" value="admin"
+                                                       autocomplete="off"
+                                                       class="layui-input">
+                                                <input type="text" name="password" style="width: 120px;" required
+                                                       lay-verify="required" placeholder="密码" autocomplete="off"
+                                                       class="layui-input">
+                                                <input type="text" name="captcha" style="width: 120px;" required
+                                                       lay-verify="required" placeholder="验证码" autocomplete="off"
+                                                       class="layui-input">
+                                                <img name="captcha" class="admin-captcha" width="90" height="30"
+                                                     th:src="@{/logic/captcha/graphic/safeImg}"
+                                                     onclick="this.src='/logic/captcha/graphic/safeImg?' + Math.random()">
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="safe-graphic-button" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+
+                                </div>
+
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre style="color: #28333e;font-size: 15px;">安全编码规范：
+    1、有效期检查：设置验证码的有效期为1分钟，确保过期的验证码无法使用，防止攻击者重复利用
+    2、验证与清除：在验证完成后，无论成功或失败，都会及时清除验证码，避免被复用
+    3、复杂度提升：将验证码设置为6位，增加识别和破解的难度，提高攻击成本</pre>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-warning icon-output-safe"></i>测试结果
+                                        </div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre id="safe-graphic-result"
+                                                 style="color: red;font-size: 15px;"></pre>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code"> 安全代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="safeGraphic"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{common/common::script}"></div>
+
+<script type="text/javascript">
+    layui.use(['layer', 'miniTab', 'common', 'form'], function () {
+        var $ = layui.jquery,
+            layer = layui.layer,
+            miniTab = layui.miniTab,
+            common = layui.common,
+            form = layui.form,
+            upload = layui.upload;
+
+        common.formListenFun("vul1-graphic-button", "", "/logic/captcha/graphic/vul1", "vul1-graphic-result", "post");
+        common.formListenFun("vul2-graphic-button", "", "/logic/captcha/graphic/vul2", "vul2-graphic-result", "post");
+        // common.formListenFun("vul3-graphic-button", "", "/logic/captcha/graphic/vul3", "vul3-graphic-result", "post");
+        common.formListenFun("safe-graphic-button", "", "/logic/captcha/graphic/safe", "safe-graphic-result", "post");
+
+        form.on('submit(vul3-captcha-button)', function (data) {
+            $.ajax({
+                type: 'POST',
+                url: '/logic/captcha/graphic/vul3',
+                data: data.field,
+                success: function (response) {
+                    console.log(response)
+                    if (response.code === 0) {
+                        $("#vul3-captcha-result").text(response.msg);
+                    } else {
+                        $("#vul3-captcha-result").text(response.msg);
+                        $(".admin-captcha").attr("src", "/logic/captcha/graphic/img?" + Math.random());
+                    }
+                },
+                error: function () {
+                    $("#vul3-captcha-result").text("请求失败，请重试！");
+                    $(".admin-captcha").attr("src", "/logic/captcha/graphic/img?" + Math.random());
+                }
+            });
+            return false;
+        });
+
+        miniTab.listen();
+        layer.msg("其他漏洞-验证码安全");
+
+        var cmConfig = {
+            lineNumbers: true,
+            lineWrapping: false,
+            indentUnit: 4,
+            indentWithTabs: true,
+            theme: 'juejin',
+            styleActiveLine: {nonEmpty: true},
+            fontSize: "18px",
+            mode: "text/x-java"
+        };
+
+        var cmConfigSafe = {
+            lineNumbers: true,
+            lineWrapping: false,
+            indentUnit: 4,
+            indentWithTabs: true,
+            theme: 'juejinsafe',
+            styleActiveLine: {nonEmpty: true},
+            fontSize: "18px",
+            mode: "text/x-java"
+        };
+
+        CodeMirror(document.getElementById("vul1Graphic"), Object.assign({}, cmConfig, {value: vul1Graphic}));
+        CodeMirror(document.getElementById("vul2Graphic"), Object.assign({}, cmConfig, {value: vul2Graphic}));
+        CodeMirror(document.getElementById("vul3Graphic"), Object.assign({}, cmConfig, {value: vul3Graphic}));
+        CodeMirror(document.getElementById("safeGraphic"), Object.assign({}, cmConfigSafe, {value: safeGraphic}));
+    })
+</script>
+
+</body>
+</html>

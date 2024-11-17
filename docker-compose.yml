@@ -15,26 +15,24 @@ services:
       - JavaSecLabNet
 
   JavaSecLab:
-    image: javaseclab:1.1
+    image: javaseclab:1.2
     container_name: Container-JavaSecLab
     restart: always
     build: .
     ports:
       - 80:80
-      - 8080:8080
-      - 9090:9090
     environment:
-      - TZ=Asia/Shanghai  # 设置时区为上海（GMT+8）
+      - TZ=Asia/Shanghai  # 设置时区上海（GMT+8）
     depends_on:
       - mysql
     volumes:
       - ./logs:/logs      # 记录日志信息
+
     networks:
       - JavaSecLabNet
 
-  # 密码 admin@portainer.com
   portainer:
-    image: portainer/portainer-ce
+    image: portainer/portainer-ce:latest
     container_name: portainer
     restart: always
     ports:

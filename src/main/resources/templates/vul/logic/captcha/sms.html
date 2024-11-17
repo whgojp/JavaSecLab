@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="~{common/common::head}"></div>
+</head>
+
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <fieldset class="layui-elem-field layui-field-title">
+                    <legend>
+                        <a style="color: rgb(30 159 255)">逻辑漏洞 - 短信验证码安全</a>
+                    </legend>
+                    <blockquote class="layui-elem-quote layui-quote-nm" style="background-color: #a7deefab;">
+                        <p>
+                        <pre>  在如今的各类系统中，验证码成为了常见的安全验证手段,然而验证码同样存在诸多安全问题,这里把验证码安全分成图形验证码安全、短信验证码安全</pre>
+                        <pre>  短信验证码安全：验证码回显、验证码绕过、短信轰炸、验证码可控(条件有限，这里只做前两种漏洞演示)</pre>
+                        </p>
+                    </blockquote>
+                </fieldset>
+            </div>
+
+            <div class="layui-col-md12" style="margin-top: 10px">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-bug"> 漏洞环境：验证码回显</span></h1>
+                        <div class="layui-tab layui-tab-brief">
+                            <div class="layui-tab-content">
+                                <div class="layui-tab-item layui-show">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="phone" style="width: 120px;" required
+                                                       lay-verify="required" placeholder="手机号" value="18888888888"
+                                                       autocomplete="off"
+                                                       class="layui-input">
+                                                <input type="text" name="code" style="width: 120px;" placeholder="验证码"
+                                                       autocomplete="off"
+                                                       class="layui-input">
+                                                <button class="layui-btn layui-btn-sm"
+                                                        style="width: 80px; margin-left: 10px;"
+                                                        lay-filter="vul1-getSMS-button" lay-submit="">
+                                                        获取验证码
+                                                </button>
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="vul1-sms-button" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+
+                                </div>
+
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre style="color: #28333e;font-size: 15px;">  验证码回显：由于系统错误配置或开发疏忽，导致短信验证码被直接回显在响应包中</pre>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i>测试结果
+                                        </div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre id="vul1-sms-result"
+                                                 style="color: red;font-size: 15px;"></pre>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="vul1SMS"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="layui-col-md12" style="margin-top: 10px">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-bug"> 漏洞环境：验证码绕过</span></h1>
+                        <div class="layui-tab layui-tab-brief">
+                            <div class="layui-tab-content">
+                                <div class="layui-tab-item layui-show">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="phone" style="width: 120px;" required
+                                                       lay-verify="required" placeholder="手机号" value="18888888888"
+                                                       autocomplete="off"
+                                                       class="layui-input">
+                                                <input type="text" name="code" style="width: 120px;" placeholder="验证码"
+                                                       autocomplete="off"
+                                                       class="layui-input">
+                                                <button class="layui-btn layui-btn-sm"
+                                                        style="width: 80px; margin-left: 10px;"
+                                                        lay-filter="vul2-getSMS-button" lay-submit="">
+                                                    获取验证码
+                                                </button>
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="vul2-sms-button" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+
+                                </div>
+
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre style="color: #28333e;font-size: 15px;">  验证码绕过：通过Fuzz请求参数，添加code_verify=true即可绕过登录校验</pre>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i>测试结果
+                                        </div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre id="vul2-sms-result"
+                                                 style="color: red;font-size: 15px;"></pre>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="vul2SMS"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{common/common::script}"></div>
+
+<script type="text/javascript">
+    layui.use(['layer', 'miniTab', 'common', 'form'], function () {
+        var $ = layui.jquery,
+            layer = layui.layer,
+            miniTab = layui.miniTab,
+            common = layui.common,
+            form = layui.form,
+            upload = layui.upload;
+
+        common.formListenFun("vul1-sms-button", "", "/logic/captcha/sms/vul1", "vul1-sms-result", "post");
+        common.formListenFun("vul2-sms-button", "", "/logic/captcha/sms/vul2", "vul2-sms-result", "post");
+
+
+        form.on('submit(vul1-getSMS-button)', function (data) {
+            $.ajax({
+                type: 'GET',
+                url: '/logic/captcha/sms/code',
+                data: data.field,
+                success: function (response) {
+                    console.log(response)
+                    if (response.code === 0) {
+                        $("#vul1-getSMS-result").text(response.msg);
+                        layer.msg('验证码已发送，请查收', {icon: 1, offset: '10px'});
+                    } else {
+                        $("#vul1-getSMSa-result").text(response.msg);
+                    }
+                },
+                error: function () {
+                    layer.msg('验证码发送失败，请检查', {icon: 2, offset: '10px'});
+                    $("#vul1-getSMS-result").text("请求失败，请重试！");
+                }
+            });
+            return false;
+        });
+
+        form.on('submit(vul2-getSMS-button)', function (data) {
+            $.ajax({
+                type: 'GET',
+                url: '/logic/captcha/sms/code2',
+                data: data.field,
+                success: function (response) {
+                    console.log(response)
+                    if (response.code === 0) {
+                        $("#vul2-getSMS-result").text(response.msg);
+                        layer.msg('验证码已发送，请查收', {icon: 1, offset: '10px'});
+                    } else {
+                        $("#vul2-getSMSa-result").text(response.msg);
+                    }
+                },
+                error: function () {
+                    layer.msg('验证码发送失败，请检查', {icon: 2, offset: '10px'});
+                    $("#vul2-getSMS-result").text("请求失败，请重试！");
+                }
+            });
+            return false;
+        });
+
+        miniTab.listen();
+        layer.msg("其他漏洞-验证码安全");
+
+        var cmConfig = {
+            lineNumbers: true,
+            lineWrapping: false,
+            indentUnit: 4,
+            indentWithTabs: true,
+            theme: 'juejin',
+            styleActiveLine: {nonEmpty: true},
+            fontSize: "18px",
+            mode: "text/x-java"
+        };
+
+        var cmConfigSafe = {
+            lineNumbers: true,
+            lineWrapping: false,
+            indentUnit: 4,
+            indentWithTabs: true,
+            theme: 'juejinsafe',
+            styleActiveLine: {nonEmpty: true},
+            fontSize: "18px",
+            mode: "text/x-java"
+        };
+
+        CodeMirror(document.getElementById("vul1SMS"), Object.assign({}, cmConfig, {value: vul1SMS}));
+        CodeMirror(document.getElementById("vul2SMS"), Object.assign({}, cmConfig, {value: vul2SMS}));
+    })
+</script>
+
+</body>
+</html>
