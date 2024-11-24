@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "9454431",
+      "name": "账号",
+      "font_class": "zhanghao",
+      "unicode": "e66d",
+      "unicode_decimal": 58989
+    },
+    {
       "icon_id": "1299598",
       "name": "密码找回",
       "font_class": "mimazhaohui",

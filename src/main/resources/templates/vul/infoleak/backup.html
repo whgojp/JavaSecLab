@@ -12,7 +12,7 @@
                     <blockquote class="layui-elem-quote layui-quote-nm"
                                 style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
                         <p>
-                        <pre>  备份文件泄漏：由于开发/运营人员疏忽，在进行数据备份时未妥善加密或存储在不安全位置，导致敏感信息被未授权访问，可能引发数据泄露、隐私侵害和系统安全风险</pre>
+                        <pre>  备份文件：Web源码泄漏、日志泄漏</pre>
                         </p>
                     </blockquote>
                 </fieldset>
@@ -21,7 +21,7 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-bug"> 漏洞环境：Web源码泄漏</span></h1>
+                        <h1><span class="iconfont icon-bug"> 漏洞场景：Web源码泄漏</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <div class="layui-tab-content">
 
@@ -29,7 +29,8 @@
                                     <blockquote class="layui-elem-quote main_btn">
                                         <div style="display: flex; align-items: center;">
                                             <p>点击访问链接：</p>
-                                            <a style="color: red" target="_blank" href="/other/infoleak/www.zip">www.zip</a>
+                                            <a style="color: red" target="_blank"
+                                               href="/other/infoleak/www.zip">www.zip</a>
 
                                         </div>
                                     </blockquote>
@@ -39,8 +40,7 @@
                                     <div class="layui-card">
                                         <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">开发在使用webpack工具打包前端项目时 使用dev开发环境，带出配置信息(这也是前后端分离流行后的开发疏忽点)
-真实漏洞环境下，可以在前端看到webapck目录，以及对应源代码……</pre>
+                                            <pre style="color: #28333e;font-size: 15px;">  由于开发/运营人员疏忽，将源码的压缩包（如.zip、.tar.gz、.bak）放置在Web目录下，未做访问限制</pre>
                                         </div>
                                     </div>
                                 </div>
@@ -51,13 +51,55 @@
                     <div class="layui-col-md6">
                         <h1><span class="iconfont icon-code">  缺陷代码</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
-                            <div class="code-editor" id="infoLeakJs">
+                            <div class="code-editor" id="infoLeakBackUp">
                             </div>
                         </div>
                     </div>
 
                 </div>
             </div>
+
+            <div class="layui-col-md12" style="margin-top: 10px">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-bug"> 漏洞场景：日志泄漏</span></h1>
+                        <div class="layui-tab layui-tab-brief">
+                            <div class="layui-tab-content">
+
+                                <div class="layui-tab-item layui-show">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <div style="display: flex; align-items: center;">
+                                            <p>点击访问链接：</p>
+                                            <a style="color: red" target="_blank"
+                                               href="/other/infoleak/JavaSecLab_logs.txt">JavaSecLab_logs.txt</a>
+                                            <p style="margin-left: 25px">跳转后乱码的话，需要改下编码(UTF-8)</p>
+                                        </div>
+                                    </blockquote>
+                                </div>
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre style="color: #28333e;font-size: 15px;">  在开发过程中，为了调试便捷，开发者常会输出一些敏感信息到日志中，例如登录信息(Session、Cookie、用户名、密码)以及SQL执行记录。这些日志内容通常会被定期打包备份，如果备份日志未妥善管理或被泄漏，攻击者可能获取其中的敏感信息，利用这些信息实施攻击。尤其是在登录时启用“记住我”功能的情况下，Cookie/Session通常会具有较长的有效期(如两周)，进一步增加了被利用的风险，最终可能导致凭证劫持</pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code">  缺陷代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="infoLeakLog">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
 
         </div>
     </div>
@@ -89,8 +131,11 @@
                 mode: "text/x-java"
             };
 
-            CodeMirror(document.getElementById("infoLeakJs"), Object.assign({}, cmConfig, {
-                value: infoLeakJs
+            CodeMirror(document.getElementById("infoLeakBackUp"), Object.assign({}, cmConfig, {
+                value: infoLeakBackUp
+            }));
+            CodeMirror(document.getElementById("infoLeakLog"), Object.assign({}, cmConfig, {
+                value: infoLeakLog
             }));
 
         });

@@ -84,7 +84,7 @@ public class OtherController {
     private UploadUtil uploadUtil;
 
     // 文件上传接口
-    @ApiOperation(value = "漏洞环境：文件上传导致存储XSS", notes = "原生漏洞环境,未加任何过滤，Controller接口返回Json类型结果")
+    @ApiOperation(value = "漏洞场景：文件上传导致存储XSS", notes = "原生漏洞场景,未加任何过滤，Controller接口返回Json类型结果")
     @RequestMapping("/vul1Upload")
     @ResponseBody
     @SneakyThrows
@@ -122,7 +122,7 @@ public class OtherController {
                 return R.error(res);
         }
     }
-    @ApiOperation(value = "漏洞环境：模版引擎解析导致存储XSS", notes = "")
+    @ApiOperation(value = "漏洞场景：模版引擎解析导致存储XSS", notes = "")
     @GetMapping("/vul2OtherTemplate")
     public String vul2OtherTemplate(@RequestParam("content") String content,
                                           @RequestParam("type") String type, Model model) {

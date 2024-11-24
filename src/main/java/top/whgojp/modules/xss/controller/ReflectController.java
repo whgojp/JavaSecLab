@@ -48,7 +48,7 @@ public class ReflectController {
     }
 
 
-    @ApiOperation(value = "漏洞环境：GET型与POST型", notes = "原生漏洞环境,未加任何过滤，Controller接口返回Json类型结果")
+    @ApiOperation(value = "漏洞场景：GET型与POST型", notes = "原生漏洞场景,未加任何过滤，Controller接口返回Json类型结果")
     @RequestMapping("/vul1")
     @ResponseBody
     @ApiImplicitParam(name = "content", value = "请求参数", dataType = "String", paramType = "query", dataTypeClass = String.class)
@@ -57,7 +57,7 @@ public class ReflectController {
         return R.ok(content);
     }
 
-    @ApiOperation(value = "漏洞环境：String", notes = "原生漏洞环境,未加任何过滤，Controller接口返回String")
+    @ApiOperation(value = "漏洞场景：String", notes = "原生漏洞场景,未加任何过滤，Controller接口返回String")
     @GetMapping("/vul2")
     @ResponseBody
     @ApiImplicitParam(name = "content", value = "请求参数", dataType = "String", paramType = "query", dataTypeClass = String.class)
@@ -67,7 +67,7 @@ public class ReflectController {
     }
 
     @SneakyThrows
-    @ApiOperation(value = "漏洞环境：Content-Type问题", notes = "Tomcat内置HttpServletResponse，Content-Type导致反射XSS")
+    @ApiOperation(value = "漏洞场景：Content-Type问题", notes = "Tomcat内置HttpServletResponse，Content-Type导致反射XSS")
     @GetMapping("/vul3")
     @ResponseBody
     @ApiImplicitParams({

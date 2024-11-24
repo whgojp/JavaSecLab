@@ -32,7 +32,7 @@ public class SsrfController {
         return "vul/ssrf/ssrf";
     }
 
-    @ApiOperation(value = "漏洞环境：服务端请求伪造", notes = "原生漏洞环境，未做任何限制，可调用URLConnection发起任意请求，探测内网服务、读取文件")
+    @ApiOperation(value = "漏洞场景：服务端请求伪造", notes = "原生漏洞场景，未做任何限制，可调用URLConnection发起任意请求，探测内网服务、读取文件")
     @GetMapping("/vul")
     @ResponseBody
     @ApiImplicitParam(name = "url", value = "请求参数", dataType = "String", paramType = "query", dataTypeClass = String.class)

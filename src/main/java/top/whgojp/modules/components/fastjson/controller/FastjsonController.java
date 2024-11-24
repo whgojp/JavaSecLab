@@ -47,7 +47,7 @@ public class FastjsonController {
             // 2、使用AutoType白名单机制
 //            ParserConfig.getGlobalInstance().setAutoTypeSupport(true);
 //            ParserConfig.getGlobalInstance().addAccept("top.whgojp.WhiteListClass");
-            // 3、1.2.68之后的版本，Fastjson真家里safeMode的支持
+            // 3、1.2.68之后的版本，Fastjson增加了safeMode的支持
 //            ParserConfig.getGlobalInstance().setSafeMode(true);
 //            JSONObject jsonObject = JSON.parseObject(content, Feature.DisableSpecialKeyDetect);
             JSONObject jsonObject = JSON.parseObject(content);

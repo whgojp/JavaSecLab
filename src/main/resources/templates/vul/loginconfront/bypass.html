@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{common/common::head}"></div>
+
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <fieldset class="layui-elem-field layui-field-title">
+                    <legend style="color: rgb(30 159 255)">登录对抗 - 登录绕过</legend>
+                    <blockquote class="layui-elem-quote layui-quote-nm"
+                                style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
+                        <p>
+                        <pre>  这里以修改响应包绕过、密码重置步骤绕过场景为例</pre>
+                        </p>
+                    </blockquote>
+                </fieldset>
+            </div>
+
+            <div class="layui-col-md12" style="margin-top: 10px">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-bug"> 漏洞场景：修改响应包绕过</span></h1>
+                        <div class="layui-tab layui-tab-brief">
+                            <div class="layui-tab-content">
+                                <div class="layui-tab-item layui-show">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="username" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="用户名" value="admin"
+                                                       autocomplete="off"
+                                                       class="layui-input">
+                                                <input type="text" name="password" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="密码" autocomplete="off"
+                                                       class="layui-input">
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="vul1-bypass-button" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+
+                                </div>
+
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre style="color: #28333e;font-size: 15px;">  在前后端分离架构中(如RESTful风格)，前端通常通过调用后端API来验证用户登录状态。后端接口返回状态码(200、500)或结果字段(error、success)直接决定前端的后续操作。当后端逻辑中直接信任客户端传递的状态码或响应结果，攻击者可以通过修改API响应包(error->success,500->200)来绕过登录校验，伪造成功状态</pre>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i>测试结果
+                                        </div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre id="vul1-bypass-result"
+                                                 style="color: red;font-size: 15px;"></pre>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="vul1Bypass"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="layui-col-md12" style="margin-top: 10px">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-bug"> 漏洞场景：密码重置步骤绕过</span></h1>
+                        <div class="layui-tab layui-tab-brief">
+                            <div class="layui-tab-content">
+                                <div class="layui-tab-item layui-show">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <div style="display: flex; align-items: center;">
+                                            <p>点击访问链接：</p>
+                                            <a style="color: red" target="_blank"
+                                               href="/loginconfront/bypass/reset">密码重置场景</a>
+
+                                        </div>
+                                    </blockquote>
+
+                                </div>
+
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre style="color: #28333e;font-size: 15px;">  由于前端通过step参数控制流程，可以通过抓包工具拦截请求并直接修改step的值，从而绕过旧密码校验的步骤，直接进入设置新密码的阶段，核心问题在于流程的关键验证依赖于前端，而不是在后端进行严格的状态管理与校验</pre>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="vul2Bypass"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+</div>
+
+<div th:replace="~{common/common::script}"></div>
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function () {
+
+        layui.use(['layer', 'miniTab', 'common', 'form'], function () {
+            var $ = layui.jquery,
+                layer = layui.layer,
+                miniTab = layui.miniTab,
+                common = layui.common,
+                form = layui.form;
+            miniTab.listen();
+            layer.msg("登录对抗 - 登录绕过")
+
+            form.on('submit(vul1-bypass-button)', function (data) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/loginconfront/bypass/vul1step1',
+                    data: data.field,
+                    success: function (response) {
+                        if (response.code === 0) {
+                            $("#vul1-bypass-result").text(response.msg);
+                            setTimeout(() => {
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/loginconfront/bypass/vul1step2',
+                                    data: {code: response.code},
+                                    success: function (step2Response) {
+                                        if (step2Response.code === 0) {
+                                            $("#vul1-bypass-result").text(step2Response.msg);
+                                        } else {
+                                            $("#vul1-bypass-result").text("第二步验证失败：" + step2Response.msg);
+                                        }
+                                    },
+                                    error: function () {
+                                        $("#vul1-bypass-result").text("第二步请求失败，请重试！");
+                                    }
+                                });
+
+                            }, 1000);
+
+                        } else {
+                            $("#vul1-bypass-result").text(response.msg);
+                        }
+                    },
+                    error: function () {
+                        $("#vul1-bypass-result").text("第一步请求失败，请重试！");
+                    }
+                });
+                return false;
+            });
+
+
+            var cmConfig = {
+                lineNumbers: true,
+                lineWrapping: false,
+                indentUnit: 4,
+                indentWithTabs: true,
+                theme: 'juejin',
+                styleActiveLine: {nonEmpty: true},
+                fontSize: "18px",
+                mode: "text/x-java"
+            };
+
+            CodeMirror(document.getElementById("vul1Bypass"), Object.assign({}, cmConfig, {
+                value: vul1Bypass
+            }));
+            CodeMirror(document.getElementById("vul2Bypass"), Object.assign({}, cmConfig, {
+                value: vul2Bypass
+            }));
+
+        });
+    });
+
+
+</script>
+
+</body>
+</html>

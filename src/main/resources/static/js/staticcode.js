@@ -4,7 +4,7 @@
  * @email:  whgojp@foxmail.com
  * @Date: 2024/5/19 19:03
  */
-const vul1ReflectRaw = "// 原生漏洞环境,未加任何过滤，Controller接口返回Json类型结果\n" +
+const vul1ReflectRaw = "// 原生漏洞场景,未加任何过滤，Controller接口返回Json类型结果\n" +
     "public R vul1(String content) {\n" +
     "    return R.ok(content);\n" +
     "}\n" +
@@ -16,7 +16,7 @@ const vul1ReflectRaw = "// 原生漏洞环境,未加任何过滤，Controller接
     "// }\n" +
     "// payload在json中是不会触发xss的 需要解析到页面中\n" +
     "\n" +
-    "// 原生漏洞环境,未加任何过滤，Controller接口返回String类型结果\n" +
+    "// 原生漏洞场景,未加任何过滤，Controller接口返回String类型结果\n" +
     "public String vul2(String content) {\n" +
     "    return content;\n" +
     "}"
@@ -118,7 +118,7 @@ const safe4HttpOnly = "// HttpOnly是HTTP响应头属性，用于增强Web应用
     "            ...\n" +
     "}"
 
-const vul1StoreRaw = "// 原生漏洞环境,未加任何过滤，将用户输入存储到数据库中\n" +
+const vul1StoreRaw = "// 原生漏洞场景,未加任何过滤，将用户输入存储到数据库中\n" +
     "// Controller层\n" +
     "public R vul(String content,HttpServletRequest request) {\n" +
     "    String ua = request.getHeader(\"User-Agent\");\n" +
@@ -411,7 +411,7 @@ const safe3BlacklistcheckSqlBlackList = "// 检测用户输入是否存在敏感
     "                rowsAffected = stmt.executeUpdate(sql);\n" +
     "                ...\n" +
     "        case \"update\":\n" +
-    "            if (checkUserInput.checkSqlBlackList(id) || checkUserInput.checkSqlBlackList(username) || checkUserInput.checkSqlBlackList(id)) {\n" +
+    "            if (checkUserInput.checkSqlBlackList(id) || checkUserInput.checkSqlBlackList(username) || checkUserInput.checkSqlBlackList(password)) {\n" +
     "                return R.error(\"黑名单检测到非法SQL注入!\");\n" +
     "            } else {\n" +
     "                sql = \"UPDATE users SET password = '\" + password + \"', username = '\" + username + \"' WHERE id = '\" + id + \"'\";\n" +
@@ -630,7 +630,7 @@ const mybatisSpecial1OrderBy =
     "    </if>\n" +
     "</select>"
 
-const mybatisSpecial2Like ="// Controller层\n" +
+const mybatisSpecial2Like = "// Controller层\n" +
     "public R special1OrderBy() {\n" +
     "@PostMapping(\"/special2-Like\")\n" +
     "public R special2Like(String type,String keyword) {\n" +
@@ -661,7 +661,7 @@ const mybatisSpecial2Like ="// Controller层\n" +
     "    SELECT * FROM sqli WHERE username LIKE CONCAT('%', #{keyword}, '%')\n" +
     "</select>"
 
-const mybatisSpecial3In ="// Controller层\n" +
+const mybatisSpecial3In = "// Controller层\n" +
     "public R special3In(String type,String scope) {\n" +
     "  switch (type) {\n" +
     "      case \"raw\":\n" +
@@ -712,7 +712,7 @@ const safeJPA = "safeJPA"
 
 
 // 任意文件类-文件上传
-const anyFileUploadCode = "// 原生漏洞环境，未做任何限制\n" +
+const anyFileUploadCode = "// 原生漏洞场景，未做任何限制\n" +
     "public R vul(MultipartFile file, HttpServletRequest request) {\n" +
     "    String res;\n" +
     "    String suffix = FilenameUtils.getExtension(\n" +
@@ -1154,11 +1154,11 @@ const vul2SMS = "public R vul2(String phone, String code, @RequestParam(required
 
 
 // 越权漏洞
-const vulHorizon = "public String vul() {\n" +
-    "\tString currentUsername = SecurityContextHolder.getContext().getAuthentication().getName();\n" +
-    "\tif (\"admin\".equals(currentUsername)) {\n" +
-    "\t\treturn \"/vul/logic/idor/admin\";\n" +
-    "\t} else return \"common/401\";\n" +
+const vulHorizon = "public R vul(String username){\n" +
+    "    User user = userMapper.getAllByUsername(username);\n" +
+    "    if (user!=null){\n" +
+    "        return R.ok(\"用户名：\"+user.getUsername()+\" 密码：\"+user.getPassword());\n" +
+    "    }else return R.error(\"用户名不存在\");\n" +
     "}"
 const safeHorizon = "public R safe(String username){\n" +
     "    // 获取当前登录的用户名\n" +
@@ -1482,6 +1482,49 @@ const infoLeakJs = "var r = new i({\n" +
     "        data: {path: \"https://official-website-1305887643.cos.ap-beijing.myqcloud.com/\".concat(o)}\n" +
     "    })\n" +
     "})";
+const infoLeakBackUp = "root@MacBook ~/www/JavaSecLab tree -L 4 -h -t\n" +
+    "[ 320]  .\n" +
+    "├── [  76]  deploy.sh\n" +
+    "├── [ 281]  Dockerfile\n" +
+    "├── [ 818]  docker-compose.yml\n" +
+    "├── [ 11K]  LICENSE\n" +
+    "├── [5.7K]  pom.xml\n" +
+    "├── [  96]  sql\n" +
+    "│   └── [2.9K]  JavaSecLab.sql\n" +
+    "└── [ 128]  src\n" +
+    "    └── [ 128]  main\n" +
+    "        ├── [  96]  java\n" +
+    "        │   └── [  96]  top\n" +
+    "        └── [ 320]  resources\n" +
+    "            ├── [ 273]  banner.txt\n" +
+    "            ├── [ 427]  application-docker.yml\n" +
+    "            ├── [9.4K]  logback-spring.xml\n" +
+    "            ├── [ 421]  application-dev.yml\n" +
+    "            ├── [ 420]  application-prod.yml\n" +
+    "            ├── [1.2K]  application.yml\n" +
+    "            └── [ 160]  mapper\n" +
+    "\n" +
+    "8 directories, 12 files"
+const infoLeakLog = "// 开启了调试模式，打印了sql执行记录 并且输出了SessionId\n" +
+    "JDBC Connection [com.alibaba.druid.proxy.jdbc.ConnectionProxyImpl@784bb5e2] will not be managed by Spring\n" +
+    "==>  Preparing: SELECT username,password FROM user WHERE (username = ?)\n" +
+    "==> Parameters: admin(String)\n" +
+    "2024-11-18 16:24:18 DEBUG Statement:136 - {conn-10006, pstmt-20183} Parameters : [admin]\n" +
+    "2024-11-18 16:24:18 DEBUG Statement:136 - {conn-10006, pstmt-20183} Types : [VARCHAR]\n" +
+    "2024-11-18 16:24:18 DEBUG Statement:136 - {conn-10006, pstmt-20183} executed. 2.459148 millis. SELECT  username,password  FROM user \n" +
+    " \n" +
+    " WHERE (username = ?)\n" +
+    "2024-11-18 16:24:18 DEBUG ResultSet:141 - {conn-10006, pstmt-20183, rs-50764} open\n" +
+    "2024-11-18 16:24:18 DEBUG ResultSet:141 - {conn-10006, pstmt-20183, rs-50764} Header: [username, password]\n" +
+    "2024-11-18 16:24:18 DEBUG ResultSet:141 - {conn-10006, pstmt-20183, rs-50764} Result: [admin, admin]\n" +
+    "<==    Columns: username, password\n" +
+    "<==        Row: admin, admin\n" +
+    "<==      Total: 1\n" +
+    "Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@23f938fe]\n" +
+    "2024-11-18 16:24:18.822  INFO 1 --- [-nio-80-exec-41] RequestAwareAuthenticationSuccessHandler : 用户名:admin,于2024-11-18 16:24:18 成功登录系统 IP:123.118.108.249 session:WebAuthenticationDetails [RemoteIpAddress=123.118.108.249, SessionId=0170B66882476E34F35BC232051F63E0]\n" +
+    "2024-11-18 16:24:32.737  INFO 1 --- [-nio-80-exec-41] t.w.m.system.controller.LoginController  : session id E3C352C378552D29E10BDF42647B6864， 生成的验证码 o1kY\n" +
+    "2024-11-18 16:24:44.127  INFO 1 --- [-nio-80-exec-34] t.w.m.system.controller.LoginController  : session id E3C352C378552D29E10BDF42647B6864， 生成的验证码 7Cwn"
+
 const springBootSwagger = "return new Docket(DocumentationType.OAS_30)\n" +
     "        .pathMapping(\"/\")\n" +
     "        .enable(swaggerProperties.getEnable())//生产禁用\n" +
@@ -1623,6 +1666,105 @@ const infoLeakCeShi = "public String ping(String ip, Model model) {\n" +
     "            result = \"Error: \" + e.getMessage();\n" +
     "    ...\n" +
     "}\n";
+
+// 登录对抗
+const vul1Account = "public class CustomUserDetailsService implements UserDetailsService {\n" +
+    "    @Autowired\n" +
+    "    private UserService userService;\n" +
+    "\t\n" +
+    "    @Override\n" +
+    "    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {\n" +
+    "        User sysUser = userService.getOne(Wrappers.<User>query().lambda().eq(User::getUsername, username));\n" +
+    "        if (ObjectUtil.isNull(sysUser)) {\n" +
+    "            throw new UsernameNotFoundException(\"用户不存在\");\n" +
+    "        // 安全写法：统一返回模糊错误信息\n" +
+    "\t\t// throw new UsernameNotFoundException(\"用户或密码错误\");\n" +
+    "        }\n" +
+    "\n" +
+    "        // 用户存在，直接返回 UserDetails 对象，不处理角色信息\n" +
+    "        return new org.springframework.security.core.userdetails.User(sysUser.getUsername(), sysUser.getPassword(), new ArrayList<>());\n" +
+    "    }\n" +
+    "}"
+const vul2Account = "public R vul2(String username, String password) {\n" +
+    "\t\n" +
+    "\t// 这里简单模拟下数据库查询操作\n" +
+    "\t// User user = UserService.getAllByUsernameAndPassword(username,password)\n" +
+    "\tif (\"admin\".equalsIgnoreCase(username) && \"admin\".equalsIgnoreCase(password)) {\n" +
+    "\t\treturn R.ok(\"登录成功！用户名：\" + username + \", 密码：\" + password);\n" +
+    "\t} else {\n" +
+    "\t\treturn R.ok(\"账号或密码错误！\");\n" +
+    "\t}\n" +
+    "}"
+
+const vul1Bypass = "$.ajax({\n" +
+    "type: 'POST',\n" +
+    "url: '/loginconfront/bypass/vul1step1',\n" +
+    "data: data.field,\n" +
+    "success: function (response) {\n" +
+    "\t// 步骤一账号校验通过后，模拟进行下一步校验\n" +
+    "    if (response.code === 0) {\n" +
+    "    $(\"#vul1-bypass-result\").text(response.msg);\n" +
+    "    setTimeout(() => {\n" +
+    "        $.ajax({\n" +
+    "            type: 'POST',\n" +
+    "            url: '/loginconfront/bypass/vul1step2',\n" +
+    "            data: {code: response.code},\n" +
+    "            ..."
+const vul2Bypass = "// step1：验证用户名并切换到步骤2\n" +
+    "$('#next1').on('click', function () {\n" +
+    "    $.post('/loginconfront/bypass/step1', { username: username }, function (res) {\n" +
+    "        if (res.code === 0) currentStep = 2;\n" +
+    "    });\n" +
+    "});\n" +
+    "\n" +
+    "// step2：验证旧密码并切换到步骤3\n" +
+    "$('#next2').on('click', function () {\n" +
+    "    $.post('/loginconfront/bypass/step2', { oldPassword: oldPassword }, function (res) {\n" +
+    "        if (res.code === 0) currentStep = 3;\n" +
+    "    });\n" +
+    "});\n" +
+    "\n" +
+    "// step3：提交新密码\n" +
+    "$('#reset-password-form').on('submit', function (e) {\n" +
+    "    $.post('/loginconfront/bypass/step3', { newPassword: newPassword });\n" +
+    "});"
+const vul1Reverse = "// 与服务端密钥一致 用于生产签名Sign\n" +
+    "const key = \"FF38DC304A1D74B19F24A36C09FD6B72\";\n" +
+    "function generateSign(params) {\n" +
+    "    const query = Object.keys(params)\n" +
+    "        .sort()\n" +
+    "        .map(k => `${k}=${params[k]}`)\n" +
+    "        .join(\"&\");\n" +
+    "    // 使用 MD5 加密生成签名\n" +
+    "    return md5(query + key);\n" +
+    "}\n" +
+    "const params = {\n" +
+    "    username: data.field.username,\n" +
+    "    password: data.field.password,\n" +
+    "    timestamp: Date.now(),\n" +
+    "};\n" +
+    "const sign = generateSign(params);\n" +
+    "\n" +
+    "{\"username\":\"admin\",\"password\":\"123456\",\"timestamp\":1732373468477,\"sign\":\"1a56f2b3de87c435be816341d9bcf6fe\"}"
+const vul2Reverse = "const publicKey = `-----BEGIN PUBLIC KEY-----\n" +
+    "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAx6Iq6tBvjNHqczQmJJAo\n" +
+    "otsBfKM/9yJCuTV87ZlI0Y1EFG65Jo89aLHW7BqBUJepcKC9kcA5PJaWSF5BYElt\n" +
+    "Y2NPnIfGkHamKeFywWh4aYy66MlBqr91Fw0Wyx8PQlp0CJKfiPEQmzwUobpimAvK\n" +
+    "...\n" +
+    "-----END PUBLIC KEY-----\n" +
+    "`;\n" +
+    "\n" +
+    "const encryptField = (field) => {\n" +
+    "    const encryptor = new JSEncrypt();\n" +
+    "    encryptor.setPublicKey(publicKey);\n" +
+    "    return encryptor.encrypt(field);\n" +
+    "};\n" +
+    "\n" +
+    "const encryptedUsername = encryptField(data.field.username);\n" +
+    "const encryptedPassword = encryptField(data.field.password);\n" +
+    "\n" +
+    "{\"encryptedUsername\":\"iDF5BNv1zaM0V9qog0qzlUES3sCGYqmvrKiqPIvUgP5qE0pYn9XN3btW3PbRwLuySeruK2i8lem+L67w5+fFQBuRrpettLrHl8izIRp2W+nq9o9Kg/LSa3/+JynFoUHxrvQ2taNM1nustROpkBjJMbTOK52S6ZBa0quMw+wjfR1XExlzc99U1WJQfRAqj7Gsl9EPydRIh8vs4S/Nen5kf/dL3ZikfMbCUUBonRlYy6a3nWJ412P+hxRbSl80Z8aQKw9lH4+Iju80oFmQ6DuS6Ce70h88z/Va+xzXHDzM8w6h5iqQLzq3Kj/E+b/wsn6eM7v+LEC8LwLQ/t8z8tki9g==\",\n" +
+    "\"encryptedPassword\":\"nDI0/PBwsFHnRRw7Z4gHZ6G8Uaq7BUjUxnTDw7bkR9nrTkoHfcDLKUddj2JS7WWbOyuwsUFce3/tXJYQWNMFQqGRtf6jXxFAlvTvBkRdsZXOIU+Abb4EqYw670xd5UTeAQ0lI5KNXtw6e/VbnXyX+STJdN2SO7FLbvZ4sM6gLQSVWLo/+pZsYxKlEUNxew2svlzDZtqKnyF12bzakWfzaWuovLnYCCEXV1oAJCErjgfoOS2wJADdgU0wE6KlFDMNjsCvONmO6KZpmJQ1GOq3MpyqySq8eyJkYG3cDSRo5nDo2YOcevOHifzMnKbrU9gh4/RUj8sxrykdqgLmzX3rhw==\"}"
 
 // java专题 SPEL注入
 const spelVul = "public R vul(String ex) {\n" +
@@ -1820,7 +1962,7 @@ const safeFastjson = "public String safe(@RequestBody String content) {\n" +
     "        // 2、使用AutoType白名单机制\n" +
     "//            ParserConfig.getGlobalInstance().setAutoTypeSupport(true);\n" +
     "//            ParserConfig.getGlobalInstance().addAccept(\"top.whgojp.WhiteListClass\");\n" +
-    "        // 3、1.2.68之后的版本，Fastjson真家里safeMode的支持\n" +
+    "        // 3、1.2.68之后的版本，Fastjson增加了safeMode的支持\n" +
     "//            ParserConfig.getGlobalInstance().setSafeMode(true);\n" +
     "//            JSONObject jsonObject = JSON.parseObject(content, Feature.DisableSpecialKeyDetect);\n" +
     "        JSONObject jsonObject = JSON.parseObject(content);\n" +

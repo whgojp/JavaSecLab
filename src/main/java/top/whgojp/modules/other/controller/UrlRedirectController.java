@@ -40,20 +40,20 @@ public class UrlRedirectController {
     }
 
     // 基于Spring MVC的重定向方式
-    @ApiOperation(value = "漏洞环境：基于Spring MVC的重定向方式", notes = "Spring MVC应用中常见的重定向方式")
+    @ApiOperation(value = "漏洞场景：基于Spring MVC的重定向方式", notes = "Spring MVC应用中常见的重定向方式")
     @GetMapping("/vul1")
     public String vul1(@RequestParam("url") String url) {
         return "redirect:" + url;   // Spring MVC写法 302临时重定向
     }
 
-    @ApiOperation(value = "漏洞环境：基于Spring MVC的重定向方式", notes = "使用ModelAndView实现的Spring MVC重定向方式")
+    @ApiOperation(value = "漏洞场景：基于Spring MVC的重定向方式", notes = "使用ModelAndView实现的Spring MVC重定向方式")
     @RequestMapping("/vul2")
     public ModelAndView vul2(@RequestParam("url") String url) {
         return new ModelAndView("redirect:" + url); // Spring MVC写法 使用ModelAndView 302临时重定向
     }
 
     // 基于Servlet标准的重定向方式
-    @ApiOperation(value = "漏洞环境：基于Servlet标准的重定向方式", notes = "基于Servlet标准的重定向方式")
+    @ApiOperation(value = "漏洞场景：基于Servlet标准的重定向方式", notes = "基于Servlet标准的重定向方式")
     @RequestMapping("/vul3")
     @ResponseBody
     public static void vul3(HttpServletRequest request, HttpServletResponse response) {
@@ -62,7 +62,7 @@ public class UrlRedirectController {
         response.setHeader("Location", url);
     }
 
-    @ApiOperation(value = "漏洞环境：基于Servlet标准的重定向方式", notes = "基于Servlet标准的重定向方式")
+    @ApiOperation(value = "漏洞场景：基于Servlet标准的重定向方式", notes = "基于Servlet标准的重定向方式")
     @RequestMapping("/vul4")
     @ResponseBody
     public static void vul4(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -71,7 +71,7 @@ public class UrlRedirectController {
     }
 
     // 基于Spring注解和状态码的重定向方式
-    @ApiOperation(value = "漏洞环境：基于Spring注解和状态码的重定向方式", notes = "使用ResponseEntity设置状态码实现重定向")
+    @ApiOperation(value = "漏洞场景：基于Spring注解和状态码的重定向方式", notes = "使用ResponseEntity设置状态码实现重定向")
     @RequestMapping("/vul5")
     @ResponseBody
     public ResponseEntity<Void> vul5(@RequestParam("url") String url) {
@@ -80,7 +80,7 @@ public class UrlRedirectController {
         return new ResponseEntity<>(headers, HttpStatus.FOUND); // 302临时重定向
     }
 
-    @ApiOperation(value = "漏洞环境：基于Spring注解和状态码的重定向方式", notes = "通过注解设置状态码实现重定向")
+    @ApiOperation(value = "漏洞场景：基于Spring注解和状态码的重定向方式", notes = "通过注解设置状态码实现重定向")
     @GetMapping("/vul6")
     @ResponseStatus(HttpStatus.FOUND) // 302临时重定向
     public void vul6(HttpServletRequest request, HttpServletResponse response) throws IOException {

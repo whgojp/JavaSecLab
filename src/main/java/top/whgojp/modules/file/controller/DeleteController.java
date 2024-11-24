@@ -33,7 +33,7 @@ public class DeleteController {
         return "vul/file/delete";
     }
 
-    @ApiOperation(value = "漏洞环境：任意文件删除", notes = "原生漏洞环境，未做任何限制")
+    @ApiOperation(value = "漏洞场景：任意文件删除", notes = "原生漏洞场景，未做任何限制")
     @RequestMapping("/vul")
     @ResponseBody
     @SneakyThrows
@@ -54,7 +54,7 @@ public class DeleteController {
 
     @Autowired
     private SysConstant sysConstant;
-    @ApiOperation(value = "安全环境：限制文件删除", notes = "仅允许删除特定目录中的文件")
+    @ApiOperation(value = "安全场景：限制文件删除", notes = "仅允许删除特定目录中的文件")
     @RequestMapping("/safe")
     @ResponseBody
     @SneakyThrows

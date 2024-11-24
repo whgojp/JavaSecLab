@@ -28,13 +28,13 @@
               "target": "_self",
               "child": [
                 {
-                  "title": "漏洞环境",
+                  "title": "漏洞场景",
                   "href": "xss/reflect/vul",
                   "icon": "iconfont icon-bug",
                   "target": "_self"
                 },
                 {
-                  "title": "安全环境",
+                  "title": "安全场景",
                   "href": "xss/reflect/safe",
                   "icon": "iconfont icon-anquan",
                   "target": "_self"
@@ -74,13 +74,13 @@
               "target": "_self",
               "child": [
                 {
-                  "title": "漏洞环境",
+                  "title": "漏洞场景",
                   "href": "sqli/jdbc/jdbcVul",
                   "icon": "iconfont icon-bug",
                   "target": "_self"
                 },
                 {
-                  "title": "安全环境",
+                  "title": "安全场景",
                   "href": "sqli/jdbc/jdbcSafe",
                   "icon": "iconfont icon-anquan",
                   "target": "_self"
@@ -158,13 +158,13 @@
           "target": "_self",
           "child": [
             {
-              "title": "漏洞环境",
+              "title": "漏洞场景",
               "href": "xxe/vul",
               "icon": "iconfont icon-bug",
               "target": "_self"
             },
             {
-              "title": "安全环境",
+              "title": "安全场景",
               "href": "xxe/safe",
               "icon": "iconfont icon-anquan",
               "target": "_self"
@@ -289,13 +289,13 @@
               "target": "_self",
               "child": [
                 {
-                  "title": "漏洞环境",
+                  "title": "漏洞场景",
                   "href": "other/URLRedirect/vul",
                   "icon": "iconfont icon-bug",
                   "target": "_self"
                 },
                 {
-                  "title": "安全环境",
+                  "title": "安全场景",
                   "href": "other/URLRedirect/safe",
                   "icon": "iconfont icon-anquan",
                   "target": "_self"
@@ -355,31 +355,31 @@
           ]
         },
         {
-          "title": "登录框对抗",
+          "title": "登录对抗",
           "href": "",
           "icon": "iconfont icon-denglukuang",
           "target": "_self",
           "child": [
             {
-              "title": "登录绕过",
-              "href": "",
-              "icon": "iconfont icon-renzhengraoguo",
+              "title": "账号安全",
+              "href": "/loginconfront/account",
+              "icon": "iconfont icon-zhanghao",
               "target": "_self"
             },
             {
-              "title": "密码找回",
-              "href": "",
+              "title": "登录绕过",
+              "href": "/loginconfront/bypass",
               "icon": "iconfont icon-mimazhaohui",
               "target": "_self"
             },
             {
               "title": "JS逆向",
-              "href": "",
+              "href": "/loginconfront/reverse",
               "icon": "iconfont icon-JS",
               "target": "_self"
             },
             {
-              "title": "jWT伪造",
+              "title": "凭证安全",
               "href": "",
               "icon": "iconfont icon-quanxianweizao",
               "target": "_self"

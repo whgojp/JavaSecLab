@@ -63,7 +63,7 @@ public class JdbcController {
         return "vul/sqli/JdbcSpecial";
     }
 
-    @ApiOperation(value = "漏洞环境：JDBC-原生SQL语句拼接", notes = "原生sql语句动态拼接 参数未进行任何处理")
+    @ApiOperation(value = "漏洞场景：JDBC-原生SQL语句拼接", notes = "原生sql语句动态拼接 参数未进行任何处理")
     @GetMapping("/vul1")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "type", value = "操作类型", required = true, dataType = "String", paramType = "query", dataTypeClass = String.class),
@@ -161,7 +161,7 @@ public class JdbcController {
      * 常用ORM框架：Hibernate、MyBatis、JPA
      */
 
-    @ApiOperation(value = "漏洞环境：JDBC-预编译拼接", notes = "虽然使用了 conn.prepareStatement(sql) 创建了一个 PreparedStatement 对象，但在执行 stmt.executeUpdate(sql) 时，却是传递了完整的 SQL 语句作为参数，而不是使用了预编译的功能")
+    @ApiOperation(value = "漏洞场景：JDBC-预编译拼接", notes = "虽然使用了 conn.prepareStatement(sql) 创建了一个 PreparedStatement 对象，但在执行 stmt.executeUpdate(sql) 时，却是传递了完整的 SQL 语句作为参数，而不是使用了预编译的功能")
     @GetMapping("/vul2")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "type", value = "操作类型", required = true, dataType = "String", paramType = "query", dataTypeClass = String.class),
@@ -241,7 +241,7 @@ public class JdbcController {
         }
     }
 
-    @ApiOperation(value = "漏洞环境：JdbcTemplate-SQL语句拼接", notes = "JDBCTemplate是Spring对JDBC的封装，底层实现实际上还是JDBC")
+    @ApiOperation(value = "漏洞场景：JdbcTemplate-SQL语句拼接", notes = "JDBCTemplate是Spring对JDBC的封装，底层实现实际上还是JDBC")
     @GetMapping("/vul3")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "type", value = "操作类型", required = true, dataType = "String", paramType = "query", dataTypeClass = String.class),
@@ -526,7 +526,7 @@ public class JdbcController {
                         return R.ok(message);
                     }
                 case "update":
-                    if (checkUserInput.checkSqlBlackList(id) || checkUserInput.checkSqlBlackList(username) || checkUserInput.checkSqlBlackList(id)) {
+                    if (checkUserInput.checkSqlBlackList(id) || checkUserInput.checkSqlBlackList(username) || checkUserInput.checkSqlBlackList(password)) {
                         log.warn("黑名单检测到非法SQL注入!");
                         return R.error("黑名单检测到非法SQL注入!");
                     } else {

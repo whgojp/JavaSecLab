@@ -32,7 +32,7 @@ public class SPELController {
         return "vul/spel/spel";
     }
 
-    @ApiOperation(value = "漏洞环境：原生漏洞环境", notes = "当参数未经过滤时，攻击者可以注入恶意的SPEL表达式，执行任意代码")
+    @ApiOperation(value = "漏洞场景：原生漏洞场景", notes = "当参数未经过滤时，攻击者可以注入恶意的SPEL表达式，执行任意代码")
     @ResponseBody
     @ApiImplicitParam(name = "ex", value = "表达式", dataType = "String", paramType = "query", dataTypeClass = String.class)
     @GetMapping("/vul")

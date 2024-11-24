@@ -40,7 +40,7 @@ public class HibernateController {
     @Autowired
     private SessionFactory sessionFactory; // 依赖注入 Hibernate SessionFactory
 
-    @ApiOperation(value = "漏洞环境：Hibernate-原生SQL语句拼接", notes = "演示SQL注入风险，模拟原生SQL语句动态拼接，参数未进行任何处理，存在严重安全风险")
+    @ApiOperation(value = "漏洞场景：Hibernate-原生SQL语句拼接", notes = "演示SQL注入风险，模拟原生SQL语句动态拼接，参数未进行任何处理，存在严重安全风险")
     @GetMapping("/vul")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "type", value = "操作类型", required = true, dataType = "String", paramType = "query", dataTypeClass = String.class),

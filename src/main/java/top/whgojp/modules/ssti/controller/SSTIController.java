@@ -38,7 +38,7 @@ public class SSTIController {
         return "vul/ssti/ssti";
     }
 
-    @ApiOperation(value = "漏洞环境：Thymeleaf模板注入", notes = "如果参数未经过滤，攻击者可以注入恶意模板参数，执行任意代码。")
+    @ApiOperation(value = "漏洞场景：Thymeleaf模板注入", notes = "如果参数未经过滤，攻击者可以注入恶意模板参数，执行任意代码。")
     @ApiImplicitParam(name = "para", value = "用户输入参数", dataType = "String", paramType = "query", dataTypeClass = String.class)
     @GetMapping("/vul1")
     public String vul1(@ApiParam(name = "para", value = "用户输入参数", required = true) @RequestParam String para, Model model) {

@@ -38,7 +38,7 @@ public class UploadController {
         return "vul/file/upload";
     }
 
-    @ApiOperation(value = "漏洞环境：任意文件上传", notes = "原生漏洞环境，未做任何限制")
+    @ApiOperation(value = "漏洞场景：任意文件上传", notes = "原生漏洞场景，未做任何限制")
     @RequestMapping("/vul")
     @ResponseBody
     @SneakyThrows

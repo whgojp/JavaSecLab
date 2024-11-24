@@ -6,7 +6,7 @@
 
     <groupId>top.whgojp</groupId>
     <artifactId>JavaSecLab</artifactId>
-    <version>1.2.0</version>
+    <version>1.3.0</version>
     <name>Java综合漏洞平台</name>
     <description>hello JavaSec!</description>
     <parent>
@@ -264,6 +264,14 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk15on</artifactId>
+            <version>1.70</version>
+        </dependency>
+
+
 
     </dependencies>
     <build>

@@ -267,30 +267,27 @@
     layui.use(['layer'], function () {
         var layer = layui.layer;
 
-        // 添加鼠标悬停提示信息
         $('#get-wechat').hover(function () {
-            layer.tips('🤏恰个V', '#get-wechat', {
+            layer.tips('交个朋友～', '#get-wechat', {
                 tips: [1, '#3fa807'],
                 time: 2000
             });
         });
 
-        // 点击图标事件
         layui.use(['layer'], function () {
             var layer = layui.layer;
 
-            // 点击图标事件
             $('.icon-wechat-fill').on('click', function () {
-                // 弹出放大图片的层
                 layer.open({
                     type: 1,
                     title: false,
                     closeBtn: 1,
-                    area: ['600px', '800px'], // 宽高可以根据需要调整
+                    area: ['300px', '400px'],
                     shadeClose: true,
                     content: '<div style="text-align: center;"><img src="/static/images/wechat.png" style="width: 100%; height: 100%;"></div>'
                 });
             });
+
         });
     });
 

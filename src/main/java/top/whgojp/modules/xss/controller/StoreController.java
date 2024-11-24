@@ -45,7 +45,7 @@ public class StoreController extends AbstractController{
         return "vul/xss/store";
     }
 
-    @ApiOperation(value = "漏洞环境：原生无过滤", notes = "原生漏洞环境,未加任何过滤，将用户输入存储到数据库中")
+    @ApiOperation(value = "漏洞场景：原生无过滤", notes = "原生漏洞场景,未加任何过滤，将用户输入存储到数据库中")
     @RequestMapping("/vul")
     @ResponseBody
     @ApiImplicitParam(name = "content", value = "请求参数", dataType = "String", paramType = "query", dataTypeClass = String.class)
