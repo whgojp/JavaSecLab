@@ -56,8 +56,9 @@ mybatis-plus:
     # 关闭MP3.0自带的banner
     banner: false
 
-upload:
-  folder: /tmp/upload
+folder:
+  upload: /tmp/upload
+  static: /tmp/static
 
 rsa:
   private:

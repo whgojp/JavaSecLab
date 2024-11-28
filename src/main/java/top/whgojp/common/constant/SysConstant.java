@@ -37,36 +37,36 @@ public class SysConstant {
     @Autowired
     private ResourceLoader resourceLoader;
 
-    @Value("${upload.folder:/tmp/upload}") // 容器内部固定路径，默认值为/tmp/upload
+    @Value("${folder.upload:/tmp/upload}")
     private String uploadFolder;
 
+    @Value("${folder.static:/tmp/static}")
     private String staticFolder;
 
     public SysConstant(ResourceLoader resourceLoader) {
         this.resourceLoader = resourceLoader;
     }
 
-
     @PostConstruct
     public void init() throws IOException {
-        // 获取资源对象
-        File uploadDir = new File(uploadFolder);
-        if (!uploadDir.exists()) {
-            if (!uploadDir.mkdirs()) {
-                throw new IOException("Failed to create upload directory: " + uploadFolder);
-            }
-        }
+        // 初始化上传目录
+        initializeDirectory(uploadFolder, "upload");
 
-//        Resource uploadResource = resourceLoader.getResource("classpath:/static/upload/");
-        Resource staticResource = resourceLoader.getResource("classpath:/static/");
-        if (staticResource.exists()) {
-            try {
-                this.staticFolder = staticResource.getFile().getPath();
-            } catch (IOException e) {
-                this.staticFolder = staticResource.getURL().toString();
-            }
-        } else {
-            throw new IOException("Resource not found!");
+        // 初始化静态资源目录
+        initializeDirectory(staticFolder, "static");
+    }
+
+    /**
+     * 初始化目录，如果不存在则尝试创建
+     *
+     * @param path          目录路径
+     * @param directoryName 目录名称，用于错误提示
+     * @throws IOException 如果目录创建失败
+     */
+    private void initializeDirectory(String path, String directoryName) throws IOException {
+        File dir = new File(path);
+        if (!dir.exists() && !dir.mkdirs()) {
+            throw new IOException("Failed to create " + directoryName + " directory: " + path);
         }
     }
 
