@@ -116,8 +116,9 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .successHandler(authenticationSuccessHandler())
                 .failureHandler(customSimpleUrlAuthenticationFailureHandler());
 
-
-        http.exceptionHandling().authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.BAD_REQUEST));
+        // TODO: 2025/1/12 解决登录就报错400状态码问题 GPT害死人啊 注释后就没问题了
+        // 设置自定义的未认证用户访问受保护资源时的响应行为，并在用户未通过认证时返回 HTTP 状态码 400 BAD_REQUEST
+//        http.exceptionHandling().authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.BAD_REQUEST));
 
         http.logout()
                 .logoutSuccessHandler(customLogoutSuccessHandler())
