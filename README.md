@@ -9,10 +9,11 @@
   <img src="https://img.shields.io/github/forks/whgojp/JavaSecLab?style=blue" alt="GitHub forks">
 </div>
 
+
 ----------------------------------------
 
 ## 项目介绍
-​	JavaSecLab是**一款综合型Java漏洞平台**，提供相关漏洞缺陷代码、修复代码、漏洞场景、审计SINK点、安全编码规范，覆盖多种漏洞场景，友好用户交互UI…… 
+​	JavaSecLab是**一款综合型Java漏洞平台**，提供相关漏洞缺陷代码、修复代码、漏洞场景、审计SINK点、安全编码规范、漏洞流量分析，覆盖多种漏洞场景，友好用户交互UI…… 
 
 ![image-20241020143155383](./pic/home.png)
 
@@ -20,7 +21,7 @@
 
 ## 面向人群
 
-- 安全服务方面：帮助安全服务人员理解漏洞原理(产生、修复、审计)
+- 安全服务方面：帮助安全服务人员理解漏洞原理(产生、修复、审计)，以及对应漏洞流量分析
 
 - 甲方安全方面：可作为开发安全培训演示，友好的交互方式，帮助研发同学更容易理解漏洞
 
@@ -61,7 +62,13 @@ http://whgojp.top/
 
 > 平台针对同种漏洞提供多种触发场景
 
-……
+🆕 更新漏洞流量分析模块，方便师傅们参考学习，以本项目漏洞流量为例，如果您有更好的漏洞流量数据包，欢迎提PR参与项目🌹
+
+![flow1](./pic/flow1.png)
+
+这里以延时注入为例：可以从响应时间明显的看到其流量特征：5秒后服务器响应
+
+![flow2](./pic/flow2.png)
 
 ## 技术架构
 
@@ -151,6 +158,7 @@ docker-compose -p javaseclab up -d
       <img src="./pic/group.png" alt="description" width="271" height="366" />
 </div>
 
+
 ## 赞助开源
 
 ​	如果您觉得这个工具对您有帮助，不妨考虑支持一下作者的开发工作。您的赞助将用于维护在线服务器和持续优化项目功能，非常感谢您的鼓励和支持！
@@ -158,6 +166,5 @@ docker-compose -p javaseclab up -d
 <div style="text-align: center;">
     <img src="./pic/donate.jpg" style="width: 40%; height: auto;"/>
   </div>
-
 
 
