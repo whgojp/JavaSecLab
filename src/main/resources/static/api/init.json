@@ -245,7 +245,7 @@
             },
             {
               "title": "支付漏洞",
-              "href": "",
+              "href": "logic/pay",
               "icon": "iconfont icon-zhifu",
               "target": "_self"
             },            {
@@ -380,7 +380,7 @@
             },
             {
               "title": "凭证安全",
-              "href": "",
+              "href": "/loginconfront/credential",
               "icon": "iconfont icon-quanxianweizao",
               "target": "_self"
             }
