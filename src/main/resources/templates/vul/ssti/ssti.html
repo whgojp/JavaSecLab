@@ -21,7 +21,22 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-bug"> 漏洞场景：thymeleaf模版注入</span></h1>
+                            <h1 style="display: flex; justify-content: space-between; align-items: center">
+                                <span class="iconfont icon-bug">  漏洞场景：thymeleaf模版注入</span>
+
+                                <span class="iconfont icon-liuliang1 custom-flow-select"
+                                      style="display: flex; align-items: center; gap: 5px;">
+                            <form class="layui-form">
+                                <select lay-verify="" lay-filter="sstiFlowSelect">
+                                    <option value="">流量分析</option>
+                                    <option value="ssti_return">return可控</option>
+                                    <option value="ssti_url">URL可控</option>
+                                </select>
+                            </form>
+                        </span>
+
+                            </h1>
+
                         <div class="layui-tab layui-tab-brief">
                             <ul class="layui-tab-title">
                                 <li class="layui-this">return可控</li>
@@ -76,7 +91,9 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
+                        <h1 style="display: flex; align-items: center; height: 33.5px;">
+                            <span class="iconfont icon-code" style="height: 22.5px;">缺陷代码</span>
+                        </h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="sstiVul"></div>
                         </div>
@@ -156,9 +173,30 @@
             var $ = layui.jquery,
                 layer = layui.layer,
                 miniTab = layui.miniTab,
+                form = layui.form,
                 common = layui.common;
             miniTab.listen();
             layer.msg("SSTI - 模板注入")
+
+            function triggerDownload(fileMap, selectedValue) {
+                if (fileMap[selectedValue]) {
+                    let link = document.createElement("a");
+                    link.href = fileMap[selectedValue];
+                    link.download = selectedValue + ".pcapng";
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                }
+            }
+
+            form.on('select(sstiFlowSelect)', function (data) {
+                let selectedValue = data.value;
+                let fileMap = {
+                    "ssti_return": "/other/datapackage/ssti/ssti_return.pcapng",
+                    "ssti_url": "/other/datapackage/ssti/ssti_url.pcapng"
+                };
+                triggerDownload(fileMap, selectedValue);
+            });
 
             var cmConfig = {
                 lineNumbers: true,

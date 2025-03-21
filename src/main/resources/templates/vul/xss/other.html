@@ -10,7 +10,7 @@
                     <legend style="color: rgb(30, 159, 255)">跨站脚本攻击 - 其他场景</legend>
                     <blockquote class="layui-elem-quote layui-quote-nm"
                                 style="font-size: 15px; background-color: #a7deefab; box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
-                        <pre>  其他场景：包含模版引擎解析问题、文件上传特殊文件类型、第三方依赖问题(供应链安全)...</pre>
+                        <pre>  其他场景：包含模版引擎解析问题、文件上传特殊文件类型、第三方依赖问题(供应链安全)、特殊场景XSS...</pre>
                     </blockquote>
                 </fieldset>
             </div>
@@ -18,7 +18,23 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-bug"> 漏洞场景：模版引擎解析问题</span></h1>
+
+                        <h1 style="display: flex; justify-content: space-between; align-items: center">
+                            <span class="iconfont icon-bug">  漏洞场景：模版引擎解析问题</span>
+
+                            <span class="iconfont icon-liuliang1 custom-flow-select"
+                                  style="display: flex; align-items: center; gap: 5px;">
+                            <form class="layui-form">
+                                <select lay-verify="" lay-filter="thFlowSelect">
+                                    <option value="">流量分析</option>
+                                    <option value="th_html">th:html</option>
+                                    <option value="th_text">th:text</option>
+                                </select>
+                            </form>
+                        </span>
+
+                        </h1>
+
                         <div class="layui-tab layui-tab-brief">
                             <ul class="layui-tab-title">
                                 <li class="layui-this">th:html</li>
@@ -27,11 +43,13 @@
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
-                                        <form class="layui-form" th:action="@{/xss/other/vul2OtherTemplate}" method="get"
+                                        <form class="layui-form" th:action="@{/xss/other/vul2OtherTemplate}"
+                                              method="get"
                                               style="display: flex; justify-content: space-between;">
                                             <div style="display: flex; align-items: center;">
-                                                <input type="text" name="content" style="width: 300px;" required
-                                                       lay-verify="required" value="<script>alert(/xss/)</script>" placeholder="请求内容" autocomplete="off"
+                                                <input type="text" name="payload" style="width: 300px;" required
+                                                       lay-verify="required" value="<script>alert(/xss/)</script>"
+                                                       placeholder="请求内容" autocomplete="off"
                                                        class="layui-input" id="vul2-other-html-input">
                                                 <input type="hidden" name="type" value="html">
                                             </div>
@@ -59,11 +77,13 @@
 
                                 <div class="layui-tab-item">
                                     <blockquote class="layui-elem-quote main_btn">
-                                        <form class="layui-form" th:action="@{/xss/other/vul2OtherTemplate}" method="get"
+                                        <form class="layui-form" th:action="@{/xss/other/vul2OtherTemplate}"
+                                              method="get"
                                               style="display: flex; justify-content: space-between;">
                                             <div style="display: flex; align-items: center;">
-                                                <input type="text" name="content" style="width: 300px;" required
-                                                       lay-verify="required" value="<script>alert(/xss/)</script>" placeholder="请求内容" autocomplete="off"
+                                                <input type="text" name="payload" style="width: 300px;" required
+                                                       lay-verify="required" value="<script>alert(/xss/)</script>"
+                                                       placeholder="请求内容" autocomplete="off"
                                                        class="layui-input">
                                                 <input type="hidden" name="type" value="text">
                                             </div>
@@ -105,7 +125,11 @@ th:utext则不进行转义，直接展示原始HTML内容
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
+
+                        <h1 style="display: flex; align-items: center; height: 33.5px;">
+                            <span class="iconfont icon-code" style="height: 22.5px;">缺陷代码</span>
+                        </h1>
+
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="vul2OtherTemplate"></div>
                         </div>
@@ -117,7 +141,34 @@ th:utext则不进行转义，直接展示原始HTML内容
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-bug"> 漏洞场景：文件上传导致存储XSS</span></h1>
+                        <h1 style="display: flex; justify-content: space-between; align-items: center">
+                            <span class="iconfont icon-bug">  漏洞场景：文件上传导致存储XSS</span>
+                            <span class="custom-flow-select" style="display: flex; align-items: center; gap: 5px;">
+                            <form class="layui-form">
+                                <select lay-verify="" lay-filter="payloadSelect">
+                                    <option value="">payload</option>
+                                    <option value="upload_html">HTML</option>
+                                    <option value="upload_svg">SVG</option>
+                                    <option value="upload_pdf">PDF</option>
+                                    <option value="upload_xml">XML</option>
+                                </select>
+                            </form>
+                        </span>
+
+                            <span class="iconfont icon-liuliang1 custom-flow-select"
+                                  style="display: flex; align-items: center; gap: 5px;">
+                                <form class="layui-form">
+                                    <select lay-verify="" lay-filter="uploadFlowSelect">
+                                        <option value="">流量分析</option>
+                                        <option value="upload_html">HTML</option>
+                                        <option value="upload_svg">SVG</option>
+                                        <option value="upload_pdf">PDF</option>
+                                        <option value="upload_xml">XML</option>
+                                    </select>
+                                </form>
+                        </span>
+
+                        </h1>
                         <div class="layui-tab layui-tab-brief">
                             <ul class="layui-tab-title">
                                 <li class="layui-this">HTML</li>
@@ -204,8 +255,11 @@ PS：除此之外，还有flash等漏洞场景，后续会补充
                         </div>
                     </div>
 
+
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
+                        <h1 style="display: flex; align-items: center; height: 33.5px;">
+                            <span class="iconfont icon-code" style="height: 22.5px;">缺陷代码</span>
+                        </h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="vul1OtherUpload"></div>
                         </div>
@@ -217,7 +271,13 @@ PS：除此之外，还有flash等漏洞场景，后续会补充
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-bug"> 漏洞场景：第三方组件导致XSS-供应链安全</span></h1>
+                        <h1 style="display: flex; justify-content: space-between; align-items: center;margin-top: 10px">
+                            <span class="iconfont icon-bug">  漏洞场景：第三方组件导致XSS-供应链安全</span>
+                            <span class="iconfont icon-liuliang1">
+                                <a href="/other/datapackage/xss/xss_swagger.pcapng" download="xss_swagger.pcapng"
+                                   style="margin-right: 19px;color: #00bb00">流量分析</a>
+                            </span>
+                        </h1>
                         <div class="layui-tab layui-tab-brief">
                             <ul class="layui-tab-title">
                                 <li class="layui-this">jQuery</li>
@@ -301,6 +361,91 @@ PS：除此之外，还有flash等漏洞场景，后续会补充
 
                 </div>
             </div>
+
+            <div class="layui-col-md12" style="margin-top: 10px">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-bug"> 漏洞场景：HTML5特性XSS</span></h1>
+                        <div class="layui-tab layui-tab-brief">
+                            <ul class="layui-tab-title">
+                                <li class="layui-this">WebSocket XSS</li>
+                                <li>PostMessage XSS</li>
+                            </ul>
+                            <div class="layui-tab-content">
+                                <div class="layui-tab-item layui-show">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <input type="text" name="wsPayload" style="width: 300px;" required
+                                                   lay-verify="required" value="<img src=x onerror=alert(1)>"
+                                                   placeholder="WebSocket Payload" autocomplete="off"
+                                                   class="layui-input">
+                                            <div style="display: flex; align-items: center;">
+                                                <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;"
+                                                        lay-submit lay-filter="ws-xss">
+                                                    <span class="iconfont icon-zhihang">发送</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+                                <div class="layui-tab-item">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <input type="text" name="pmPayload" style="width: 300px;" required
+                                                   lay-verify="required" value="<img src=x onerror=alert(1)>"
+                                                   placeholder="PostMessage Payload" autocomplete="off"
+                                                   class="layui-input">
+                                            <div style="display: flex; align-items: center;">
+                                                <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;"
+                                                        lay-submit lay-filter="pm-xss">
+                                                    <span class="iconfont icon-zhihang">打开</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre style="color: #28333e;font-size: 12px;">
+1. WebSocket XSS
+   - WebSocket通信不受同源策略限制，可以连接到任意域名的WebSocket服务器
+   - WebSocket消息内容可能包含恶意代码，如果直接插入DOM会导致XSS
+   - 缺乏消息验证和过滤机制，攻击者可以发送任意内容
+2. PostMessage XSS
+   - postMessage跨域通信可能被滥用，特别是targetOrigin设置为*时
+   - 接收方没有正确验证消息来源，可能处理恶意消息
+   - 消息内容可能包含恶意代码，如果直接插入DOM会导致XSS
+   - 窗口间通信可能被劫持，导致信息泄露</pre>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i>测试结果</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <div id="wsMessages" style="color: red;font-size: 15px;"></div>
+                                            <div id="pmMessages" style="color: red;font-size: 15px;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="vulHtml5"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
@@ -325,15 +470,169 @@ PS：除此之外，还有flash等漏洞场景，后续会补充
 </script>
 
 <script>
-    layui.use(['layer', 'miniTab', 'common', 'upload'], function () {
+    layui.use(['layer', 'miniTab', 'common', 'upload', 'form'], function () {
         var $ = layui.jquery,
             layer = layui.layer,
             miniTab = layui.miniTab,
             common = layui.common,
-            upload = layui.upload;
+            form = layui.form,
+            upload = layui.upload,
+            receiverWindow = null,
+            ws = null,
+            messageToSend = null;
 
         miniTab.listen();
         layer.msg("跨站脚本-其他场景");
+
+        form.on('submit(pm-xss)', function (data) {
+            var payload = data.field.pmPayload;
+            if (!payload) {
+                layer.msg('请输入要发送的内容');
+                return false;
+            }
+
+            // 如果接收窗口已关闭，重新打开
+            if (!receiverWindow || receiverWindow.closed) {
+                messageToSend = payload;
+                receiverWindow = window.open('/xss/postmessage/receiver', '_blank',
+                    'width=600,height=400,left=' + (window.screenX + 50) +
+                    ',top=' + (window.screenY + 50));
+                console.log('打开新窗口，等待ready消息');
+            } else {
+                receiverWindow.focus();
+                receiverWindow.postMessage(payload, '*');
+                console.log('向已存在窗口发送消息:', payload);
+            }
+            return false;
+        });
+
+        // 监听来自接收窗口的消息
+        window.addEventListener('message', function (event) {
+            // 故意不验证origin，用于演示XSS风险
+            console.log('收到消息:', event.data);
+            
+            if (event.data === 'receiver_ready') {
+                console.log('收到ready消息，发送:', messageToSend);
+                if (messageToSend) {
+                    receiverWindow.postMessage(messageToSend, '*');
+                    messageToSend = null;
+                }
+            } else if (event.data && event.data.startsWith('接收窗口已收到消息：')) {
+                layer.msg('接收窗口已确认');
+            }
+        });
+
+        // WebSocket连接
+        function connectWebSocket() {
+            try {
+                if (ws !== null && ws.readyState !== WebSocket.CLOSED) {
+                    console.log('WebSocket已经连接');
+                    return;
+                }
+
+                ws = new WebSocket('ws://' + window.location.host + '/xss/websocket');
+
+                ws.onopen = function () {
+                    console.log('WebSocket连接成功');
+                    var div = document.createElement('div');
+                    // div.textContent = '连接成功';
+                    document.getElementById('wsMessages').appendChild(div);
+                };
+
+                ws.onmessage = function (event) {
+                    console.log('收到消息:', event.data);
+                    // 故意使用innerHTML来演示XSS风险
+                    var div = document.createElement('div');
+                    div.innerHTML = event.data;
+                    document.getElementById('wsMessages').appendChild(div);
+                };
+
+                ws.onerror = function (error) {
+                    console.error('WebSocket错误:', error);
+                    layer.msg('WebSocket连接失败，请检查服务器状态');
+                };
+
+                ws.onclose = function () {
+                    console.log('WebSocket连接关闭');
+                    ws = null;
+                };
+            } catch (error) {
+                console.error('连接WebSocket时发生错误:', error);
+                layer.msg('连接WebSocket失败: ' + error.message);
+            }
+        }
+
+        // 页面加载时连接WebSocket
+        connectWebSocket();
+
+        // 监听表单提交
+        form.on('submit(ws-xss)', function (data) {
+            if (!ws || ws.readyState !== WebSocket.OPEN) {
+                layer.msg('WebSocket未连接，正在重新连接...');
+                connectWebSocket();
+                setTimeout(function () {
+                    if (ws && ws.readyState === WebSocket.OPEN) {
+                        ws.send(data.field.wsPayload);
+                    } else {
+                        layer.msg('WebSocket连接失败，请稍后重试');
+                    }
+                }, 1000);
+                return false;
+            }
+            ws.send(data.field.wsPayload);
+            return false;
+        });
+
+        form.on('select(payloadSelect)', function (data) {
+            let selectedValue = data.value;
+            let fileMap = {
+                "upload_html": "/other/datapackage/xss/payload/xss.html",
+                "upload_svg": "/other/datapackage/xss/payload/xss.svg",
+                "upload_pdf": "/other/datapackage/xss/payload/xss.pdf",
+                "upload_xml": "/other/datapackage/xss/payload/xss.xml"
+            };
+
+            if (fileMap[selectedValue]) {
+                let link = document.createElement("a");
+                link.href = fileMap[selectedValue];
+                link.download = selectedValue
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        });
+
+        function triggerDownload(fileMap, selectedValue) {
+            if (fileMap[selectedValue]) {
+                let link = document.createElement("a");
+                link.href = fileMap[selectedValue];
+                link.download = selectedValue + ".pcapng";
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        }
+
+        form.on('select(thFlowSelect)', function (data) {
+            let selectedValue = data.value;
+            let fileMap = {
+                "th_html": "/other/datapackage/xss/xss_th_html.pcapng",
+                "th_text": "/other/datapackage/xss/xss_th_text.pcapng"
+            };
+            triggerDownload(fileMap, selectedValue);
+        });
+
+        form.on('select(uploadFlowSelect)', function (data) {
+            let selectedValue = data.value;
+            let fileMap = {
+                "upload_html": "/other/datapackage/xss/xss_upload_html.pcapng",
+                "upload_svg": "/other/datapackage/xss/xss_upload_svg.pcapng",
+                "upload_pdf": "/other/datapackage/xss/xss_upload_pdf.pcapng",
+                "upload_xml": "/other/datapackage/xss/xss_upload_xml.pcapng"
+            };
+            triggerDownload(fileMap, selectedValue);
+        });
+
 
         function createUploadInstance(config) {
             return upload.render({
@@ -412,6 +711,9 @@ PS：除此之外，还有flash等漏洞场景，后续会补充
             value: vul3SCMSec
         }));
 
+        CodeMirror(document.getElementById("vulHtml5"), Object.assign({}, cmConfig, {
+            value: vulHtml5
+        }));
 
     });
 </script>

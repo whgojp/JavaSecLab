@@ -54,7 +54,7 @@ layui.define(['form','table'], function (exports) { //提示：模块也可以�
         submitPostReq,
         formListenFun: function (layFilter, type, path, resultId, reqType) {
             form.on(`submit(${layFilter})`, function (data) {
-                var value = data.field.content;
+                var value = data.field.payload;
 
                 // 定义白名单正则表达式
                 var whitelistRegex = /^[a-zA-Z0-9_\s]+$/;

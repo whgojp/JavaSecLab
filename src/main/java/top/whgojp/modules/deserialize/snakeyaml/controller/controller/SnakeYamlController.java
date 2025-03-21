@@ -32,6 +32,7 @@ public class SnakeYamlController {
     @RequestMapping("/vul")
     @ResponseBody
     public R vul(String payload) {
+        log.info("payload："+payload);
         Yaml y = new Yaml();
         y.load(payload);
         return R.ok("[+]Java反序列化：SnakeYaml原生漏洞");

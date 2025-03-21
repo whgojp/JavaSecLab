@@ -171,8 +171,9 @@
 </div>
 
 <div th:replace="~{common/common::script}"></div>
-<script src="https://cdn.jsdelivr.net/npm/js-md5@0.7.3/build/md5.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/jsencrypt@3.0.0-rc.2/bin/jsencrypt.min.js"></script>
+<script th:src="@{/js/md5.min.js}" charset="utf-8"></script>
+<script th:src="@{/js/jsencrypt.min.js}" charset="utf-8"></script>
+
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", function () {
 

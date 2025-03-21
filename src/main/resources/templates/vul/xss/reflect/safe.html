@@ -21,7 +21,7 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-anquan"> 安全场景：用户输入验证和过滤</span></h1>
+                        <h1><span class="iconfont icon-anquan"> 安全场景：用户输入白名单过滤</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <ul class="layui-tab-title">
                                 <li class="layui-this">前端白名单</li>
@@ -31,7 +31,7 @@
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
                                         <form class="layui-form" style="display: flex; justify-content: space-between;">
-                                            <input type="text" name="content" style="width: 300px;" required
+                                            <input type="text" name="payload" style="width: 300px;" required
                                                    lay-verify="required" value="<script>alert(/xss/)</script>"
                                                    autocomplete="off"
                                                    class="layui-input" id="safe1-CheckUserInput-front-input">
@@ -60,7 +60,7 @@
                                 <div class="layui-tab-item">
                                     <blockquote class="layui-elem-quote main_btn">
                                         <form class="layui-form" style="display: flex; justify-content: space-between;">
-                                            <input type="text" name="content" style="width: 300px;" required
+                                            <input type="text" name="payload" style="width: 300px;" required
                                                    lay-verify="required" value="<script>alert(/xss/)</script>" autocomplete="off"
                                                    class="layui-input" id="safe1-CheckUserInput-back">
                                             <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;" lay-filter="safe1-CheckUserInput-back" lay-submit="">
@@ -126,7 +126,7 @@
                                 <div class="layui-tab-item">
                                     <blockquote class="layui-elem-quote main_btn">
                                         <p>后端通过配置Content-Security-Policy响应头</p>
-                                        <a target="_blank" href="/xss/reflect/safe2?content=可结合响应包分析🤔️123<u>A</u>123<script>alert(/xss/)</script>123">
+                                        <a target="_blank" href="/xss/reflect/safe2?payload=可结合响应包分析🤔️123<u>A</u>123<script>alert(/xss/)</script>123">
                                             <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
                                                 <span class="iconfont icon-zhihang">Run</span>
                                             </button>
@@ -175,7 +175,7 @@
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
                                         <form class="layui-form" style="display: flex; justify-content: space-between;">
-                                            <input type="text" name="content" style="width: 300px;" required
+                                            <input type="text" name="payload" style="width: 300px;" required
                                                    lay-verify="required" value="<script>alert(/xss/)</script>"
                                                    autocomplete="off"
                                                    class="layui-input" id="safe3-EntityEscape-input">
@@ -204,7 +204,7 @@
                                 <div class="layui-tab-item">
                                     <blockquote class="layui-elem-quote main_btn">
                                         <form class="layui-form" style="display: flex; justify-content: space-between;">
-                                            <input type="text" name="content" style="width: 300px;" required
+                                            <input type="text" name="payload" style="width: 300px;" required
                                                    lay-verify="required" value="<script>alert(/xss/)</script>" autocomplete="off"
                                                    class="layui-input" id="safe3-EntityEscape">
                                             <p>使用Spring框架内置安全工具类实体转义</p>
@@ -257,7 +257,7 @@ PS：这里前端实体编码Demo放到了存储型XSS模块中
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
                                         <form class="layui-form" style="display: flex; justify-content: space-between;">
-                                            <input type="text" name="content" style="width: 300px;" required
+                                            <input type="text" name="payload" style="width: 300px;" required
                                                    lay-verify="required" value="<script>alert(/xss/)</script>"
                                                    autocomplete="off"
                                                    class="layui-input" id="safe4-HttpOnly-input">

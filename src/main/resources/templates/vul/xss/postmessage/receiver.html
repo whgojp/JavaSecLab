@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>PostMessage XSS Receiver</title>
+    <link rel="stylesheet" href="/lib/layui-v2.5.5/css/layui.css" media="all">
+    <style>
+        #messageContainer {
+            margin: 15px;
+            padding: 15px;
+            border: 1px solid #e6e6e6;
+            border-radius: 2px;
+            background-color: #fff;
+            min-height: 100px;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-container">
+    <div class="layui-card">
+        <div class="layui-card-header">PostMessage XSS演示 - 接收端</div>
+        <div class="layui-card-body">
+            <div id="messageContainer">等待接收消息...</div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var container = document.getElementById('messageContainer');
+    
+    // 立即通知父窗口接收端已准备就绪
+    if (window.opener) {
+        console.log('发送ready消息');
+        window.opener.postMessage('receiver_ready', '*');
+    }
+
+    // 监听消息
+    window.addEventListener('message', function(event) {
+        // 故意不验证origin，用于演示XSS风险
+        console.log('收到消息:', event.data);
+        
+        // 故意使用innerHTML来演示XSS风险
+        container.innerHTML = event.data;
+        
+        // 回复消息给发送者
+        if (event.source) {
+            event.source.postMessage('接收窗口已收到消息：' + event.data, '*');
+        }
+    });
+});
+</script>
+</body>
+</html>

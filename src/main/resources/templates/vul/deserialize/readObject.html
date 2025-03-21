@@ -26,6 +26,7 @@
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
                         <h1><span class="iconfont icon-bug"> 漏洞场景：ObjectInputStream.readObject()</span></h1>
+
                         <div class="layui-tab layui-tab-brief">
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
@@ -238,13 +239,13 @@ payload生成：java -jar ysoserial-all.jar CommonsCollections5 "open -a Calcula
             miniTab.listen();
             layer.msg("反序列化 - ReadObject");
 
-            common.formListenFun("vul-ReadObject-submit", "", "/readObject/vul", "vul-ReadObject-result", "get");
+            common.formListenFun("vul-ReadObject-submit", "", "/readObject/vul", "vul-ReadObject-result", "post");
             common.selectListenFun("vul-ReadObject-select", "vul-ReadObject-input");
 
-            common.formListenFun("safe-ReadObject1-submit", "", "/readObject/safe1", "safe-ReadObject1-result", "get");
+            common.formListenFun("safe-ReadObject1-submit", "", "/readObject/safe1", "safe-ReadObject1-result", "post");
             common.selectListenFun("safe-ReadObject1-select", "safe-ReadObject1-input");
 
-            common.formListenFun("safe-ReadObject2-submit", "", "/readObject/safe2", "safe-ReadObject2-result", "get");
+            common.formListenFun("safe-ReadObject2-submit", "", "/readObject/safe2", "safe-ReadObject2-result", "post");
             common.selectListenFun("safe-ReadObject2-select", "safe-ReadObject2-input");
 
             var cmConfig = {

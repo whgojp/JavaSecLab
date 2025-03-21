@@ -32,7 +32,7 @@
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
                                         <form class="layui-form" style="display: flex; justify-content: space-between;">
-                                            <input type="text" name="content" style="width: 300px;" required
+                                            <input type="text" name="payload" style="width: 300px;" required
                                                    lay-verify="required" value="<script>alert(/xss/)</script>" autocomplete="off"
                                                    class="layui-input" id="vul1-reflect-raw-get-input">
                                             <div style="display: flex; align-items: center;">
@@ -60,7 +60,7 @@
                                 <div class="layui-tab-item">
                                     <blockquote class="layui-elem-quote main_btn">
                                         <form class="layui-form" style="display: flex; justify-content: space-between;">
-                                            <input type="text" name="content" style="width: 300px;" required
+                                            <input type="text" name="payload" style="width: 300px;" required
                                                    lay-verify="required" value="<script>alert(/xss/)</script>" autocomplete="off"
                                                    class="layui-input">
                                             <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;" lay-filter="vul1-reflect-raw-post" lay-submit="">
@@ -73,7 +73,7 @@
                                 <div class="layui-tab-item">
                                     <blockquote class="layui-elem-quote main_btn">
                                         <p>Controller接口返回的数据是String类型</p>
-                                        <a target="_blank" href="/xss/reflect/vul2?content=%3Cscript%3Ealert(/xss/)%3C/script%3E">
+                                        <a target="_blank" href="/xss/reflect/vul2?payload=%3Cscript%3Ealert(/xss/)%3C/script%3E">
                                             <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
                                                 <span class="iconfont icon-zhihang">Run</span>
                                             </button>
@@ -133,7 +133,7 @@
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
                                         <p>text/plain：浏览器在获取到这种文件时并不会对其进行处理，将文件设置为纯文本的形式</p>
-                                        <a target="_blank" href="/xss/reflect/vul3?type=plain&content=123<script>alert(/xss/)</script>123">
+                                        <a target="_blank" href="/xss/reflect/vul3?type=plain&payload=123<script>alert(/xss/)</script>123">
                                             <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
                                                 <span class="iconfont icon-zhihang">Run</span>
                                             </button>
@@ -144,7 +144,7 @@
                                 <div class="layui-tab-item">
                                     <blockquote class="layui-elem-quote main_btn">
                                         <p>text/html：浏览器在获取到这种文件时会自动调用html的解析器对文件进行相应的处理</p>
-                                        <a target="_blank" href="/xss/reflect/vul3?type=html&content=123<script>alert(/xss/)</script>123">
+                                        <a target="_blank" href="/xss/reflect/vul3?type=html&payload=123<script>alert(/xss/)</script>123">
                                             <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
                                                 <span class="iconfont icon-zhihang">Run</span>
                                             </button>

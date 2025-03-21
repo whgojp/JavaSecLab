@@ -38,6 +38,11 @@ public class FastjsonController {
         }
     }
 
+    public String vul2(){
+
+        return "";
+    }
+
     @PostMapping("/safe")
     @ResponseBody
     public String safe(@RequestBody String content) {

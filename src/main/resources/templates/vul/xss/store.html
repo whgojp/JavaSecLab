@@ -18,14 +18,22 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-bug">  漏洞场景：原生无过滤</span></h1>
+                        <h1 style="display: flex; justify-content: space-between; align-items: center;margin-top: 10px">
+                            <span class="iconfont icon-bug">  漏洞场景：原生无过滤</span>
+                            <span class="iconfont icon-liuliang1">
+                                <a href="/other/datapackage/xss/xss_store.pcapng" download="xss_store.pcapng"
+                                   style="margin-right: 19px;color: #00bb00">流量分析</a>
+                            </span>
+                        </h1>
                         <div class="layui-tab-content">
                             <div class="layui-tab-item layui-show">
                                 <blockquote class="layui-elem-quote main_btn">
-                                    <form class="layui-form" id="vul1-store-raw-form" style="display: flex; justify-content: space-between;">
+                                    <form class="layui-form" id="vul1-store-raw-form"
+                                          style="display: flex; justify-content: space-between;">
                                         <div style="display: flex; align-items: center;">
-                                            <input type="text" name="content" style="width: 300px;" required
-                                                   lay-verify="required" value="<script>alert(/xss/)</script>" placeholder="请求内容" autocomplete="off"
+                                            <input type="text" name="payload" style="width: 300px;" required
+                                                   lay-verify="required" value="<script>alert(/xss/)</script>"
+                                                   placeholder="请求内容" autocomplete="off"
                                                    class="layui-input" id="vul1-store-raw-input">
                                         </div>
                                         <div style="display: flex; align-items: center;">
@@ -104,14 +112,17 @@
                         <div class="layui-tab-content">
                             <div class="layui-tab-item layui-show">
                                 <blockquote class="layui-elem-quote main_btn">
-                                    <form class="layui-form" id="safe1-store-EntityEscape-front-form" style="display: flex; justify-content: space-between;">
+                                    <form class="layui-form" id="safe1-store-EntityEscape-front-form"
+                                          style="display: flex; justify-content: space-between;">
                                         <div style="display: flex; align-items: center;">
-                                            <input type="text" name="content" style="width: 300px;" required
-                                                   lay-verify="required"value="<script>alert(/xss/)</script>" placeholder="请求内容" autocomplete="off"
+                                            <input type="text" name="payload" style="width: 300px;" required
+                                                   lay-verify="required" value="<script>alert(/xss/)</script>"
+                                                   placeholder="请求内容" autocomplete="off"
                                                    class="layui-input" id="safe1-store-EntityEscape-front-input">
                                         </div>
                                         <div style="display: flex; align-items: center;">
-                                            <select class="layui-form-select" lay-filter="safe1-store-EntityEscape-front">
+                                            <select class="layui-form-select"
+                                                    lay-filter="safe1-store-EntityEscape-front">
                                                 <option value="">示例Payload</option>
                                                 <option value="123&lt;u&gt;A&lt;/u&gt;123">123&lt;u&gt;A&lt;/u&gt;123
                                                 </option>
@@ -200,10 +211,10 @@
                 type: 'POST',
                 url: '/xss/store/vul',
                 data: data.field,
-                success: function(response) {
+                success: function (response) {
                     location.reload(); // 请求成功后刷新页面
                 },
-                error: function(error) {
+                error: function (error) {
                     console.log('Error:', error);
                 }
             });
@@ -215,10 +226,10 @@
                 type: 'POST',
                 url: '/xss/store/vul',
                 data: data.field,
-                success: function(response) {
+                success: function (response) {
                     location.reload(); // 请求成功后刷新页面
                 },
-                error: function(error) {
+                error: function (error) {
                     console.log('Error:', error);
                 }
             });

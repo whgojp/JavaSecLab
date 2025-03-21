@@ -18,7 +18,18 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-bug"> 漏洞场景：原生漏洞场景</span></h1>
+
+                        <h1 style="display: flex; justify-content: space-between; align-items: center;height: 33.5px">
+                            <span class="iconfont icon-bug"> 漏洞场景：原生漏洞场景</span>
+                            <span class="iconfont">
+                                <a href="/other/datapackage/file/payload/test.jsp" download="test.jsp"
+                                   style="margin-right: 19px;color: #0051ff">Payload</a>
+                            </span>
+                            <span class="iconfont icon-liuliang1">
+                                <a href="/other/datapackage/file/upload.pcapng" download="upload.pcapng"
+                                   style="margin-right: 19px;color: #00bb00">流量分析</a>
+                            </span>
+                        </h1>
                         <div class="layui-tab layui-tab-brief">
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
@@ -58,7 +69,9 @@ SpringBoot默认不支持jsp文件解析，本想着做jsp和Thymeleaf的同时�
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
+                        <h1 style="display: flex; align-items: center; height: 33.5px;">
+                            <span class="iconfont icon-code" style="height: 22.5px;">缺陷代码</span>
+                        </h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="anyFileUploadCode"></div>
                         </div>

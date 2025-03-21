@@ -25,6 +25,9 @@
                                 <li class="layui-this">innerHTML</li>
                                 <li>LocalStorage</li>
                                 <li>href跳转</li>
+                                <li>location对象</li>
+                                <li>eval执行</li>
+                                <li>document对象</li>
                             </ul>
                             <div class="layui-tab-content">
                                 <!-- innerHTML -->
@@ -70,7 +73,7 @@
                                                 <input type="text" name="content" style="width: 300px;" required
                                                        lay-verify="required" value="123<img src onerror=alert(/xss/)>123" placeholder="请求内容" autocomplete="off"
                                                        class="layui-input" id="vul3-dom-raw-input">
-                                                <p>从LocalStorage中读取数据并插入到DOM中</p>
+                                                <p>从LocalStorage中读取并插入到DOM中</p>
                                             </div>
                                             <div style="display: flex; align-items: center;">
                                                 <button class="layui-btn layui-btn-normal"
@@ -100,21 +103,76 @@
                                     </blockquote>
                                 </div>
 
+                                <!-- location对象 -->
+                                <div class="layui-tab-item">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div class="layui-form-item" style="margin: 0; flex-grow: 1;">
+                                                <div class="layui-input-block" style="margin-left: 0;">
+                                                    <input type="text" name="locationPayload" style="width: 300px;" required
+                                                           lay-verify="required" value="javascript:alert(1)" placeholder="请求内容" autocomplete="off"
+                                                           class="layui-input">
+<!--                                                    <input type="text" name="locationPayload" placeholder="输入location payload" class="layui-input">-->
+                                                </div>
+                                            </div>
+                                            <div class="layui-form-item" style="margin: 0 0 0 10px;">
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="location-xss" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+
+                                <!-- eval执行 -->
+                                <div class="layui-tab-item">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div class="layui-form-item" style="margin: 0; flex-grow: 1;">
+                                                <div class="layui-input-block" style="margin-left: 0;">
+                                                    <input type="text" name="evalPayload" style="width: 300px;" required
+                                                           lay-verify="required" value="javascript:alert(1)" placeholder="请求内容" autocomplete="off"
+                                                           class="layui-input" >
+                                                </div>
+                                            </div>
+                                            <div class="layui-form-item" style="margin: 0 0 0 10px;">
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="eval-xss" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+
+                                <!-- document对象 -->
+                                <div class="layui-tab-item">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div class="layui-form-item" style="margin: 0; flex-grow: 1;">
+                                                <div class="layui-input-block" style="margin-left: 0;">
+                                                    <input type="text" name="documentPayload" style="width: 300px;" required
+                                                           lay-verify="required" value="<img src=x onerror=alert(1)>" placeholder="请求内容" autocomplete="off"
+                                                           class="layui-input" >
+                                                </div>
+                                            </div>
+                                            <div class="layui-form-item" style="margin: 0 0 0 10px;">
+                                                <button class="layui-btn layui-btn-normal" lay-submit lay-filter="document-write">测试document.write</button>
+                                                <button class="layui-btn layui-btn-normal" lay-submit lay-filter="document-domain">测试document.domain</button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+
                                 <!-- Tips -->
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
                                         <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">一些可能导致DOM XSS的SINK点：
-    document.write()
-    document.writeln()
-    document.domain
-    element.innerHTML
-    element.outerHTML
-    element.insertAdjacentHTML
-    element.onevent
-PS：除此之外，还有URL参数注入、DOM属性注入、document.write、eval等场景，后续会进行补充
-</pre>
+                                            <pre style="color: #28333e;font-size: 15px;">  一些可能导致DOM XSS的SINK点：document.write()、document.writeln()、document.domain、element.innerHTML、element.outerHTML、element.insertAdjacentHTML、element.onevent、location.href、location.hash、location.search、eval()、setTimeout()、setInterval()、Function()</pre>
                                         </div>
                                     </div>
                                 </div>
@@ -232,6 +290,69 @@ PS：除此之外，还有URL参数注入、DOM属性注入、document.write、e
             area: ['1124px', '554px'], // 宽高可以根据需要调整
             shadeClose: true,
             content: '<div style="text-align: center;"><img src="/static/images/vul/xss/dom.png" style="width: 100%; height: 100%;"></div>'
+        });
+    });
+
+    // Location对象XSS
+    layui.use(['form'], function () {
+        var form = layui.form;
+        form.on('submit(location-xss)', function(data) {
+            var payload = data.field.locationPayload;
+            // 故意使用不安全的方式处理location
+            var result = 'Location对象当前值：<br>' +
+                'Hash: ' + location.hash + '<br>' +
+                'Search: ' + location.search + '<br>' +
+                'Pathname: ' + location.pathname;
+            document.getElementById('vul-dom-raw-result').innerHTML = result;
+            // 将payload添加到URL并执行
+            window.location = payload;  // 直接赋值给location以执行javascript:协议
+            return false;
+        });
+    });
+
+    // Eval执行XSS
+    layui.use(['form'], function () {
+        var form = layui.form;
+        form.on('submit(eval-xss)', function(data) {
+            var payload = data.field.evalPayload;
+            try {
+                // 故意使用不安全的方式执行代码
+                var result = eval(payload);
+                document.getElementById('vul-dom-raw-result').innerHTML = 'Eval执行结果: ' + result;
+            } catch(e) {
+                document.getElementById('vul-dom-raw-result').innerHTML = 'Eval执行错误: ' + e.message;
+            }
+            return false;
+        });
+    });
+
+    // Document对象XSS
+    layui.use(['form'], function () {
+        var form = layui.form;
+        
+        // document.write测试
+        form.on('submit(document-write)', function(data) {
+            var payload = data.field.documentPayload;
+            document.getElementById('vul-dom-raw-result').innerHTML = 'Document.write执行内容：<br>' + payload;
+            // 故意使用不安全的document.write
+            setTimeout(function() {
+                document.write(payload);
+                document.close();
+            }, 1000);
+            return false;
+        });
+
+        // document.domain测试
+        form.on('submit(document-domain)', function(data) {
+            var payload = data.field.documentPayload;
+            try {
+                // 故意使用不安全的方式设置domain
+                document.domain = payload;
+                document.getElementById('vul-dom-raw-result').innerHTML = 'Domain已设置为: ' + document.domain;
+            } catch(e) {
+                document.getElementById('vul-dom-raw-result').innerHTML = '设置Domain失败: ' + e.message;
+            }
+            return false;
         });
     });
 

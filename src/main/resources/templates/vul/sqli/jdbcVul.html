@@ -22,7 +22,32 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-bug">  漏洞场景：JDBC-原生SQL语句拼接</span></h1>
+                        <h1 style="display: flex; justify-content: space-between; align-items: center;margin-top: 10px">
+                            <span class="iconfont icon-bug">  漏洞场景：JDBC-原生SQL语句拼接</span>
+                            <span class="iconfont icon-liuliang1 custom-flow-select"
+                                  style="display: flex; align-items: center; gap: 5px;">
+                                <form class="layui-form">
+                                    <select lay-verify="" lay-filter="sqliFlowSelect">
+                                        <option value="">流量分析</option>
+                                        <option value="sqli_time">延时注入</option>
+                                        <option value="sqli_boolean">布尔注入</option>
+                                        <option value="sqli_error">报错注入</option>
+                                        <option value="sqli_xpath">Xpath注入</option>
+                                    </select>
+                                </form>
+                        </span>
+<!--                            <span class="custom-flow-select" style="display: flex; align-items: center; gap: 5px;">-->
+<!--                            <form class="layui-form">-->
+<!--                                <select lay-verify="" lay-filter="payloadSelect">-->
+<!--                                    <option value="">payload</option>-->
+<!--                                    <option value="upload_html">HTML</option>-->
+<!--                                    <option value="upload_svg">SVG</option>-->
+<!--                                    <option value="upload_pdf">PDF</option>-->
+<!--                                    <option value="upload_xml">XML</option>-->
+<!--                                </select>-->
+<!--                            </form>-->
+<!--                        </span>-->
+                        </h1>
                         <div class="layui-tab layui-tab-brief">
                             <ul class="layui-tab-title">
                                 <li class="layui-this">增加-add</li>
@@ -400,13 +425,35 @@
 <div th:replace="~{common/common::script}"></div>
 
 <script type="text/javascript">
-    layui.use(['layer', 'miniTab', 'common'], function () {
+    layui.use(['layer', 'miniTab', 'common','form'], function () {
         var $ = layui.jquery,
             layer = layui.layer,
             miniTab = layui.miniTab,
+            form = layui.form,
             common = layui.common;
         miniTab.listen();
         layer.msg("SQL注入-JDBC")
+
+        function triggerDownload(fileMap, selectedValue) {
+            if (fileMap[selectedValue]) {
+                let link = document.createElement("a");
+                link.href = fileMap[selectedValue];
+                link.download = selectedValue + ".pcapng";
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        }
+        form.on('select(sqliFlowSelect)', function (data) {
+            let selectedValue = data.value;
+            let fileMap = {
+                "upload_html": "/other/datapackage/sqli/sqli_time.pcapng",
+                "upload_svg": "/other/datapackage/sqli/sqli_boolean.pcapng",
+                "upload_pdf": "/other/datapackage/sqli/sqli_error.pcapng",
+                "upload_xml": "/other/datapackage/sqli/sqli_xpath.pcapng"
+            };
+            triggerDownload(fileMap, selectedValue);
+        });
 
         common.formListenFun("vul1-raw-joint-add", "add", "/sqli/jdbc/vul1", "vul1-raw-joint-result","get");
         common.formListenFun("vul1-raw-joint-delete", "delete", "/sqli/jdbc/vul1", "vul1-raw-joint-result","get");

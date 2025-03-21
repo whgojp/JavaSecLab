@@ -37,3 +37,4 @@ build/
 /logs/
 /.idea/
 /src/test/
+src/main/resources/application-aliyun.yml

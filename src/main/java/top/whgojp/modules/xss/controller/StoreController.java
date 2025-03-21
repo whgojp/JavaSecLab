@@ -46,13 +46,13 @@ public class StoreController extends AbstractController{
     }
 
     @ApiOperation(value = "漏洞场景：原生无过滤", notes = "原生漏洞场景,未加任何过滤，将用户输入存储到数据库中")
-    @RequestMapping("/vul")
+    @PostMapping("/vul")
     @ResponseBody
-    @ApiImplicitParam(name = "content", value = "请求参数", dataType = "String", paramType = "query", dataTypeClass = String.class)
-    public R vul(@ApiParam(name = "content", value = "请求参数", required = true) @RequestParam String content,HttpServletRequest request) {
-        log.info("存储型XSS：" + content);
+    @ApiImplicitParam(name = "payload", value = "请求参数", dataType = "String", paramType = "query", dataTypeClass = String.class)
+    public R vul(@ApiParam(name = "payload", value = "请求参数", required = true) @RequestParam String payload,HttpServletRequest request) {
+        log.info("[+]XSS-存储性-原生无过滤：" + payload);
         String ua = request.getHeader("User-Agent");
-        final int code = xssService.insertOne(content,ua);
+        final int code = xssService.insertOne(payload,ua);
         if (code == 1) {
             log.info("插入数据成功！");
             return R.ok("插入数据成功！");

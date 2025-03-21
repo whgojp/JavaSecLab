@@ -11,48 +11,47 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Random;
+import java.util.UUID;
 
-/**
- * 功能 : 上传文件工具类
- * 创建人 : 慌途L
- */
+
 @Slf4j
 public class FileUtils {
 
     public static String upLoadFile(MultipartFile file, String path) {
-
-        if(file.isEmpty()){
+        if (file == null || file.isEmpty()) {
             log.info("文件为空！");
             return null;
         }
+        
         String fileName = file.getOriginalFilename();
-        int size = (int) file.getSize();
-        log.info(fileName + "-->" + size);
+        log.info("上传文件: {} - 大小: {}", fileName, file.getSize());
 
-        // 取得文件的后缀名。
-        String ext = fileName.substring(fileName.lastIndexOf(".") + 1).toUpperCase();
-
-        String newFileName =
-                System.currentTimeMillis() / 1000 + new Random().nextInt(100000)+"." + ext;
-
-        //String path = "F:/test" ;
-        File dest = new File(path + "/" + newFileName);
-        if(!dest.getParentFile().exists()){ //判断文件父目录是否存在
-            dest.getParentFile().mkdir();
+        String ext = getFileExtension(fileName);
+        String newFileName = generateUniqueFileName(ext);
+        
+        return saveFile(file, path, newFileName);
+    }
+    
+    private static String getFileExtension(String fileName) {
+        return fileName.substring(fileName.lastIndexOf(".") + 1).toUpperCase();
+    }
+    
+    private static String generateUniqueFileName(String ext) {
+        return UUID.randomUUID().toString() + "." + ext;
+    }
+    
+    private static String saveFile(MultipartFile file, String path, String newFileName) {
+        File dest = new File(path, newFileName);
+        if (!dest.getParentFile().exists()) {
+            dest.getParentFile().mkdirs();
         }
+        
         try {
-            file.transferTo(dest); //保存文件
+            file.transferTo(dest);
             return newFileName;
-        } catch (IllegalStateException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            return null;
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            log.error("文件保存失败", e);
             return null;
         }
     }
 }
-

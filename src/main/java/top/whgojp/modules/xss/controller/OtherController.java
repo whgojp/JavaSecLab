@@ -124,12 +124,12 @@ public class OtherController {
     }
     @ApiOperation(value = "漏洞场景：模版引擎解析导致存储XSS", notes = "")
     @GetMapping("/vul2OtherTemplate")
-    public String vul2OtherTemplate(@RequestParam("content") String content,
+    public String vul2OtherTemplate(@RequestParam("payload") String payload,
                                           @RequestParam("type") String type, Model model) {
         if ("html".equals(type)) {
-            model.addAttribute("html", content);
+            model.addAttribute("html", payload);
         } else if ("text".equals(type)) {
-            model.addAttribute("text", content);
+            model.addAttribute("text", payload);
         }
         return "vul/xss/other";
     }

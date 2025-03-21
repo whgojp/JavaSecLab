@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>PostMessage XSS Sender</title>
+    <link rel="stylesheet" href="/lib/layui-v2.5.5/css/layui.css" media="all">
+</head>
+<body>
+<div class="layui-container" style="padding: 15px;">
+    <div class="layui-card">
+        <div class="layui-card-header">PostMessage XSS演示 - 发送端</div>
+        <div class="layui-card-body">
+            <form class="layui-form">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">消息内容</label>
+                    <div class="layui-input-block">
+                        <textarea id="message" placeholder="请输入要发送的消息，支持HTML" class="layui-textarea"></textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button type="button" class="layui-btn" onclick="sendMessage()">发送消息</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="/lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script>
+layui.use(['layer'], function(){
+    var layer = layui.layer;
+    window.sendMessage = function() {
+        var message = document.getElementById('message').value;
+        // 故意不对message进行过滤，用于演示XSS风险
+        if (window.opener) {
+            window.opener.postMessage(message, '*');  // 故意使用'*'作为targetOrigin，用于演示安全风险
+            layer.msg('消息已发送');
+        } else {
+            layer.msg('找不到接收窗口，请确保接收窗口已打开');
+        }
+    };
+});
+</script>
+</body>
+</html>

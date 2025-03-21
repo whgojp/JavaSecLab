@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>密码重置步骤绕过场景</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/layui/dist/css/layui.css">
+    <link rel="stylesheet" th:href="@{/lib/layui-v2.6.3/css/layui.css}" media="all">
     <style>
         .step-indicator {
             margin: 20px 0;
@@ -106,8 +106,7 @@
     </form>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/layui/dist/layui.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<div th:replace="~{common/common::script}"></div>
 <script>
     layui.use(['form'], function () {
         const $ = layui.$;

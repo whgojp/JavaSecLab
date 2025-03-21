@@ -41,6 +41,7 @@ management:
     web:
       exposure:
         include: '*'
+        exclude:
       base-path: /sys/actuator
 
 logging:
@@ -55,6 +56,7 @@ mybatis-plus:
   global-config:
     # 关闭MP3.0自带的banner
     banner: false
+
 
 folder:
   upload: /tmp/upload
@@ -90,3 +92,8 @@ hGUahXhPvN1OkI+772dFhjpQYxf02oKrdW/pNrTAoYyE9tCUUeZngUZ6SkN+TlJa
 ouK1o4xnmMD2YhHhzmxyn8wlLB8KopMzCQ8WaooivlJbyXQVp6bq9UFaeQW0NtIB
 tzMFGyiO+DvR4pO52uQLEBU=
 -----END PRIVATE KEY-----"
+
+jwt:
+  key: f3a4c6d5b9bfeff28b1f529b0840134bcd4183474e2d4a97c05615a134e4f4da
+
+#debug: true

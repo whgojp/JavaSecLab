@@ -6,6 +6,27 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "8371993",
+      "name": "流量",
+      "font_class": "liuliang1",
+      "unicode": "e62f",
+      "unicode_decimal": 58927
+    },
+    {
+      "icon_id": "108775",
+      "name": "流量",
+      "font_class": "liuliang",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    },
+    {
+      "icon_id": "11992869",
+      "name": "horse-solid",
+      "font_class": "horse-solid",
+      "unicode": "e6cd",
+      "unicode_decimal": 59085
+    },
+    {
       "icon_id": "9454431",
       "name": "账号",
       "font_class": "zhanghao",

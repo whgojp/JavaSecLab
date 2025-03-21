@@ -1,12 +1,13 @@
 package top.whgojp.common.utils;
 
 import org.springframework.stereotype.Component;
-
+import org.springframework.web.util.HtmlUtils;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * @description 用户输入数据校验
@@ -16,6 +17,30 @@ import java.util.List;
  */
 @Component
 public class CheckUserInput {
+    private static final Pattern SCRIPT_PATTERN = Pattern.compile("<script[^>]*>.*?</script>", Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
+    private static final Pattern EVENT_PATTERN = Pattern.compile("on\\w+\\s*=", Pattern.CASE_INSENSITIVE);
+    private static final Pattern JAVASCRIPT_PATTERN = Pattern.compile("javascript:", Pattern.CASE_INSENSITIVE);
+
+    public String filter(String input) {
+        if (input == null) {
+            return "";
+        }
+        
+        // 基本HTML转义
+        String filtered = HtmlUtils.htmlEscape(input);
+        
+        // 移除script标签
+        filtered = SCRIPT_PATTERN.matcher(filtered).replaceAll("");
+        
+        // 移除事件处理器
+        filtered = EVENT_PATTERN.matcher(filtered).replaceAll("");
+        
+        // 移除javascript:协议
+        filtered = JAVASCRIPT_PATTERN.matcher(filtered).replaceAll("");
+        
+        return filtered;
+    }
+
     public String checkUser(String username, String password, Integer id) {
         String message = "";
         if (username == null || username.isEmpty()) {

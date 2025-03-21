@@ -163,29 +163,56 @@ const safe1StoreEntityEscape = "// 表格数据渲染\n" +
     "// 方法三、jQuery的text()方法\n" +
     "$('#element').text(htmlContent);\n"
 
-const vul1DomRaw = "// innerHTML\n" +
+const vul1DomRaw = "// 1. innerHTML XSS\n" +
     "form.on('submit(vul1-dom-raw)', function (data) {\n" +
     "    var userInput = document.getElementById('vul1-dom-raw-input').value;\n" +
     "    var outputDiv = document.getElementById('vul-dom-raw-result');\n" +
-    "    outputDiv.innerHTML = userInput;\n" +
+    "    outputDiv.innerHTML = userInput;  // 漏洞点：直接使用innerHTML插入用户输入\n" +
     "    return false;\n" +
     "});\n" +
     "\n" +
-    "// href跳转场景\n" +
-    "var hash = location.hash;\n" +
-    "if(hash){\n" +
-    "    var url = hash.substring(ueditor);\n" +
-    "    console.log(url);\n" +
-    "    location.href = url;\n" +
-    "}\n" +
-    "\n" +
-    "// DOM存储注入\n" +
+    "// 2. LocalStorage XSS\n" +
     "form.on('submit(vul3-dom-raw-submit)', function (data) {\n" +
     "    localStorage.setItem('vul4-dom-raw', document.getElementById('vul4-dom-raw-input').value);\n" +
     "    var storedData = localStorage.getItem('vul4-dom-raw');\n" +
-    "    document.getElementById('vul-dom-raw-result').innerHTML = storedData;\n" +
+    "    document.getElementById('vul-dom-raw-result').innerHTML = storedData;  // 漏洞点：从存储读取后直接插入\n" +
     "    return false;\n" +
-    "})"
+    "});\n" +
+    "\n" +
+    "// 3. href跳转XSS\n" +
+    "var hash = location.hash;\n" +
+    "if(hash){\n" +
+    "    var url = hash.substring(1);  // 去掉#号\n" +
+    "    console.log(url);\n" +
+    "    location.href = url;  // 漏洞点：直接使用hash部分作为跳转URL\n" +
+    "}\n" +
+    "\n" +
+    "// 4. Location对象XSS\n" +
+    "form.on('submit(location-xss)', function(data) {\n" +
+    "    var payload = data.field.locationPayload;\n" +
+    "    window.location = payload;  // 漏洞点：直接使用用户输入修改location\n" +
+    "    return false;\n" +
+    "});\n" +
+    "\n" +
+    "// 5. Eval执行XSS\n" +
+    "form.on('submit(eval-xss)', function(data) {\n" +
+    "    var payload = data.field.evalPayload;\n" +
+    "    eval(payload);  // 漏洞点：直接执行用户输入的JavaScript代码\n" +
+    "    return false;\n" +
+    "});\n" +
+    "\n" +
+    "// 6. Document对象XSS\n" +
+    "form.on('submit(document-write)', function(data) {\n" +
+    "    var payload = data.field.documentPayload;\n" +
+    "    document.write(payload);  // 漏洞点：直接写入用户输入的HTML\n" +
+    "    document.close();\n" +
+    "    return false;\n" +
+    "});\n" +
+    "form.on('submit(document-domain)', function(data) {\n" +
+    "    var payload = data.field.documentPayload;\n" +
+    "    document.domain = payload;  // 漏洞点：直接修改document.domain\n" +
+    "    return false;\n" +
+    "});"
 
 const vul1OtherUpload = "public String uploadFile(MultipartFile file, String suffix,String path) throws IOException {\n" +
     "    String uploadFolderPath = sysConstant.getUploadFolder();\n" +
@@ -233,6 +260,22 @@ const vul3SCMSec = "// jQuery依赖\n" +
     "</dependency>\n" +
     "\n" +
     "// Ueditor编辑器未做任何限制 抓上传数据包后，可以上传任意类型文件";
+
+const vulHtml5 = "1、WebSocket XSS\n" +
+    "// 接收端：直接使用innerHTML插入消息\n" +
+    "window.addEventListener('message', function(event) {\n" +
+    "    // 故意不验证origin\n" +
+    "    document.getElementById('messageContainer').innerHTML = event.data;\n" +
+    "});\n" +
+    "// 客户端：直接使用innerHTML插入消息\n" +
+    "ws.onmessage = function(event) {\n" +
+    "    document.getElementById('wsMessageContainer').innerHTML = event.data;\n" +
+    "};\n" +
+    "2、PostMessage XSS\n" +
+    "// 服务端：直接广播用户输入\n" +
+    "protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {\n" +
+    "    broadcast(message.getPayload());\n" +
+    "}"
 
 const vul1RawJoint = "// 原生sql语句动态拼接 参数未进行任何处理\n" +
     "public R vul1(String type,String id,String username,String password) {\n" +

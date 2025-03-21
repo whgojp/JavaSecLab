@@ -8,7 +8,6 @@ import top.whgojp.modules.xss.entity.Xss;
 import top.whgojp.modules.xss.service.XssService;
 import top.whgojp.modules.xss.mapper.XssMapper;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 /**
@@ -18,30 +17,42 @@ import java.util.List;
 */
 @Slf4j
 @Service
-public class XssServiceImpl extends ServiceImpl<XssMapper, Xss>
-    implements XssService{
+public class XssServiceImpl extends ServiceImpl<XssMapper, Xss> implements XssService {
     @Autowired
     private XssMapper xssMapper;
 
     @Override
     public int insertOne(String content, String ua) {
-        final int code = xssMapper.insertAll(content,ua,DateUtil.now());
-        return code;
+        try {
+            log.info("插入XSS记录 - content: {}, ua: {}", content, ua);
+            final int code = xssMapper.insertAll(content,ua,DateUtil.now());
+            return code;
+        } catch (Exception e) {
+            log.error("插入XSS记录失败", e);
+            return 0;
+        }
     }
 
     @Override
     public List<Xss> selectAll() {
-        List<Xss> xssList = xssMapper.selectAll();
-        return xssList;
+        try {
+            List<Xss> xssList = xssMapper.selectAll();
+            return xssList;
+        } catch (Exception e) {
+            log.error("查询XSS记录失败", e);
+            return null;
+        }
     }
 
     @Override
     public int deleteById(int id) {
-        int i = xssMapper.deleteById(id);
-        return i;
+        try {
+            log.info("删除XSS记录 - id: {}", id);
+            int i = xssMapper.deleteById(id);
+            return i;
+        } catch (Exception e) {
+            log.error("删除XSS记录失败 - id: {}", id, e);
+            return 0;
+        }
     }
 }
-
-
-
-

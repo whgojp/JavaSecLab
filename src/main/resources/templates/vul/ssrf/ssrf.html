@@ -21,14 +21,23 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-bug"> 漏洞场景：原生漏洞场景</span></h1>
+                        <h1 style="display: flex; justify-content: space-between; align-items: center;height: 33.5px">
+                            <span class="iconfont icon-bug"> 漏洞场景：原生漏洞场景</span>
+                            <span class="iconfont icon-liuliang1">
+                                <a href="/other/datapackage/ssrf/ssrf.pcapng"
+                                   download="ssrf.pcapng"
+                                   style="margin-right: 19px;color: #00bb00">流量分析</a>
+                            </span>
+                        </h1>
+
                         <div class="layui-tab layui-tab-brief">
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
                                         <p>可尝试使用file、http(s)、dict、gopher等协议进行测试</p>
                                         <a target="_blank" href="/ssrf/vul?url=file:///etc/passwd">
-                                            <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
+                                            <button class="layui-btn layui-btn-normal"
+                                                    style="width: 100px; margin-left: 10px;">
                                                 <span class="iconfont icon-zhihang">Run</span>
                                             </button>
                                         </a>
@@ -51,7 +60,9 @@ Linux：file:///etc/hosts Windows：file:///C:\windows\win.ini</pre>
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
+                        <h1 style="display: flex; align-items: center; height: 33.5px;">
+                            <span class="iconfont icon-code" style="height: 22.5px;">缺陷代码</span>
+                        </h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="vul1URLConnection"></div>
                         </div>
@@ -69,7 +80,8 @@ Linux：file:///etc/hosts Windows：file:///C:\windows\win.ini</pre>
                                     <blockquote class="layui-elem-quote main_btn">
                                         <p>限制http(s)协议、请求白名单(baidu.com、whgojp.top)</p>
                                         <a target="_blank" href="/ssrf/safe?url=http://baidu.com">
-                                            <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
+                                            <button class="layui-btn layui-btn-normal"
+                                                    style="width: 100px; margin-left: 10px;">
                                                 <span class="iconfont icon-zhihang">Run</span>
                                             </button>
                                         </a>
@@ -122,7 +134,7 @@ Linux：file:///etc/hosts Windows：file:///C:\windows\win.ini</pre>
             indentUnit: 4,
             indentWithTabs: true,
             theme: 'juejin',
-            styleActiveLine: { nonEmpty: true },
+            styleActiveLine: {nonEmpty: true},
             fontSize: "18px",
             mode: "text/x-java"
         };
@@ -133,7 +145,7 @@ Linux：file:///etc/hosts Windows：file:///C:\windows\win.ini</pre>
             indentUnit: 4,
             indentWithTabs: true,
             theme: 'juejinsafe',
-            styleActiveLine: { nonEmpty: true },
+            styleActiveLine: {nonEmpty: true},
             fontSize: "18px",
             mode: "text/x-java"
         };

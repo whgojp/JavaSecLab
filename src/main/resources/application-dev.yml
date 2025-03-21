@@ -1,28 +1,24 @@
 spring:
   datasource:
-    type: com.zaxxer.hikari.HikariDataSource
+    type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: QWE123qwe
     url: jdbc:mysql://localhost:13306/JavaSecLab?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2B8&nullCatalogMeansCurrent=true&allowPublicKeyRetrieval=true&allowMultiQueries=true
     druid:
-      initial-size: 5
-      min-idle: 5
-      max-active: 20
-      max-wait: 60000
-      time-between-eviction-runs-millis: 60000
-      min-evictable-idle-time-millis: 300000
-      validation-query: SELECT 1 FROM DUAL
-      test-while-idle: true
-      test-on-borrow: false
-      test-on-return: false
-      pool-prepared-statements: true
-      max-pool-prepared-statement-per-connection-size: 20
-      filters: stat,log4j     # wall 这里关闭sql防火墙
-      connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
-      remove-abandoned: true
-      remove-abandoned-timeout: 1800
-      log-abandoned: true
+      initial-size: 5                      # 初始化连接数
+      min-idle: 5                          # 最小空闲连接数
+      max-active: 20                       # 最大连接数
+      max-wait: 30000                      # 获取连接的最大等待时间（单位：毫秒）
+      validation-query: SELECT 1 FROM DUAL # 用于验证连接是否可用的 SQL
+      test-while-idle: true                 # 是否在空闲时测试连接
+      time-between-eviction-runs-millis: 60000 # 空闲连接检测周期（单位：毫秒）
+      min-evictable-idle-time-millis: 300000 # 连接在池中最小空闲时间（单位：毫秒）
+      pool-prepared-statements: true        # 是否缓存PreparedStatement
+      max-pool-prepared-statement-per-connection-size: 20 # 每个连接缓存的最大PreparedStatement数量
+      log-abandoned: true                   # 是否记录被丢弃的连接
+      remove-abandoned: true                # 是否移除被丢弃的连接
+      remove-abandoned-timeout: 180         # 丢弃连接的超时时间（单位：秒）
       web-stat-filter:
         enabled: true
       stat-view-servlet:
@@ -31,13 +27,23 @@ spring:
         #        login-username: admin
         #        login-password: admin
         reset-enable: false
-      # 防火墙配置
-#      wall:
-#        config:
-#          multi-statement-allow: false
+        # 防火墙配置
+  #      wall:
+  #        config:
+  #          multi-statement-allow: false
 
-# Hibernate 配置：将当前上下文策略设置为 Spring
-#  jpa:
-#    properties:
-#      hibernate:
-#        current_session_context_class: thread
+  # JPA 配置（可选）
+  #spring:
+  jpa:
+    hibernate:
+      ddl-auto: update                      # 自动更新数据库表结构（生产环境建议改为 validate 或 none）
+    show-sql: true                          # 打印 SQL 日志
+    properties:
+      hibernate.format_sql: true            # 格式化 SQL
+      hibernate.dialect: org.hibernate.dialect.MySQL8Dialect
+
+logging:
+  level:
+    root: INFO                              # 默认日志级别
+    com.alibaba.druid.pool: DEBUG           # 启用 Druid 的 DEBUG 日志（排查数据库连接池问题时启用）
+
