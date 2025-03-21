@@ -5,8 +5,8 @@
  * @Date: 2024/5/19 19:03
  */
 const vul1ReflectRaw = "// 原生漏洞场景,未加任何过滤，Controller接口返回Json类型结果\n" +
-    "public R vul1(String content) {\n" +
-    "    return R.ok(content);\n" +
+    "public R vul1(String payload) {\n" +
+    "    return R.ok(payload);\n" +
     "}\n" +
     "// R 是对返回结果的封装工具util\n" +
     "// 返回结果：\n" +
@@ -17,19 +17,19 @@ const vul1ReflectRaw = "// 原生漏洞场景,未加任何过滤，Controller接
     "// payload在json中是不会触发xss的 需要解析到页面中\n" +
     "\n" +
     "// 原生漏洞场景,未加任何过滤，Controller接口返回String类型结果\n" +
-    "public String vul2(String content) {\n" +
-    "    return content;\n" +
+    "public String vul2(String payload) {\n" +
+    "    return payload;\n" +
     "}"
 const vul2ReflectContentType = "// Tomcat内置HttpServletResponse，Content-Type导致反射XSS\n" +
-    "public void vul3(String type,String content, HttpServletResponse response) {\n" +
+    "public void vul3(String type,String payload, HttpServletResponse response) {\n" +
     "    switch (type) {\n" +
     "        case \"html\":\n" +
-    "            response.getWriter().print(content);\n" +
+    "            response.getWriter().print(payload);\n" +
     "            response.setContentType(\"text/html;charset=utf-8\");\n" +
     "            response.getWriter().flush();\n" +
     "            break;\n" +
     "        case \"plain\":\n" +
-    "            response.getWriter().print(content);\n" +
+    "            response.getWriter().print(payload);\n" +
     "            response.setContentType(\"text/plain;charset=utf-8\");\n" +
     "            response.getWriter().flush();\n" +
     "            ...\n" +
@@ -51,9 +51,9 @@ const safe1CheckUserInput = "// 对用户输入的数据进行验证和过滤，
     "private static final String WHITELIST_REGEX = \"^[a-zA-Z0-9_\\\\s]+$\";\n" +
     "private static final Pattern pattern = Pattern.compile(WHITELIST_REGEX);\n" +
     "\n" +
-    "Matcher matcher = pattern.matcher(content);\n" +
+    "Matcher matcher = pattern.matcher(payload);\n" +
     "if (matcher.matches()){\n" +
-    "    return R.ok(content);\n" +
+    "    return R.ok(payload);\n" +
     "}else return R.error(\"输入内容包含非法字符，请检查输入\");"
 const safe2CSP = "// 内容安全策略（Content Security Policy）是一种由浏览器实施的安全机制，旨在减少和防范跨站脚本攻击（XSS）等安全威胁。它通过允许网站管理员定义哪些内容来源是可信任的，从而防止恶意内容的加载和执行\n" +
     "// 前端Meta配置\n" +
@@ -61,27 +61,27 @@ const safe2CSP = "// 内容安全策略（Content Security Policy）是一种由
     "\n" +
     "\n" +
     "// 后端Header配置\n" +
-    "public String safe2(String content,HttpServletResponse response) {\n" +
+    "public String safe2(String payload,HttpServletResponse response) {\n" +
     "    response.setHeader(\"Content-Security-Policy\",\"default-src self\");\n" +
-    "    return content;\n" +
+    "    return payload;\n" +
     "}"
 
 const safe3EntityEscape = '// 特殊字符实体转义是一种将HTML中的特殊字符转换为预定义实体表示的过程\n' +
     '// 这种转义是为了确保在HTML页面中正确显示特定字符，同时避免它们被浏览器误解为HTML标签或JavaScript代码的一部分，从而导致页面结构混乱或安全漏洞\n' +
-    'public R safe3(@ApiParam(String type, String content) {\n' +
+    'public R safe3(@ApiParam(String type, String payload) {\n' +
     '    String filterContented = "";\n' +
     '    switch (type){\n' +
     '        case "manual":\n' +
-    '            content = StringUtils.replace(content, "&", "&amp;");\n' +
-    '            content = StringUtils.replace(content, "<", "&lt;");\n' +
-    '            content = StringUtils.replace(content, ">", "&gt;");\n' +
-    '            content = StringUtils.replace(content, "\\"", "&quot;");\n' +
-    '            content = StringUtils.replace(content, "\'", "&#x27;");\n' +
-    '            content = StringUtils.replace(content, "/", "&#x2F;");\n' +
-    '            filterContented = content;\n' +
+    '            payload = StringUtils.replace(payload, "&", "&amp;");\n' +
+    '            payload = StringUtils.replace(payload, "<", "&lt;");\n' +
+    '            payload = StringUtils.replace(payload, ">", "&gt;");\n' +
+    '            payload = StringUtils.replace(payload, "\\"", "&quot;");\n' +
+    '            payload = StringUtils.replace(payload, "\'", "&#x27;");\n' +
+    '            payload = StringUtils.replace(payload, "/", "&#x2F;");\n' +
+    '            filterContented = payload;\n' +
     '            break;\n' +
     '        case "spring":\n' +
-    '            filterContented = HtmlUtils.htmlEscape(content);\n' +
+    '            filterContented = HtmlUtils.htmlEscape(payload);\n' +
     '            break;\n' +
     '            ...\n' +
     '    }\n' +
@@ -89,13 +89,13 @@ const safe3EntityEscape = '// 特殊字符实体转义是一种将HTML中的特�
 
 const safe4HttpOnly = "// HttpOnly是HTTP响应头属性，用于增强Web应用程序安全性。它防止客户端脚本访问(只能通过http/https协议访问)带有HttpOnly标记的 cookie，从而减少跨站点脚本攻击（XSS）的风险\n" +
     "// 单个接口配置\n" +
-    "public R safe4(String content, HttpServletRequest request,HttpServletResponse response) {\n" +
+    "public R safe4(String payload, HttpServletRequest request,HttpServletResponse response) {\n" +
     "    Cookie cookie = request.getCookies()[ueditor];\n" +
     "    cookie.setHttpOnly(true); // 设置为 HttpOnly\n" +
     "    cookie.setMaxAge(600);  // 这里设置生效时间为十分钟\n" +
     "    cookie.setPath(\"/\");\n" +
     "    response.addCookie(cookie);\n" +
-    "    return R.ok(content);\n" +
+    "    return R.ok(payload);\n" +
     "}\n" +
     "\n" +
     "// 全局配置\n" +
@@ -120,9 +120,9 @@ const safe4HttpOnly = "// HttpOnly是HTTP响应头属性，用于增强Web应用
 
 const vul1StoreRaw = "// 原生漏洞场景,未加任何过滤，将用户输入存储到数据库中\n" +
     "// Controller层\n" +
-    "public R vul(String content,HttpServletRequest request) {\n" +
+    "public R vul(String payload,HttpServletRequest request) {\n" +
     "    String ua = request.getHeader(\"User-Agent\");\n" +
-    "    final int code = xssService.insertOne(content,ua);\n" +
+    "    final int code = xssService.insertOne(payload,ua);\n" +
     "    ...\n" +
     "}\n" +
     "// Service层\n" +
@@ -203,11 +203,11 @@ const vul1OtherUpload = "public String uploadFile(MultipartFile file, String suf
     "    }\n" +
     "}"
 
-const vul2OtherTemplate = "public String handleTemplateInjection(String content,String type, Model model) {\n" +
+const vul2OtherTemplate = "public String handleTemplateInjection(String payload,String type, Model model) {\n" +
     "    if (\"html\".equals(type)) {\n" +
-    "        model.addAttribute(\"html\", content);\n" +
+    "        model.addAttribute(\"html\", payload);\n" +
     "    } else if (\"text\".equals(type)) {\n" +
-    "        model.addAttribute(\"text\", content);\n" +
+    "        model.addAttribute(\"text\", payload);\n" +
     "    }\n" +
     "    return \"vul/xss/other\";\n" +
     "}\n" +
@@ -1177,7 +1177,121 @@ const safeHorizon = "public R safe(String username){\n" +
     "}"
 
 // 支付漏洞
+const vul1Pay = "public R vul1(@RequestParam String count, @RequestParam String price) {\n" +
+    "    try {\n" +
+    "        double totalPrice = Integer.parseInt(count) * Double.parseDouble(price);\n" +
+    "        log.info(\"用户需支付金额：\" + totalPrice);\n" +
+    "        \n" +
+    "        // 直接使用客户端传入的价格，未与服务端商品实际价格进行校验\n" +
+    "        BigDecimal currentMoney = userMoney.get();\n" +
+    "        if (currentMoney.compareTo(BigDecimal.valueOf(totalPrice)) < 0) {\n" +
+    "            return R.error(\"支付金额不足，支付失败！\");\n" +
+    "        }\n" +
+    "        userMoney.set(currentMoney.subtract(BigDecimal.valueOf(totalPrice)));\n" +
+    "        return R.ok(\"支付成功！剩余余额：\" + userMoney.get());\n" +
+    "    } catch (Exception e) {\n" +
+    "        return R.error(e.toString());\n" +
+    "    }\n" +
+    "}";
 
+const vul2Pay = "public R vul2(@RequestParam String orderId, @RequestParam double amount) {\n" +
+    "    // 未检查订单是否已支付\n" +
+    "    // 这里应该使用paymentStatusMap检查订单是否已支付，但为了演示漏洞，故意不检查\n" +
+    "    BigDecimal currentMoney = userMoney.get();\n" +
+    "    if (currentMoney.compareTo(BigDecimal.valueOf(amount)) < 0) {\n" +
+    "        return R.error(\"余额不足\");\n" +
+    "    }\n" +
+    "    userMoney.set(currentMoney.subtract(BigDecimal.valueOf(amount)));\n" +
+    "    return R.ok(\"支付成功！剩余余额：\" + userMoney.get());\n" +
+    "}";
+
+const  vul3Pay = "public R vul3(@RequestParam String orderId, @RequestParam double amount) {\n" +
+    "    // 模拟处理延迟\n" +
+    "    try {\n" +
+    "        Thread.sleep(1000);\n" +
+    "    } catch (InterruptedException e) {\n" +
+    "        Thread.currentThread().interrupt();\n" +
+    "    }\n" +
+    "\n" +
+    "    BigDecimal currentMoney = userMoney.get();\n" +
+    "    if (currentMoney.compareTo(BigDecimal.valueOf(amount)) < 0) {\n" +
+    "        return R.error(\"余额不足\");\n" +
+    "    }\n" +
+    "    userMoney.set(currentMoney.subtract(BigDecimal.valueOf(amount)));\n" +
+    "    return R.ok(\"支付成功！剩余余额：\" + userMoney.get());\n" +
+    "}";
+
+const vul4Pay = "@ApiOperation(\"支付流程绕过漏洞 - 创建订单\")\n" +
+    "@RequestMapping(\"/vul4/create\")\n" +
+    "public R createOrder(@RequestParam String orderId, @RequestParam double amount) {\n" +
+    "    OrderStatus status = new OrderStatus(orderId, BigDecimal.valueOf(amount));\n" +
+    "    orderStatusMap.put(orderId, status);\n" +
+    "    Map<String, Object> data = new HashMap<>();\n" +
+    "    data.put(\"orderId\", orderId);\n" +
+    "    data.put(\"amount\", amount);\n" +
+    "    return R.ok(\"订单创建成功\").put(\"data\", data);\n" +
+    "}\n" +
+    "\n" +
+    "@ApiOperation(\"支付流程绕过漏洞 - 查询订单状态\")\n" +
+    "@RequestMapping(\"/vul4/status\")\n" +
+    "public R getOrderStatus(@RequestParam String orderId) {\n" +
+    "    OrderStatus status = orderStatusMap.get(orderId);\n" +
+    "    if (status == null) {\n" +
+    "        return R.error(\"订单不存在\");\n" +
+    "    }\n" +
+    "    Map<String, Object> data = new HashMap<>();\n" +
+    "    data.put(\"orderId\", status.orderId);\n" +
+    "    data.put(\"amount\", status.amount);\n" +
+    "    data.put(\"isPaid\", status.isPaid);\n" +
+    "    return R.ok().put(\"data\", data);\n" +
+    "}\n" +
+    "\n" +
+    "@ApiOperation(\"支付流程绕过漏洞 - 支付通知\")\n" +
+    "@RequestMapping(\"/vul4/notify\")\n" +
+    "public R paymentNotify(@RequestParam String orderId, @RequestParam boolean success) {\n" +
+    "    // 未验证通知来源，直接更新订单状态\n" +
+    "    OrderStatus status = orderStatusMap.get(orderId);\n" +
+    "    if (status == null) {\n" +
+    "        return R.error(\"订单不存在\");\n" +
+    "    }\n" +
+    "    status.isPaid = success;\n" +
+    "    return R.ok(\"状态更新成功\");\n" +
+    "}";
+const vul5Pay = "public R integerOverflow(@RequestParam String count, @RequestParam String price) {\n" +
+    "    try {\n" +
+    "        Integer countValue = Integer.valueOf(count);\n" +
+    "        Integer priceValue = Integer.valueOf(price);\n" +
+    "\n" +
+    "        // 整数溢出场景：当 count 或 price 数值过大时，可能会导致溢出\n" +
+    "        int totalAmount = countValue * priceValue;\n" +
+    "        log.info(\"用户需支付金额：\" + totalAmount);\n" +
+    "\n" +
+    "        BigDecimal currentMoney = userMoney.get();\n" +
+    "        if (currentMoney.compareTo(BigDecimal.valueOf(totalAmount)) < 0) {\n" +
+    "            return R.error(\"支付金额不足，支付失败！\");\n" +
+    "        }\n" +
+    "        userMoney.set(currentMoney.subtract(BigDecimal.valueOf(totalAmount)));\n" +
+    "        return R.ok(\"支付成功！剩余余额：\" + userMoney.get());\n" +
+    "    } catch (Exception e) {\n" +
+    "        return R.error(\"无效的输入，请输入有效的数量和价格！\");\n" +
+    "    }\n" +
+    "}";
+const vul6Pay = "public R floatingPointPrecision(@RequestParam String count, @RequestParam String price) {\n" +
+    "    try {\n" +
+    "        // 使用BigDecimal处理金额计算，避免浮点数精度问题\n" +
+    "        BigDecimal amountValue = new BigDecimal(price).multiply(new BigDecimal(count));\n" +
+    "        log.info(\"用户需支付金额：\" + amountValue);\n" +
+    "\n" +
+    "        BigDecimal currentMoney = userMoney.get();\n" +
+    "        if (currentMoney.compareTo(amountValue) < 0) {\n" +
+    "            return R.error(\"支付金额不足，支付失败！\");\n" +
+    "        }\n" +
+    "        userMoney.set(currentMoney.subtract(amountValue));\n" +
+    "        return R.ok(\"支付成功！剩余余额：\" + userMoney.get());\n" +
+    "    } catch (Exception e) {\n" +
+    "        return R.error(\"无效的输入，请输入有效的数量和价格！\");\n" +
+    "    }\n" +
+    "}";
 
 // 其他漏洞
 const vul1SpringMvcRedirect = "// 基于Spring MVC的重定向方式\n" +
@@ -1766,6 +1880,11 @@ const vul2Reverse = "const publicKey = `-----BEGIN PUBLIC KEY-----\n" +
     "{\"encryptedUsername\":\"iDF5BNv1zaM0V9qog0qzlUES3sCGYqmvrKiqPIvUgP5qE0pYn9XN3btW3PbRwLuySeruK2i8lem+L67w5+fFQBuRrpettLrHl8izIRp2W+nq9o9Kg/LSa3/+JynFoUHxrvQ2taNM1nustROpkBjJMbTOK52S6ZBa0quMw+wjfR1XExlzc99U1WJQfRAqj7Gsl9EPydRIh8vs4S/Nen5kf/dL3ZikfMbCUUBonRlYy6a3nWJ412P+hxRbSl80Z8aQKw9lH4+Iju80oFmQ6DuS6Ce70h88z/Va+xzXHDzM8w6h5iqQLzq3Kj/E+b/wsn6eM7v+LEC8LwLQ/t8z8tki9g==\",\n" +
     "\"encryptedPassword\":\"nDI0/PBwsFHnRRw7Z4gHZ6G8Uaq7BUjUxnTDw7bkR9nrTkoHfcDLKUddj2JS7WWbOyuwsUFce3/tXJYQWNMFQqGRtf6jXxFAlvTvBkRdsZXOIU+Abb4EqYw670xd5UTeAQ0lI5KNXtw6e/VbnXyX+STJdN2SO7FLbvZ4sM6gLQSVWLo/+pZsYxKlEUNxew2svlzDZtqKnyF12bzakWfzaWuovLnYCCEXV1oAJCErjgfoOS2wJADdgU0wE6KlFDMNjsCvONmO6KZpmJQ1GOq3MpyqySq8eyJkYG3cDSRo5nDo2YOcevOHifzMnKbrU9gh4/RUj8sxrykdqgLmzX3rhw==\"}"
 
+const vul1Credential = "vul1Credential"
+
+const vul2Credential = "vul2Credential"
+
+
 // java专题 SPEL注入
 const spelVul = "public R vul(String ex) {\n" +
     "    // 创建SpEL解析器，ExpressionParser接口用于表示解析器，SpelExpressionParser为默认实现\n" +
@@ -2075,3 +2194,21 @@ const vulShiro = "public R getShiroKey(){\n" +
     "    <artifactId>shiro-spring</artifactId>\n" +
     "    <version>1.2.4</version>\n" +
     "</dependency>"
+const JdbcDeserial = "public R vul() {\n" +
+    "    ...\n" +
+    "    Connection conn = DriverManager.getConnection(url, username, password);\n" +
+    "    String selectQuery = \"SELECT malicious_object FROM objects WHERE id = 1\";\n" +
+    "    Statement stmt = conn.createStatement();\n" +
+    "    ResultSet rs = stmt.executeQuery(selectQuery);\n" +
+    "\n" +
+    "    if (rs.next()) {\n" +
+    "        // 查询并获取恶意对象的字节数据\n" +
+    "        byte[] maliciousObjectBytes = rs.getBytes(\"malicious_object\");\n" +
+    "        // 反序列化恶意对象\n" +
+    "        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(maliciousObjectBytes);\n" +
+    "        ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);\n" +
+    "\n" +
+    "        // 触发反序列化漏洞\n" +
+    "        MaliciousObject maliciousObject = (MaliciousObject) objectInputStream.readObject();\n" +
+    "    }\n" +
+    "    ..."

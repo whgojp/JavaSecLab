@@ -471,7 +471,6 @@
                 
                 // 模拟并发请求
                 for (var i = 0; i < requestCount; i++) {
-                    // 添加一个随机参数，避免浏览器缓存
                     var requestData = Object.assign({}, data.field, {_t: new Date().getTime() + i});
                     
                     $.ajax({
@@ -479,11 +478,9 @@
                         type: 'post',
                         data: requestData,
                         success: function(res) {
-                            // 将每个请求的结果添加到结果区域
-                            $("#vul3-pay-result").append("<p>请求 #" + (++completedCount) + " 结果: " + 
+                            $("#vul3-pay-result").append("<p>请求 #" + (++completedCount) + " 结果: " +
                                 (res.code === 0 ? "成功 - " + res.msg : "失败 - " + res.msg) + "</p>");
                             
-                            // 所有请求完成后关闭加载提示
                             if (completedCount >= requestCount) {
                                 layer.close(loadingMsg);
                             }
@@ -567,25 +564,6 @@
                 value: vul6Pay
             }));
 
-        });
-
-        $('.shiro').hover(function () {
-            $(this).css('cursor', 'pointer');
-            layer.tips('RememberMe序列化过程', this, {
-                tips: [1, '#0051ff'],
-                time: 2000
-            });
-        });
-
-        $('.shiro').on('click', function () {
-            layer.open({
-                type: 1,
-                title: false,
-                closeBtn: 1,
-                area: ['975px', '672px'], // 宽高缩小为0.9倍
-                shadeClose: true,
-                content: '<div style="text-align: center;"><img src="/static/images/vul/components/shiro.png" style="width: 100%; height: 100%;"></div>'
-            });
         });
 
 
