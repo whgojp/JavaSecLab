@@ -28,7 +28,7 @@ public class JsFileLeakController {
     }
     @RequestMapping("/loginSuccess")
     public String loginSuccess(){
-        return "/vul/infoleak/loginSuccess";
+        return "vul/infoleak/loginSuccess";
     }
 
 }

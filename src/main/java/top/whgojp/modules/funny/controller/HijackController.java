@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HijackController {
     @RequestMapping()
     public String hijack(){
-        return "/vul/funny/hijack";
+        return "vul/funny/hijack";
     }
 
 }

@@ -46,7 +46,7 @@ public class SSTIController {
 //        return "vul/ssti/vul"; // 将参数 para 传递到模板 "vul/ssti/template"
 
         // 用户输入直接拼接到模板路径，可能导致SSTI（服务器端模板注入）漏洞
-        return "/vul/ssti/" + para;
+        return "vul/ssti/" + para;
     }
     @GetMapping("/vul2/{path}")
     public void vul2(@PathVariable String path) {

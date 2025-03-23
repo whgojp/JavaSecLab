@@ -40,11 +40,11 @@ public class JdbcController {
     private CheckUserInput checkUserInput;
 
     //指定数据库地址、用户名、密码
-    @Value("${spring.datasource.url}")
+    @Value("${spring.datasource.primary.url}")
     private String dbUrl;
-    @Value("${spring.datasource.username}")
+    @Value("${spring.datasource.primary.username}")
     private String dbUser;
-    @Value("${spring.datasource.password}")
+    @Value("${spring.datasource.primary.password}")
     private String dbPass;
 
 

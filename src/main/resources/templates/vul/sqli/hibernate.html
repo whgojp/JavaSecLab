@@ -5,129 +5,75 @@
 <div class="layuimini-container">
     <div class="layuimini-main">
         <div class="layui-row layui-col-space15">
-
             <div class="layui-col-md12">
                 <fieldset class="layui-elem-field layui-field-title">
-                    <legend><a style="color: rgb(30 159 255)" class="sqli-jdbc">SQL注入攻击 - Hibernate</a></legend>
+                    <legend><a style="color: rgb(30 159 255)" class="sqli-hibernate">SQL注入攻击 - Hibernate</a></legend>
                     <blockquote class="layui-elem-quote layui-quote-nm"
                                 style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
                         <p>
-                        <pre>  Hibernate是Java领域中广泛使用的ORM框架，它通过HQL(Hibernate Query Language)或者Criteria API等方法将Java对象映射为SQL语句来与数据库进行交互</pre>
+                        <pre>   Hibernate是一个流行的ORM框架，它提供了多种查询方式，如HQL、Criteria API和原生SQL。虽然Hibernate提供了参数绑定等安全特性，但不当使用仍可能导致SQL注入漏洞。</pre>
+                        </p>
+                        <p>
+                        <pre>   在Hibernate中，SQL注入可能发生在HQL查询、原生SQL查询和动态排序等场景。攻击者可以通过注入恶意输入来执行非授权的数据库操作。</pre>
                         </p>
                     </blockquote>
                 </fieldset>
             </div>
 
+            <!-- 原生SQL注入场景 -->
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-bug">  漏洞场景：JDBC-原生SQL语句拼接</span></h1>
+                        <h1><span class="iconfont icon-bug">  漏洞场景：原生SQL注入</span></h1>
                         <div class="layui-tab layui-tab-brief">
-                            <ul class="layui-tab-title">
-                                <li class="layui-this">增加-add</li>
-                                <li>删除-delete</li>
-                                <li>修改-update</li>
-                                <li>查询-select</li>
-                            </ul>
+
                             <div class="layui-tab-content">
+                                <!-- 查询 -->
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
                                         <form class="layui-form" style="display: flex; justify-content: space-between;">
                                             <div style="display: flex; align-items: center;">
-                                                <input type="text" name="username" style="width: 150px;" required
-                                                       lay-verify="required" placeholder="用户名" autocomplete="off"
-                                                       class="layui-input">
-                                                <input type="password" name="password" style="width: 150px" required
-                                                       lay-verify="required" placeholder="密码" autocomplete="off"
+                                                <input type="text" name="username" id="vul1-native-select-username" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="用户名" value="admin' OR 1=1 OR '1'='1" autocomplete="off"
                                                        class="layui-input">
                                             </div>
                                             <div style="display: flex; align-items: center;">
                                                 <select class="layui-form-select"
-                                                        style="background-color: #5eb878;!important;">
+                                                        style="background-color: #5eb878;!important;"lay-filter="vul1-native-select-select">
                                                     <option value="">示例Payload</option>
-                                                    <option value="0">'</option>
-                                                    <option value="1">上海</option>
-                                                    <option value="2">广州</option>
-                                                    <option value="3">深圳</option>
-                                                    <option value="4">杭州</option>
+                                                    <option value="1' AND (SELECT 4804 FROM (SELECT(SLEEP(5)))iBHa) AND '1'='1">延时注入</option>
+                                                    <option value="1' AND ELT(5753=5753,6782) AND '1'='1">布尔盲注</option>
+                                                    <option value="1' AND GTID_SUBSET(CONCAT(0x71706a7a71,(SELECT (ELT(7170=7170,1))),0x7171717071),7170) AND '1'='1">报错注入</option>
+                                                    <option value="1' and updatexml(1,concat(0x7e,(SELECT user()),0x7e),1) AND '1'='1">xpath注入</option>
                                                 </select>
                                                 <button class="layui-btn layui-btn-normal"
                                                         style="width: 100px; margin-left: 10px;"
-                                                        lay-filter="vul1-raw-joint-add" lay-submit="">
+                                                        lay-filter="vul1-native-select" lay-submit="">
                                                     <span class="iconfont icon-zhihang">Run</span>
                                                 </button>
                                             </div>
                                         </form>
                                     </blockquote>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-md12">
+                            <div class="layui-card">
+                                <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                <div class="layui-card-body layui-text layadmin-text">
+                                            <pre style="color: #28333e;font-size: 14px;">由于Hibernate和Mybatis做兼容较为困难，这里只以查询场景为例，部分场景需结合后端日志进行测试。
+在测试过程中，建议关注以下几点:
+1. 观察SQL语句的执行结果和后端日志输出
+2. 尝试不同类型的SQL注入payload(如联合查询、布尔盲注、延时注入等)
+3. 注意HQL和原生SQL的语法差异
+4. 测试时建议打开Hibernate的show_sql选项以便观察实际执行的SQL语句</pre>
+                                </div>
+                            </div>
 
-                                <div class="layui-tab-item">
-                                    <blockquote class="layui-elem-quote main_btn">
-                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
-                                            <div style="display: flex; align-items: center;">
-                                                <input type="text" name="id" style="width: 150px;" required
-                                                       lay-verify="required" placeholder="用户id" autocomplete="off"
-                                                       class="layui-input">
-                                            </div>
-                                            <div style="display: flex; align-items: center;">
-                                                <button class="layui-btn layui-btn-normal"
-                                                        style="width: 100px; margin-left: 10px;"
-                                                        lay-filter="vul1-raw-joint-delete" lay-submit="">
-                                                    <span class="iconfont icon-zhihang">Run</span>
-                                                </button>
-                                            </div>
-                                        </form>
-                                    </blockquote>
-                                </div>
-                                <div class="layui-tab-item">
-                                    <blockquote class="layui-elem-quote main_btn">
-                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
-                                            <div style="display: flex; align-items: center;">
-                                                <input type="text" name="id" style="width: 150px;" required
-                                                       lay-verify="required" placeholder="用户id" autocomplete="off"
-                                                       class="layui-input">
-                                                <input type="text" name="username" style="width: 150px;" required
-                                                       lay-verify="required" placeholder="用户名" autocomplete="off"
-                                                       class="layui-input">
-                                                <input type="password" name="password" style="width: 150px;" required
-                                                       lay-verify="required" placeholder="密码" autocomplete="off"
-                                                       class="layui-input">
-                                            </div>
-                                            <div style="display: flex; align-items: center;">
-                                                <button class="layui-btn layui-btn-normal"
-                                                        style="width: 100px; margin-left: 10px;"
-                                                        lay-filter="vul1-raw-joint-update" lay-submit="">
-                                                    <span class="iconfont icon-zhihang">Run</span>
-                                                </button>
-                                            </div>
-                                        </form>
-                                    </blockquote>
-                                </div>
-                                <div class="layui-tab-item">
-                                    <blockquote class="layui-elem-quote main_btn">
-                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
-                                            <div style="display: flex; align-items: center;">
-                                                <input type="text" name="id" style="width: 150px;" required
-                                                       lay-verify="required" placeholder="用户id" autocomplete="off"
-                                                       class="layui-input">
-                                            </div>
-                                            <div style="display: flex; align-items: center;">
-                                                <button class="layui-btn layui-btn-normal"
-                                                        style="width: 100px; margin-left: 10px;"
-                                                        lay-filter="vul1-raw-joint-select" lay-submit="">
-                                                    <span class="iconfont icon-zhihang">Run</span>
-                                                </button>
-                                            </div>
-                                        </form>
-                                    </blockquote>
-                                </div>
-                                <div class="layui-col-md12">
-                                    <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i>测试结果</div>
-                                        <div class="layui-card-body layui-text layadmin-text">
-                                            <pre id="vul1-raw-joint-result" style="color: red;font-size: 15px;"></pre>
-                                        </div>
-                                    </div>
+                            <div class="layui-card">
+                                <div class="layui-card-header"><i class="fa fa-warning icon-output"></i>测试结果</div>
+                                <div class="layui-card-body layui-text layadmin-text">
+                                    <pre id="vul1-native-result" style="color: red;font-size: 15px;"></pre>
                                 </div>
                             </div>
                         </div>
@@ -136,13 +82,125 @@
                     <div class="layui-col-md6">
                         <h1><span class="iconfont icon-code">  缺陷代码</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
-                            <div class="code-editor" id="vulHibernate">
+                            <div class="code-editor" id="vul1Native">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- HQL注入场景 -->
+            <div class="layui-col-md12" style="margin-top: 10px">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-bug">  漏洞场景：HQL注入</span></h1>
+                        <div class="layui-tab layui-tab-brief">
+                            <div class="layui-tab-content">
+                                <!-- 查询 -->
+                                <div class="layui-tab-item layui-show">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="username" id="vul2-hql-select-username" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="用户名" value="admin' OR 1=1 OR '1'='1" autocomplete="off"
+                                                       class="layui-input">
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <select class="layui-form-select"
+                                                        style="background-color: #5eb878;!important;"lay-filter="vul2-hql-select-select">
+                                                    <option value="">示例Payload</option>
+                                                    <option value="1' AND (SELECT 4804 FROM (SELECT(SLEEP(5)))iBHa) AND '1'='1">延时注入</option>
+                                                    <option value="1' AND ELT(5753=5753,6782) AND '1'='1">布尔盲注</option>
+                                                    <option value="1' AND GTID_SUBSET(CONCAT(0x71706a7a71,(SELECT (ELT(7170=7170,1))),0x7171717071),7170) AND '1'='1">报错注入</option>
+                                                    <option value="1' and updatexml(1,concat(0x7e,(SELECT user()),0x7e),1) AND '1'='1">xpath注入</option>
+                                                </select>
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="vul2-hql-select" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-md12">
+                            <div class="layui-card">
+                                <div class="layui-card-header"><i class="fa fa-warning icon-output"></i>测试结果</div>
+                                <div class="layui-card-body layui-text layadmin-text">
+                                    <pre id="vul2-hql-result" style="color: red;font-size: 15px;"></pre>
+                                </div>
                             </div>
                         </div>
                     </div>
 
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code">  缺陷代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="vul2Hql">
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
             </div>
+
+            <!-- 安全场景 -->
+            <div class="layui-col-md12" style="margin-top: 10px">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-anquan">  安全场景：参数化查询</span></h1>
+                        <div class="layui-tab layui-tab-brief">
+                            <div class="layui-tab-content">
+                                <!-- 查询 -->
+                                <div class="layui-tab-item layui-show">
+                                    <blockquote class="layui-elem-quote main_btn">
+                                        <form class="layui-form" style="display: flex; justify-content: space-between;">
+                                            <div style="display: flex; align-items: center;">
+                                                <input type="text" name="username" id="safe-hql-select-username" style="width: 150px;" required
+                                                       lay-verify="required" placeholder="用户名" value="admin' OR 1=1 OR '1'='1" autocomplete="off"
+                                                       class="layui-input">
+                                            </div>
+                                            <div style="display: flex; align-items: center;">
+                                                <select class="layui-form-select"
+                                                        style="background-color: #5eb878;!important;"lay-filter="safe-hql-select-select">
+                                                    <option value="">示例Payload</option>
+                                                    <option value="1' AND (SELECT 4804 FROM (SELECT(SLEEP(5)))iBHa) AND '1'='1">延时注入</option>
+                                                    <option value="1' AND ELT(5753=5753,6782) AND '1'='1">布尔盲注</option>
+                                                    <option value="1' AND GTID_SUBSET(CONCAT(0x71706a7a71,(SELECT (ELT(7170=7170,1))),0x7171717071),7170) AND '1'='1">报错注入</option>
+                                                    <option value="1' and updatexml(1,concat(0x7e,(SELECT user()),0x7e),1) AND '1'='1">xpath注入</option>
+                                                </select>
+                                                <button class="layui-btn layui-btn-normal"
+                                                        style="width: 100px; margin-left: 10px;"
+                                                        lay-filter="safe1-param-select" lay-submit="">
+                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </blockquote>
+                                </div>
+                            </div>
+                                </div>
+                                <div class="layui-col-md12">
+                                    <div class="layui-card">
+                                <div class="layui-card-header"><i class="fa fa-warning icon-output-safe"></i>测试结果</div>
+                                        <div class="layui-card-body layui-text layadmin-text">
+                                    <pre id="safe1-param-result" style="color: red;font-size: 15px;"></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md6">
+                        <h1><span class="iconfont icon-code">  安全代码</span></h1>
+                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
+                            <div class="code-editor" id="safe1Param">
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
         </div>
     </div>
@@ -151,6 +209,8 @@
 <div th:replace="~{common/common::script}"></div>
 
 <script type="text/javascript">
+
+
     layui.use(['layer', 'miniTab', 'common'], function () {
         var $ = layui.jquery,
             layer = layui.layer,
@@ -159,10 +219,18 @@
         miniTab.listen();
         layer.msg("SQL注入-Hibernate")
 
-        common.formListenFun("vul1-raw-joint-add", "add", "/sqli/hibernate/vul", "vul1-raw-joint-result","get");
-        common.formListenFun("vul1-raw-joint-delete", "delete", "/sqli/hibernate/vul", "vul1-raw-joint-result","get");
-        common.formListenFun("vul1-raw-joint-update", "update", "/sqli/hibernate/vul", "vul1-raw-joint-result","get");
-        common.formListenFun("vul1-raw-joint-select", "select", "/sqli/hibernate/vul", "vul1-raw-joint-result","get");
+        // 原生SQL注入场景
+        common.formListenFun("vul1-native-select", "select", "/sqli/hibernate/vul1", "vul1-native-result","post");
+        common.selectListenFun("vul1-native-select-select", "vul1-native-select-username");
+
+
+        // HQL注入场景
+        common.formListenFun("vul2-hql-select", "select", "/sqli/hibernate/vul2", "vul2-hql-result","get");
+        common.selectListenFun("vul2-hql-select-select", "vul2-hql-select-username");
+
+        // 安全场景
+        common.formListenFun("safe1-param-select", "select", "/sqli/hibernate/safe", "safe1-param-result","post");
+        common.selectListenFun("safe-hql-select-select", "safe-hql-select-username");
 
         var cmConfig = {
             lineNumbers: true,
@@ -174,15 +242,27 @@
             fontSize: "18px",
             mode: "text/x-java"
         };
+        var cmConfigSafe = {
+            lineNumbers: true,
+            lineWrapping: false,
+            indentUnit: 4,
+            indentWithTabs: true,
+            theme: 'juejinsafe',
+            styleActiveLine: {nonEmpty: true},
+            fontSize: "18px",
+            mode: "text/x-java"
+        };
 
-        CodeMirror(document.getElementById("vulHibernate"), Object.assign({}, cmConfig, {
-            value: vulHibernate
+        CodeMirror(document.getElementById("vul1Native"), Object.assign({}, cmConfig, {
+            value: vul1Native
         }));
-
-
+        CodeMirror(document.getElementById("vul2Hql"), Object.assign({}, cmConfig, {
+            value: vul2Hql
+        }));
+        CodeMirror(document.getElementById("safe1Param"), Object.assign({}, cmConfigSafe, {
+            value: safe1Param
+        }));
     });
-
 </script>
-
 </body>
 </html>

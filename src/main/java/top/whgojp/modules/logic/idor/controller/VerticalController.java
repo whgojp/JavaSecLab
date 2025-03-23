@@ -30,7 +30,7 @@ public class VerticalController {
     public String vul() {
         String currentUsername = SecurityContextHolder.getContext().getAuthentication().getName();
         if ("admin".equals(currentUsername)) {
-            return "/vul/logic/idor/admin";
+            return "vul/logic/idor/admin";
         } else return "common/401";
     }
 

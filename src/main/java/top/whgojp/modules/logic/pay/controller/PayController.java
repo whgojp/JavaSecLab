@@ -40,7 +40,7 @@ public class PayController {
     
     @RequestMapping("")
     public String pay() {
-        return "/vul/logic/pay/pay";
+        return "vul/logic/pay/pay";
     }
 
     /**

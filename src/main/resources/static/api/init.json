@@ -101,13 +101,13 @@
             },
             {
               "title": "Hibernate",
-              "href": "",
+              "href": "sqli/hibernate",
               "icon": "iconfont icon-Hivebiao",
               "target": "_self"
             },
             {
               "title": "JPA",
-              "href": "",
+              "href": "sqli/jpa",
               "icon": "iconfont icon-spring",
               "target": "_self"
             }

@@ -5,6 +5,8 @@ spring:
   # 环境 dev|docker
   profiles:
     active: docker
+  main:
+    allow-bean-definition-overriding: true
   thymeleaf:
     mode: LEGACYHTML5 #模板类型
     cache: false #缓存
@@ -13,10 +15,7 @@ spring:
     suffix: .html
   mvc:
     pathmatch:
-      matching-strategy: ant_path_matcher  #解决swaggerUI不匹配接口
-#    view:                                  # 设置JSP视图的前缀和后缀
-#      prefix: /WEB-INF/jsp/
-#      suffix: .jsp
+      matching-strategy: ANT_PATH_MATCHER  #解决swaggerUI不匹配接口
 
 swagger:
   enable: true
@@ -50,13 +49,18 @@ logging:
 # mybaits-plus配置
 mybatis-plus:
   configuration:
+    map-underscore-to-camel-case: true
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   # MyBatis Mapper所对应的XML文件位置
-  mapper-locations: /mapper/**/*Mapper.xml
+  mapper-locations: classpath*:/mapper/**/*.xml
   global-config:
     # 关闭MP3.0自带的banner
     banner: false
-
+    db-config:
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+  type-aliases-package: top.whgojp.modules.*.entity
 
 folder:
   upload: /tmp/upload

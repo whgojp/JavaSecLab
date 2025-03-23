@@ -781,6 +781,89 @@ const anyFileUploadWhiteCode = "// 检测文件后缀，做白名单过滤\n" +
     "    return false;\n" +
     "}"
 
+const vul1Native = "public R vul1(@RequestParam String username) {\n" +
+    "    try {\n" +
+    "        String sql = \"SELECT * FROM sqli WHERE username = '\" + username + \"'\";\n" +
+    "        Object[] result = (Object[]) hibernateTemplate.execute(session ->\n" +
+    "                session.createNativeQuery(sql).uniqueResult()\n" +
+    "        );\n" +
+    "        message = \"查询成功，用户名：\" + result[1] + \" 密码：\" +result[2];\n" +
+    "        return R.ok(message);\n" +
+    "    } catch (Exception e) {\n" +
+    "        log.error(\"查询失败\", e);\n" +
+    "        return R.error(e.getMessage());\n" +
+    "    }\n" +
+    "}"
+const vul2Hql = "public R vul2(@RequestParam String username) {\n" +
+    "    try {\n" +
+    "        String hql = \"FROM Sqli WHERE username = '\" + username + \"'\";\n" +
+    "        Sqli result = (Sqli) hibernateTemplate.execute(session ->\n" +
+    "                session.createQuery(hql).uniqueResult()\n" +
+    "        );\n" +
+    "        message = \"查询成功，用户名：\" +result.getUsername()+ \" 密码：\" +result.getPassword();\n" +
+    "        return R.ok(message);\n" +
+    "    } catch (Exception e) {\n" +
+    "        log.error(\"查询失败\", e);\n" +
+    "        return R.error(e.getMessage());\n" +
+    "    }\n" +
+    "}"
+const safe1Param = "public R safe(@RequestParam String username) {\n" +
+    "    try {\n" +
+    "        String hql = \"FROM Sqli WHERE username = :username\";\n" +
+    "        Sqli result = hibernateTemplate.execute(session ->\n" +
+    "                (Sqli) session.createQuery(hql)\n" +
+    "                        .setParameter(\"username\", username)\n" +
+    "                        .uniqueResult()\n" +
+    "        );\n" +
+    "        message = \"查询成功，用户名：\" +result.getUsername()+ \" 密码：\" +result.getPassword();\n" +
+    "        return R.ok(message);\n" +
+    "    } catch (Exception e) {\n" +
+    "        log.error(\"查询失败\", e);\n" +
+    "        return R.error(e.getMessage());\n" +
+    "    }\n" +
+    "}"
+
+const vul1JpaJpql = "public R vul1(@RequestParam String username) {\n" +
+    "    try {\n" +
+    "        String jpql = \"SELECT s FROM Sqli s WHERE s.username = '\" + username + \"'\";\n" +
+    "        Query query = entityManager.createQuery(jpql);\n" +
+    "        List<Sqli> results = query.getResultList();\n" +
+    "        if (results == null || results.isEmpty()) {\n" +
+    "            return R.error(\"未找到记录\");\n" +
+    "        }\n" +
+    "        StringBuilder sb = new StringBuilder();\n" +
+    "        sb.append(\"查询成功，找到 \").append(results.size()).append(\" 条记录\\n\");\n" +
+    "        message = sb.toString();\n" +
+    "        log.info(message);\n" +
+    "        return R.ok(message);\n" +
+    "    } catch (Exception e) {\n" +
+    "        String errorMsg = e.getMessage();\n" +
+    "        log.error(\"查询失败: {}\", errorMsg, e);\n" +
+    "        return R.error(errorMsg);\n" +
+    "    }\n" +
+    "}"
+const vul2JpaSort = "vul2JpaSort"
+const safeJpaParam = "public R safe(@RequestParam String username) {\n" +
+    "    try {\n" +
+    "        String jpql = \"SELECT s FROM Sqli s WHERE s.username = :username\";\n" +
+    "        Query query = entityManager.createQuery(jpql)\n" +
+    "                .setParameter(\"username\", username);\n" +
+    "        List<Sqli> results = query.getResultList();\n" +
+    "        if (results == null || results.isEmpty()) {\n" +
+    "            return R.error(\"未找到记录\");\n" +
+    "        }\n" +
+    "        StringBuilder sb = new StringBuilder();\n" +
+    "        sb.append(\"查询成功，找到 \").append(results.size()).append(\" 条记录\\n\");\n" +
+    "        message = sb.toString();\n" +
+    "        log.info(message);\n" +
+    "        return R.ok(message);\n" +
+    "    } catch (Exception e) {\n" +
+    "        String errorMsg = e.getMessage();\n" +
+    "        log.error(\"查询失败: {}\", errorMsg, e);\n" +
+    "        return R.error(errorMsg);\n" +
+    "    }\n" +
+    "}"
+
 // 任意文件类型-文件删除
 const deleteFile = "public String vul(String filePath) {\n" +
     "    String currentPath = System.getProperty(\"user.dir\");\n" +
@@ -1961,7 +2044,7 @@ const spelSafe = "public R safe(String ex) {\n" +
 
 const sstiVul = "public String vul1(@RequestParam String para, Model model) {\n" +
     "    // 用户输入直接拼接到模板路径，可能导致SSTI（服务器端模板注入）漏洞\n" +
-    "    return \"/vul/ssti/\" + para;\n" +
+    "    return \"vul/ssti/\" + para;\n" +
     "}\n" +
     "\n" +
     "public void vul2(@PathVariable String path) {\n" +
