@@ -11,48 +11,11 @@
  Target Server Version : 80200 (8.2.0)
  File Encoding         : 65001
 
- Date: 21/03/2025 16:51:30
+ Date: 23/03/2025 17:52:40
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
-
--- ----------------------------
--- Table structure for hsqli
--- ----------------------------
-DROP TABLE IF EXISTS `hsqli`;
-CREATE TABLE `hsqli` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- ----------------------------
--- Records of hsqli
--- ----------------------------
-BEGIN;
-COMMIT;
-
--- ----------------------------
--- Table structure for log
--- ----------------------------
-DROP TABLE IF EXISTS `log`;
-CREATE TABLE `log` (
-  `logId` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'log_id',
-  `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '用户名',
-  `optionName` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '用户操作',
-  `optionTerminal` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '操作终端',
-  `optionIp` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'Ip地址',
-  `optionTime` date DEFAULT NULL COMMENT '创建时间',
-  PRIMARY KEY (`logId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- ----------------------------
--- Records of log
--- ----------------------------
-BEGIN;
-COMMIT;
 
 -- ----------------------------
 -- Table structure for objects
@@ -80,13 +43,15 @@ CREATE TABLE `sqli` (
   `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '用户名',
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '密码',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of sqli
 -- ----------------------------
 BEGIN;
-INSERT INTO `sqli` (`id`, `username`, `password`) VALUES (1, 'test', 'test');
+INSERT INTO `sqli` (`id`, `username`, `password`) VALUES (1, 'admin', 'admin');
+INSERT INTO `sqli` (`id`, `username`, `password`) VALUES (2, 'admin123', 'admin123');
+INSERT INTO `sqli` (`id`, `username`, `password`) VALUES (3, 'test', 'test');
 COMMIT;
 
 -- ----------------------------
@@ -118,7 +83,7 @@ CREATE TABLE `xss` (
   `ua` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'User-Agent',
   `date` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '插入时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=85 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of xss
