@@ -4,7 +4,7 @@ server:
 spring:
   # 环境 dev|docker
   profiles:
-    active: dev
+    active: docker
   main:
     allow-bean-definition-overriding: true
   messages:
