@@ -3,6 +3,8 @@ package top.whgojp.modules.crossorigin.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import top.whgojp.common.utils.R;
@@ -27,12 +29,17 @@ import java.util.regex.Pattern;
 //@CrossOrigin(origins = "*")
 @RequestMapping("/crossorigin")
 public class CrossOriginController {
+    private final MessageSource messageSource;
 
     private static final Set<String> TRUSTED_ORIGINS = new HashSet<>(Arrays.asList(
             "http://127.0.0.1:8080",
             "https://127.0.0.1:8080"
     ));
     private static final Pattern JSONP_CALLBACK_PATTERN = Pattern.compile("^[A-Za-z_$][A-Za-z0-9_$]*(\\.[A-Za-z_$][A-Za-z0-9_$]*)*$");
+
+    public CrossOriginController(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
 
     @RequestMapping("/cors")
     public String cors() {
@@ -54,13 +61,13 @@ public class CrossOriginController {
             response.setHeader("Access-Control-Allow-Origin", "http://example.com");
         }
 
-        // 允许携带 Cookie 或其他凭证
+        // Allow cookies or other credentials.
         response.setHeader("Access-Control-Allow-Credentials", "true");
         response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
         response.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With");
         response.setHeader("Vary", "Origin");
 
-        return R.ok("CORS漏洞演示：username:admin,password:Admin123");
+        return R.ok(msg("crossorigin.result.corsVul"));
     }
 
     @RequestMapping(value = "/corsSafe", method = {RequestMethod.GET, RequestMethod.OPTIONS})
@@ -69,17 +76,17 @@ public class CrossOriginController {
         String origin = request.getHeader("Origin");
         response.setHeader("Vary", "Origin");
         if (origin == null) {
-            return R.ok("同源请求不需要CORS响应头");
+            return R.ok(msg("crossorigin.result.sameOriginNoCors"));
         }
         if (!TRUSTED_ORIGINS.contains(origin)) {
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            return R.error(HttpServletResponse.SC_FORBIDDEN, "Origin不在CORS白名单");
+            return R.error(HttpServletResponse.SC_FORBIDDEN, msg("crossorigin.result.originNotAllowlisted"));
         }
         response.setHeader("Access-Control-Allow-Origin", origin);
         response.setHeader("Access-Control-Allow-Credentials", "true");
         response.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
         response.setHeader("Access-Control-Allow-Headers", "Content-Type");
-        return R.ok("配置CORS可信源白名单");
+        return R.ok(msg("crossorigin.result.corsAllowlistConfigured"));
     }
 
     @GetMapping("/jsonpVul")
@@ -87,10 +94,10 @@ public class CrossOriginController {
         String callback = request.getParameter("callback");
         String sensitiveData = "{\"username\":\"admin\",\"password\":\"Admin123\"}";
 
-        // 返回数据包装成 JSONP 格式，并没有对 callback 参数进行安全验证
+        // Wrap data as JSONP without validating the callback parameter.
         String jsonpResponse = callback + "(" + sensitiveData + ");";
 
-        // 设置响应类型为 JavaScript 脚本
+        // Set the response type to JavaScript.
         response.setContentType("application/javascript;charset=UTF-8");
         response.getWriter().write(jsonpResponse);
     }
@@ -100,7 +107,7 @@ public class CrossOriginController {
     public void jsonpSafe(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String callback = request.getParameter("callback");
 
-        // 校验回调函数名是否合法
+        // Validate the callback function name.
         if (callback == null || !JSONP_CALLBACK_PATTERN.matcher(callback).matches()) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             response.getWriter().write("Invalid callback");
@@ -113,5 +120,8 @@ public class CrossOriginController {
         response.getWriter().write(callback + "(" + publicData + ");");
     }
 
+    private String msg(String code, Object... args) {
+        return messageSource.getMessage(code, args, LocaleContextHolder.getLocale());
+    }
 
 }

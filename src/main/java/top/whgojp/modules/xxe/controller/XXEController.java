@@ -4,6 +4,9 @@ import groovy.xml.SAXBuilder;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.w3c.dom.Document;
@@ -28,17 +31,20 @@ import java.io.StringReader;
 import java.io.StringWriter;
 
 /**
- * @description XML外部实体注入
+ * @description XML external entity injection
  * @author: whgojp
  * @email: whgojp@foxmail.com
  * @Date: 2024/8/29 11:27
  */
 @Slf4j
-@Api(value = "XXEController", tags = "XML外部实体注入")
+@Api(value = "XXEController", tags = "XXE - XML External Entity Injection")
 @Controller
 @CrossOrigin(origins = "*")
 @RequestMapping("/xxe")
 public class XXEController {
+    @Autowired
+    private MessageSource messageSource;
+
 
     @RequestMapping("/vul")
     public String xxeVul() {
@@ -74,7 +80,7 @@ public class XXEController {
 
 
     /**
-     * SAXParser 解析不可信 XML 时同样需要显式关闭 DTD、外部实体和外部 DTD 加载。
+     * SAXParser also needs DTDs, external entities, and external DTD loading explicitly disabled when parsing untrusted XML.
      */
     @RequestMapping(value = "/vul2")
     @ResponseBody
@@ -216,7 +222,7 @@ public class XXEController {
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
-//        return "出错了！";
+//        return "Error!";
 //    }
 
 
@@ -225,7 +231,7 @@ public class XXEController {
     public String safe1(@RequestParam String payload) {
         try {
             XMLReader xmlReader = XMLReaderFactory.createXMLReader();
-            // 禁用外部实体引用，防止XXE攻击
+            // Disable external entity references to prevent XXE attacks.
             xmlReader.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
             xmlReader.setFeature("http://xml.org/sax/features/external-general-entities", false);
             xmlReader.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
@@ -279,10 +285,10 @@ public class XXEController {
         String[] black_list = {"ENTITY", "DOCTYPE"};
         for (String keyword : black_list) {
             if (payload.toUpperCase().contains(keyword)) {
-                return "[+]检测到恶意XML！";
+                return msg("xxe.result.maliciousXmlDetected");
             }
         }
-        return "[-]XML内容安全";
+        return msg("xxe.result.xmlContentSafe");
     }
 
     private String formatXmlText(String text) {
@@ -300,5 +306,8 @@ public class XXEController {
         }
     }
 
+    private String msg(String code, Object... args) {
+        return messageSource.getMessage(code, args, LocaleContextHolder.getLocale());
+    }
 
 }

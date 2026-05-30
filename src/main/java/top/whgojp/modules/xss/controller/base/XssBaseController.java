@@ -2,6 +2,8 @@ package top.whgojp.modules.xss.controller.base;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.thymeleaf.util.StringUtils;
 import top.whgojp.common.utils.CheckUserInput;
 import top.whgojp.common.utils.R;
@@ -13,9 +15,12 @@ public abstract class XssBaseController {
     @Autowired
     protected CheckUserInput checkUserInput;
 
+    @Autowired
+    protected MessageSource messageSource;
+
     protected R handleXssPayload(String payload, String type, boolean enableFilter) {
         if (StringUtils.isEmpty(payload)) {
-            return R.error("参数不能为空");
+            return R.error(msg("xss.reflect.result.emptyPayload"));
         }
         
         log.info("[+]XSS-{}-收到payload：{}", type, payload);
@@ -27,6 +32,10 @@ public abstract class XssBaseController {
         }
         
         return R.ok(payload);
+    }
+
+    protected String msg(String code, Object... args) {
+        return messageSource.getMessage(code, args, LocaleContextHolder.getLocale());
     }
 
     protected String getUserAgent(HttpServletRequest request) {

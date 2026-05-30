@@ -8,12 +8,12 @@
             <div class="layui-col-md12">
                 <fieldset class="layui-elem-field layui-field-title">
                     <legend>
-                        <a style="color: rgb(30 159 255)" class="xxe">XXE (XML External Entity Injection)</a>
+                        <a style="color: rgb(30 159 255)" class="xxe" th:text="#{xxe.title}">XXE (XML External Entity Injection)</a>
                     </legend>
                     <blockquote class="layui-elem-quote layui-quote-nm"
                                 style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
-                        <pre>  XXE(XML外部实体注入)：应用解析不可信 XML 时允许 DTD 或外部实体，攻击者可通过 SYSTEM/PUBLIC 外部实体让解析器读取本地文件、访问内网地址、触发 SSRF，或利用实体膨胀造成拒绝服务。</pre>
-                        <pre>  常见入口：Content-Type 为 text/xml/application/xml 的接口、SOAP、SAML、SVG、Office/Excel 预览、XML 配置导入、文件解析插件、消息队列或第三方回调中的 XML 数据。</pre>
+                        <pre th:text="#{xxe.intro.core}">  XXE(XML外部实体注入)：应用解析不可信 XML 时允许 DTD 或外部实体，攻击者可通过 SYSTEM/PUBLIC 外部实体让解析器读取本地文件、访问内网地址、触发 SSRF，或利用实体膨胀造成拒绝服务。</pre>
+                        <pre th:text="#{xxe.intro.entry}">  常见入口：Content-Type 为 text/xml/application/xml 的接口、SOAP、SAML、SVG、Office/Excel 预览、XML 配置导入、文件解析插件、消息队列或第三方回调中的 XML 数据。</pre>
                     </blockquote>
                 </fieldset>
             </div>
@@ -21,15 +21,15 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-bug"> 漏洞场景：XMLReader</span></h1>
+                        <h1><span class="iconfont icon-bug" th:text="| #{xxe.vul.xmlReader}|"> 漏洞场景：XMLReader</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
-	                                        <p>XMLReader 未禁用 DTD 和外部实体时，可能解析攻击者提供的外部实体</p>
+	                                        <p th:text="#{xxe.vul.xmlReader.desc}">XMLReader 未禁用 DTD 和外部实体时，可能解析攻击者提供的外部实体</p>
                                         <a target="_blank" href="/xxe/vul1?payload=%3c%3f%78%6d%6c%20%76%65%72%73%69%6f%6e%3d%22%31%2e%30%22%20%65%6e%63%6f%64%69%6e%67%3d%22%55%54%46%2d%38%22%3f%3e%3c%21%44%4f%43%54%59%50%45%20%72%6f%6f%74%20%5b%3c%21%45%4e%54%49%54%59%20%78%78%65%20%53%59%53%54%45%4d%20%22%66%69%6c%65%3a%2f%2f%2f%65%74%63%2f%70%61%73%73%77%64%22%3e%5d%3e%3c%72%6f%6f%74%3e%20%20%26%78%78%65%3b%3c%2f%72%6f%6f%74%3e">
                                             <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
-                                                <span class="iconfont icon-zhihang">Run</span>
+                                                <span class="iconfont icon-zhihang" th:text="#{xxe.common.run}">Run</span>
                                             </button>
                                         </a>
                                     </blockquote>
@@ -37,21 +37,9 @@
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{xxe.common.tips}">tips</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">代码审计 SINK 点：
-  1、XMLReader
-  2、SAXReader
-  3、DocumentBuilder
-  4、XMLStreamReader
-  5、SAXBuilder
-  6、SAXParser
-  7、SAXSource
-  8、TransformerFactory
-  9、SAXTransformerFactory
-  10、SchemaFactory
-  11、Unmarshaller
-  12、XPathExpression</pre>
+                                            <pre style="color: #28333e;font-size: 15px;" th:text="#{xxe.auditTips}">代码审计 SINK 点</pre>
                                         </div>
                                     </div>
                                 </div>
@@ -61,7 +49,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="| #{xxe.common.vulnerableCode}|"> 缺陷代码</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="vulXMLReader"></div>
                         </div>
@@ -72,15 +60,15 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-bug"> 漏洞场景：SAXParser</span></h1>
+                        <h1><span class="iconfont icon-bug" th:text="| #{xxe.vul.saxParser}|"> 漏洞场景：SAXParser</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
-	                                        <p>SAXParser 解析不可信 XML 时同样需要显式关闭 DTD 和外部实体</p>
+	                                        <p th:text="#{xxe.vul.saxParser.desc}">SAXParser 解析不可信 XML 时同样需要显式关闭 DTD 和外部实体</p>
                                         <a target="_blank" href="/xxe/vul2?payload=%3c%3f%78%6d%6c%20%76%65%72%73%69%6f%6e%3d%22%31%2e%30%22%20%65%6e%63%6f%64%69%6e%67%3d%22%55%54%46%2d%38%22%3f%3e%3c%21%44%4f%43%54%59%50%45%20%72%6f%6f%74%20%5b%3c%21%45%4e%54%49%54%59%20%78%78%65%20%53%59%53%54%45%4d%20%22%66%69%6c%65%3a%2f%2f%2f%65%74%63%2f%68%6f%73%74%73%22%3e%5d%3e%3c%72%6f%6f%74%3e%20%20%26%78%78%65%3b%3c%2f%72%6f%6f%74%3e">
                                             <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
-                                                <span class="iconfont icon-zhihang">Run</span>
+                                                <span class="iconfont icon-zhihang" th:text="#{xxe.common.run}">Run</span>
                                             </button>
                                         </a>
                                     </blockquote>
@@ -88,9 +76,9 @@
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{xxe.common.tips}">tips</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">  不同 JDK、解析器实现和库版本的默认安全特性并不完全一致。审计时不要依赖“默认安全”，应在创建解析器后显式禁用 DOCTYPE、外部通用实体、外部参数实体和外部 DTD 加载。</pre></div>
+                                            <pre style="color: #28333e;font-size: 15px;" th:text="#{xxe.parserTips}">  不同 JDK、解析器实现和库版本的默认安全特性并不完全一致。</pre></div>
                                     </div>
                                 </div>
 
@@ -99,7 +87,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="| #{xxe.common.vulnerableCode}|"> 缺陷代码</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="vulSAXParser"></div>
                         </div>
@@ -110,15 +98,15 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-bug"> 漏洞场景：DocumentBuilder</span></h1>
+                        <h1><span class="iconfont icon-bug" th:text="| #{xxe.vul.documentBuilder}|"> 漏洞场景：DocumentBuilder</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
-                                        <p>DocumentBuilder 解析 DOM 文档时如果未禁用外部实体，同样会展开 SYSTEM/PUBLIC 实体</p>
+                                        <p th:text="#{xxe.vul.documentBuilder.desc}">DocumentBuilder 解析 DOM 文档时如果未禁用外部实体，同样会展开 SYSTEM/PUBLIC 实体</p>
                                         <a target="_blank" href="/xxe/vul3?payload=%3c%3f%78%6d%6c%20%76%65%72%73%69%6f%6e%3d%22%31%2e%30%22%20%65%6e%63%6f%64%69%6e%67%3d%22%55%54%46%2d%38%22%3f%3e%3c%21%44%4f%43%54%59%50%45%20%72%6f%6f%74%20%5b%3c%21%45%4e%54%49%54%59%20%78%78%65%20%53%59%53%54%45%4d%20%22%66%69%6c%65%3a%2f%2f%2f%65%74%63%2f%68%6f%73%74%73%22%3e%5d%3e%3c%72%6f%6f%74%3e%20%20%26%78%78%65%3b%3c%2f%72%6f%6f%74%3e">
                                             <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
-                                                <span class="iconfont icon-zhihang">Run</span>
+                                                <span class="iconfont icon-zhihang" th:text="#{xxe.common.run}">Run</span>
                                             </button>
                                         </a>
                                     </blockquote>
@@ -126,9 +114,9 @@
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{xxe.common.tips}">tips</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">  DOM、SAX、StAX、JAXB 等 XML 解析入口都要单独确认安全配置；不要只修某一个解析器封装。</pre>
+                                            <pre style="color: #28333e;font-size: 15px;" th:text="#{xxe.domTips}">  DOM、SAX、StAX、JAXB 等 XML 解析入口都要单独确认安全配置。</pre>
                                         </div>
                                     </div>
                                 </div>
@@ -138,7 +126,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="| #{xxe.common.vulnerableCode}|"> 缺陷代码</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="vulDocumentBuilder"></div>
                         </div>
@@ -151,14 +139,15 @@
 </div>
 
 <div th:replace="~{common/common::script}"></div>
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
     layui.use(['layer', 'miniTab', 'common', 'upload'], function () {
         var $ = layui.jquery,
             layer = layui.layer,
             miniTab = layui.miniTab;
 
         miniTab.listen();
-        layer.msg("XXE-XML外部实体注入");
+        layer.msg(/*[[#{xxe.toast}]]*/ "XXE-XML外部实体注入");
+        var isEnglishXxe = /*[[${#locale.language == 'en'}]]*/ false;
 
         var cmConfig = {
             lineNumbers: true,
@@ -172,13 +161,13 @@
         };
 
         CodeMirror(document.getElementById("vulXMLReader"), Object.assign({}, cmConfig, {
-            value: vulXMLReader
+            value: isEnglishXxe ? vulXMLReader : vulXMLReaderZh
         }));
         CodeMirror(document.getElementById("vulSAXParser"), Object.assign({}, cmConfig, {
-            value: vulSAXParser
+            value: isEnglishXxe ? vulSAXParser : vulSAXParserZh
         }));
         CodeMirror(document.getElementById("vulDocumentBuilder"), Object.assign({}, cmConfig, {
-            value: vulDocumentBuilder
+            value: isEnglishXxe ? vulDocumentBuilder : vulDocumentBuilderZh
         }));
 
 
@@ -186,7 +175,7 @@
 
     $('.xxe').hover(function () {
         $(this).css('cursor', 'pointer');
-        layer.tips('攻击流程图', this, {
+        layer.tips(/*[[#{xxe.flowTip}]]*/ '攻击流程图', this, {
             tips: [1, '#0051ff'],
             time: 2000
         });
@@ -197,7 +186,7 @@
             type: 1,
             title: false,
             closeBtn: 1,
-            area: ['859px', '506px'], // 宽高可以根据需要调整
+            area: ['859px', '506px'], // Width and height.
             shadeClose: true,
             content: '<div style="text-align: center;"><img src="/static/images/vul/xxe/xxe.png" style="width: 100%; height: 50%;"></div>'
         });

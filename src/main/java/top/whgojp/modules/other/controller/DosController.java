@@ -5,6 +5,8 @@ import cn.hutool.captcha.ShearCaptcha;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,9 +35,14 @@ import java.util.zip.ZipInputStream;
 @CrossOrigin(origins = "*")
 @RequestMapping("/other/dos")
 public class DosController {
+    private final MessageSource messageSource;
     private static final int MAX_IMAGE_WIDTH = 800;
     private static final int MAX_IMAGE_HEIGHT = 300;
     private static final int MAX_IMAGE_PIXELS = 240_000;
+
+    public DosController(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
 
     @RequestMapping("")
     public String dos() {
@@ -47,7 +54,7 @@ public class DosController {
         response.setContentType("image/jpeg");
         response.setHeader("Pragma", "no-cache");
         response.setHeader("Cache-Control", "no-cache");
-        // 验证码参数可控 造成拒绝服务攻击
+        // Captcha parameters are controllable, causing denial of service.
         ShearCaptcha shearCaptcha = CaptchaUtil.createShearCaptcha(width, height,4,3);
         try {
             shearCaptcha.write(response.getOutputStream());
@@ -63,7 +70,7 @@ public class DosController {
                 || (long) width * height > MAX_IMAGE_PIXELS) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             response.setContentType("text/plain;charset=UTF-8");
-            response.getWriter().write("图片尺寸超出限制");
+            response.getWriter().write(msg("other.dos.result.imageTooLarge"));
             return;
         }
         response.setContentType("image/jpeg");
@@ -77,18 +84,18 @@ public class DosController {
     @ResponseBody
     public R vul2(MultipartFile file) {
         if (file == null || file.isEmpty()) {
-            return R.error("请先选择ZIP文件");
+            return R.error(msg("other.dos.result.chooseZip"));
         }
         File tempFile = null;
         try {
             tempFile = convertMultipartFileToFile(file);
-            // 限制解压深度为 1，防止无限递归
+            // Limit decompression depth to 1 to prevent infinite recursion.
             int maxDepth = 1;
             unzip(tempFile, 0, maxDepth);
-            return R.ok("文件解压成功!");
+            return R.ok(msg("other.dos.result.unzipSuccess"));
         } catch (Exception e) {
             e.printStackTrace();
-            return R.error("文件解压失败: " + e.getMessage());
+            return R.error(msg("other.dos.result.unzipFailed", e.getMessage()));
         } finally {
             if (tempFile != null && tempFile.exists()) {
                 tempFile.delete();
@@ -97,7 +104,7 @@ public class DosController {
     }
 
     private File convertMultipartFileToFile(MultipartFile file) throws IOException {
-        // 将上传的MultipartFile转换为临时文件
+        // Convert the uploaded MultipartFile to a temporary file.
         File tempFile = File.createTempFile("tempFile", ".zip");
         file.transferTo(tempFile);
         return tempFile;
@@ -105,20 +112,20 @@ public class DosController {
 
     private void unzip(File zipFile, int currentDepth, int maxDepth) throws IOException {
         if (currentDepth > maxDepth) {
-            throw new IOException("超过最大解压深度限制！");
+            throw new IOException(msg("other.dos.result.depthExceeded"));
         }
 
         try (ZipInputStream zipInputStream = new ZipInputStream(new FileInputStream(zipFile))) {
             ZipEntry entry;
             while ((entry = zipInputStream.getNextEntry()) != null) {
-                // 排除 macOS 元数据文件
+                // Exclude macOS metadata files.
                 if (entry.getName().startsWith("__MACOSX") || entry.getName().startsWith("._")) {
                     continue;
                 }
 
-                // 如果解压出的文件是ZIP文件，则递归解压
+                // Recursively decompress ZIP files found inside the archive.
                 if (entry.getName().endsWith(".zip")) {
-                    // 创建临时文件来存储这个ZIP
+                    // Create a temporary file to store this ZIP.
                     File tempFile = File.createTempFile("unzip", ".zip");
                     try (FileOutputStream fos = new FileOutputStream(tempFile)) {
                         byte[] buffer = new byte[1024];
@@ -127,15 +134,15 @@ public class DosController {
                             fos.write(buffer, 0, length);
                         }
                     }
-                    // 递归解压这个新的ZIP文件
+                    // Recursively decompress the new ZIP file.
                     unzip(tempFile, currentDepth + 1, maxDepth);
-                    // 解压完成后删除临时文件
+                    // Delete the temporary file after decompression.
                     tempFile.delete();
                 } else {
-                    // 解压并存储文件
+                    // Decompress and store the file.
                     File extractedDir = new File("extracted");
                     if (!extractedDir.exists()) {
-                        extractedDir.mkdirs();  // 创建目录
+                        extractedDir.mkdirs();
                     }
                     File outputFile = new File(extractedDir, entry.getName());
                     try (BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(outputFile))) {
@@ -148,8 +155,12 @@ public class DosController {
                 }
             }
         } catch (IOException e) {
-            throw new IOException("解压文件失败: " + zipFile.getName(), e);
+            throw new IOException(msg("other.dos.result.unzipFileFailed", zipFile.getName()), e);
         }
+    }
+
+    private String msg(String code, Object... args) {
+        return messageSource.getMessage(code, args, LocaleContextHolder.getLocale());
     }
 
 

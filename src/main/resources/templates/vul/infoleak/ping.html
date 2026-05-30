@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>网络连通性测试</title>
+    <title th:text="#{infoleak.test.ping.pageTitle}">Network Connectivity Test</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 24px; }
         .panel { border: 1px solid #e5e7eb; padding: 16px; margin-bottom: 18px; max-width: 760px; }
@@ -11,23 +11,23 @@
     </style>
 </head>
 <body>
-<h1>Ping 测试页面</h1>
+<h1 th:text="#{infoleak.test.ping.heading}">Ping Test Page</h1>
 <div class="panel">
-    <h2>漏洞场景：命令拼接</h2>
+    <h2 th:text="#{infoleak.test.ping.vulTitle}">Vulnerable Scenario: Command Concatenation</h2>
     <form method="get" action="/infoLeak/ceShiPage/ping">
-        <label for="ip">目标地址:</label>
+        <label for="ip" th:text="#{infoleak.test.ping.target}">Target:</label>
         <input value="127.0.0.1 & whoami" type="text" id="ip" name="ip">
-        <button type="submit">Ping</button>
+        <button type="submit" th:text="#{infoleak.test.ping.submit}">Ping</button>
     </form>
     <pre th:text="${result}"></pre>
 </div>
 
 <div class="panel">
-    <h2>安全场景：参数白名单 + ProcessBuilder参数数组</h2>
+    <h2 th:text="#{infoleak.test.ping.safeTitle}">Safe Scenario: Parameter Allowlist + ProcessBuilder Argument Array</h2>
     <form method="get" action="/infoLeak/ceShiPage/safePing">
-        <label for="safeIp">目标地址:</label>
+        <label for="safeIp" th:text="#{infoleak.test.ping.target}">Target:</label>
         <input value="127.0.0.1 & whoami" type="text" id="safeIp" name="ip">
-        <button type="submit">安全Ping</button>
+        <button type="submit" th:text="#{infoleak.test.ping.safeSubmit}">Safe Ping</button>
     </form>
     <pre th:text="${safeResult}"></pre>
 </div>

@@ -5,6 +5,8 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.expression.EvaluationContext;
 import org.springframework.expression.Expression;
 import org.springframework.expression.ExpressionParser;
@@ -27,6 +29,12 @@ import top.whgojp.common.utils.R;
 @CrossOrigin(origins = "*")
 @RequestMapping("/spel")
 public class SPELController {
+    private final MessageSource messageSource;
+
+    public SPELController(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
+
     @RequestMapping("")
     public String spel() {
         return "vul/spel/spel";
@@ -46,11 +54,11 @@ public class SPELController {
             Expression exp = parser.parseExpression(ex);
             // 通过上下文计算表达式的值，并将结果转换为字符串
             Object result = exp.getValue(evaluationContext);
-            log.info("[+]SPEL表达式注入：" + ex);
+            log.info("[+] SpEL expression injection: {}", ex);
             return R.ok(String.valueOf(result));
         } catch (Exception e) {
-            log.error("[+]SPEL表达式执行失败：" + ex, e);
-            return R.error("SPEL表达式执行失败：" + e.getMessage());
+            log.error("[+] SpEL expression execution failed: {}", ex, e);
+            return R.error(msg("spel.result.vulFailed", e.getMessage()));
         }
     }
 
@@ -64,13 +72,16 @@ public class SPELController {
             EvaluationContext simpleContext = SimpleEvaluationContext.forReadOnlyDataBinding().build();
             Expression exp = parser.parseExpression(ex);
             Object result = exp.getValue(simpleContext);
-            log.info("[-]SPEL表达式注入：" + ex);
+            log.info("[-] SpEL expression evaluated in restricted context: {}", ex);
             return R.ok(String.valueOf(result));
         } catch (Exception e) {
-            log.warn("[-]SPEL安全场景拦截表达式：" + ex, e);
-            return R.error("表达式被安全上下文限制：" + e.getMessage());
+            log.warn("[-] SpEL safe scenario blocked expression: {}", ex, e);
+            return R.error(msg("spel.result.safeBlocked", e.getMessage()));
         }
     }
 
+    private String msg(String key, Object... args) {
+        return messageSource.getMessage(key, args, LocaleContextHolder.getLocale());
+    }
 
 }

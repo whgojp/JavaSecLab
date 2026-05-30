@@ -7,11 +7,11 @@
         <div class="layui-row layui-col-space15">
             <div class="layui-col-md12">
                 <fieldset class="layui-elem-field layui-field-title">
-                    <legend style="color: rgb(30 159 255)">任意文件操作 - 文件下载</legend>
+                    <legend style="color: rgb(30 159 255)" th:text="#{file.download.title}">任意文件操作 - 文件下载</legend>
                     <blockquote class="layui-elem-quote layui-quote-nm"
                                 style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
                         <p>
-                        <pre>  任意文件下载：应用根据用户可控参数拼接下载路径，未限制可下载目录和文件名，攻击者可通过绝对路径或 ../ 目录穿越下载敏感文件。它本质上是文件读取漏洞的一种业务表现，常出现在附件下载、导出和日志下载接口中。</pre>
+                        <pre th:text="#{file.download.intro}">  任意文件下载：应用根据用户可控参数拼接下载路径，未限制可下载目录和文件名，攻击者可通过绝对路径或 ../ 目录穿越下载敏感文件。它本质上是文件读取漏洞的一种业务表现，常出现在附件下载、导出和日志下载接口中。</pre>
                         </p>
                     </blockquote>
                 </fieldset>
@@ -21,10 +21,10 @@
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
                         <h1 style="display: flex; justify-content: space-between; align-items: center;height: 33.5px">
-                            <span class="iconfont icon-bug"> 漏洞场景：路径未限制</span>
+                            <span class="iconfont icon-bug" th:text="| #{file.common.vul.unrestrictedPath}|"> 漏洞场景：路径未限制</span>
                             <span class="iconfont icon-liuliang1">
                                 <a href="/other/datapackage/file/download.pcapng" download="download.pcapng"
-                                   style="margin-right: 19px;color: #00bb00">流量分析</a>
+                                   style="margin-right: 19px;color: #00bb00" th:text="#{file.common.traffic}">流量分析</a>
                             </span>
                         </h1>
 
@@ -33,10 +33,10 @@
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
-                                        <p>文件路径没做限制，可使用绝对路径或 ../ 遍历下载文件</p>
+                                        <p th:text="#{file.download.vulDesc}">文件路径没做限制，可使用绝对路径或 ../ 遍历下载文件</p>
                                         <a target="_blank" href="/file/download/vul?fileName=/etc/passwd">
                                             <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
-                                                <span class="iconfont icon-zhihang">Run</span>
+                                                <span class="iconfont icon-zhihang" th:text="#{file.common.run}">Run</span>
                                             </button>
                                         </a>
                                     </blockquote>
@@ -47,7 +47,7 @@
 
                     <div class="layui-col-md6">
                         <h1 style="display: flex; align-items: center; height: 33.5px;">
-                            <span class="iconfont icon-code" style="height: 22.5px;">缺陷代码</span>
+                            <span class="iconfont icon-code" style="height: 22.5px;" th:text="#{file.common.vulnerableCode}">缺陷代码</span>
                         </h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="downloadFile">
@@ -60,16 +60,16 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-anquan">  安全场景：文件下载目录限制</span></h1>
+                        <h1><span class="iconfont icon-anquan" th:text="|  #{file.common.safe.downloadScope}|">  安全场景：文件下载目录限制</span></h1>
                         <div class="layui-tab layui-tab-brief">
 
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
-                                        <p>安全场景将下载范围限制在上传目录内，可使用 /etc/hosts 验证拦截效果</p>
+                                        <p th:text="#{file.download.safeDesc}">安全场景将下载范围限制在上传目录内，可使用 /etc/hosts 验证拦截效果</p>
                                         <a target="_blank" href="/file/download/safe?fileName=/etc/hosts">
                                             <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
-                                                <span class="iconfont icon-zhihang">Run</span>
+                                                <span class="iconfont icon-zhihang" th:text="#{file.common.run}">Run</span>
                                             </button>
                                         </a>
                                     </blockquote>
@@ -77,14 +77,9 @@
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{file.common.tips}">tips</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">安全编码建议：
-  1、下载接口优先接收文件 ID，由后端映射真实路径，不直接信任用户传入路径。
-  2、标准化路径后校验目录边界，并只允许下载普通文件。
-  3、对已存在文件再校验 toRealPath，避免通过符号链接绕出允许目录。
-  4、文件名、扩展名和业务权限都应校验，白名单不能替代授权判断。
-  5、Content-Disposition 只使用后端确认过的安全文件名，避免响应头注入和路径泄露。</pre>
+                                            <pre style="color: #28333e;font-size: 15px;" th:text="#{file.download.safeTips}">安全编码建议</pre>
                                         </div>
                                     </div>
                                 </div>
@@ -94,7 +89,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code">  安全代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="|  #{file.common.safeCode}|">  安全代码</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="safeDownloadFile">
                             </div>
@@ -107,7 +102,7 @@
 </div>
 
 <div th:replace="~{common/common::script}"></div>
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
     layui.use(['layer', 'miniTab', 'common', 'upload'], function () {
         var $ = layui.jquery,
             layer = layui.layer,
@@ -115,7 +110,8 @@
             common = layui.common,
             upload = layui.upload;
         miniTab.listen();
-        layer.msg("任意文件类-文件下载")
+        layer.msg(/*[[#{file.download.toast}]]*/ "任意文件类-文件下载")
+        var isEnglishFile = /*[[${#locale.language == 'en'}]]*/ false;
 
 
         var cmConfig = {
@@ -141,11 +137,11 @@
         };
 
         CodeMirror(document.getElementById("downloadFile"), Object.assign({}, cmConfig, {
-            value: downloadFile
+            value: isEnglishFile ? downloadFile : downloadFileZh
         }));
 
         CodeMirror(document.getElementById("safeDownloadFile"), Object.assign({}, cmConfigSafe, {
-            value: safeDownloadFile
+            value: isEnglishFile ? safeDownloadFile : safeDownloadFileZh
         }));
 
 

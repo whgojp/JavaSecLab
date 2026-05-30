@@ -8,11 +8,11 @@
         <div class="layui-row layui-col-space15">
             <div class="layui-col-md12">
                 <fieldset class="layui-elem-field layui-field-title">
-                    <legend style="color: rgb(30 159 255)">敏感信息泄漏 - 目录遍历</legend>
+                    <legend style="color: rgb(30 159 255)" th:text="#{infoleak.dir.title}">Information Leakage - Directory Traversal</legend>
                     <blockquote class="layui-elem-quote layui-quote-nm"
                                 style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
                         <p>
-                        <pre>  目录遍历泄漏发生在目录列表、文件浏览、静态资源代理等功能中。应用把用户可控路径拼接到服务端目录后，如果没有标准化路径并校验目录边界，攻击者可通过 ../ 或编码变体浏览非预期目录，进而发现配置、备份、日志或源码文件。</pre>
+                        <pre th:text="#{infoleak.dir.intro}">Directory traversal leakage appears in directory listing and file browsing features.</pre>
                         </p>
                     </blockquote>
                 </fieldset>
@@ -21,21 +21,21 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-bug"> 漏洞场景：原生漏洞场景</span></h1>
+                        <h1><span class="iconfont icon-bug" th:text="| #{infoleak.dir.vul.title}|"> Vulnerable Scenario: Raw Directory Listing</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <div class="layui-tab-content">
 
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
                                         <div style="display: flex; align-items: center;">
-                                            <p>在Java环境中，目录遍历漏洞通常伴随任意文件读取漏洞一起被利用</p>
+                                            <p th:text="#{infoleak.dir.vul.desc}">In Java applications, directory traversal is often chained with arbitrary file read vulnerabilities.</p>
                                         </div>
                                         <div style="display: flex; align-items: center;">
                                             <a target="_blank"
                                                href="/infoLeak/dirTraversal/vul?dir=/">
                                                 <button class="layui-btn layui-btn-normal"
                                                         style="width: 100px; margin-left: 10px;">
-                                                    <span>点击访问</span>
+                                                    <span th:text="#{infoleak.dir.visit}">Visit</span>
                                                 </button>
                                             </a>
                                         </div>
@@ -44,9 +44,9 @@
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{infoleak.dir.tips}">Tips</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">可尝试 /infoLeak/dirTraversal/vul?dir=../ 观察是否能跳出预期静态目录。</pre>
+                                            <pre style="color: #28333e;font-size: 15px;" th:text="#{infoleak.dir.vul.tips}">Try /infoLeak/dirTraversal/vul?dir=../ to observe whether traversal can escape the expected static directory.</pre>
                                         </div>
                                     </div>
                                 </div>
@@ -55,7 +55,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code">  缺陷代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="|  #{infoleak.dir.vulnerableCode}|">  Vulnerable Code</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="dirTraversal">
                             </div>
@@ -68,21 +68,21 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-anquan"> 安全场景：敏感字符过滤</span></h1>
+                        <h1><span class="iconfont icon-anquan" th:text="| #{infoleak.dir.safe1.title}|"> Safe Scenario: Sensitive Character Filtering</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <div class="layui-tab-content">
 
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
                                         <div style="display: flex; align-items: center;">
-                                            <p>进行敏感字符过滤，禁止使用 '.'、';'、'\' 和 '%'</p>
+                                            <p th:text="#{infoleak.dir.safe1.desc}">Filter sensitive characters and block '.', ';', '\', and '%'.</p>
                                         </div>
                                         <div style="display: flex; align-items: center;">
                                             <a target="_blank"
                                                href="/infoLeak/dirTraversal/safe1?dir=/">
                                                 <button class="layui-btn layui-btn-normal"
                                                         style="width: 100px; margin-left: 10px;">
-                                                    <span>点击访问</span>
+                                                    <span th:text="#{infoleak.dir.visit}">Visit</span>
                                                 </button>
                                             </a>
                                         </div>
@@ -91,9 +91,9 @@
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{infoleak.dir.tips}">Tips</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">黑名单过滤不严谨的话，往往可以通过特殊字符/编码进行绕过</pre>
+                                            <pre style="color: #28333e;font-size: 15px;" th:text="#{infoleak.dir.safe1.tips}">Blacklist filtering is often bypassed through special characters or encoding variants.</pre>
                                         </div>
                                     </div>
                                 </div>
@@ -102,7 +102,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code">  安全代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="|  #{infoleak.dir.safeCode}|">  Safe Code</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="safe1ListDirectory">
                             </div>
@@ -114,21 +114,21 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-anquan"> 安全场景：限制遍历目录</span></h1>
+                        <h1><span class="iconfont icon-anquan" th:text="| #{infoleak.dir.safe2.title}|"> Safe Scenario: Directory Boundary Restriction</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <div class="layui-tab-content">
 
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
                                         <div style="display: flex; align-items: center;">
-                                            <p>检查请求的目录是否在规定的根目录内，可以有效防止目录遍历攻击</p>
+                                            <p th:text="#{infoleak.dir.safe2.desc}">Check whether the requested directory stays under the configured root directory to prevent directory traversal.</p>
                                         </div>
                                         <div style="display: flex; align-items: center;">
                                             <a target="_blank"
                                                href="/infoLeak/dirTraversal/safe2?dir=/">
                                                 <button class="layui-btn layui-btn-normal"
                                                         style="width: 100px; margin-left: 10px;">
-                                                    <span>点击访问</span>
+                                                    <span th:text="#{infoleak.dir.visit}">Visit</span>
                                                 </button>
                                             </a>
                                         </div>
@@ -137,9 +137,9 @@
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{infoleak.dir.tips}">Tips</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">先确定允许根目录，再对目标路径做 canonical/real path 校验。黑名单只能作为辅助，不能替代目录边界校验。</pre>
+                                            <pre style="color: #28333e;font-size: 15px;" th:text="#{infoleak.dir.safe2.tips}">Choose an allowed root first, then validate the target path with canonical or real path checks.</pre>
                                         </div>
                                     </div>
                                 </div>
@@ -148,7 +148,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code">  安全代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="|  #{infoleak.dir.safeCode}|">  Safe Code</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="safe2ListDirectory">
                             </div>
@@ -164,7 +164,7 @@
 </div>
 
 <div th:replace="~{common/common::script}"></div>
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
     document.addEventListener("DOMContentLoaded", function () {
 
         layui.use(['layer', 'miniTab', 'common', 'form'], function () {
@@ -174,7 +174,8 @@
                 common = layui.common,
                 form = layui.form;
             miniTab.listen();
-            layer.msg("敏感信息泄漏-目录遍历")
+            layer.msg(/*[[#{infoleak.dir.toast}]]*/ "Information Leakage - Directory Traversal")
+            var isEnglishInfoLeakDir = /*[[${#locale.language == 'en'}]]*/ false;
 
 
             var cmConfig = {
@@ -200,14 +201,14 @@
 
 
             CodeMirror(document.getElementById("dirTraversal"), Object.assign({}, cmConfig, {
-                value: dirTraversal
+                value: isEnglishInfoLeakDir ? dirTraversal : dirTraversalZh
             }));
 
             CodeMirror(document.getElementById("safe1ListDirectory"), Object.assign({}, cmConfigSafe, {
-                value: safe1ListDirectory
+                value: isEnglishInfoLeakDir ? safe1ListDirectory : safe1ListDirectoryZh
             }));
             CodeMirror(document.getElementById("safe2ListDirectory"), Object.assign({}, cmConfigSafe, {
-                value: safe2ListDirectory
+                value: isEnglishInfoLeakDir ? safe2ListDirectory : safe2ListDirectoryZh
             }));
 
         });

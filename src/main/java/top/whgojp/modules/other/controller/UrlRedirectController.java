@@ -4,6 +4,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +32,13 @@ import java.net.URI;
 @CrossOrigin(origins = "*")
 @RequestMapping("/other/URLRedirect")
 public class UrlRedirectController {
+
+    private final MessageSource messageSource;
+
+    public UrlRedirectController(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
+
     @RequestMapping("/vul")
     public String UrlRedirectVul() {
         return "vul/other/url-redirect-vul";
@@ -90,14 +99,14 @@ public class UrlRedirectController {
 
     @RequestMapping("/safe1")
     @ResponseBody
-    public static void safe1(HttpServletRequest request, HttpServletResponse response) {
+    public void safe1(HttpServletRequest request, HttpServletResponse response) {
         String url = request.getParameter("url");
-        request.setAttribute("message", "正在进行内部转发，请稍候...");
+        request.setAttribute("message", msg("other.redirect.result.internalForward"));
 
         RequestDispatcher rd = request.getRequestDispatcher(url);
         try {
             rd.forward(request, response);
-            log.info("做了内部转发……");
+            log.info("Internal forward completed.");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -113,14 +122,17 @@ public class UrlRedirectController {
         String url = request.getParameter("url");
         if (checkUserInput.checkURL(url)) { // 校验通过
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            response.getWriter().write("  Forbidden: url not in WhiteUrlList!");
+            response.getWriter().write(msg("other.redirect.result.forbidden"));
             return;
         }
         response.sendRedirect(url);
     }
 
+    private String msg(String key, Object... args) {
+        return messageSource.getMessage(key, args, LocaleContextHolder.getLocale());
+    }
+
 
 
 }
-
 

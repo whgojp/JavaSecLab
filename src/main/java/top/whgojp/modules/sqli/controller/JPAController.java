@@ -49,14 +49,14 @@ public class JPAController {
             Query query = entityManager.createQuery(jpql);
             List<Sqli> results = query.getResultList();
             if (results == null || results.isEmpty()) {
-                return R.error("未找到记录");
+                return R.error("No records found.");
             }
             StringBuilder sb = new StringBuilder();
-            sb.append("查询成功，找到 ").append(results.size()).append(" 条记录\n");
+            sb.append("Query succeeded. Found ").append(results.size()).append(" records\n");
             for (Sqli sqli : results) {
                 sb.append("ID: ").append(sqli.getId())
-                        .append(", 用户名: ").append(sqli.getUsername())
-                        .append(", 密码: ").append(sqli.getPassword())
+                        .append(", Username: ").append(sqli.getUsername())
+                        .append(", Password: ").append(sqli.getPassword())
                         .append("\n");
             }
             String message = sb.toString();
@@ -98,14 +98,14 @@ public class JPAController {
                     .setParameter("username", username);
             List<Sqli> results = query.getResultList();
             if (results == null || results.isEmpty()) {
-                return R.error("未找到记录");
+                return R.error("No records found.");
             }
             StringBuilder sb = new StringBuilder();
-            sb.append("查询成功，找到 ").append(results.size()).append(" 条记录\n");
+            sb.append("Query succeeded. Found ").append(results.size()).append(" records\n");
             for (Sqli sqli : results) {
                 sb.append("ID: ").append(sqli.getId())
-                        .append(", 用户名: ").append(sqli.getUsername())
-                        .append(", 密码: ").append(sqli.getPassword())
+                        .append(", Username: ").append(sqli.getUsername())
+                        .append(", Password: ").append(sqli.getPassword())
                         .append("\n");
             }
             String message = sb.toString();
@@ -131,7 +131,7 @@ public class JPAController {
 
             String safeOrderBy = orderByMap.get(orderBy);
             if (safeOrderBy == null) {
-                return R.error("排序字段不合法");
+                return R.error("Invalid sort field.");
             }
 
             CriteriaBuilder cb = entityManager.getCriteriaBuilder();
@@ -150,14 +150,14 @@ public class JPAController {
 
     private String formatResults(List<Sqli> results) {
         if (results == null || results.isEmpty()) {
-            return "未找到记录";
+            return "No records found.";
         }
         StringBuilder sb = new StringBuilder();
-        sb.append("查询成功，找到 ").append(results.size()).append(" 条记录\n");
+        sb.append("Query succeeded. Found ").append(results.size()).append(" records\n");
         for (Sqli sqli : results) {
             sb.append("ID: ").append(sqli.getId())
-                    .append(", 用户名: ").append(sqli.getUsername())
-                    .append(", 密码: ").append(sqli.getPassword())
+                    .append(", Username: ").append(sqli.getUsername())
+                    .append(", Password: ").append(sqli.getPassword())
                     .append("\n");
         }
         return sb.toString();

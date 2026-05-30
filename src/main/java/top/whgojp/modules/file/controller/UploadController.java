@@ -6,6 +6,8 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,13 +23,13 @@ import java.io.InputStream;
 import java.util.Locale;
 
 /**
- * @description 任意文件类-文件上传
+ * @description Arbitrary file - upload
  * @author: whgojp
  * @email: whgojp@foxmail.com
  * @Date: 2024/7/8 15:57
  */
 @Slf4j
-@Api(value = "UploadController", tags = "任意文件类-文件上传")
+@Api(value = "UploadController", tags = "Arbitrary File - Upload")
 @Controller
 @CrossOrigin(origins = "*")
 @RequestMapping("/file/upload")
@@ -37,40 +39,40 @@ public class UploadController {
     private UploadUtil uploadUtil;
     @Autowired
     private CheckUserInput checkUserInput;
+    @Autowired
+    private MessageSource messageSource;
 
     @RequestMapping("")
     public String fileUpload() {
         return "vul/file/upload";
     }
 
-    @ApiOperation(value = "漏洞场景：任意文件上传", notes = "原生漏洞场景，未做任何限制")
+    @ApiOperation(value = "Vulnerable scenario: arbitrary file upload", notes = "Native vulnerable scenario without restrictions")
     @RequestMapping("/vul")
     @ResponseBody
     @SneakyThrows
     public R vul(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
-        String res;
         String suffix = FilenameUtils.getExtension(file.getOriginalFilename());
         String path = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/file/";
-        res = uploadUtil.uploadFile(file, suffix, path);
-        return R.ok(res);
+        String fileUrl = uploadUtil.uploadFileAndReturnUrl(file, suffix, path);
+        return R.ok(msg("file.result.uploadSuccess", fileUrl));
     }
-    @ApiOperation(value = "安全代码：文件上传白名单", notes = "检测文件后缀，做白名单过滤")
+    @ApiOperation(value = "Safe code: file upload allowlist", notes = "Check file extensions with an allowlist")
     @RequestMapping("/safe")
     @ResponseBody
     @SneakyThrows
     public R safe(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
-        String res;
         String suffix = FilenameUtils.getExtension(file.getOriginalFilename());
-        // 后缀白名单检查
+        // Extension allowlist check.
         if (!checkUserInput.checkFileSuffixWhiteList(suffix)){
-            return R.error("只能上传图片哦！");
+            return R.error(msg("file.result.uploadImageOnly"));
         }
         if (!isAllowedImageContent(file, suffix)) {
-            return R.error("文件内容与图片类型不匹配！");
+            return R.error(msg("file.result.uploadContentMismatch"));
         }
         String path = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/file/";
-        res = uploadUtil.uploadFile(file, suffix, path);
-        return R.ok(res);
+        String fileUrl = uploadUtil.uploadFileAndReturnUrl(file, suffix, path);
+        return R.ok(msg("file.result.uploadSuccess", fileUrl));
     }
 
     private boolean isAllowedImageContent(MultipartFile file, String suffix) throws IOException {
@@ -88,16 +90,20 @@ public class UploadController {
             BufferedImage image = ImageIO.read(inputStream);
             return image != null;
         } catch (IOException e) {
-            log.warn("图片内容校验失败：{}", e.getMessage());
+            log.warn("Image content validation failed: {}", e.getMessage());
             return false;
         }
     }
 
 
-    // 返回JSP视图
+    // Return the JSP view.
     @GetMapping("/jsp")
     public String showJspPage() {
-        return "jsp/test"; // 返回JSP页面，不包括路径和后缀
+        return "jsp/test"; // Return the JSP page without path or suffix.
+    }
+
+    private String msg(String code, Object... args) {
+        return messageSource.getMessage(code, args, LocaleContextHolder.getLocale());
     }
 
 }

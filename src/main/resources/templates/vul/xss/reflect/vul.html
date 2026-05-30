@@ -8,12 +8,11 @@
             <div class="layui-col-md12">
                 <fieldset class="layui-elem-field layui-field-title">
                     <legend>
-                    <a style="color: rgb(30 159 255)" class="xss-reflect">跨站脚本攻击 - 反射型XSS</a>
+	                    <a style="color: rgb(30 159 255)" class="xss-reflect" th:text="#{xss.reflect.title}">跨站脚本攻击 - 反射型XSS</a>
                     </legend>
                     <blockquote class="layui-elem-quote layui-quote-nm"
                                 style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
-                        <pre>  XSS(跨站脚本攻击)的本质是：不可信数据进入页面执行上下文后，被浏览器当作脚本或可执行HTML解析。常见危害包括窃取会话信息、篡改页面内容、跳转钓鱼页面、诱导用户执行敏感操作等。
-  反射型XSS：攻击载荷通常来自URL参数、表单、Header或路径等请求数据，服务端未做合适的输出编码或上下文处理，就把载荷立即返回到响应页面中执行。该类型通常不依赖数据库，特点是“请求即触发”。</pre>
+	                        <pre th:text="#{xss.reflect.intro.vul}">  XSS(跨站脚本攻击)的本质是：不可信数据进入页面执行上下文后，被浏览器当作脚本或可执行HTML解析。</pre>
                     </blockquote>
                 </fieldset>
             </div>
@@ -21,12 +20,12 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-bug"> 漏洞场景：GET型与POST型</span></h1>
+	                        <h1><span class="iconfont icon-bug" th:text="| #{xss.reflect.vul.getPost}|"> 漏洞场景：GET型与POST型</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <ul class="layui-tab-title">
-                                <li class="layui-this">GET型</li>
-                                <li>POST型</li>
-                                <li>String</li>
+	                                <li class="layui-this" th:text="#{xss.reflect.vul.get}">GET型</li>
+	                                <li th:text="#{xss.reflect.vul.post}">POST型</li>
+	                                <li th:text="#{xss.reflect.vul.string}">String</li>
                             </ul>
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
@@ -37,20 +36,20 @@
                                                    class="layui-input" id="vul1-reflect-raw-get-input">
                                             <div style="display: flex; align-items: center;">
                                                 <select class="layui-form-select" lay-filter="vul1-reflect-raw-get">
-                                                    <option value="">示例Payload</option>
-                                                    <option value="123&lt;u&gt;A&lt;/u&gt;123">探测漏洞标签</option>
-                                                    <option value="重定向恶意网站-SEO引流&lt;a href=javascript:window.location.href=&#x27;http://bilibili.com&#x27;&gt;Click Me&lt;/a&gt;">
-                                                        恶意流量劫持
+	                                                    <option value="" th:text="#{xss.reflect.payload.example}">示例Payload</option>
+		                                                    <option th:value="#{xss.reflect.payload.value.tag}" th:text="#{xss.reflect.payload.tag}">探测漏洞标签</option>
+	                                                    <option th:value="#{xss.reflect.payload.value.hijack}">
+	                                                        [[#{xss.reflect.payload.hijack}]]
                                                     </option>
-                                                    <option value="&lt;a href=&#x27;/other/cookie.txt&#x27; target=&#x27;_blank&#x27;&gt;点击查看&lt;/a&gt;&lt;script src=&#x27;/static/js/hackcookie.js&#x27;&gt;&lt;/script&gt;">
-                                                        窃取用户信息
+	                                                    <option th:value="#{xss.reflect.payload.value.steal}">
+	                                                        [[#{xss.reflect.payload.steal}]]
                                                     </option>
-                                                    <option value="修改背景颜色为红色&lt;img src onerror=javascript:document.getElementsByClassName(&#x27;layuimini-container&#x27;)[0].style.backgroundColor=&#x27;red&#x27;&gt;">
-                                                        篡改网页内容
+	                                                    <option th:value="#{xss.reflect.payload.value.deface}">
+	                                                        [[#{xss.reflect.payload.deface}]]
                                                     </option>
                                                 </select>
                                                 <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;" lay-filter="vul1-reflect-raw-get" lay-submit="">
-                                                    <span class="iconfont icon-zhihang">Run</span>
+	                                                    <span class="iconfont icon-zhihang" th:text="#{button.run}">Run</span>
                                                 </button>
                                             </div>
                                         </form>
@@ -64,7 +63,7 @@
                                                    lay-verify="required" value="<script>alert(/xss/)</script>" autocomplete="off"
                                                    class="layui-input">
                                             <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;" lay-filter="vul1-reflect-raw-post" lay-submit="">
-                                                <span class="iconfont icon-zhihang">Run</span>
+	                                                <span class="iconfont icon-zhihang" th:text="#{button.run}">Run</span>
                                             </button>
                                         </form>
                                     </blockquote>
@@ -72,10 +71,10 @@
 
                                 <div class="layui-tab-item">
                                     <blockquote class="layui-elem-quote main_btn">
-                                        <p>Controller接口返回的数据是String类型</p>
+	                                        <p th:text="#{xss.reflect.vul.stringDesc}">Controller接口返回的数据是String类型</p>
                                         <a target="_blank" href="/xss/reflect/vul2?payload=%3Cscript%3Ealert(/xss/)%3C/script%3E">
                                             <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
-                                                <span class="iconfont icon-zhihang">Run</span>
+	                                                <span class="iconfont icon-zhihang" th:text="#{button.run}">Run</span>
                                             </button>
                                         </a>
                                     </blockquote>
@@ -83,24 +82,16 @@
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+	                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{common.tips}">tips</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 12px;">Java后端返回数据有以下几种形式。是否触发XSS取决于最终Content-Type和前端如何把数据写入页面：
-    响应String字符串：返回一个字符串作为响应，一般用于返回纯文本数据
-    响应JSON数据：返回一个JSON对象作为响应，单纯JSON响应一般不会直接执行脚本，但前端若用innerHTML等方式渲染字段仍可能触发XSS
-    响应XML数据：返回一个XML对象作为响应，适用于与其他系统进行数据交互
-    响应二进制数据：返回一个字节数组或文件流作为响应，适用于文件下载或图片等二进制数据的返回
-    响应数据流：返回一个数据流对象作为响应，适用于大文件或大数据量的返回
-    响应视图模板：通过模板引擎将数据填充到模板中，生成最终的HTML页面
-    响应重定向：将请求重定向到另一个URL，适用于页面跳转或处理不同的请求
-    响应错误码：返回一个错误码和错误信息作为响应，用于指示请求出现错误或异常</pre>
+	                                            <pre style="color: #28333e;font-size: 12px;" th:text="#{xss.reflect.vul.responseTips}">Java后端返回数据有以下几种形式。</pre>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i>测试结果</div>
+	                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i><span th:text="#{common.testResult}">测试结果</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
                                             <pre id="vul1-reflect-raw-result" style="color: red;font-size: 15px;"></pre>
                                         </div>
@@ -111,7 +102,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
+	                        <h1><span class="iconfont icon-code" th:text="| #{common.vulnerableCode}|"> 缺陷代码</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="vul1ReflectRaw"></div>
                         </div>
@@ -123,7 +114,7 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-bug"> 漏洞场景：Content-Type问题</span></h1>
+	                        <h1><span class="iconfont icon-bug" th:text="| #{xss.reflect.vul.contentType}|"> 漏洞场景：Content-Type问题</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <ul class="layui-tab-title">
                                 <li class="layui-this">text/plain</li>
@@ -132,10 +123,10 @@
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
-                                        <p>text/plain：浏览器在获取到这种文件时并不会对其进行处理，将文件设置为纯文本的形式</p>
+	                                        <p th:text="#{xss.reflect.vul.textPlainDesc}">text/plain：浏览器在获取到这种文件时并不会对其进行处理，将文件设置为纯文本的形式</p>
                                         <a target="_blank" href="/xss/reflect/vul3?type=plain&payload=123<script>alert(/xss/)</script>123">
                                             <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
-                                                <span class="iconfont icon-zhihang">Run</span>
+	                                                <span class="iconfont icon-zhihang" th:text="#{button.run}">Run</span>
                                             </button>
                                         </a>
                                     </blockquote>
@@ -143,10 +134,10 @@
 
                                 <div class="layui-tab-item">
                                     <blockquote class="layui-elem-quote main_btn">
-                                        <p>text/html：浏览器在获取到这种文件时会自动调用html的解析器对文件进行相应的处理</p>
+	                                        <p th:text="#{xss.reflect.vul.textHtmlDesc}">text/html：浏览器在获取到这种文件时会自动调用html的解析器对文件进行相应的处理</p>
                                         <a target="_blank" href="/xss/reflect/vul3?type=html&payload=123<script>alert(/xss/)</script>123">
                                             <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
-                                                <span class="iconfont icon-zhihang">Run</span>
+	                                                <span class="iconfont icon-zhihang" th:text="#{button.run}">Run</span>
                                             </button>
                                         </a>
                                     </blockquote>
@@ -154,11 +145,9 @@
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+	                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{common.tips}">tips</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">
-  Content-Type属性指定响应的HTTP内容类型。安全场景中应明确返回text/plain、application/json等合适类型；如果把不可信内容以text/html返回，浏览器会按HTML解析，XSS风险会显著增加
-                                            </pre>
+	                                            <pre style="color: #28333e;font-size: 15px;" th:text="#{xss.reflect.vul.contentTypeTips}">Content-Type属性指定响应的HTTP内容类型。</pre>
                                         </div>
                                     </div>
                                 </div>
@@ -168,7 +157,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
+	                        <h1><span class="iconfont icon-code" th:text="| #{common.vulnerableCode}|"> 缺陷代码</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="vul2ReflectContentType"></div>
                         </div>
@@ -181,7 +170,7 @@
 </div>
 
 <script th:replace="~{common/common::script}"></script>
-<script type="text/javascript">
+	<script type="text/javascript" th:inline="javascript">
     layui.use(['layer', 'miniTab', 'common', 'form'], function () {
         var $ = layui.jquery,
             layer = layui.layer,
@@ -189,33 +178,70 @@
             common = layui.common,
             form = layui.form;
         miniTab.listen();
-        layer.msg("跨站脚本-反射型");
+	        layer.msg(/*[[#{xss.reflect.toast}]]*/ "跨站脚本-反射型");
 
         common.formListenFun("vul1-reflect-raw-get", "", "/xss/reflect/vul1", "vul1-reflect-raw-result", "get");
         common.formListenFun("vul1-reflect-raw-post", "", "/xss/reflect/vul1", "vul1-reflect-raw-result", "post");
         common.selectListenFun("vul1-reflect-raw-get", "vul1-reflect-raw-get-input");
 
-        var cmConfig = {
-            lineNumbers: true,
-            lineWrapping: false,
+	        var cmConfig = {
+	            lineNumbers: true,
+	            lineWrapping: true,
             indentUnit: 4,
             indentWithTabs: true,
             theme: 'juejin',
             styleActiveLine: {nonEmpty: true},
             fontSize: "18px",
-            mode: "text/x-java"
-        };
+	            mode: "text/x-java"
+	        };
+	        var isEnglishReflect = /*[[${#locale.language == 'en'}]]*/ false;
+	        var reflectVulCode = isEnglishReflect ? {
+	            vul1: "// Raw vulnerable scenario, no filtering. The controller returns a JSON-style result\n" +
+	                "public R vul1(String payload) {\n" +
+	                "    return R.ok(payload);\n" +
+	                "}\n" +
+	                "// R is a utility wrapper for unified API responses\n" +
+	                "// Response example:\n" +
+	                "// {\n" +
+	                "//     \"msg\": \"\u003Cscript>alert(document.cookie)\u003C/script>\",\n" +
+	                "//     \"code\": 0\n" +
+	                "// }\n" +
+	                "// A JSON response usually does not execute script by itself. XSS is triggered when the frontend writes the field into the page with unsafe sinks such as innerHTML\n" +
+	                "\n" +
+	                "// Raw vulnerable scenario, no filtering. The controller returns a String response\n" +
+	                "public String vul2(String payload) {\n" +
+	                "    return payload;\n" +
+	                "}",
+	            vul2: "// Built-in Tomcat HttpServletResponse. Content-Type controls how the browser parses the reflected payload\n" +
+	                "public void vul3(String type, String payload, HttpServletResponse response) {\n" +
+	                "    switch (type) {\n" +
+	                "        case \"html\":\n" +
+	                "            response.getWriter().print(payload);\n" +
+	                "            response.setContentType(\"text/html;charset=utf-8\");\n" +
+	                "            response.getWriter().flush();\n" +
+	                "            break;\n" +
+	                "        case \"plain\":\n" +
+	                "            response.getWriter().print(payload);\n" +
+	                "            response.setContentType(\"text/plain;charset=utf-8\");\n" +
+	                "            response.getWriter().flush();\n" +
+	                "            ...\n" +
+	                "    }\n" +
+	                "}"
+	        } : {
+	            vul1: vul1ReflectRaw,
+	            vul2: vul2ReflectContentType
+	        };
 
-        CodeMirror(document.getElementById("vul1ReflectRaw"), Object.assign({}, cmConfig, {
-            value: vul1ReflectRaw
-        }));
-        CodeMirror(document.getElementById("vul2ReflectContentType"), Object.assign({}, cmConfig, {
-            value: vul2ReflectContentType
-        }));
+	        CodeMirror(document.getElementById("vul1ReflectRaw"), Object.assign({}, cmConfig, {
+	            value: reflectVulCode.vul1
+	        }));
+	        CodeMirror(document.getElementById("vul2ReflectContentType"), Object.assign({}, cmConfig, {
+	            value: reflectVulCode.vul2
+	        }));
 
         $('.xss-reflect').hover(function () {
             $(this).css('cursor', 'pointer');
-            layer.tips('攻击流程图', this, {
+	            layer.tips(/*[[#{xss.reflect.flowTip}]]*/ '攻击流程图', this, {
                 tips: [1, '#0051ff'],
                 time: 2000
             });

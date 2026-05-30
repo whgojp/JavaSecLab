@@ -9,13 +9,13 @@
             <div class="layui-col-md12">
                 <fieldset class="layui-elem-field layui-field-title">
                     <legend>
-                        <a style="color: rgb(30 159 255)" class="CrossOrigin">其他漏洞 - 跨源安全问题</a>
+                        <a style="color: rgb(30 159 255)" class="CrossOrigin" th:text="#{crossorigin.title}">其他漏洞 - 跨源安全问题</a>
                     </legend>
                     <blockquote class="layui-elem-quote layui-quote-nm"
                                 style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
                         <p>
-                        <pre>  同源策略(Same Origin Policy)：浏览器限制脚本读取不同源的响应内容；协议、域名、端口三者完全一致才属于同源。它主要约束“读响应”，并不等价于阻止请求发出。</pre>
-                        <pre>  跨源资源共享(CORS)：服务端通过 Access-Control-Allow-Origin 等响应头声明哪些来源可以读取响应。CORS 配置错误通常发生在敏感接口反射任意 Origin、信任过宽来源，或在允许凭证时放开跨源读取。</pre>
+                        <pre th:text="#{crossorigin.cors.intro.sameOrigin}">同源策略(Same Origin Policy)：浏览器限制脚本读取不同源的响应内容；协议、域名、端口三者完全一致才属于同源。它主要约束“读响应”，并不等价于阻止请求发出。</pre>
+                        <pre th:text="#{crossorigin.cors.intro.cors}">跨源资源共享(CORS)：服务端通过 Access-Control-Allow-Origin 等响应头声明哪些来源可以读取响应。CORS 配置错误通常发生在敏感接口反射任意 Origin、信任过宽来源，或在允许凭证时放开跨源读取。</pre>
                         </p>
                     </blockquote>
                 </fieldset>
@@ -24,15 +24,15 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-bug"> 漏洞场景：CORS漏洞场景</span></h1>
+                        <h1><span class="iconfont icon-bug" th:text="| #{crossorigin.cors.vul.title}|"> 漏洞场景：CORS漏洞场景</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
-                                        <p>服务端把请求中的 Origin 原样写回 Access-Control-Allow-Origin，并允许携带凭证</p>
+                                        <p th:text="#{crossorigin.cors.vul.desc}">服务端把请求中的 Origin 原样写回 Access-Control-Allow-Origin，并允许携带凭证</p>
                                         <a target="_blank" href="/crossorigin/corsVul">
                                             <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
-                                                <span class="iconfont icon-zhihang">Run</span>
+                                                <span class="iconfont icon-zhihang" th:text="#{crossorigin.run}">Run</span>
                                             </button>
                                         </a>
                                     </blockquote>
@@ -40,12 +40,9 @@
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{crossorigin.tips}">tips</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">问题点：
-  1、Access-Control-Allow-Origin 反射任意 Origin，相当于把敏感响应开放给任意站点读取。
-  2、Access-Control-Allow-Credentials: true 会让浏览器在跨源 XHR/fetch 中携带 Cookie 等凭证。
-  3、CORS 不是认证或鉴权机制，放宽 CORS 只是在放宽浏览器读取响应的边界。</pre>
+                                            <pre style="color: #28333e;font-size: 15px;" th:text="#{crossorigin.cors.vul.tips}">问题点</pre>
                                         </div>
                                     </div>
                                 </div>
@@ -55,7 +52,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="| #{crossorigin.vulnerableCode}|"> 缺陷代码</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="vulCORS"></div>
                         </div>
@@ -66,15 +63,15 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-anquan"> 安全场景：CORS白名单</span></h1>
+                        <h1><span class="iconfont icon-anquan" th:text="| #{crossorigin.cors.safe.title}|"> 安全场景：CORS白名单</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
-                                        <p>只对精确匹配白名单的 Origin 返回 CORS 响应头；不可信来源直接拒绝</p>
+                                        <p th:text="#{crossorigin.cors.safe.desc}">只对精确匹配白名单的 Origin 返回 CORS 响应头；不可信来源直接拒绝</p>
                                         <a target="_blank" href="/crossorigin/corsSafe">
                                             <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
-                                                <span class="iconfont icon-zhihang">Run</span>
+                                                <span class="iconfont icon-zhihang" th:text="#{crossorigin.run}">Run</span>
                                             </button>
                                         </a>
                                     </blockquote>
@@ -82,13 +79,9 @@
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{crossorigin.tips}">tips</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">安全编码建议：
-  1、维护精确 Origin 白名单，完整匹配协议、域名、端口，不使用字符串 contains/startsWith 判断。
-  2、允许凭证时必须返回具体可信 Origin，不能使用 *，并加上 Vary: Origin 避免缓存污染。
-  3、只开放必要的方法和请求头；不因为 CORS 白名单通过就跳过认证、鉴权和 CSRF 防护。
-  4、谨慎信任子域和本地开发域名，接入测试域、预发域前也要评估账号体系和数据权限。</pre>
+                                            <pre style="color: #28333e;font-size: 15px;" th:text="#{crossorigin.cors.safe.tips}">安全编码建议</pre>
                                         </div>
                                     </div>
                                 </div>
@@ -98,7 +91,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code"> 安全代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="| #{crossorigin.safeCode}|"> 安全代码</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="safeCORS"></div>
                         </div>
@@ -112,7 +105,7 @@
 </div>
 
 <div th:replace="~{common/common::script}"></div>
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
     document.addEventListener("DOMContentLoaded", function () {
 
         layui.use(['layer', 'miniTab', 'common', 'form'], function () {
@@ -122,7 +115,8 @@
                 common = layui.common,
                 form = layui.form;
             miniTab.listen();
-            layer.msg("其他漏洞-跨域资源共享")
+            layer.msg(/*[[#{crossorigin.cors.toast}]]*/ "其他漏洞-跨域资源共享")
+            var isEnglishCrossOrigin = /*[[${#locale.language == 'en'}]]*/ false;
 
             var cmConfig = {
                 lineNumbers: true,
@@ -146,15 +140,15 @@
             };
 
             CodeMirror(document.getElementById("vulCORS"), Object.assign({}, cmConfig, {
-                value: vulCORS
+                value: isEnglishCrossOrigin ? vulCORS : vulCORSZh
             }));
             CodeMirror(document.getElementById("safeCORS"), Object.assign({}, cmConfigSafe, {
-                value: safeCORS
+                value: isEnglishCrossOrigin ? safeCORS : safeCORSZh
             }));
 
             $('.CrossOrigin').hover(function () {
                 $(this).css('cursor', 'pointer');
-                layer.tips('攻击流程图', this, {
+                layer.tips(/*[[#{crossorigin.sameOriginFlow}]]*/ '攻击流程图', this, {
                     tips: [1, '#0051ff'],
                     time: 2000
                 });

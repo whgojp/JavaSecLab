@@ -3,6 +3,8 @@ package top.whgojp.modules.csrf.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -33,6 +35,12 @@ import java.util.UUID;
 @CrossOrigin(origins = "*")
 @RequestMapping("/csrf")
 public class CsrfController {
+    private final MessageSource messageSource;
+
+    public CsrfController(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
+
     @ApiOperation("")
     @RequestMapping("")
     public String csrf() {
@@ -47,7 +55,7 @@ public class CsrfController {
         result.put("receiver", receiver);
         result.put("amount", amount);
 
-        log.info("转账人："+currentUser+"收款人："+receiver+",转账金额："+amount);
+        log.info("transfer from: {}, receiver: {}, amount: {}", currentUser, receiver, amount);
         return R.ok(result);
     }
 
@@ -58,7 +66,7 @@ public class CsrfController {
         String amount = request.getParameter("amount");
         String receiver = request.getParameter("receiver");
         Map<String, Object> result = new HashMap<>();
-        // 校验Referer 判断请求是否来自本站
+        // Validate Referer to determine whether the request comes from this site.
         String referer = request.getHeader("referer");
         if (referer == null || !referer.startsWith("http://baidu.com")) {
             result.put("success", false);
@@ -91,7 +99,7 @@ public class CsrfController {
         Map<String, Object> result = new HashMap<>();
         if (!constantTimeEquals(csrfToken, sessionToken)) {
             result.put("success", false);
-            result.put("message", "Token失效！");
+            result.put("message", msg("csrf.result.tokenInvalid"));
             return result;
         }
         result.put("currentUser", currentUser);
@@ -112,7 +120,7 @@ public class CsrfController {
         }
         if (!isTrustedSameOrigin(request, originOrReferer)) {
             result.put("success", false);
-            result.put("message", "Origin/Referer无效！");
+            result.put("message", msg("csrf.result.originRefererInvalid"));
             return result;
         }
         result.put("currentUser", currentUser);
@@ -155,6 +163,10 @@ public class CsrfController {
             return 443;
         }
         return 80;
+    }
+
+    private String msg(String code, Object... args) {
+        return messageSource.getMessage(code, args, LocaleContextHolder.getLocale());
     }
 
 }

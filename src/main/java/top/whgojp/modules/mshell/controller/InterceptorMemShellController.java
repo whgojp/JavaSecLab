@@ -85,10 +85,10 @@ public class InterceptorMemShellController extends BaseMemShellController {
             interceptors.add(mappedInterceptor);
 
             log.info("Spring拦截器型内存马注入成功，拦截路径: {}, 命令参数: {}", pattern, cmdParam);
-            return R.ok("内存马注入成功").put("data", "拦截路径: " + pattern + ", 命令参数: " + cmdParam);
+            return R.ok(msg("mshell.result.injectSuccess")).put("data", msg("mshell.result.interceptorInjectData", pattern, cmdParam));
         } catch (Exception e) {
             log.error("注入失败", e);
-            return R.error("注入失败：" + e.getMessage());
+            return R.error(msg("mshell.result.injectFailed", e.getMessage()));
         }
     }
 
@@ -98,7 +98,7 @@ public class InterceptorMemShellController extends BaseMemShellController {
     public R detect() {
         try {
             StringBuilder result = new StringBuilder();
-            result.append("已注入的拦截器列表：\n");
+            result.append(msg("mshell.result.interceptorList")).append("\n");
             
             // 通过反射获取adaptedInterceptors字段
             Field adaptedInterceptors = RequestMappingHandlerMapping.class.getDeclaredField("adaptedInterceptors");
@@ -112,9 +112,9 @@ public class InterceptorMemShellController extends BaseMemShellController {
                     MappedInterceptor mappedInterceptor = (MappedInterceptor) interceptor;
                     result.append("- MappedInterceptor: ")
                           .append(mappedInterceptor.getClass().getName())
-                          .append("\n  路径模式: ")
+                          .append("\n  ").append(msg("mshell.result.pathPattern")).append(": ")
                           .append(String.join(", ", mappedInterceptor.getPathPatterns()))
-                          .append("\n  拦截器类型: ")
+                          .append("\n  ").append(msg("mshell.result.interceptorType")).append(": ")
                           .append(mappedInterceptor.getInterceptor().getClass().getName())
                           .append("\n");
                 } else {
@@ -127,7 +127,7 @@ public class InterceptorMemShellController extends BaseMemShellController {
             return R.ok().put("data", result.toString());
         } catch (Exception e) {
             log.error("检测失败", e);
-            return R.error("检测失败：" + e.getMessage());
+            return R.error(msg("mshell.result.detectFailed", e.getMessage()));
         }
     }
 }

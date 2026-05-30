@@ -7,13 +7,13 @@
         <div class="layui-row layui-col-space15">
             <div class="layui-col-md12">
                 <fieldset class="layui-elem-field layui-field-title">
-                    <legend><a style="color: rgb(30 159 255)" class="sqli-jpa">SQL注入攻击 - JPA</a></legend>
+                    <legend><a style="color: rgb(30 159 255)" class="sqli-jpa" th:text="#{sqli.common.title.jpa}">SQL注入攻击 - JPA</a></legend>
                     <blockquote class="layui-elem-quote layui-quote-nm"
                                 style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
                         <p>
-                        <pre>  SQL注入的本质是：不可信输入被拼接进SQL语法结构，导致攻击者改变原SQL语义。JPA中的JPQL、nativeQuery和动态排序字段同样需要关注。</pre>
-                        <pre>  JPA（Java Persistence API）是Java EE标准的ORM规范，它提供了一种优雅的方式来操作数据库。尽管JPA提供了参数绑定等安全特性，但不当使用仍可能导致SQL注入漏洞。</pre>
-                        <pre>  修复优先级：查询参数使用命名参数绑定；动态字段、排序方向等SQL结构使用Criteria API配合白名单映射。</pre>
+                        <pre th:text="#{sqli.jpa.intro.core}">  SQL注入的本质是：不可信输入被拼接进SQL语法结构，导致攻击者改变原SQL语义。JPA中的JPQL、nativeQuery和动态排序字段同样需要关注。</pre>
+                        <pre th:text="#{sqli.jpa.intro.framework}">  JPA（Java Persistence API）是Java EE标准的ORM规范，它提供了一种优雅的方式来操作数据库。尽管JPA提供了参数绑定等安全特性，但不当使用仍可能导致SQL注入漏洞。</pre>
+                        <pre th:text="#{sqli.jpa.intro.fix}">  修复优先级：查询参数使用命名参数绑定；动态字段、排序方向等SQL结构使用Criteria API配合白名单映射。</pre>
                         </p>
                     </blockquote>
                 </fieldset>
@@ -22,10 +22,10 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-bug">  漏洞场景：JPA-JPQL注入</span></h1>
+                        <h1><span class="iconfont icon-bug" th:text="#{sqli.jpa.vul.jpql}">  漏洞场景：JPA-JPQL注入</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <ul class="layui-tab-title">
-                                <li class="layui-this">查询</li>
+                                <li class="layui-this" th:text="#{sqli.common.action.select}">查询</li>
                             </ul>
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
@@ -33,7 +33,7 @@
                                         <form class="layui-form" style="display: flex; justify-content: space-between;">
                                             <div style="display: flex; align-items: center;">
                                                 <input type="text" name="username" style="width: 150px;" required
-                                                       lay-verify="required" placeholder="用户名" value="admin' OR '1'='1" autocomplete="off"
+                                                       lay-verify="required" placeholder="用户名" th:placeholder="#{sqli.common.username}" value="admin' OR '1'='1" autocomplete="off"
                                                        class="layui-input">
                                             </div>
                                             <div style="display: flex; align-items: center;">
@@ -48,7 +48,7 @@
                                 </div>
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i>测试结果</div>
+                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i><span th:text="#{sqli.common.testResult}">测试结果</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
                                             <pre id="vul1-jpa-jpql-result" style="color: red;font-size: 15px;"></pre>
                                         </div>
@@ -59,7 +59,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code">  缺陷代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="#{sqli.common.vulnerableCode}">  缺陷代码</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="vul1JpaJpql">
                             </div>
@@ -71,7 +71,7 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-bug">  漏洞场景：JPA-动态排序注入</span></h1>
+                        <h1><span class="iconfont icon-bug" th:text="#{sqli.jpa.vul.sort}">  漏洞场景：JPA-动态排序注入</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
@@ -79,7 +79,7 @@
                                         <form class="layui-form" style="display: flex; justify-content: space-between;">
                                             <div style="display: flex; align-items: center;">
                                                 <input type="text" name="orderBy" style="width: 200px;" required
-                                                       lay-verify="required" value="username desc" placeholder="排序字段" autocomplete="off"
+                                                       lay-verify="required" value="username desc" placeholder="排序字段" th:placeholder="#{sqli.common.sortField}" autocomplete="off"
                                                        class="layui-input">
                                             </div>
                                             <div style="display: flex; align-items: center;">
@@ -94,7 +94,7 @@
                                 </div>
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i>测试结果</div>
+                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i><span th:text="#{sqli.common.testResult}">测试结果</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
                                             <pre id="vul3-jpa-sort-result" style="color: red;font-size: 15px;"></pre>
                                         </div>
@@ -105,7 +105,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code">  缺陷代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="#{sqli.common.vulnerableCode}">  缺陷代码</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="vul2JpaSort">
                             </div>
@@ -117,10 +117,10 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-anquan">  安全场景：JPA-参数化查询</span></h1>
+                        <h1><span class="iconfont icon-anquan" th:text="#{sqli.jpa.safe.param}">  安全场景：JPA-参数化查询</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <ul class="layui-tab-title">
-                                <li class="layui-this">查询</li>
+                                <li class="layui-this" th:text="#{sqli.common.action.select}">查询</li>
                             </ul>
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
@@ -128,7 +128,7 @@
                                         <form class="layui-form" style="display: flex; justify-content: space-between;">
                                             <div style="display: flex; align-items: center;">
                                                 <input type="text" name="username" style="width: 150px;" required
-                                                       lay-verify="required" placeholder="用户名" value="admin' OR '1'='1" autocomplete="off"
+                                                       lay-verify="required" placeholder="用户名" th:placeholder="#{sqli.common.username}" value="admin' OR '1'='1" autocomplete="off"
                                                        class="layui-input">
                                             </div>
                                             <div style="display: flex; align-items: center;">
@@ -143,7 +143,7 @@
                                 </div>
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-warning icon-output-safe"></i>测试结果</div>
+                                        <div class="layui-card-header"><i class="fa fa-warning icon-output-safe"></i><span th:text="#{sqli.common.testResult}">测试结果</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
                                             <pre id="safe1-jpa-param-result" style="color: red;font-size: 15px;"></pre>
                                         </div>
@@ -154,7 +154,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code">  安全代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="#{sqli.common.safeCode}">  安全代码</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="safeJpaParam">
                             </div>
@@ -166,7 +166,7 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-anquan">  安全场景：JPA-动态排序白名单</span></h1>
+                        <h1><span class="iconfont icon-anquan" th:text="#{sqli.jpa.safe.sort}">  安全场景：JPA-动态排序白名单</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
@@ -174,9 +174,9 @@
                                         <form class="layui-form" style="display: flex; justify-content: space-between;">
                                             <div style="display: flex; align-items: center;">
                                                 <input type="text" name="orderBy" style="width: 150px;" required
-                                                       lay-verify="required" value="username" placeholder="排序字段" autocomplete="off"
+                                                       lay-verify="required" value="username" placeholder="排序字段" th:placeholder="#{sqli.common.sortField}" autocomplete="off"
                                                        class="layui-input">
-                                                <p>仅允许 id、username、password</p>
+                                                <p th:text="#{sqli.common.onlySortFields}">仅允许 id、username、password</p>
                                             </div>
                                             <div style="display: flex; align-items: center;">
                                                 <button class="layui-btn layui-btn-normal"
@@ -190,7 +190,7 @@
                                 </div>
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-warning icon-output-safe"></i>测试结果</div>
+                                        <div class="layui-card-header"><i class="fa fa-warning icon-output-safe"></i><span th:text="#{sqli.common.testResult}">测试结果</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
                                             <pre id="safe2-jpa-sort-result" style="color: red;font-size: 15px;"></pre>
                                         </div>
@@ -201,7 +201,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code">  安全代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="#{sqli.common.safeCode}">  安全代码</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="safeJpaSort">
                             </div>
@@ -215,14 +215,15 @@
 </div>
 <div th:replace="~{common/common::script}"></div>
 
-<script type="text/javascript">
+<script th:inline="javascript" type="text/javascript">
     layui.use(['layer', 'miniTab', 'common'], function () {
         var $ = layui.jquery,
             layer = layui.layer,
             miniTab = layui.miniTab,
             common = layui.common;
         miniTab.listen();
-        layer.msg("SQL注入-JPA")
+        layer.msg(/*[[#{sqli.common.toast.jpa}]]*/ "SQL注入-JPA")
+        var isEnglishSqli = /*[[${#locale.language == 'en'}]]*/ false;
 
         common.formListenFun("vul1-jpa-jpql-select", "select", "/sqli/jpa/vul1", "vul1-jpa-jpql-result","get");
         common.formListenFun("vul3-jpa-sort-select", "select", "/sqli/jpa/vul2", "vul3-jpa-sort-result","get");
@@ -251,16 +252,16 @@
         };
 
         CodeMirror(document.getElementById("vul1JpaJpql"), Object.assign({}, cmConfig, {
-            value: vul1JpaJpql
+            value: isEnglishSqli ? vul1JpaJpql : vul1JpaJpqlZh
         }));
         CodeMirror(document.getElementById("vul2JpaSort"), Object.assign({}, cmConfig, {
-            value: vul2JpaSort
+            value: isEnglishSqli ? vul2JpaSort : vul2JpaSortZh
         }));
         CodeMirror(document.getElementById("safeJpaParam"), Object.assign({}, cmConfigSafe, {
-            value: safeJpaParam
+            value: isEnglishSqli ? safeJpaParam : safeJpaParamZh
         }));
         CodeMirror(document.getElementById("safeJpaSort"), Object.assign({}, cmConfigSafe, {
-            value: safeJpaSort
+            value: isEnglishSqli ? safeJpaSort : safeJpaSortZh
         }));
     });
 </script>

@@ -276,7 +276,7 @@ layui.define(["jquery", "miniMenu", "element","miniTab", "miniTheme"], function 
              */
             $('body').on('click', '[data-refresh]', function () {
                 $(".layui-tab-item.layui-show").find("iframe")[0].contentWindow.location.reload();
-                miniAdmin.success('刷新成功');
+                miniAdmin.success((window.I18N && window.I18N.refreshSuccess) || 'Refreshed successfully');
             });
 
             /**

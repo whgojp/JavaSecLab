@@ -81,7 +81,7 @@ public class ReflectController extends XssBaseController {
                 response.getWriter().flush();
                 break;
             default:
-                response.getWriter().print("type字段不存在!");
+                response.getWriter().print(msg("xss.reflect.result.invalidType"));
                 response.setContentType("text/plain;charset=utf-8");
                 response.getWriter().flush();
                 break;
@@ -110,7 +110,7 @@ public class ReflectController extends XssBaseController {
                 Matcher matcher = pattern.matcher(payload);
                 if (matcher.matches()) {
                     return R.ok(payload);
-                } else return R.error("输入内容包含非法字符，请检查输入");
+                } else return R.error(msg("common.illegalInput"));
 
         }
         return R.ok(filterContented);
@@ -177,7 +177,7 @@ public class ReflectController extends XssBaseController {
                 log.info("[-]XSS-反射型-HTML正文输出编码-Spring框架：" + payload);
                 break;
             default:
-                return R.error("参数输入有误！");
+                return R.error(msg("xss.reflect.result.invalidParam"));
         }
         return R.ok(filterContented);
     }
@@ -194,6 +194,6 @@ public class ReflectController extends XssBaseController {
         cookie.setPath("/");
 
         response.addCookie(cookie);
-        return R.ok("已设置httponly(有效期10分钟)，请打开控制台查看cookie属性：" + payload);
+        return R.ok(msg("xss.reflect.result.httpOnlySet", payload));
     }
 }

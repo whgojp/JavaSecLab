@@ -2,6 +2,9 @@ package top.whgojp.modules.mshell.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.catalina.Context;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -17,6 +20,12 @@ import java.lang.reflect.Field;
  */
 @Slf4j
 public class BaseMemShellController {
+    @Autowired
+    protected MessageSource messageSource;
+
+    protected String msg(String key, Object... args) {
+        return messageSource.getMessage(key, args, LocaleContextHolder.getLocale());
+    }
 
     /**
      * 获取Tomcat的Context对象

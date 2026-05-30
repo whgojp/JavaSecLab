@@ -8,11 +8,11 @@
         <div class="layui-row layui-col-space15">
             <div class="layui-col-md12">
                 <fieldset class="layui-elem-field layui-field-title">
-                    <legend style="color: rgb(30 159 255)">登录对抗 - 登录绕过</legend>
+                    <legend style="color: rgb(30 159 255)" th:text="#{login.bypass.title}">Login Confrontation - Login Bypass</legend>
                     <blockquote class="layui-elem-quote layui-quote-nm"
                                 style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
                         <p>
-                        <pre>  这里以修改响应包绕过、密码重置步骤绕过为例，演示认证流程中将关键判断交给客户端或缺少服务端状态校验造成的绕过风险。</pre>
+                        <pre th:text="#{login.bypass.intro}">This page demonstrates login bypass risks.</pre>
                         </p>
                     </blockquote>
                 </fieldset>
@@ -21,7 +21,7 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-bug"> 漏洞场景：修改响应包绕过</span></h1>
+                        <h1><span class="iconfont icon-bug" th:text="| #{login.bypass.response.title}|"> Vulnerable Scenario: Response Tampering Bypass</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
@@ -29,18 +29,18 @@
                                         <form class="layui-form" style="display: flex; justify-content: space-between;">
                                             <div style="display: flex; align-items: center;">
                                                 <input type="text" name="username" style="width: 150px;" required
-                                                       lay-verify="required" placeholder="用户名" value="admin"
+                                                       lay-verify="required" th:placeholder="#{login.bypass.username}" placeholder="Username" value="admin"
                                                        autocomplete="off"
                                                        class="layui-input">
                                                 <input type="text" name="password" style="width: 150px;" required
-                                                       lay-verify="required" placeholder="密码" autocomplete="off"
+                                                       lay-verify="required" th:placeholder="#{login.bypass.password}" placeholder="Password" autocomplete="off"
                                                        class="layui-input">
                                             </div>
                                             <div style="display: flex; align-items: center;">
                                                 <button class="layui-btn layui-btn-normal"
                                                         style="width: 100px; margin-left: 10px;"
                                                         lay-filter="vul1-bypass-button" lay-submit="">
-                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                    <span class="iconfont icon-zhihang" th:text="#{login.bypass.run}">Run</span>
                                                 </button>
                                             </div>
                                         </form>
@@ -51,16 +51,16 @@
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{login.bypass.tips}">Tips</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">  如果前端仅根据接口响应字段进入下一步，而后端后续接口又信任这个客户端状态，攻击者可通过抓包把失败响应改成成功响应，诱导前端继续调用敏感接口。修复时必须在服务端保存并校验认证状态，不能把登录成功与否交给前端决定。</pre>
+                                            <pre style="color: #28333e;font-size: 15px;" th:text="#{login.bypass.response.tips}">If the frontend proceeds only according to response fields, attackers can tamper with failed responses.</pre>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i>测试结果
+                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i><span th:text="#{login.bypass.testResult}">Test Result</span>
                                         </div>
                                         <div class="layui-card-body layui-text layadmin-text">
                                             <pre id="vul1-bypass-result"
@@ -74,7 +74,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="| #{login.bypass.vulnerableCode}|"> Vulnerable Code</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="vul1Bypass"></div>
                         </div>
@@ -86,15 +86,15 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-bug"> 漏洞场景：密码重置步骤绕过</span></h1>
+                        <h1><span class="iconfont icon-bug" th:text="| #{login.bypass.reset.title}|"> Vulnerable Scenario: Password Reset Step Bypass</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
                                         <div style="display: flex; align-items: center;">
-                                            <p>点击访问链接：</p>
+                                            <p th:text="#{login.bypass.openLink}">Open link:</p>
                                             <a style="color: red" target="_blank"
-                                               href="/loginconfront/bypass/reset">密码重置场景</a>
+                                               href="/loginconfront/bypass/reset" th:text="#{login.bypass.reset.link}">Password Reset Scenario</a>
 
                                         </div>
                                     </blockquote>
@@ -104,9 +104,9 @@
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{login.bypass.tips}">Tips</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">  多步骤流程只在前端切换页面状态，后端第三步接口未校验当前会话是否已经完成用户名和旧密码验证。攻击者可直接调用设置新密码接口完成重置。修复时应在服务端维护流程状态，并在每一步校验前置步骤、用户身份和一次性令牌。</pre>
+                                            <pre style="color: #28333e;font-size: 15px;" th:text="#{login.bypass.reset.tips}">In a multi-step flow, missing server-side state validation can allow direct password reset calls.</pre>
                                         </div>
                                     </div>
                                 </div>
@@ -116,7 +116,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="| #{login.bypass.vulnerableCode}|"> Vulnerable Code</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="vul2Bypass"></div>
                         </div>
@@ -132,7 +132,7 @@
 </div>
 
 <div th:replace="~{common/common::script}"></div>
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
     document.addEventListener("DOMContentLoaded", function () {
 
         layui.use(['layer', 'miniTab', 'common', 'form'], function () {
@@ -142,7 +142,8 @@
                 common = layui.common,
                 form = layui.form;
             miniTab.listen();
-            layer.msg("登录对抗 - 登录绕过")
+            layer.msg(/*[[#{login.bypass.toast}]]*/ "Login Confrontation - Login Bypass")
+            var isEnglishLoginBypass = /*[[${#locale.language == 'en'}]]*/ false;
 
             form.on('submit(vul1-bypass-button)', function (data) {
                 $.ajax({
@@ -161,11 +162,11 @@
                                         if (step2Response.code === 0) {
                                             $("#vul1-bypass-result").text(step2Response.msg);
                                         } else {
-                                            $("#vul1-bypass-result").text("第二步验证失败：" + step2Response.msg);
+                                            $("#vul1-bypass-result").text((/*[[#{login.bypass.ajax.step2Failed}]]*/ "Step 2 verification failed:") + step2Response.msg);
                                         }
                                     },
                                     error: function () {
-                                        $("#vul1-bypass-result").text("第二步请求失败，请重试！");
+                                        $("#vul1-bypass-result").text(/*[[#{login.bypass.ajax.step2RequestFailed}]]*/ "Step 2 request failed. Please try again.");
                                     }
                                 });
 
@@ -176,7 +177,7 @@
                         }
                     },
                     error: function () {
-                        $("#vul1-bypass-result").text("第一步请求失败，请重试！");
+                        $("#vul1-bypass-result").text(/*[[#{login.bypass.ajax.step1RequestFailed}]]*/ "Step 1 request failed. Please try again.");
                     }
                 });
                 return false;
@@ -195,10 +196,10 @@
             };
 
             CodeMirror(document.getElementById("vul1Bypass"), Object.assign({}, cmConfig, {
-                value: vul1Bypass
+                value: isEnglishLoginBypass ? vul1Bypass : vul1BypassZh
             }));
             CodeMirror(document.getElementById("vul2Bypass"), Object.assign({}, cmConfig, {
-                value: vul2Bypass
+                value: isEnglishLoginBypass ? vul2Bypass : vul2BypassZh
             }));
 
         });

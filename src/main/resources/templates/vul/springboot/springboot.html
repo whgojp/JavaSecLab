@@ -9,14 +9,13 @@
             <div class="layui-col-md12">
                 <fieldset class="layui-elem-field layui-field-title">
                     <legend>
-                        <a style="color: rgb(30 159 255)" class="jdbc">SpringBoot框架 - 相关漏洞</a>
+                        <a style="color: rgb(30 159 255)" class="jdbc" th:text="#{springboot.title}">SpringBoot Framework - Related Vulnerabilities</a>
                     </legend>
 
                     <blockquote class="layui-elem-quote layui-quote-nm"
                                 style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
                         <p>
-                        <pre>  Spring Boot通过自动配置、嵌入式服务器和生产级功能简化了Java应用开发，但调试、监控、文档和数据源组件一旦在生产环境暴露，就可能泄漏接口、配置、运行状态、SQL监控数据，甚至形成反序列化利用链。
-  本模块聚焦Spring Boot常见暴露面：Swagger/OpenAPI文档、Actuator管理端点、Druid监控台，以及MySQL JDBC反序列化相关风险。</pre>
+                        <pre th:text="#{springboot.intro}">Spring Boot exposure surfaces can leak APIs, configuration, runtime state, SQL monitoring data, and deserialization chains.</pre>
                         </p>
                     </blockquote>
                 </fieldset>
@@ -25,10 +24,10 @@
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
                         <h1 style="display: flex; justify-content: space-between; align-items: center;height: 33.5px">
-                            <span class="iconfont icon-bug"> 漏洞场景：Swagger UI 敏感接口泄漏</span>
+                            <span class="iconfont icon-bug" th:text="| #{springboot.swagger.title}|"> Vulnerable Scenario: Swagger UI Sensitive API Leakage</span>
                             <span class="iconfont icon-liuliang1">
                                 <a href="/other/datapackage/springboot/swagger_ui.pcapng" download="swagger_ui.pcapng"
-                                   style="margin-right: 19px;color: #00bb00">流量分析</a>
+                                   style="margin-right: 19px;color: #00bb00" th:text="#{springboot.traffic}">Traffic Analysis</a>
                             </span>
                         </h1>
 
@@ -38,8 +37,8 @@
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
                                         <div style="display: flex; align-items: center;">
-                                            <p>点击访问链接：</p>
-                                            <a style="color: red" target="_blank" href="/v3/api-docs">Swagger 接口</a>
+                                            <p th:text="#{springboot.openLink}">Open link:</p>
+                                            <a style="color: red" target="_blank" href="/v3/api-docs" th:text="#{springboot.swagger.link}">Swagger API</a>
 
                                         </div>
                                     </blockquote>
@@ -47,9 +46,9 @@
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{springboot.tips}">Tips</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">  Swagger/OpenAPI文档会集中暴露接口路径、参数、数据结构和调试入口。若生产环境未鉴权开放，攻击者可快速梳理后台接口、发现未授权或越权入口。修复时应在生产环境关闭文档，或增加强鉴权、网络访问控制和环境隔离。</pre>
+                                            <pre style="color: #28333e;font-size: 15px;" th:text="#{springboot.swagger.tips}">Swagger/OpenAPI documentation exposes API paths, parameters, data structures, and debugging entry points.</pre>
                                         </div>
                                     </div>
                                 </div>
@@ -59,7 +58,7 @@
 
                     <div class="layui-col-md6">
                         <h1 style="display: flex; align-items: center; height: 33.5px;">
-                            <span class="iconfont icon-code" style="height: 22.5px;">缺陷代码</span>
+                            <span class="iconfont icon-code" style="height: 22.5px;" th:text="#{springboot.vulnerableCode}">Vulnerable Code</span>
                         </h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="springBootSwagger">
@@ -73,10 +72,10 @@
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
                         <h1 style="display: flex; justify-content: space-between; align-items: center;height: 33.5px">
-                            <span class="iconfont icon-bug"> SpringBoot Actuator 敏感端点泄漏</span>
+                            <span class="iconfont icon-bug" th:text="| #{springboot.actuator.title}|"> SpringBoot Actuator Sensitive Endpoint Leakage</span>
                             <span class="iconfont icon-liuliang1">
                                 <a href="/other/datapackage/springboot/actuator.pcapng" download="actuator.pcapng"
-                                   style="margin-right: 19px;color: #00bb00">流量分析</a>
+                                   style="margin-right: 19px;color: #00bb00" th:text="#{springboot.traffic}">Traffic Analysis</a>
                             </span>
                         </h1>
                         <div class="layui-tab layui-tab-brief">
@@ -85,8 +84,8 @@
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
                                         <div style="display: flex; align-items: center;">
-                                            <p>点击访问链接：</p>
-                                            <a style="color: red" target="_blank" href="/sys/actuator">Actuator 端点</a>
+                                            <p th:text="#{springboot.openLink}">Open link:</p>
+                                            <a style="color: red" target="_blank" href="/sys/actuator" th:text="#{springboot.actuator.link}">Actuator Endpoints</a>
 
                                         </div>
                                     </blockquote>
@@ -94,9 +93,9 @@
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{springboot.tips}">Tips</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">  Actuator用于健康检查和运行时监控，但暴露`env`、`beans`、`mappings`、`heapdump`、`threaddump`等端点会泄漏配置、依赖、路由、内存和线程信息。修复时应最小化暴露端点，只开放必要健康检查，并对管理端口加鉴权、内网限制和脱敏。</pre>
+                                            <pre style="color: #28333e;font-size: 15px;" th:text="#{springboot.actuator.tips}">Actuator endpoints can leak configuration, dependencies, routes, memory, and thread information.</pre>
                                         </div>
                                     </div>
                                 </div>
@@ -106,7 +105,7 @@
 
                     <div class="layui-col-md6">
                         <h1 style="display: flex; align-items: center; height: 33.5px;">
-                            <span class="iconfont icon-code" style="height: 22.5px;">缺陷代码</span>
+                            <span class="iconfont icon-code" style="height: 22.5px;" th:text="#{springboot.vulnerableCode}">Vulnerable Code</span>
                         </h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="springBootActuator">
@@ -120,10 +119,10 @@
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
                         <h1 style="display: flex; justify-content: space-between; align-items: center;height: 33.5px">
-                            <span class="iconfont icon-bug"> 漏洞场景：Druid 监控台暴露</span>
+                            <span class="iconfont icon-bug" th:text="| #{springboot.druid.title}|"> Vulnerable Scenario: Exposed Druid Monitor Console</span>
                             <span class="iconfont icon-liuliang1">
                                 <a href="/other/datapackage/springboot/druid.pcapng" download="druid.pcapng"
-                                   style="margin-right: 19px;color: #00bb00">流量分析</a>
+                                   style="margin-right: 19px;color: #00bb00" th:text="#{springboot.traffic}">Traffic Analysis</a>
                             </span>
                         </h1>
                         <div class="layui-tab layui-tab-brief">
@@ -132,9 +131,8 @@
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
                                         <div style="display: flex; align-items: center;">
-                                            <p>点击访问链接：</p>
-                                            <a style="color: red" target="_blank" href="/druid/index.html">Druid
-                                                配置不当</a>
+                                            <p th:text="#{springboot.openLink}">Open link:</p>
+                                            <a style="color: red" target="_blank" href="/druid/index.html" th:text="#{springboot.druid.link}">Druid Misconfiguration</a>
 
                                         </div>
                                     </blockquote>
@@ -142,9 +140,9 @@
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{springboot.tips}">Tips</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">  这里的Druid指Alibaba Druid连接池监控台，不是Apache Druid分析数据库。若`/druid/*`监控台未设置鉴权或被安全配置放行，攻击者可查看数据源、SQL、URI、Session等运行信息。修复时应关闭生产监控台，或设置强口令、内网访问、反向代理鉴权和访问审计。</pre>
+                                            <pre style="color: #28333e;font-size: 15px;" th:text="#{springboot.druid.tips}">Exposed Druid monitor console can leak datasource, SQL, URI, Session, and runtime data.</pre>
                                         </div>
                                     </div>
                                 </div>
@@ -154,7 +152,7 @@
 
                     <div class="layui-col-md6">
                         <h1 style="display: flex; align-items: center; height: 33.5px;">
-                            <span class="iconfont icon-code" style="height: 22.5px;">缺陷代码</span>
+                            <span class="iconfont icon-code" style="height: 22.5px;" th:text="#{springboot.vulnerableCode}">Vulnerable Code</span>
                         </h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="springBootDruid">
@@ -169,10 +167,10 @@
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
                         <h1 style="display: flex; justify-content: space-between; align-items: center;height: 33.5px">
-                            <span class="iconfont icon-bug">  漏洞场景：MYSQL JDBC反序列化</span>
+                            <span class="iconfont icon-bug" th:text="|  #{springboot.jdbc.title}|">  Vulnerable Scenario: MySQL JDBC Deserialization</span>
                             <span class="iconfont icon-liuliang1">
                                 <a href="/other/datapackage/springboot/mysql_jdbc.pcapng" download="mysql_jdbc.pcapng"
-                                   style="margin-right: 19px;color: #00bb00">流量分析</a>
+                                   style="margin-right: 19px;color: #00bb00" th:text="#{springboot.traffic}">Traffic Analysis</a>
                             </span>
 
                         </h1>
@@ -184,10 +182,10 @@
                                             <div style="display: flex; align-items: center;">
                                                 <p>
                                                     <a target="_blank" style="color: red" href="/springboot/vul?url=jdbc:mysql://ip:port/test?characterEncoding=UTF-8&amp;serverTimezone=Asia/Shanghai&amp;autoDeserialize=true&amp;queryInterceptors=com.mysql.cj.jdbc.interceptors.ServerStatusDiffInterceptor&amp;username=deser_URLDNS_http://xxx.dnslog.cn&amp;password=qwe">
-                                                        Fake-MySQL-Server漏洞测试
+                                                        <span th:text="#{springboot.jdbc.fakeMysql}">Fake-MySQL-Server Vulnerability Test</span>
                                                     </a> |
                                                     <a target="_blank" style="color: red" href="/springboot/insert?command=open%20-a%20Calculator">
-                                                        反序列化命令
+                                                        <span th:text="#{springboot.jdbc.insertCommand}">Deserialization Command</span>
                                                     </a>
                                                 </p>
 
@@ -196,7 +194,7 @@
                                                 <button type="button" id="vul-jdbc-run" class="layui-btn layui-btn-normal"
                                                         style="width: 100px; margin-left: 10px;"
                                                         onclick="runSpringBootJdbc()">
-                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                    <span class="iconfont icon-zhihang" th:text="#{springboot.run}">Run</span>
                                                 </button>
                                             </div>
                                         </form>
@@ -205,16 +203,16 @@
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{springboot.tips}">Tips</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">  MySQL JDBC反序列化风险通常与不可信JDBC URL、特殊连接参数、恶意MySQL服务端或本地反序列化链路有关。修复时应禁止用户控制JDBC URL，关闭危险连接参数，升级驱动版本，并避免从数据库读取后直接进行Java原生反序列化。</pre>
+                                            <pre style="color: #28333e;font-size: 15px;" th:text="#{springboot.jdbc.tips}">MySQL JDBC deserialization risk is usually related to untrusted JDBC URLs and dangerous connection parameters.</pre>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i>测试结果
+                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i><span th:text="#{springboot.testResult}">Test Result</span>
                                         </div>
                                         <div class="layui-card-body layui-text layadmin-text">
                                             <pre id="vul-jdbc-result" style="color: red;font-size: 15px;"></pre>
@@ -228,7 +226,7 @@
 
                     <div class="layui-col-md6">
                         <h1 style="display: flex; align-items: center; height: 33.5px;">
-                            <span class="iconfont icon-code" style="height: 22.5px;">缺陷代码</span>
+                            <span class="iconfont icon-code" style="height: 22.5px;" th:text="#{springboot.vulnerableCode}">Vulnerable Code</span>
                         </h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="jdbcDeserial"></div>
@@ -243,7 +241,7 @@
 </div>
 
 <div th:replace="~{common/common::script}"></div>
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
     function runSpringBootJdbc() {
         var result = document.getElementById("vul-jdbc-result");
         var xhr = new XMLHttpRequest();
@@ -255,12 +253,12 @@
             if (xhr.status >= 200 && xhr.status < 300) {
                 try {
                     var res = JSON.parse(xhr.responseText);
-                    result.textContent = res && res.msg ? res.msg : "请求完成";
+                    result.textContent = res && res.msg ? res.msg : /*[[#{springboot.jdbc.done}]]*/ "Request completed.";
                 } catch (e) {
-                    result.textContent = xhr.responseText || "请求完成";
+                    result.textContent = xhr.responseText || /*[[#{springboot.jdbc.done}]]*/ "Request completed.";
                 }
             } else {
-                result.textContent = "请求失败，请检查服务状态";
+                result.textContent = /*[[#{springboot.jdbc.failed}]]*/ "Request failed. Please check service status.";
             }
         };
         xhr.send();
@@ -275,7 +273,8 @@
                 miniTab = layui.miniTab,
                 form = layui.form;
             miniTab.listen();
-            layer.msg("SpringBoot框架-相关漏洞")
+            layer.msg(/*[[#{springboot.toast}]]*/ "SpringBoot Framework - Related Vulnerabilities")
+            var isEnglishSpringBoot = /*[[${#locale.language == 'en'}]]*/ false;
 
             var cmConfig = {
                 lineNumbers: true,
@@ -289,23 +288,23 @@
             };
 
             CodeMirror(document.getElementById("springBootSwagger"), Object.assign({}, cmConfig, {
-                value: springBootSwagger
+                value: isEnglishSpringBoot ? springBootSwagger : springBootSwaggerZh
             }));
             CodeMirror(document.getElementById("springBootActuator"), Object.assign({}, cmConfig, {
-                value: springBootActuator
+                value: isEnglishSpringBoot ? springBootActuator : springBootActuatorZh
             }));
             CodeMirror(document.getElementById("springBootDruid"), Object.assign({}, cmConfig, {
-                value: springBootDruid
+                value: isEnglishSpringBoot ? springBootDruid : springBootDruidZh
             }));
             CodeMirror(document.getElementById("jdbcDeserial"), Object.assign({}, cmConfig, {
-                value: JdbcDeserial
+                value: isEnglishSpringBoot ? JdbcDeserial : JdbcDeserialZh
             }));
 
         });
 
         $('.jdbc').hover(function () {
             $(this).css('cursor', 'pointer');
-            layer.tips('JDBC反序列化攻击流程', this, {
+            layer.tips(/*[[#{springboot.jdbc.flowTip}]]*/ 'JDBC deserialization attack flow', this, {
                 tips: [1, '#0051ff'],
                 time: 2000
             });

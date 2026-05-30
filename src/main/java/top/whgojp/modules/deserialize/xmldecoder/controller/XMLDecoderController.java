@@ -3,6 +3,8 @@ package top.whgojp.modules.deserialize.xmldecoder.controller;
 import io.swagger.annotations.Api;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import top.whgojp.common.utils.R;
@@ -30,6 +32,12 @@ import org.xml.sax.helpers.DefaultHandler;
 @CrossOrigin(origins = "*")
 @RequestMapping("/xmlDecoder")
 public class XMLDecoderController {
+    private final MessageSource messageSource;
+
+    public XMLDecoderController(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
+
     @RequestMapping("")
     public String xmlDecoder() {
         return "vul/deserialize/xmlDecoder";
@@ -39,7 +47,7 @@ public class XMLDecoderController {
     @ResponseBody
     public R vul(@RequestParam(required = false) String payload) {
         if (payload == null || payload.trim().isEmpty()) {
-            return R.error("Payload不能为空");
+            return R.error(msg("common.payload.empty"));
         }
         String[] strCmd = payload.split(" ");
         StringBuilder xml = new StringBuilder()
@@ -55,9 +63,9 @@ public class XMLDecoderController {
         try {
             new java.beans.XMLDecoder(new ByteArrayInputStream(xml.toString().getBytes(StandardCharsets.UTF_8)))
                     .readObject().toString();
-            return R.ok("[+]命令执行成功");
+            return R.ok(msg("deserialize.xmlDecoder.result.executed"));
         } catch (Exception e) {
-            return R.error("[-]命令执行失败: " + e.getMessage());
+            return R.error(msg("deserialize.xmlDecoder.result.executeFailed", e.getMessage()));
         }
     }
 
@@ -66,7 +74,7 @@ public class XMLDecoderController {
     @ResponseBody
     public R safe(@RequestParam(required = false) String payload) {
         if (payload == null || payload.trim().isEmpty()) {
-            return R.error("Payload不能为空");
+            return R.error(msg("common.payload.empty"));
         }
         try {
             // 构建 XML 字符串
@@ -98,10 +106,14 @@ public class XMLDecoderController {
             // 处理解析后的命令参数
             System.out.println("Parsed command: " + String.join(" ", args));
 
-            return R.ok("[+]命令解析成功:"+String.join(" ", args));
+            return R.ok(msg("deserialize.xmlDecoder.result.parsed", String.join(" ", args)));
         } catch (Exception e) {
-            return R.error("[-]命令解析失败: " + e.getMessage());
+            return R.error(msg("deserialize.xmlDecoder.result.parseFailed", e.getMessage()));
         }
+    }
+
+    private String msg(String key, Object... args) {
+        return messageSource.getMessage(key, args, LocaleContextHolder.getLocale());
     }
 
     // SAX 处理器

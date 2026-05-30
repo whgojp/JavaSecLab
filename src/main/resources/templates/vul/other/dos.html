@@ -7,17 +7,17 @@
 <body>
 <div class="layuimini-container">
     <div class="layuimini-main">
-        <!-- DoS攻击部分 -->
+        
         <div class="layui-row layui-col-space15">
             <div class="layui-col-md12">
                 <fieldset class="layui-elem-field layui-field-title">
                     <legend>
-                        <a class="dos" style="color: rgb(30 159 255)">其他漏洞 - DoS攻击</a>
+                        <a class="dos" style="color: rgb(30 159 255)" th:text="#{other.dos.title}">其他漏洞 - DoS攻击</a>
                     </legend>
                     <blockquote class="layui-elem-quote layui-quote-nm" style="background-color: #a7deefab;">
                         <p>
-                        <pre>  DoS攻击：攻击者通过异常输入、资源放大或高成本操作耗尽CPU、内存、磁盘或线程池，使服务不可用。</pre>
-                        <pre>  DDoS攻击：由多个来源协同发起，产生巨量流量或请求压力，防御重点通常在流量清洗、限速和弹性扩容。</pre>
+                        <pre th:text="#{other.dos.intro.dos}">DoS攻击</pre>
+                        <pre th:text="#{other.dos.intro.ddos}">DDoS攻击</pre>
                         </p>
                     </blockquote>
                 </fieldset>
@@ -27,12 +27,12 @@
             <div class="layui-col-md12">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-bug">  漏洞场景：验证码参数可控</span></h1>
+                        <h1><span class="iconfont icon-bug" th:text="|  #{other.dos.vul.image.title}|">  漏洞场景：验证码参数可控</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
-                                        <p>图片功能点(二维码/验证码)参数长、宽可控时，可能造成CPU和内存消耗放大。</p>
+                                        <p th:text="#{other.dos.vul.image.desc}">图片功能点(二维码/验证码)参数长、宽可控时，可能造成CPU和内存消耗放大。</p>
                                         <a target="_blank" href="/other/dos/vul?width=1200&height=1200">
                                             <button class="layui-btn layui-btn-normal" style="width: 100px;">Run</button>
                                         </a>
@@ -43,7 +43,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code">  缺陷代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="|  #{other.dos.vulnerableCode}|">  缺陷代码</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="vulDos"></div>
                         </div>
@@ -55,26 +55,26 @@
             <div class="layui-col-md12">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-anquan">  安全场景：图片尺寸限制</span></h1>
+                        <h1><span class="iconfont icon-anquan" th:text="|  #{other.dos.safe.image.title}|">  安全场景：图片尺寸限制</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
-                                        <p>服务端限制宽高、总像素和请求频率，避免用户输入直接决定资源消耗。</p>
+                                        <p th:text="#{other.dos.safe.image.desc}">服务端限制宽高、总像素和请求频率，避免用户输入直接决定资源消耗。</p>
                                         <a target="_blank" href="/other/dos/safe?width=1200&height=1200">
-                                            <button class="layui-btn layui-btn-normal" style="width: 100px;">拦截测试</button>
+                                            <button class="layui-btn layui-btn-normal" style="width: 100px;" th:text="#{other.dos.safe.image.block}">拦截测试</button>
                                         </a>
                                         <a target="_blank" href="/other/dos/safe?width=300&height=120">
-                                            <button class="layui-btn layui-btn-normal" style="width: 100px;">正常生成</button>
+                                            <button class="layui-btn layui-btn-normal" style="width: 100px;" th:text="#{other.dos.safe.image.normal}">正常生成</button>
                                         </a>
                                     </blockquote>
                                 </div>
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i> tips</div>
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i> <span th:text="#{other.dos.tips}">tips</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre>图片、报表、压缩、加密、搜索等高成本功能都应设置输入上限、超时、并发限制和异步队列。</pre>
+                                            <pre th:text="#{other.dos.safe.image.tips}">图片、报表、压缩、加密、搜索等高成本功能都应设置输入上限、超时、并发限制和异步队列。</pre>
                                         </div>
                                     </div>
                                 </div>
@@ -83,7 +83,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code">  安全代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="|  #{other.dos.safeCode}|">  安全代码</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="safeDos"></div>
                         </div>
@@ -95,29 +95,27 @@
             <div class="layui-col-md12">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-bug"> 漏洞场景：ZIP解压炸弹</span></h1>
+                        <h1><span class="iconfont icon-bug" th:text="| #{other.dos.vul.zip.title}|"> 漏洞场景：ZIP解压炸弹</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
                                         <button type="button" class="layui-btn" id="uploadZipFile">
-                                            <i class="layui-icon">&#xe67c;</i>选择文件
+                                            <i class="layui-icon">&#xe67c;</i><span th:text="#{other.dos.vul.zip.choose}">选择文件</span>
                                         </button>
                                         <div style="display: flex; align-items: center;">
-                                            <p> ZIP解压炸弹</p>
+                                            <p th:text="#{other.dos.vul.zip.desc}"> ZIP解压炸弹</p>
                                         </div>
-                                        <button type="button" class="layui-btn layui-btn-normal" id="uploadZip">上传文件</button>
+                                        <button type="button" class="layui-btn layui-btn-normal" id="uploadZip" th:text="#{other.dos.vul.zip.upload}">上传文件</button>
                                     </blockquote>
                                 </div>
 
                                 <!-- 提示信息 -->
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i> tips</div>
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i> <span th:text="#{other.dos.tips}">tips</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre>某些功能点后端会对上传的文件进行解压并且可以递归解压
-测试zip：https://www.bamsoftware.com/hacks/zipbomb/zbsm.zip
-漏洞原理：解压zbxl.zip炸弹以后会出现16个压缩包，每个压缩包又包含16个，循环5次，最后得到16的5次方个文件，也就是1048576个文件，一百多万个最终文件，每个大小为4.3GB</pre>
+                                            <pre th:text="#{other.dos.vul.zip.tips}">ZIP解压炸弹</pre>
                                         </div>
                                     </div>
                                 </div>
@@ -125,7 +123,7 @@
                                 <!-- 测试结果 -->
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i> 测试结果</div>
+                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i> <span th:text="#{other.dos.testResult}">测试结果</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
                                             <pre id="vul-result" style="color: red;"></pre>
                                         </div>
@@ -136,7 +134,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="| #{other.dos.vulnerableCode}|"> 缺陷代码</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="vul2Dos"></div>
                         </div>
@@ -149,7 +147,7 @@
 
 <div th:replace="~{common/common::script}"></div>
 
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
     document.addEventListener("DOMContentLoaded", function () {
         layui.use(['layer', 'miniTab', 'common', 'form'], function () {
             var $ = layui.jquery,
@@ -159,7 +157,8 @@
                 upload = layui.upload;
 
             miniTab.listen();
-            layer.msg("其他漏洞-拒绝服务攻击");
+            layer.msg(/*[[#{other.dos.toast}]]*/ "其他漏洞-拒绝服务攻击");
+            var isEnglishDos = /*[[${#locale.language == 'en'}]]*/ false;
 
             // 创建上传实例
             function createUploadInstance(config) {
@@ -175,12 +174,12 @@
                     multiple: config.multiple || false,
                     drag: config.drag || true,
                     done: function (res) {
-                        console.log("上传文件成功：" + JSON.stringify(res));
+                        console.log((/*[[#{other.dos.uploadSuccess}]]*/ "上传文件成功：") + JSON.stringify(res));
                         $(config.resultElem).html(res.msg);  // 直接访问msg字段，而不是JSON.stringify(res).msg
                     },
                     error: function () {
-                        console.log("上传文件失败");
-                        $(config.resultElem).html("上传文件失败，请检查文件类型和大小");
+                        console.log(/*[[#{other.dos.uploadFailed}]]*/ "上传文件失败");
+                        $(config.resultElem).html(/*[[#{other.dos.uploadFailed}]]*/ "上传文件失败，请检查文件类型和大小");
                     }
                 });
             }
@@ -207,14 +206,14 @@
             };
 
             // 初始化代码编辑器
-            CodeMirror(document.getElementById("vulDos"), Object.assign({}, cmConfig, { value: vulDos }));
-            CodeMirror(document.getElementById("safeDos"), Object.assign({}, cmConfig, { value: safeDos }));
-            CodeMirror(document.getElementById("vul2Dos"), Object.assign({}, cmConfig, { value: vul2Dos }));
+            CodeMirror(document.getElementById("vulDos"), Object.assign({}, cmConfig, { value: isEnglishDos ? vulDos : vulDosZh }));
+            CodeMirror(document.getElementById("safeDos"), Object.assign({}, cmConfig, { value: isEnglishDos ? safeDos : safeDosZh }));
+            CodeMirror(document.getElementById("vul2Dos"), Object.assign({}, cmConfig, { value: isEnglishDos ? vul2Dos : vul2DosZh }));
 
             // hover 效果
             $('.dos').hover(function () {
                 $(this).css('cursor', 'pointer');
-                layer.tips('DoS与DDoS区别', this, {
+                layer.tips(/*[[#{other.dos.diffTip}]]*/ 'DoS与DDoS区别', this, {
                     tips: [1, '#0051ff'],
                     time: 2000
                 });

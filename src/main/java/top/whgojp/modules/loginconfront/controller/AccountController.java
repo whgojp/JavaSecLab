@@ -2,6 +2,8 @@ package top.whgojp.modules.loginconfront.controller;
 
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +29,11 @@ public class AccountController {
     // 测试账号密码
     private static final Set<String> REAL_USERNAMES = new HashSet<>(Arrays.asList("admin", "test", "12345", "root"));
     private static final String REAL_PASSWORD = "admin123";
+    private final MessageSource messageSource;
+
+    public AccountController(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
 
     @RequestMapping("")
     public String account() {
@@ -37,16 +44,16 @@ public class AccountController {
     @ResponseBody
     public R vul1(String username, String password) {
         if (username == null || username.trim().isEmpty() || password == null) {
-            return R.error("用户名或密码不能为空！");
+            return R.error(msg("login.account.result.empty"));
         }
         if (REAL_USERNAMES.contains(username)) {
             if (REAL_PASSWORD.equalsIgnoreCase(password)) {
-                return R.ok("登录成功！用户名：" + username + ", 密码：" + password);
+                return R.ok(msg("login.account.result.success", username, password));
             } else {
-                return R.error("密码错误，请重试！");
+                return R.error(msg("login.account.result.passwordWrong"));
             }
         } else {
-            return R.error("用户不存在！");
+            return R.error(msg("login.account.result.userMissing"));
         }
     }
 
@@ -54,16 +61,19 @@ public class AccountController {
     @ResponseBody
     public R vul2(String username, String password) {
         if (username == null || username.trim().isEmpty() || password == null) {
-            return R.error("用户名或密码不能为空！");
+            return R.error(msg("login.account.result.empty"));
         }
         // 这里简单模拟下数据库查询操作
         // User user = UserService.getAllByUsernameAndPassword(username,password)
         if ("admin".equalsIgnoreCase(username) && "admin".equalsIgnoreCase(password)) {
-            return R.ok("登录成功！用户名：" + username + ", 密码：" + password);
+            return R.ok(msg("login.account.result.success", username, password));
         } else {
-            return R.ok("账号或密码错误！");
+            return R.ok(msg("login.account.result.genericWrong"));
         }
     }
 
+    private String msg(String key, Object... args) {
+        return messageSource.getMessage(key, args, LocaleContextHolder.getLocale());
+    }
 
 }

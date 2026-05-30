@@ -7,17 +7,16 @@
 <body>
 <div class="layuimini-container">
     <div class="layuimini-main">
-        <!-- DoS攻击部分 -->
         <div class="layui-row layui-col-space15">
             <div class="layui-col-md12">
                 <fieldset class="layui-elem-field layui-field-title">
                     <legend>
-                        <a class="idor" style="color: rgb(30 159 255)">逻辑漏洞 - 越权漏洞</a>
+                        <a class="idor" style="color: rgb(30 159 255)" th:text="#{logic.idor.title}">逻辑漏洞 - 越权漏洞</a>
                     </legend>
                     <blockquote class="layui-elem-quote layui-quote-nm" style="background-color: #a7deefab;">
                         <p>
-                        <pre>  IDOR(不安全的直接对象引用)：通过修改请求中的对象标识符(如用户ID、文件名)绕过授权检查，访问或操作本不属于自己的资源</pre>
-                        <pre>  垂直越权：低权限用户绕过服务端角色校验，访问原本只允许管理员或高权限角色使用的功能。</pre>
+                        <pre th:text="#{logic.idor.intro.core}">IDOR(不安全的直接对象引用)：服务端把用户可控的对象标识符直接用于查询或操作资源，但没有校验该资源是否属于当前登录用户。</pre>
+                        <pre th:text="#{logic.idor.intro.vertical}">垂直越权：低权限用户绕过服务端角色校验，访问原本只允许管理员或高权限角色使用的功能。</pre>
                         </p>
                     </blockquote>
                 </fieldset>
@@ -26,15 +25,15 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-bug"> 漏洞场景：垂直越权管理员</span></h1>
+                        <h1><span class="iconfont icon-bug" th:text="| #{logic.idor.vertical.vul.title}|"> 漏洞场景：垂直越权管理员</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
-                                        <p>低权限用户直接访问管理员功能地址，服务端未做角色校验</p>
+                                        <p th:text="#{logic.idor.vertical.vul.desc}">低权限用户直接访问管理员功能地址，服务端未做角色校验</p>
                                         <a target="_blank" href="/logic/idor/vertical/vul">
                                             <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
-                                                <span class="iconfont icon-zhihang">Run</span>
+                                                <span class="iconfont icon-zhihang" th:text="#{logic.idor.run}">Run</span>
                                             </button>
                                         </a>
                                     </blockquote>
@@ -42,12 +41,9 @@
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{logic.idor.tips}">tips</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">问题点：
-  1、前端菜单隐藏、按钮置灰、URL不可见都不是权限控制。
-  2、管理员接口必须在服务端校验当前用户角色、权限点和资源归属。
-  3、权限失败应返回403或统一无权限页，并记录审计日志。</pre>
+                                            <pre style="color: #28333e;font-size: 15px;" th:text="#{logic.idor.vertical.vul.tips}">问题点</pre>
                                         </div>
                                     </div>
                                 </div>
@@ -57,7 +53,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="| #{logic.idor.vulnerableCode}|"> 缺陷代码</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="vulHorizon"></div>
                         </div>
@@ -72,7 +68,7 @@
 
 <div th:replace="~{common/common::script}"></div>
 
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
     layui.use(['layer', 'miniTab', 'common', 'form'], function () {
         var $ = layui.jquery,
             layer = layui.layer,
@@ -82,7 +78,8 @@
             upload = layui.upload;
 
         miniTab.listen();
-        layer.msg("其他漏洞-垂直越权");
+        layer.msg(/*[[#{logic.idor.vertical.toast}]]*/ "其他漏洞-垂直越权");
+        var isEnglishIdor = /*[[${#locale.language == 'en'}]]*/ false;
 
         var cmConfig = {
             lineNumbers: true,
@@ -95,11 +92,11 @@
             mode: "text/x-java"
         };
 
-        CodeMirror(document.getElementById("vulHorizon"), Object.assign({}, cmConfig, { value: vulVertical }));
+        CodeMirror(document.getElementById("vulHorizon"), Object.assign({}, cmConfig, { value: isEnglishIdor ? vulVertical : vulVerticalZh }));
 
         $('.idor').hover(function () {
             $(this).css('cursor', 'pointer');
-            layer.tips('漏洞示意图', this, {
+            layer.tips(/*[[#{logic.idor.diagramTip}]]*/ '漏洞示意图', this, {
                 tips: [1, '#0051ff'],
                 time: 2000
             });

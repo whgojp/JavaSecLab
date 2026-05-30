@@ -1,0 +1,483 @@
+{
+  "homeInfo": {
+    "title": "Home",
+    "href": "home"
+  },
+  "logoInfo": {
+    "title": "JavaSecLab",
+    "image": "images/logo.png",
+    "href": ""
+  },
+  "menuInfo": [
+    {
+      "title": "General Vulnerabilities",
+      "icon": "fa fa-address-book",
+      "href": "",
+      "target": "_self",
+      "child": [
+        {
+          "title": "Cross-Site Scripting",
+          "href": "",
+          "icon": "iconfont icon-kuazhanjiaobengongji",
+          "target": "_self",
+          "child": [
+            {
+              "title": "Reflected",
+              "href": "",
+              "icon": "iconfont icon-R",
+              "target": "_self",
+              "child": [
+                {
+                  "title": "Vulnerable Scenario",
+                  "href": "xss/reflect/vul",
+                  "icon": "iconfont icon-bug",
+                  "target": "_self"
+                },
+                {
+                  "title": "Safe Scenario",
+                  "href": "xss/reflect/safe",
+                  "icon": "iconfont icon-anquan",
+                  "target": "_self"
+                }
+              ]
+            },
+            {
+              "title": "Stored",
+              "href": "xss/store",
+              "icon": "iconfont icon-S",
+              "target": "_self"
+            },
+            {
+              "title": "DOM",
+              "href": "xss/dom",
+              "icon": "iconfont icon-dom",
+              "target": "_self"
+            },
+            {
+              "title": "Other Scenarios",
+              "href": "xss/other",
+              "icon": "iconfont icon-qita",
+              "target": "_self"
+            }
+          ]
+        },
+        {
+          "title": "SQL Injection",
+          "href": "",
+          "icon": "iconfont icon-SQLzhurugongji",
+          "target": "_self",
+          "child": [
+            {
+              "title": "JDBC",
+              "href": "",
+              "icon": "iconfont icon-jdbc",
+              "target": "_self",
+              "child": [
+                {
+                  "title": "Vulnerable Scenario",
+                  "href": "sqli/jdbc/jdbcVul",
+                  "icon": "iconfont icon-bug",
+                  "target": "_self"
+                },
+                {
+                  "title": "Safe Scenario",
+                  "href": "sqli/jdbc/jdbcSafe",
+                  "icon": "iconfont icon-anquan",
+                  "target": "_self"
+                },
+                {
+                  "title": "Special Scenario",
+                  "href": "sqli/jdbc/jdbcSpecial",
+                  "icon": "iconfont icon-tesefuwu",
+                  "target": "_self"
+                }
+              ]
+            },
+            {
+              "title": "MyBatis",
+              "href": "sqli/mybatis",
+              "icon": "iconfont icon-icons8-mybatis",
+              "target": "_self"
+            },
+            {
+              "title": "Hibernate",
+              "href": "sqli/hibernate",
+              "icon": "iconfont icon-Hivebiao",
+              "target": "_self"
+            },
+            {
+              "title": "JPA",
+              "href": "sqli/jpa",
+              "icon": "iconfont icon-spring",
+              "target": "_self"
+            }
+          ]
+        },
+        {
+          "title": "Arbitrary File",
+          "href": "",
+          "icon": "iconfont icon-wenjian1",
+          "target": "_self",
+          "child": [
+            {
+              "title": "Upload",
+              "href": "file/upload",
+              "icon": "iconfont icon-wenjian-shangchuan",
+              "target": "_self"
+            },
+            {
+              "title": "Read",
+              "href": "file/read",
+              "icon": "iconfont icon-duqu",
+              "target": "_self"
+            },
+            {
+              "title": "Download",
+              "href": "file/download",
+              "icon": "iconfont icon-wenjian-xiazai",
+              "target": "_self"
+            },
+            {
+              "title": "Delete",
+              "href": "file/delete",
+              "icon": "iconfont icon-wenjian-shanchu",
+              "target": "_self"
+            }
+          ]
+        },
+        {
+          "title": "SSRF",
+          "href": "ssrf",
+          "icon": "iconfont icon-fuwuqingqiu",
+          "target": "_self"
+        },
+        {
+          "title": "XXE",
+          "href": "",
+          "icon": "iconfont icon-XML",
+          "target": "_self",
+          "child": [
+            {
+              "title": "Vulnerable Scenario",
+              "href": "xxe/vul",
+              "icon": "iconfont icon-bug",
+              "target": "_self"
+            },
+            {
+              "title": "Safe Scenario",
+              "href": "xxe/safe",
+              "icon": "iconfont icon-anquan",
+              "target": "_self"
+            }
+          ]
+        },
+        {
+          "title": "CSRF",
+          "href": "csrf",
+          "icon": "iconfont icon-kuazhanqingqiuweizao",
+          "target": "_self"
+        },
+        {
+          "title": "Cross-Origin Security",
+          "href": "",
+          "icon": "iconfont icon-origin",
+          "target": "_self",
+          "child": [
+            {
+              "title": "CORS",
+              "href": "crossorigin/cors",
+              "icon": "iconfont icon-cors",
+              "target": "_self"
+            },
+            {
+              "title": "JSONP",
+              "href": "crossorigin/jsonp",
+              "icon": "iconfont icon-JSON",
+              "target": "_self"
+            }
+          ]
+        },
+        {
+          "title": "RCE",
+          "href": "",
+          "icon": "iconfont icon-minglingzhihang",
+          "target": "_self",
+          "child": [
+            {
+              "title": "Command Injection",
+              "href": "command",
+              "icon": "iconfont icon-minglingzhihang",
+              "target": "_self"
+            },
+            {
+              "title": "Code Injection",
+              "href": "code",
+              "icon": "iconfont icon-minglingzhihang",
+              "target": "_self"
+            }
+          ]
+        },
+        {
+          "title": "Logic Vulnerabilities",
+          "href": "",
+          "icon": "iconfont icon-luojiloudongjiance",
+          "target": "_self",
+          "child": [
+            {
+              "title": "IDOR",
+              "href": "",
+              "icon": "iconfont icon-quanxian",
+              "target": "_self",
+              "child": [
+                {
+                  "title": "Horizontal IDOR",
+                  "href": "logic/idor/horizontal",
+                  "icon": "iconfont icon-24gl-swapHorizontal3",
+                  "target": "_self"
+                },
+                {
+                  "title": "Vertical IDOR",
+                  "href": "logic/idor/vertical",
+                  "icon": "iconfont icon-24gl-swapVertical3",
+                  "target": "_self"
+                }
+              ]
+            },
+            {
+              "title": "Payment",
+              "href": "logic/pay",
+              "icon": "iconfont icon-zhifu",
+              "target": "_self"
+            },
+            {
+              "title": "Concurrency",
+              "href": "logic/concurrent",
+              "icon": "iconfont icon-gaobingfa",
+              "target": "_self"
+            },
+            {
+              "title": "Captcha Security",
+              "href": "",
+              "icon": "iconfont icon-yanzhengma1",
+              "target": "_self",
+              "child": [
+                {
+                  "title": "Image Captcha",
+                  "href": "logic/captcha/graphic",
+                  "icon": "iconfont icon-yanzhengma",
+                  "target": "_self"
+                },
+                {
+                  "title": "SMS Captcha",
+                  "href": "logic/captcha/sms",
+                  "icon": "iconfont icon-duanxin",
+                  "target": "_self"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Other Vulnerabilities",
+          "href": "",
+          "icon": "iconfont icon-qita",
+          "target": "_self",
+          "child": [
+            {
+              "title": "URL Redirect",
+              "href": "",
+              "icon": "iconfont icon-redirect",
+              "target": "_self",
+              "child": [
+                {
+                  "title": "Vulnerable Scenario",
+                  "href": "other/URLRedirect/vul",
+                  "icon": "iconfont icon-bug",
+                  "target": "_self"
+                },
+                {
+                  "title": "Safe Scenario",
+                  "href": "other/URLRedirect/safe",
+                  "icon": "iconfont icon-anquan",
+                  "target": "_self"
+                }
+              ]
+            },
+            {
+              "title": "XFF Forgery",
+              "href": "other/xff",
+              "icon": "iconfont icon-laiyuan",
+              "target": "_self"
+            },
+            {
+              "title": "DoS",
+              "href": "other/dos",
+              "icon": "iconfont icon-DOSgongji",
+              "target": "_self"
+            },
+            {
+              "title": "XPath Injection",
+              "href": "other/xpath",
+              "icon": "iconfont icon-XPath",
+              "target": "_self"
+            }
+          ]
+        },
+        {
+          "title": "Information Leakage",
+          "href": "",
+          "icon": "iconfont icon-minganxinxi",
+          "target": "_self",
+          "child": [
+            {
+              "title": "JS Leakage",
+              "href": "infoLeak/js",
+              "icon": "iconfont icon-js",
+              "target": "_self"
+            },
+            {
+              "title": "Directory Traversal",
+              "href": "infoLeak/dirTraversal",
+              "icon": "iconfont icon-catalog",
+              "target": "_self"
+            },
+            {
+              "title": "Test Page",
+              "href": "infoLeak/ceShiPage",
+              "icon": "iconfont icon-ceshiliucheng",
+              "target": "_self"
+            },
+            {
+              "title": "Backup Files",
+              "href": "infoLeak/backUp",
+              "icon": "iconfont icon-yasuobao",
+              "target": "_self"
+            }
+          ]
+        },
+        {
+          "title": "Login Confrontation",
+          "href": "",
+          "icon": "iconfont icon-denglukuang",
+          "target": "_self",
+          "child": [
+            {
+              "title": "Account Security",
+              "href": "/loginconfront/account",
+              "icon": "iconfont icon-zhanghao",
+              "target": "_self"
+            },
+            {
+              "title": "Login Bypass",
+              "href": "/loginconfront/bypass",
+              "icon": "iconfont icon-mimazhaohui",
+              "target": "_self"
+            },
+            {
+              "title": "JS Reverse",
+              "href": "/loginconfront/reverse",
+              "icon": "iconfont icon-JS",
+              "target": "_self"
+            },
+            {
+              "title": "Credential Security",
+              "href": "/loginconfront/credential",
+              "icon": "iconfont icon-quanxianweizao",
+              "target": "_self"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Java Topics",
+      "icon": "fa fa-lemon-o",
+      "href": "",
+      "target": "_self",
+      "child": [
+        {
+          "title": "SpringBoot",
+          "href": "springboot",
+          "icon": "iconfont icon-spring",
+          "target": "_self"
+        },
+        {
+          "title": "SPEL Injection",
+          "href": "spel",
+          "icon": "iconfont icon-spring",
+          "target": "_self"
+        },
+        {
+          "title": "SSTI Injection",
+          "href": "ssti",
+          "icon": "iconfont icon-thymeleaf",
+          "target": "_self"
+        },
+        {
+          "title": "Deserialization",
+          "href": "",
+          "icon": "iconfont icon-fanxuliehuaJson",
+          "target": "_self",
+          "child": [
+            {
+              "title": "ReadObject",
+              "href": "readObject",
+              "icon": "iconfont icon-fanxuliehuaJson",
+              "target": "_self"
+            },
+            {
+              "title": "SnakeYaml",
+              "href": "snakeYaml",
+              "icon": "iconfont icon-fanxuliehuaJson",
+              "target": "_self"
+            },
+            {
+              "title": "XMLDecoder",
+              "href": "xmlDecoder",
+              "icon": "iconfont icon-fanxuliehuaJson",
+              "target": "_self"
+            }
+          ]
+        },
+        {
+          "title": "Component Vulnerabilities",
+          "href": "",
+          "icon": "iconfont icon-zujian",
+          "target": "_self",
+          "child": [
+            {
+              "title": "Fastjson",
+              "href": "fastjson",
+              "icon": "iconfont icon-F",
+              "target": "_self"
+            },
+            {
+              "title": "Jackson",
+              "href": "jackson",
+              "icon": "iconfont icon-J",
+              "target": "_self"
+            },
+            {
+              "title": "XStream",
+              "href": "xstream",
+              "icon": "iconfont icon-X",
+              "target": "_self"
+            },
+            {
+              "title": "Log4j2",
+              "href": "log4j2",
+              "icon": "iconfont icon-L",
+              "target": "_self"
+            },
+            {
+              "title": "Shiro",
+              "href": "shiro",
+              "icon": "iconfont icon-S",
+              "target": "_self"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

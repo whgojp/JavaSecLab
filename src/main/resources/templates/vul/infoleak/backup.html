@@ -8,11 +8,11 @@
         <div class="layui-row layui-col-space15">
             <div class="layui-col-md12">
                 <fieldset class="layui-elem-field layui-field-title">
-                    <legend style="color: rgb(30 159 255)">敏感信息泄漏 - 备份文件</legend>
+                    <legend style="color: rgb(30 159 255)" th:text="#{infoleak.backup.title}">Information Leakage - Backup Files</legend>
                     <blockquote class="layui-elem-quote layui-quote-nm"
                                 style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
                         <p>
-                        <pre>  备份文件泄漏通常来自源码包、数据库备份、日志、临时压缩包或编辑器备份文件被放入 Web 可访问目录。攻击者可通过常见文件名、目录索引或搜索引擎发现这些文件，进一步获取源码、配置、凭证、Session、SQL日志和内部路径。</pre>
+                        <pre th:text="#{infoleak.backup.intro}">Backup file leakage usually comes from source archives, database backups, logs, temporary archives, or editor backup files.</pre>
                         </p>
                     </blockquote>
                 </fieldset>
@@ -21,14 +21,14 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-bug"> 漏洞场景：Web源码泄漏</span></h1>
+                        <h1><span class="iconfont icon-bug" th:text="| #{infoleak.backup.source.title}|"> Vulnerable Scenario: Web Source Code Leakage</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <div class="layui-tab-content">
 
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
                                         <div style="display: flex; align-items: center;">
-                                            <p>点击访问链接：</p>
+                                            <p th:text="#{infoleak.backup.openLink}">Open link:</p>
                                             <a style="color: red" target="_blank"
                                                href="/other/infoleak/www.zip">www.zip</a>
 
@@ -38,9 +38,9 @@
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{infoleak.backup.tips}">Tips</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">源码备份常包含 pom.xml、application.yml、SQL脚本、密钥配置和业务代码。生产环境应禁止把备份文件放入静态目录，并通过部署前扫描拦截 .zip、.tar.gz、.bak、.old、.sql 等高风险文件。</pre>
+                                            <pre style="color: #28333e;font-size: 15px;" th:text="#{infoleak.backup.source.tips}">Source backups often contain pom.xml, application.yml, SQL scripts, key configuration, and business code.</pre>
                                         </div>
                                     </div>
                                 </div>
@@ -49,7 +49,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code">  缺陷代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="|  #{infoleak.backup.vulnerableCode}|">  Vulnerable Code</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="infoLeakBackUp">
                             </div>
@@ -62,26 +62,26 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-bug"> 漏洞场景：日志泄漏</span></h1>
+                        <h1><span class="iconfont icon-bug" th:text="| #{infoleak.backup.log.title}|"> Vulnerable Scenario: Log Leakage</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <div class="layui-tab-content">
 
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
                                         <div style="display: flex; align-items: center;">
-                                            <p>点击访问链接：</p>
+                                            <p th:text="#{infoleak.backup.openLink}">Open link:</p>
                                             <a style="color: red" target="_blank"
                                                href="/other/infoleak/JavaSecLab_logs.txt">JavaSecLab_logs.txt</a>
-                                            <p style="margin-left: 25px">跳转后乱码的话，需要改下编码(UTF-8)</p>
+                                            <p style="margin-left: 25px" th:text="#{infoleak.backup.encodingTip}">If the redirected file is garbled, switch the encoding to UTF-8.</p>
                                         </div>
                                     </blockquote>
                                 </div>
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{infoleak.backup.tips}">Tips</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">日志中不应输出明文密码、Token、Cookie、验证码、完整SQL参数或身份证件等敏感数据。生产日志应脱敏、分级授权、设置保留周期，并禁止通过静态目录直接访问。</pre>
+                                            <pre style="color: #28333e;font-size: 15px;" th:text="#{infoleak.backup.log.tips}">Logs should not output plaintext passwords, tokens, cookies, captcha codes, full SQL parameters, ID numbers, or other sensitive data.</pre>
                                         </div>
                                     </div>
                                 </div>
@@ -90,7 +90,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code">  缺陷代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="|  #{infoleak.backup.vulnerableCode}|">  Vulnerable Code</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="infoLeakLog">
                             </div>
@@ -107,7 +107,7 @@
 </div>
 
 <div th:replace="~{common/common::script}"></div>
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
     document.addEventListener("DOMContentLoaded", function () {
 
         layui.use(['layer', 'miniTab', 'common', 'form'], function () {
@@ -117,7 +117,8 @@
                 common = layui.common,
                 form = layui.form;
             miniTab.listen();
-            layer.msg("敏感信息泄漏-备份文件")
+            layer.msg(/*[[#{infoleak.backup.toast}]]*/ "Information Leakage - Backup Files")
+            var isEnglishInfoLeakBackup = /*[[${#locale.language == 'en'}]]*/ false;
 
 
             var cmConfig = {
@@ -135,7 +136,7 @@
                 value: infoLeakBackUp
             }));
             CodeMirror(document.getElementById("infoLeakLog"), Object.assign({}, cmConfig, {
-                value: infoLeakLog
+                value: isEnglishInfoLeakBackup ? infoLeakLog : infoLeakLogZh
             }));
 
         });

@@ -4,6 +4,8 @@ import io.swagger.annotations.Api;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import top.whgojp.common.constant.SysConstant;
@@ -33,6 +35,11 @@ public class DirTraversalController {
 
     @Autowired
     private SysConstant sysConstant;
+    private final MessageSource messageSource;
+
+    public DirTraversalController(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
 
     @RequestMapping("")
     public String DirTraversal() {
@@ -58,7 +65,7 @@ public class DirTraversalController {
 
         // 进行敏感字符过滤，禁止使用 '.'、';'、'\' 和 '%'
         if (decodedDir.contains(".") || decodedDir.contains(";") || decodedDir.contains("\\") || decodedDir.contains("%")) {
-            return "非法字符！";
+            return msg("infoleak.dir.result.illegal");
         }
         File requestedDir = new File(baseDir, dir);
 
@@ -97,7 +104,7 @@ public class DirTraversalController {
                 return new File(resource.toURI());
             }
         } catch (URISyntaxException e) {
-            log.warn("解析classpath静态目录失败", e);
+            log.warn("Failed to resolve classpath static directory.", e);
         }
 
         return configuredDir;
@@ -122,10 +129,11 @@ public class DirTraversalController {
         response.append("<html lang=\"en\">");
         response.append("<head>");
         response.append("<meta charset=\"utf-8\">");
-        response.append("<title>Directory listing for ").append(escapeHtml(normalizedDisplayDir)).append("</title>");
+        String listingTitle = msg("infoleak.dir.result.listingTitle");
+        response.append("<title>").append(escapeHtml(listingTitle)).append(" ").append(escapeHtml(normalizedDisplayDir)).append("</title>");
         response.append("</head>");
         response.append("<body>");
-        response.append("<h1>Directory listing for ").append(escapeHtml(normalizedDisplayDir)).append("</h1>");
+        response.append("<h1>").append(escapeHtml(listingTitle)).append(" ").append(escapeHtml(normalizedDisplayDir)).append("</h1>");
         response.append("<hr>");
         response.append("<ul>");
 
@@ -150,7 +158,7 @@ public class DirTraversalController {
                 response.append("</li>");
             }
         } else {
-            response.append("Failed to list contents of the directory.");
+            response.append(escapeHtml(msg("infoleak.dir.result.failed")));
         }
 
         response.append("</ul>");
@@ -182,5 +190,9 @@ public class DirTraversalController {
                 .replace(">", "&gt;")
                 .replace("\"", "&quot;")
                 .replace("'", "&#39;");
+    }
+
+    private String msg(String key, Object... args) {
+        return messageSource.getMessage(key, args, LocaleContextHolder.getLocale());
     }
 }

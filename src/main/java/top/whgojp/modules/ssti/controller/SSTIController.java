@@ -5,6 +5,8 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +29,12 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 @RequestMapping("/ssti")
 public class SSTIController {
+    private final MessageSource messageSource;
+
+    public SSTIController(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
+
     @RequestMapping("")
     public String ssti() {
         return "vul/ssti/ssti";
@@ -44,7 +52,7 @@ public class SSTIController {
     }
     @GetMapping("/vul2/{path}")
     public String vul2(@PathVariable String path) {
-        log.info("SSTI注入：" + path);
+        log.info("SSTI injection: {}", path);
         return "vul/ssti/" + path;
     }
     @GetMapping("/vul3")
@@ -64,11 +72,13 @@ public class SSTIController {
     }
     @GetMapping("/safe2/{path}")
     public void safe2(@PathVariable String path, HttpServletResponse response) throws IOException {
-        log.info("SSTI注入：" + path);
+        log.info("SSTI injection: {}", path);
         response.setContentType("text/plain;charset=UTF-8");
-        response.getWriter().write("已跳过视图解析，输入路径：" + path);
+        response.getWriter().write(msg("ssti.result.skip", path));
     }
 
-
+    private String msg(String key, Object... args) {
+        return messageSource.getMessage(key, args, LocaleContextHolder.getLocale());
+    }
 
 }

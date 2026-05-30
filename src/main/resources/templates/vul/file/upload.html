@@ -7,10 +7,10 @@
         <div class="layui-row layui-col-space15">
             <div class="layui-col-md12">
                 <fieldset class="layui-elem-field layui-field-title">
-                    <legend style="color: rgb(30 159 255)">任意文件操作 - 文件上传</legend>
+                    <legend style="color: rgb(30 159 255)" th:text="#{file.upload.title}">任意文件操作 - 文件上传</legend>
                     <blockquote class="layui-elem-quote layui-quote-nm"
                                 style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
-                        <pre>  任意文件上传：应用接收用户上传文件时，未对文件类型、内容、存储位置和访问方式做有效限制，攻击者可能上传脚本、HTML/SVG、压缩包或伪装文件。风险不只包括服务端脚本执行，也可能造成存储型 XSS、钓鱼文件分发、恶意文件托管或覆盖业务文件。</pre>
+                        <pre th:text="#{file.upload.intro}">  任意文件上传：应用接收用户上传文件时，未对文件类型、内容、存储位置和访问方式做有效限制，攻击者可能上传脚本、HTML/SVG、压缩包或伪装文件。风险不只包括服务端脚本执行，也可能造成存储型 XSS、钓鱼文件分发、恶意文件托管或覆盖业务文件。</pre>
                     </blockquote>
                 </fieldset>
             </div>
@@ -20,14 +20,14 @@
                     <div class="layui-col-md6">
 
                         <h1 style="display: flex; justify-content: space-between; align-items: center;height: 33.5px">
-                            <span class="iconfont icon-bug"> 漏洞场景：原生漏洞场景</span>
+                            <span class="iconfont icon-bug" th:text="| #{file.common.vul.native}|"> 漏洞场景：原生漏洞场景</span>
                             <span class="iconfont">
                                 <a href="/other/datapackage/file/payload/test.jsp" download="test.jsp"
-                                   style="margin-right: 19px;color: #0051ff">Payload</a>
+                                   style="margin-right: 19px;color: #0051ff" th:text="#{file.common.payload}">Payload</a>
                             </span>
                             <span class="iconfont icon-liuliang1">
                                 <a href="/other/datapackage/file/upload.pcapng" download="upload.pcapng"
-                                   style="margin-right: 19px;color: #00bb00">流量分析</a>
+                                   style="margin-right: 19px;color: #00bb00" th:text="#{file.common.traffic}">流量分析</a>
                             </span>
                         </h1>
                         <div class="layui-tab layui-tab-brief">
@@ -35,31 +35,29 @@
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
                                         <button type="button" class="layui-btn" id="anyFileUpload">
-                                            <i class="layui-icon">&#xe67c;</i>选择文件
+                                            <i class="layui-icon">&#xe67c;</i><span th:text="#{file.common.selectFile}">选择文件</span>
                                         </button>
                                         <div style="display: flex; align-items: center;">
-                                            <p>可上传任意类型文件</p>
+                                            <p th:text="#{file.upload.anyType}">可上传任意类型文件</p>
                                         </div>
                                         <button type="button" class="layui-btn layui-btn-normal" id="anyFileUploadButton">
-                                            上传文件
+                                            <span th:text="#{file.common.uploadFile}">上传文件</span>
                                         </button>
                                     </blockquote>
                                 </div>
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{file.common.tips}">tips</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">说明：
-  当前 Spring Boot 环境不会直接解析上传后的 JSP，访问时更接近“恶意文件托管/下载”场景。
-  真实审计中仍要关注上传目录是否被 Web 容器、网关、对象存储或其他解析链路执行。</pre>
+                                            <pre style="color: #28333e;font-size: 15px;" th:text="#{file.upload.vulTips}">说明</pre>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i>测试结果</div>
+                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i><span th:text="#{file.common.testResult}">测试结果</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
                                             <pre id="anyFileUpload-result" style="color: red;font-size: 15px;"></pre>
                                         </div>
@@ -71,7 +69,7 @@
 
                     <div class="layui-col-md6">
                         <h1 style="display: flex; align-items: center; height: 33.5px;">
-                            <span class="iconfont icon-code" style="height: 22.5px;">缺陷代码</span>
+                            <span class="iconfont icon-code" style="height: 22.5px;" th:text="#{file.common.vulnerableCode}">缺陷代码</span>
                         </h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="anyFileUploadCode"></div>
@@ -83,39 +81,35 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-anquan"> 安全场景：文件上传白名单</span></h1>
+                        <h1><span class="iconfont icon-anquan" th:text="| #{file.common.safe.uploadAllowlist}|"> 安全场景：文件上传白名单</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
                                         <button type="button" class="layui-btn" id="anyFileUploadWhite">
-                                            <i class="layui-icon">&#xe67c;</i>选择文件
+                                            <i class="layui-icon">&#xe67c;</i><span th:text="#{file.common.selectFile}">选择文件</span>
                                         </button>
                                         <div style="display: flex; align-items: center;">
-                                            <p>只能上传图片哦！</p>
+                                            <p th:text="#{file.upload.imageOnly}">只能上传图片哦！</p>
                                         </div>
                                         <button type="button" class="layui-btn layui-btn-normal" id="anyFileUploadWhiteButton">
-                                            上传文件
+                                            <span th:text="#{file.common.uploadFile}">上传文件</span>
                                         </button>
                                     </blockquote>
                                 </div>
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{file.common.tips}">tips</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">安全编码建议：
-  1、后端使用精确白名单校验扩展名，并结合 MIME、文件头、图片解码和业务场景做多重校验。
-  2、上传文件使用服务端生成的新文件名，避免保留用户可控路径或文件名。
-  3、上传目录禁止脚本解析，必要时放到独立域名、对象存储或非 Web 根目录。
-  4、对外回显相对标识或下载接口，不直接暴露服务器真实路径。</pre>
+                                            <pre style="color: #28333e;font-size: 15px;" th:text="#{file.upload.safeTips}">安全编码建议</pre>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-warning icon-output-safe"></i>测试结果</div>
+                                        <div class="layui-card-header"><i class="fa fa-warning icon-output-safe"></i><span th:text="#{file.common.testResult}">测试结果</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
                                             <pre id="anyFileUploadWhite-result" style="color: red;font-size: 15px;"></pre>
                                         </div>
@@ -126,7 +120,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code"> 安全代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="| #{file.common.safeCode}|"> 安全代码</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="anyFileUploadWhiteCode"></div>
                         </div>
@@ -138,7 +132,7 @@
 </div>
 
 <div th:replace="~{common/common::script}"></div>
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
     layui.use(['layer', 'miniTab', 'common', 'upload'], function () {
         var $ = layui.jquery,
             layer = layui.layer,
@@ -147,7 +141,8 @@
             upload = layui.upload;
 
         miniTab.listen();
-        layer.msg("任意文件类-文件上传");
+        layer.msg(/*[[#{file.upload.toast}]]*/ "任意文件类-文件上传");
+        var isEnglishFile = /*[[${#locale.language == 'en'}]]*/ false;
 
         function createUploadInstance(config) {
             return upload.render({
@@ -157,15 +152,15 @@
                 accept: config.accept || 'file',
                 auto: config.auto || false,
                 bindAction: config.bindAction,
-                size: config.size || 50 * 1024, // 单位 KB
+                size: config.size || 50 * 1024, // KB
                 multiple: config.multiple || false,
                 drag: config.drag || true,
                 done: function (res) {
-                    console.log("上传文件成功：" + JSON.stringify(res));
+                    console.log("Upload succeeded: " + JSON.stringify(res));
                     $(config.resultElem).html(res.msg);
                 },
                 error: function () {
-                    console.log("上传文件失败🤔️");
+                    console.log("Upload failed");
                 }
             });
         }
@@ -178,15 +173,15 @@
                 exts: config.exts || 'png|jpg|gif|jpeg|bmp|ico',
                 auto: config.auto || false,
                 bindAction: config.bindAction,
-                size: config.size || 50 * 1024, // 单位 KB
+                size: config.size || 50 * 1024, // KB
                 multiple: config.multiple || false,
                 drag: config.drag || true,
                 done: function (res) {
-                    console.log("上传文件成功：" + JSON.stringify(res));
+                    console.log("Upload succeeded: " + JSON.stringify(res));
                     $(config.resultElem).html(res.msg);
                 },
                 error: function () {
-                    console.log("上传文件失败🤔️");
+                    console.log("Upload failed");
                 }
             });
         }
@@ -228,11 +223,11 @@
         };
 
         CodeMirror(document.getElementById("anyFileUploadCode"), Object.assign({}, cmConfig, {
-            value: anyFileUploadCode
+            value: isEnglishFile ? anyFileUploadCode : anyFileUploadCodeZh
         }));
 
         CodeMirror(document.getElementById("anyFileUploadWhiteCode"), Object.assign({}, cmConfigSafe, {
-            value: anyFileUploadWhiteCode
+            value: isEnglishFile ? anyFileUploadWhiteCode : anyFileUploadWhiteCodeZh
         }));
 
     });

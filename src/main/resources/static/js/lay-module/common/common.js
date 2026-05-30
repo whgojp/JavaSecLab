@@ -61,7 +61,7 @@ layui.define(['form','table'], function (exports) { //提示：模块也可以�
 
                 // 检查输入值是否符合白名单要求
                 if (layFilter==="safe1-CheckUserInput-front" && !whitelistRegex.test(value)) {
-                    layer.msg('输入内容包含非法字符，请检查输入', {icon: 2, offset: '10px'});
+                    layer.msg((window.I18N && window.I18N.illegalInput) || '输入内容包含非法字符，请检查输入', {icon: 2, offset: '10px'});
                     return false; // 取消表单提交
                 } else {
                     data.field.type = type; // 添加类型字段
@@ -86,7 +86,7 @@ layui.define(['form','table'], function (exports) { //提示：模块也可以�
             table.on(`tool(${layFilter})`, function(obj) {
                 var data = obj.data;
                 if (obj.event === 'delete') {
-                    layer.confirm('确认删除该条记录？', function(index) {
+                    layer.confirm((window.I18N && window.I18N.confirmDelete) || '确认删除该条记录？', function(index) {
                         $.ajax({
                             url: `${path}`,
                             type: `${reqType}`,
@@ -94,14 +94,14 @@ layui.define(['form','table'], function (exports) { //提示：模块也可以�
                             success: function(res) {
                                 if (res.code === 0) {
                                     obj.del();
-                                    layer.msg('删除成功', {icon: 1, offset: '10px'});
+                                    layer.msg(res.msg || (window.I18N && window.I18N.deleteSuccess) || '删除成功', {icon: 1, offset: '10px'});
                                 } else {
-                                    layer.msg('删除失败', {icon: 2, offset: '10px'});
+                                    layer.msg(res.msg || (window.I18N && window.I18N.deleteFailed) || '删除失败', {icon: 2, offset: '10px'});
                                 }
                             },
                             error: function(xhr, status, error) {
                                 console.error('删除请求失败:', error);
-                                layer.msg('删除请求失败，请稍后重试', {icon: 2, offset: '10px'});
+                                layer.msg((window.I18N && window.I18N.deleteRequestFailed) || '删除请求失败，请稍后重试', {icon: 2, offset: '10px'});
                             }
                         });
                         layer.close(index);
@@ -116,4 +116,3 @@ layui.define(['form','table'], function (exports) { //提示：模块也可以�
     //输出test接口
     exports('common', obj);	//定义变量名来接收obj变量
 });
-

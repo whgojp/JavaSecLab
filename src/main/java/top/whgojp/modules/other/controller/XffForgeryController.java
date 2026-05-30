@@ -3,6 +3,8 @@ package top.whgojp.modules.other.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -28,6 +30,11 @@ import java.util.List;
 @RequestMapping("/other/xff")
 public class XffForgeryController {
     private static final List<String> TRUSTED_PROXY_IPS = Arrays.asList("192.168.1.1", "10.0.0.1");
+    private final MessageSource messageSource;
+
+    public XffForgeryController(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
 
     @ApiOperation("")
     @RequestMapping("")
@@ -39,8 +46,8 @@ public class XffForgeryController {
     @ResponseBody
     public String getIp(HttpServletRequest request) {
         final String remoteHost = request.getRemoteHost();
-        log.info("获取到的IP：" + remoteHost);
-        return "获取到的IP：" + remoteHost;
+        log.info("Detected IP: {}", remoteHost);
+        return msg("other.xff.result.ipFound") + remoteHost;
     }
 
     @RequestMapping("/vul1")
@@ -93,14 +100,14 @@ public class XffForgeryController {
         if ("true".equals(xff)) {
             if (!isTrustedProxy(proxyIp)){
                 model.addAttribute("clientIP", proxyIp);
-                model.addAttribute("sensitiveInfo", "非可信代理来源，忽略XFF头：" + proxyIp);
+                model.addAttribute("sensitiveInfo", msg("other.xff.result.untrustedProxy") + proxyIp);
                 return "vul/other/onlyForGoogle";
             }
             remoteHost = getFirstForwardedIp(request.getHeader("X-Forwarded-For"));
         }
         if (remoteHost == null || remoteHost.isEmpty()) {
             model.addAttribute("clientIP", request.getRemoteAddr());
-            model.addAttribute("sensitiveInfo", "XFF头为空或格式异常！");
+            model.addAttribute("sensitiveInfo", msg("other.xff.result.emptyXff"));
             return "vul/other/onlyForGoogle";
         }
         boolean isClientIP8888 = "8.8.8.8".equals(remoteHost);
@@ -120,6 +127,10 @@ public class XffForgeryController {
             return "";
         }
         return xForwardedFor.split(",")[0].trim();
+    }
+
+    private String msg(String key, Object... args) {
+        return messageSource.getMessage(key, args, LocaleContextHolder.getLocale());
     }
 
 }

@@ -7,16 +7,16 @@
         <div class="layui-row layui-col-space15">
             <div class="layui-col-md12">
                 <fieldset class="layui-elem-field layui-field-title">
-                    <legend><a style="color: rgb(30 159 255)" class="sqli-hibernate">SQL注入攻击 - Hibernate</a></legend>
+                    <legend><a style="color: rgb(30 159 255)" class="sqli-hibernate" th:text="#{sqli.common.title.hibernate}">SQL注入攻击 - Hibernate</a></legend>
                     <blockquote class="layui-elem-quote layui-quote-nm"
                                 style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
                         <p>
-                        <pre>  SQL注入的本质是：不可信输入被拼接进SQL语法结构，导致攻击者改变原SQL语义。Hibernate中的HQL、原生SQL和动态排序字段同样需要关注。</pre>
-                        <pre>  Hibernate是一个流行的ORM框架，它提供了多种查询方式，如HQL、Criteria API和原生SQL。虽然Hibernate提供了参数绑定等安全特性，但不当使用仍可能导致SQL注入漏洞。</pre>
-                        <pre>  修复优先级：查询参数使用setParameter绑定；动态字段、排序方向等SQL结构使用枚举或白名单映射。</pre>
+                        <pre th:text="#{sqli.hibernate.intro.core}">  SQL注入的本质是：不可信输入被拼接进SQL语法结构，导致攻击者改变原SQL语义。Hibernate中的HQL、原生SQL和动态排序字段同样需要关注。</pre>
+                        <pre th:text="#{sqli.hibernate.intro.framework}">  Hibernate是一个流行的ORM框架，它提供了多种查询方式，如HQL、Criteria API和原生SQL。虽然Hibernate提供了参数绑定等安全特性，但不当使用仍可能导致SQL注入漏洞。</pre>
+                        <pre th:text="#{sqli.hibernate.intro.fix}">  修复优先级：查询参数使用setParameter绑定；动态字段、排序方向等SQL结构使用枚举或白名单映射。</pre>
                         </p>
                         <p>
-                        <pre>  在Hibernate中，SQL注入可能发生在HQL查询、原生SQL查询和动态排序等场景。攻击者可以通过注入恶意输入来执行非授权的数据库操作。</pre>
+                        <pre th:text="#{sqli.hibernate.intro.risk}">  在Hibernate中，SQL注入可能发生在HQL查询、原生SQL查询和动态排序等场景。攻击者可以通过注入恶意输入来执行非授权的数据库操作。</pre>
                         </p>
                     </blockquote>
                 </fieldset>
@@ -26,7 +26,7 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-bug">  漏洞场景：原生SQL注入</span></h1>
+                        <h1><span class="iconfont icon-bug" th:text="#{sqli.hibernate.vul.native}">  漏洞场景：原生SQL注入</span></h1>
                         <div class="layui-tab layui-tab-brief">
 
                             <div class="layui-tab-content">
@@ -36,17 +36,17 @@
                                         <form class="layui-form" style="display: flex; justify-content: space-between;">
                                             <div style="display: flex; align-items: center;">
                                                 <input type="text" name="username" id="vul1-native-select-username" style="width: 150px;" required
-                                                       lay-verify="required" placeholder="用户名" value="admin' OR 1=1 OR '1'='1" autocomplete="off"
+                                                       lay-verify="required" placeholder="用户名" th:placeholder="#{sqli.common.username}" value="admin' OR 1=1 OR '1'='1" autocomplete="off"
                                                        class="layui-input">
                                             </div>
                                             <div style="display: flex; align-items: center;">
                                                 <select class="layui-form-select"
                                                         style="background-color: #5eb878;!important;"lay-filter="vul1-native-select-select">
-                                                    <option value="">示例Payload</option>
-                                                    <option value="1' AND (SELECT 4804 FROM (SELECT(SLEEP(5)))iBHa) AND '1'='1">延时注入</option>
-                                                    <option value="1' AND ELT(5753=5753,6782) AND '1'='1">布尔盲注</option>
-                                                    <option value="1' AND GTID_SUBSET(CONCAT(0x71706a7a71,(SELECT (ELT(7170=7170,1))),0x7171717071),7170) AND '1'='1">报错注入</option>
-                                                    <option value="1' and updatexml(1,concat(0x7e,(SELECT user()),0x7e),1) AND '1'='1">xpath注入</option>
+                                                    <option value="" th:text="#{sqli.common.payload.example}">示例Payload</option>
+                                                    <option value="1' AND (SELECT 4804 FROM (SELECT(SLEEP(5)))iBHa) AND '1'='1" th:text="#{sqli.common.payload.time}">延时注入</option>
+                                                    <option value="1' AND ELT(5753=5753,6782) AND '1'='1" th:text="#{sqli.common.payload.booleanBlind}">布尔盲注</option>
+                                                    <option value="1' AND GTID_SUBSET(CONCAT(0x71706a7a71,(SELECT (ELT(7170=7170,1))),0x7171717071),7170) AND '1'='1" th:text="#{sqli.common.payload.error}">报错注入</option>
+                                                    <option value="1' and updatexml(1,concat(0x7e,(SELECT user()),0x7e),1) AND '1'='1" th:text="#{sqli.common.payload.xpath}">xpath注入</option>
                                                 </select>
                                                 <button class="layui-btn layui-btn-normal"
                                                         style="width: 100px; margin-left: 10px;"
@@ -61,15 +61,15 @@
                         </div>
                         <div class="layui-col-md12">
                             <div class="layui-card">
-                                <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{sqli.common.tips}">tips</span></div>
                                 <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 14px;">  Hibernate需要同时关注HQL和原生SQL：参数值用setParameter绑定，动态列名、排序方向等SQL结构用枚举映射。
-  测试时建议关注SQL执行结果和后端日志，并区分HQL语法与原生SQL语法差异。</pre>
+                                            <pre style="color: #28333e;font-size: 14px;" th:text="#{sqli.hibernate.tips}">  Hibernate需要同时关注HQL和原生SQL：参数值用setParameter绑定，动态列名、排序方向等SQL结构用枚举映射。
+  During testing, observe SQL execution results and backend logs, and distinguish HQL syntax from native SQL syntax.</pre>
                                 </div>
                             </div>
 
                             <div class="layui-card">
-                                <div class="layui-card-header"><i class="fa fa-warning icon-output"></i>测试结果</div>
+                                <div class="layui-card-header"><i class="fa fa-warning icon-output"></i><span th:text="#{sqli.common.testResult}">测试结果</span></div>
                                 <div class="layui-card-body layui-text layadmin-text">
                                     <pre id="vul1-native-result" style="color: red;font-size: 15px;"></pre>
                                 </div>
@@ -78,7 +78,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code">  缺陷代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="#{sqli.common.vulnerableCode}">  缺陷代码</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="vul1Native">
                             </div>
@@ -92,7 +92,7 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-bug">  漏洞场景：HQL注入</span></h1>
+                        <h1><span class="iconfont icon-bug" th:text="#{sqli.hibernate.vul.hql}">  漏洞场景：HQL注入</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <div class="layui-tab-content">
                                 <!-- 查询 -->
@@ -101,17 +101,17 @@
                                         <form class="layui-form" style="display: flex; justify-content: space-between;">
                                             <div style="display: flex; align-items: center;">
                                                 <input type="text" name="username" id="vul2-hql-select-username" style="width: 150px;" required
-                                                       lay-verify="required" placeholder="用户名" value="admin' OR 1=1 OR '1'='1" autocomplete="off"
+                                                       lay-verify="required" placeholder="用户名" th:placeholder="#{sqli.common.username}" value="admin' OR 1=1 OR '1'='1" autocomplete="off"
                                                        class="layui-input">
                                             </div>
                                             <div style="display: flex; align-items: center;">
                                                 <select class="layui-form-select"
                                                         style="background-color: #5eb878;!important;"lay-filter="vul2-hql-select-select">
-                                                    <option value="">示例Payload</option>
-                                                    <option value="1' AND (SELECT 4804 FROM (SELECT(SLEEP(5)))iBHa) AND '1'='1">延时注入</option>
-                                                    <option value="1' AND ELT(5753=5753,6782) AND '1'='1">布尔盲注</option>
-                                                    <option value="1' AND GTID_SUBSET(CONCAT(0x71706a7a71,(SELECT (ELT(7170=7170,1))),0x7171717071),7170) AND '1'='1">报错注入</option>
-                                                    <option value="1' and updatexml(1,concat(0x7e,(SELECT user()),0x7e),1) AND '1'='1">xpath注入</option>
+                                                    <option value="" th:text="#{sqli.common.payload.example}">示例Payload</option>
+                                                    <option value="1' AND (SELECT 4804 FROM (SELECT(SLEEP(5)))iBHa) AND '1'='1" th:text="#{sqli.common.payload.time}">延时注入</option>
+                                                    <option value="1' AND ELT(5753=5753,6782) AND '1'='1" th:text="#{sqli.common.payload.booleanBlind}">布尔盲注</option>
+                                                    <option value="1' AND GTID_SUBSET(CONCAT(0x71706a7a71,(SELECT (ELT(7170=7170,1))),0x7171717071),7170) AND '1'='1" th:text="#{sqli.common.payload.error}">报错注入</option>
+                                                    <option value="1' and updatexml(1,concat(0x7e,(SELECT user()),0x7e),1) AND '1'='1" th:text="#{sqli.common.payload.xpath}">xpath注入</option>
                                                 </select>
                                                 <button class="layui-btn layui-btn-normal"
                                                         style="width: 100px; margin-left: 10px;"
@@ -126,7 +126,7 @@
                         </div>
                         <div class="layui-col-md12">
                             <div class="layui-card">
-                                <div class="layui-card-header"><i class="fa fa-warning icon-output"></i>测试结果</div>
+                                <div class="layui-card-header"><i class="fa fa-warning icon-output"></i><span th:text="#{sqli.common.testResult}">测试结果</span></div>
                                 <div class="layui-card-body layui-text layadmin-text">
                                     <pre id="vul2-hql-result" style="color: red;font-size: 15px;"></pre>
                                 </div>
@@ -135,7 +135,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code">  缺陷代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="#{sqli.common.vulnerableCode}">  缺陷代码</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="vul2Hql">
                             </div>
@@ -149,7 +149,7 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-anquan">  安全场景：参数化查询</span></h1>
+                        <h1><span class="iconfont icon-anquan" th:text="#{sqli.hibernate.safe.param}">  安全场景：参数化查询</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <div class="layui-tab-content">
                                 <!-- 查询 -->
@@ -158,17 +158,17 @@
                                         <form class="layui-form" style="display: flex; justify-content: space-between;">
                                             <div style="display: flex; align-items: center;">
                                                 <input type="text" name="username" id="safe-hql-select-username" style="width: 150px;" required
-                                                       lay-verify="required" placeholder="用户名" value="admin' OR 1=1 OR '1'='1" autocomplete="off"
+                                                       lay-verify="required" placeholder="用户名" th:placeholder="#{sqli.common.username}" value="admin' OR 1=1 OR '1'='1" autocomplete="off"
                                                        class="layui-input">
                                             </div>
                                             <div style="display: flex; align-items: center;">
                                                 <select class="layui-form-select"
                                                         style="background-color: #5eb878;!important;"lay-filter="safe-hql-select-select">
-                                                    <option value="">示例Payload</option>
-                                                    <option value="1' AND (SELECT 4804 FROM (SELECT(SLEEP(5)))iBHa) AND '1'='1">延时注入</option>
-                                                    <option value="1' AND ELT(5753=5753,6782) AND '1'='1">布尔盲注</option>
-                                                    <option value="1' AND GTID_SUBSET(CONCAT(0x71706a7a71,(SELECT (ELT(7170=7170,1))),0x7171717071),7170) AND '1'='1">报错注入</option>
-                                                    <option value="1' and updatexml(1,concat(0x7e,(SELECT user()),0x7e),1) AND '1'='1">xpath注入</option>
+                                                    <option value="" th:text="#{sqli.common.payload.example}">示例Payload</option>
+                                                    <option value="1' AND (SELECT 4804 FROM (SELECT(SLEEP(5)))iBHa) AND '1'='1" th:text="#{sqli.common.payload.time}">延时注入</option>
+                                                    <option value="1' AND ELT(5753=5753,6782) AND '1'='1" th:text="#{sqli.common.payload.booleanBlind}">布尔盲注</option>
+                                                    <option value="1' AND GTID_SUBSET(CONCAT(0x71706a7a71,(SELECT (ELT(7170=7170,1))),0x7171717071),7170) AND '1'='1" th:text="#{sqli.common.payload.error}">报错注入</option>
+                                                    <option value="1' and updatexml(1,concat(0x7e,(SELECT user()),0x7e),1) AND '1'='1" th:text="#{sqli.common.payload.xpath}">xpath注入</option>
                                                 </select>
                                                 <button class="layui-btn layui-btn-normal"
                                                         style="width: 100px; margin-left: 10px;"
@@ -183,7 +183,7 @@
                                 </div>
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                <div class="layui-card-header"><i class="fa fa-warning icon-output-safe"></i>测试结果</div>
+                                <div class="layui-card-header"><i class="fa fa-warning icon-output-safe"></i><span th:text="#{sqli.common.testResult}">测试结果</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
                                     <pre id="safe1-param-result" style="color: red;font-size: 15px;"></pre>
                                 </div>
@@ -192,7 +192,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code">  安全代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="#{sqli.common.safeCode}">  安全代码</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="safe1Param">
                             </div>
@@ -206,7 +206,7 @@
 </div>
 <div th:replace="~{common/common::script}"></div>
 
-<script type="text/javascript">
+<script th:inline="javascript" type="text/javascript">
 
 
     layui.use(['layer', 'miniTab', 'common'], function () {
@@ -215,7 +215,8 @@
             miniTab = layui.miniTab,
             common = layui.common;
         miniTab.listen();
-        layer.msg("SQL注入-Hibernate")
+        layer.msg(/*[[#{sqli.common.toast.hibernate}]]*/ "SQL注入-Hibernate")
+        var isEnglishSqli = /*[[${#locale.language == 'en'}]]*/ false;
 
         // 原生SQL注入场景
         common.formListenFun("vul1-native-select", "select", "/sqli/hibernate/vul1", "vul1-native-result","post");
@@ -252,13 +253,13 @@
         };
 
         CodeMirror(document.getElementById("vul1Native"), Object.assign({}, cmConfig, {
-            value: vul1Native
+            value: isEnglishSqli ? vul1Native : vul1NativeZh
         }));
         CodeMirror(document.getElementById("vul2Hql"), Object.assign({}, cmConfig, {
-            value: vul2Hql
+            value: isEnglishSqli ? vul2Hql : vul2HqlZh
         }));
         CodeMirror(document.getElementById("safe1Param"), Object.assign({}, cmConfigSafe, {
-            value: safe1Param
+            value: isEnglishSqli ? safe1Param : safe1ParamZh
         }));
     });
 </script>

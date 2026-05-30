@@ -46,14 +46,14 @@ public class HibernateController {
                     .list()
             );
             if (results == null || results.isEmpty()) {
-                return R.error("未找到记录");
+                return R.error("No records found.");
             }
             StringBuilder sb = new StringBuilder();
-            sb.append("查询成功，找到 ").append(results.size()).append(" 条记录\n");
+            sb.append("Query succeeded. Found ").append(results.size()).append(" records\n");
             for (Object[] row : results) {
                 sb.append("ID: ").append(row[0])
-                  .append(", 用户名: ").append(row[1])
-                  .append(", 密码: ").append(row[2])
+                  .append(", Username: ").append(row[1])
+                  .append(", Password: ").append(row[2])
                   .append("\n");
             }
             String message = sb.toString();
@@ -77,14 +77,14 @@ public class HibernateController {
                 session.createQuery(hql).list()
             );
             if (results == null || results.isEmpty()) {
-                return R.error("未找到记录");
+                return R.error("No records found.");
             }
             StringBuilder sb = new StringBuilder();
-            sb.append("查询成功，找到 ").append(results.size()).append(" 条记录\n");
+            sb.append("Query succeeded. Found ").append(results.size()).append(" records\n");
             for (Sqli sqli : results) {
                 sb.append("ID: ").append(sqli.getId())
-                  .append(", 用户名: ").append(sqli.getUsername())
-                  .append(", 密码: ").append(sqli.getPassword())
+                  .append(", Username: ").append(sqli.getUsername())
+                  .append(", Password: ").append(sqli.getPassword())
                   .append("\n");
             }
             String message = sb.toString();
@@ -110,14 +110,14 @@ public class HibernateController {
                     .list()
             );
             if (results == null || results.isEmpty()) {
-                return R.error("未找到记录");
+                return R.error("No records found.");
             }
             StringBuilder sb = new StringBuilder();
-            sb.append("查询成功，找到 ").append(results.size()).append(" 条记录\n");
+            sb.append("Query succeeded. Found ").append(results.size()).append(" records\n");
             for (Sqli sqli : results) {
                 sb.append("ID: ").append(sqli.getId())
-                  .append(", 用户名: ").append(sqli.getUsername())
-                  .append(", 密码: ").append(sqli.getPassword())
+                  .append(", Username: ").append(sqli.getUsername())
+                  .append(", Password: ").append(sqli.getPassword())
                   .append("\n");
             }
             String message = sb.toString();

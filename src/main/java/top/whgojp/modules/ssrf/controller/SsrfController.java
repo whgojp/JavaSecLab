@@ -6,6 +6,8 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import top.whgojp.common.utils.CheckUserInput;
@@ -20,23 +22,26 @@ import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 
 /**
- * @description SSRF-服务端请求伪造
+ * @description SSRF - server-side request forgery
  * @author: whgojp
  * @email: whgojp@foxmail.com
  * @Date: 2024/8/8 10:06
  */
 @Slf4j
-@Api(value = "SsrfController", tags = "SSRF-服务端请求伪造")
+@Api(value = "SsrfController", tags = "SSRF - Server-Side Request Forgery")
 @Controller
 @CrossOrigin(origins = "*")
 @RequestMapping("/ssrf")
 public class SsrfController {
+    @Autowired
+    private MessageSource messageSource;
+
     @RequestMapping("")
     public String fileUpload() {
         return "vul/ssrf/ssrf";
     }
 
-    @ApiOperation(value = "模拟内网元数据服务", notes = "用于SSRF场景演示，模拟攻击者通过服务端访问内网或云元数据接口")
+    @ApiOperation(value = "Simulated internal metadata service", notes = "Used by the SSRF demo to simulate server-side access to internal or cloud metadata APIs")
     @GetMapping("/internal/metadata")
     @ResponseBody
     public String internalMetadata() {
@@ -46,20 +51,20 @@ public class SsrfController {
                 + "source: 127.0.0.1";
     }
 
-    @ApiOperation(value = "模拟跳转链路", notes = "用于演示SSRF修复时必须禁用自动跳转，或对每一跳重新校验")
+    @ApiOperation(value = "Simulated redirect chain", notes = "Demonstrates why SSRF defenses must disable automatic redirects or revalidate every hop")
     @GetMapping("/redirect")
     public void redirect(@RequestParam String target, HttpServletResponse response) throws IOException {
         response.sendRedirect(target);
     }
 
-    @ApiOperation(value = "漏洞场景：服务端请求伪造", notes = "原生漏洞场景，未做任何限制，可调用URLConnection发起任意请求，探测内网服务、读取文件")
+    @ApiOperation(value = "Vulnerable scenario: server-side request forgery", notes = "Native vulnerable scenario without restrictions; URLConnection can initiate arbitrary requests, probe internal services, or read files")
     @GetMapping("/vul")
     @ResponseBody
-    @ApiImplicitParam(name = "url", value = "请求参数", dataType = "String", paramType = "query", dataTypeClass = String.class)
-    public String vul(@ApiParam(name = "url", value = "请求参数", required = true) @RequestParam String url) {
+    @ApiImplicitParam(name = "url", value = "Request parameter", dataType = "String", paramType = "query", dataTypeClass = String.class)
+    public String vul(@ApiParam(name = "url", value = "Request parameter", required = true) @RequestParam String url) {
         try {
             URL u = new URL(url);
-            URLConnection conn = u.openConnection();    // 这里以URLConnection作为演示
+            URLConnection conn = u.openConnection();    // URLConnection is used for this demo.
             BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             String content;
             StringBuilder html = new StringBuilder();
@@ -78,15 +83,15 @@ public class SsrfController {
     @Autowired
     private CheckUserInput checkUserInput;
 
-    @ApiOperation(value = "安全代码：请求白名单过滤", notes = "判断协议，对请求URL做白名单过滤")
+    @ApiOperation(value = "Safe code: request allowlist filtering", notes = "Validate the protocol and apply an allowlist to the request URL")
     @GetMapping("/safe")
     @ResponseBody
-    @ApiImplicitParam(name = "url", value = "请求参数", dataType = "String", paramType = "query", dataTypeClass = String.class)
-    public String safe(@ApiParam(name = "url", value = "请求参数", required = true) @RequestParam String url) {
+    @ApiImplicitParam(name = "url", value = "Request parameter", dataType = "String", paramType = "query", dataTypeClass = String.class)
+    public String safe(@ApiParam(name = "url", value = "Request parameter", required = true) @RequestParam String url) {
         if (!checkUserInput.isHttp(url)) {
-            return "检测到不是http(s)协议！";
+            return msg("ssrf.result.invalidProtocol");
         } else if (!checkUserInput.ssrfWhiteList(url)) {
-            return "非白名单域名！";
+            return msg("ssrf.result.notAllowlisted");
         } else {
             try {
                 URL u = new URL(url);
@@ -110,5 +115,8 @@ public class SsrfController {
         }
     }
 
+    private String msg(String code, Object... args) {
+        return messageSource.getMessage(code, args, LocaleContextHolder.getLocale());
+    }
 
 }

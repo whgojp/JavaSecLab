@@ -3,6 +3,8 @@ package top.whgojp.modules.logic.idor.controller;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -27,6 +29,8 @@ import top.whgojp.modules.system.mapper.UserMapper;
 public class HorizontalController {
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private MessageSource messageSource;
 
     @RequestMapping("")
     public String horizontal(){
@@ -38,25 +42,29 @@ public class HorizontalController {
     public R getUserInfo(String username){
         User user = userMapper.getAllByUsername(username);
         if (user!=null){
-            return R.ok("用户名："+user.getUsername()+" 密码："+user.getPassword());
-        }else return R.error("用户名不存在");
+            return R.ok(msg("logic.idor.result.userInfo", user.getUsername(), user.getPassword()));
+        }else return R.error(msg("logic.idor.result.userNotFound"));
     }
     @GetMapping("/safe")
     @ResponseBody
     public R safe(String username){
-        // 获取当前登录的用户名
+        // Get the current logged-in username.
         String currentUsername = SecurityContextHolder.getContext().getAuthentication().getName();
-        // 检查当前请求的用户名是否和登录用户名一致
+        // Check whether the requested username matches the logged-in user.
         if (username == null || !username.equals(currentUsername)) {
-            return R.error("您没有权限查看该用户的资料,当前登录用户："+currentUsername);
+            return R.error(msg("logic.idor.result.noPermission", currentUsername));
         }
-        // 查询用户信息
+        // Query user information.
         User user = userMapper.getAllByUsername(username);
         if (user != null) {
-            return R.ok("用户名："+user.getUsername()+" 密码："+user.getPassword());
+            return R.ok(msg("logic.idor.result.userInfo", user.getUsername(), user.getPassword()));
         } else {
-            return R.error("用户名不存在");
+            return R.error(msg("logic.idor.result.userNotFound"));
         }
+    }
+
+    private String msg(String code, Object... args) {
+        return messageSource.getMessage(code, args, LocaleContextHolder.getLocale());
     }
 
 }

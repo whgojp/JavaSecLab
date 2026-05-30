@@ -2,6 +2,8 @@ package top.whgojp.modules.other.controller;
 
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.w3c.dom.Document;
@@ -30,6 +32,12 @@ import java.io.StringReader;
 @RequestMapping("/other/xpath")
 public class XpathController {
 
+    private final MessageSource messageSource;
+
+    public XpathController(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
+
     @RequestMapping("")
     public String xpath() {
         return "vul/other/xpath";
@@ -51,15 +59,15 @@ public class XpathController {
             String expression = "/users/user[username='" + username + "' and password='" + password + "']";
             NodeList nodes = (NodeList) xpath.evaluate(expression, doc, XPathConstants.NODESET);
             if (nodes.getLength() > 0) {
-                log.info("[vul] XPath 注入成功，用户验证通过！");
-                return R.ok("用户名和密码验证通过！欢迎："+username);
+                log.info("[vul] XPath injection succeeded; user verification passed.");
+                return R.ok(msg("other.xpath.result.success", username));
             } else {
-                log.info("[vul] XPath 注入失败，用户名或密码错误！");
-                return R.ok("用户名或密码错误！");
+                log.info("[vul] XPath injection failed; username or password is incorrect.");
+                return R.ok(msg("other.xpath.result.invalid"));
             }
         } catch (Exception e) {
-            log.error("[vul] 发生异常：" + e.getMessage(), e);
-            return R.error("发生异常：" + e.getMessage());
+            log.error("[vul] Exception occurred: {}", e.getMessage(), e);
+            return R.error(msg("other.xpath.result.exception", e.getMessage()));
         }
     }
 
@@ -78,13 +86,13 @@ public class XpathController {
             NodeList nodes = (NodeList) xpath.evaluate(expression, doc, XPathConstants.NODESET);
 
             if (nodes.getLength() > 0) {
-                return R.ok("用户名和密码验证通过！欢迎：" + username);
+                return R.ok(msg("other.xpath.result.success", username));
             } else {
-                return R.error("认证失败：用户名或密码错误");
+                return R.error(msg("other.xpath.result.authFailed"));
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return R.error("服务器内部错误：" + e.getMessage());
+            return R.error(msg("other.xpath.result.serverError", e.getMessage()));
         }
     }
 
@@ -96,6 +104,10 @@ public class XpathController {
             return password;
         }
         return "";
+    }
+
+    private String msg(String key, Object... args) {
+        return messageSource.getMessage(key, args, LocaleContextHolder.getLocale());
     }
 
 }

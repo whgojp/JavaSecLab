@@ -8,11 +8,11 @@
         <div class="layui-row layui-col-space15">
             <div class="layui-col-md12">
                 <fieldset class="layui-elem-field layui-field-title">
-                    <legend style="color: rgb(30 159 255)">敏感信息泄漏 - Js文件泄漏敏感信息</legend>
+                    <legend style="color: rgb(30 159 255)" th:text="#{infoleak.js.title}">Information Leakage - JavaScript File Leakage</legend>
                     <blockquote class="layui-elem-quote layui-quote-nm"
                                 style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
                         <p>
-                        <pre>  JavaScript文件属于客户端可见资源，任何写入前端源码、打包产物、SourceMap或注释中的账号、密钥、内网地址、接口路径和调试信息都应视为已公开。修复时应把密钥和鉴权逻辑放回服务端，前端只持有短期、最小权限、可吊销的公开配置。</pre>
+                        <pre th:text="#{infoleak.js.intro}">JavaScript files are client-visible resources.</pre>
                         </p>
                     </blockquote>
                 </fieldset>
@@ -21,15 +21,15 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-bug"> 漏洞场景：登录通过前端校验(硬编码)</span></h1>
+                        <h1><span class="iconfont icon-bug" th:text="| #{infoleak.js.hardcoding.title}|"> Vulnerable Scenario: Frontend Login Validation (Hardcoded)</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <div class="layui-tab-content">
 
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
                                         <div style="display: flex; align-items: center;">
-                                            <p>点击访问链接：</p>
-                                            <a style="color: red" target="_blank" href="/infoLeak/js/hard-coding">登录校验硬编码</a>
+                                            <p th:text="#{infoleak.js.openLink}">Open link:</p>
+                                            <a style="color: red" target="_blank" href="/infoLeak/js/hard-coding" th:text="#{infoleak.js.hardcoding.link}">Hardcoded Login Validation</a>
 
                                         </div>
                                     </blockquote>
@@ -37,9 +37,9 @@
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{infoleak.js.tips}">Tips</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">前端校验只能提升交互体验，不能承担认证职责。账号密码、角色判断、接口权限必须在服务端完成。</pre>
+                                            <pre style="color: #28333e;font-size: 15px;" th:text="#{infoleak.js.hardcoding.tips}">Frontend validation can improve interaction, but it must not perform authentication.</pre>
                                         </div>
                                     </div>
                                 </div>
@@ -48,7 +48,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code">  缺陷代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="|  #{infoleak.js.vulnerableCode}|">  Vulnerable Code</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="hardCoding">
                             </div>
@@ -61,14 +61,14 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-bug"> 漏洞场景：Webpack打包导致云密钥泄漏</span></h1>
+                        <h1><span class="iconfont icon-bug" th:text="| #{infoleak.js.webpack.title}|"> Vulnerable Scenario: Cloud Key Leakage in Webpack Bundle</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <div class="layui-tab-content">
 
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
                                         <div style="display: flex; align-items: center;">
-                                            <p>点击访问链接：</p>
+                                            <p th:text="#{infoleak.js.openLink}">Open link:</p>
                                             <a style="color: red" target="_blank" href="/other/infoleak/chunk-0226s3f2.57e3ed6f.js">chunk-0226s3f2.57e3ed6f.js</a>
 
                                         </div>
@@ -77,9 +77,9 @@
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{infoleak.js.tips}">Tips</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">构建产物中常见泄漏包括云AK/SK、Bucket、内部接口、SourceMap、调试开关和测试账号。发布前应进行密钥扫描，禁用生产SourceMap并轮换已暴露密钥。</pre>
+                                            <pre style="color: #28333e;font-size: 15px;" th:text="#{infoleak.js.webpack.tips}">Common bundle leaks include cloud AK/SK, buckets, internal APIs, SourceMaps, debug switches, and test accounts.</pre>
                                         </div>
                                     </div>
                                 </div>
@@ -88,7 +88,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code">  缺陷代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="|  #{infoleak.js.vulnerableCode}|">  Vulnerable Code</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="infoLeakJs">
                             </div>
@@ -104,7 +104,7 @@
 </div>
 
 <div th:replace="~{common/common::script}"></div>
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
     document.addEventListener("DOMContentLoaded", function () {
 
         layui.use(['layer', 'miniTab', 'common', 'form'], function () {
@@ -114,7 +114,8 @@
                 common = layui.common,
                 form = layui.form;
             miniTab.listen();
-            layer.msg("敏感信息泄漏-Js文件泄漏敏感信息")
+            layer.msg(/*[[#{infoleak.js.toast}]]*/ "Information Leakage - JavaScript File Leakage")
+            var isEnglishInfoLeakJs = /*[[${#locale.language == 'en'}]]*/ false;
 
 
             var cmConfig = {
@@ -129,10 +130,10 @@
             };
 
             CodeMirror(document.getElementById("hardCoding"), Object.assign({}, cmConfig, {
-                value: hardCoding
+                value: isEnglishInfoLeakJs ? hardCoding : hardCodingZh
             }));
             CodeMirror(document.getElementById("infoLeakJs"), Object.assign({}, cmConfig, {
-                value: infoLeakJs
+                value: isEnglishInfoLeakJs ? infoLeakJs : infoLeakJsZh
             }));
 
         });

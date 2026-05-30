@@ -9,13 +9,13 @@
             <div class="layui-col-md12">
                 <fieldset class="layui-elem-field layui-field-title">
                     <legend>
-                        <a style="color: rgb(30 159 255)" class="deserialize">反序列化 - SnakeYaml</a>
+                        <a style="color: rgb(30 159 255)" class="deserialize" th:text="#{deserialize.snakeYaml.title}">Deserialization - SnakeYAML</a>
                     </legend>
                     <blockquote class="layui-elem-quote layui-quote-nm"
                                 style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
                         <p>
-                        <pre>  SnakeYAML 是 Java 常用 YAML 解析库。使用默认 Constructor 解析不可信 YAML 时，攻击者可能通过 !!全类名 指定任意 Java 类型，触发对象实例化、构造器、setter 或类加载链路。</pre>
-                        <pre>  安全解析应使用 SafeConstructor 或受限 LoaderOptions，只允许标量、列表、Map 等基础数据结构进入业务层；不要把用户提交的 YAML 直接映射为任意 Java 对象。</pre>
+                        <pre th:text="#{deserialize.snakeYaml.intro1}">SnakeYAML is a common Java YAML parser.</pre>
+                        <pre th:text="#{deserialize.snakeYaml.intro2}">Use SafeConstructor for untrusted YAML.</pre>
                         </p>
                     </blockquote>
                 </fieldset>
@@ -24,7 +24,7 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-bug"> 漏洞场景：SnakeYaml</span></h1>
+                        <h1><span class="iconfont icon-bug" th:text="| #{deserialize.snakeYaml.vul.title}|"> Vulnerable Scenario: SnakeYAML</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
@@ -35,7 +35,7 @@
                                                    class="layui-input" id="vul-SnakeYaml-input">
                                             <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;"
                                                     lay-filter="vul-SnakeYaml-submit" lay-submit="">
-                                                <span class="iconfont icon-zhihang">Run</span>
+                                                <span class="iconfont icon-zhihang" th:text="#{button.run}">Run</span>
                                             </button>
                                         </form>
                                     </blockquote>
@@ -43,16 +43,16 @@
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{common.tips}">Tips</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">默认 Yaml.load() 会根据 YAML 标签构造 Java 对象。示例 payload 使用项目内 Sqli 类，便于稳定观察“类型被实例化”的效果；真实攻击还可能结合 ScriptEngineManager、URLClassLoader、JNDI 或组件 gadget 链。</pre>
+                                            <pre style="color: #28333e;font-size: 15px;" th:text="#{deserialize.snakeYaml.vul.tips}">Default Yaml.load() can construct Java objects from YAML tags.</pre>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i>测试结果</div>
+                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i><span th:text="#{common.testResult}">Test Result</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
                                             <pre id="vul-SnakeYaml-result" style="color: red;font-size: 15px;"></pre>
                                         </div>
@@ -64,7 +64,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="| #{common.vulnerableCode}|"> Vulnerable Code</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="vulSnakeYaml"></div>
                         </div>
@@ -75,7 +75,7 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-anquan"> 安全场景：SafeConstructor安全构造</span></h1>
+                        <h1><span class="iconfont icon-anquan" th:text="| #{deserialize.snakeYaml.safe.title}|"> Safe Scenario: SafeConstructor</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
@@ -86,7 +86,7 @@
                                                    class="layui-input" id="safe-SnakeYaml-input">
                                             <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;"
                                                     lay-filter="safe-SnakeYaml-submit" lay-submit="">
-                                                <span class="iconfont icon-zhihang">Run</span>
+                                                <span class="iconfont icon-zhihang" th:text="#{button.run}">Run</span>
                                             </button>
                                         </form>
                                     </blockquote>
@@ -94,16 +94,16 @@
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{common.tips}">Tips</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">SafeConstructor 只解析基础 YAML 类型，不允许通过 !!全类名 任意实例化 Java 对象。安全场景应返回普通 Map/List/标量结果，带 Java 类型标签的 payload 应被拒绝。</pre>
+                                            <pre style="color: #28333e;font-size: 15px;" th:text="#{deserialize.snakeYaml.safe.tips}">SafeConstructor parses only basic YAML types.</pre>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-warning icon-output-safe"></i>测试结果</div>
+                                        <div class="layui-card-header"><i class="fa fa-warning icon-output-safe"></i><span th:text="#{common.testResult}">Test Result</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
                                             <pre id="safe-SnakeYaml-result" style="color: red;font-size: 15px;"></pre>
                                         </div>
@@ -115,7 +115,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code"> 安全代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="| #{common.safeCode}|"> Safe Code</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="safeSnakeYaml"></div>
                         </div>
@@ -130,7 +130,7 @@
 </div>
 
 <div th:replace="~{common/common::script}"></div>
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
     document.addEventListener("DOMContentLoaded", function () {
 
         layui.use(['layer', 'miniTab', 'common', 'form'], function () {
@@ -141,7 +141,8 @@
                 form = layui.form;
 
             miniTab.listen();
-            layer.msg("反序列化 - SnakeYaml");
+            layer.msg(/*[[#{deserialize.snakeYaml.title}]]*/ "Deserialization - SnakeYAML");
+            var isEnglish = /*[[${#locale.language == 'en'}]]*/ false;
 
             common.formListenFun("vul-SnakeYaml-submit", "", "/snakeYaml/vul", "vul-SnakeYaml-result", "post");
             common.formListenFun("safe-SnakeYaml-submit", "", "/snakeYaml/safe", "safe-SnakeYaml-result", "post");
@@ -168,17 +169,17 @@
             };
 
             CodeMirror(document.getElementById("vulSnakeYaml"), Object.assign({}, cmConfig, {
-                value: vulSnakeYaml
+                value: isEnglish ? vulSnakeYaml : vulSnakeYamlZh
             }));
             CodeMirror(document.getElementById("safeSnakeYaml"), Object.assign({}, cmConfigSafe, {
-                value: safeSnakeYaml
+                value: isEnglish ? safeSnakeYaml : safeSnakeYamlZh
             }));
 
         });
 
         $('.deserialize').hover(function () {
             $(this).css('cursor', 'pointer');
-            layer.tips('漏洞原理', this, {
+            layer.tips(/*[[#{common.principle}]]*/ 'Principle', this, {
                 tips: [1, '#0051ff'],
                 time: 2000
             });

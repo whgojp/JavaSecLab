@@ -5,6 +5,8 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.log4j.lf5.util.StreamUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import top.whgojp.common.constant.SysConstant;
@@ -17,23 +19,26 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 /**
- * @description 任意文件类-文件下载
+ * @description Arbitrary file - download
  * @author: whgojp
  * @email: whgojp@foxmail.com
  * @Date: 2024/7/8 15:59
  */
 @Slf4j
-@Api(value = "DownloadController", tags = "任意文件类-文件下载")
+@Api(value = "DownloadController", tags = "Arbitrary File - Download")
 @Controller
 @CrossOrigin(origins = "*")
 @RequestMapping("/file/download")
 public class DownloadController {
+    @Autowired
+    private MessageSource messageSource;
+
     @RequestMapping("")
     public String fileDownload() {
         return "vul/file/download";
     }
 
-    @ApiOperation(value = "下载文件", notes = "下载指定文件")
+    @ApiOperation(value = "Download file", notes = "Download the specified file")
     @RequestMapping("/vul")
     public void vul(@RequestParam("fileName") String fileName, HttpServletResponse response) throws IOException {
         File file = new File(fileName);
@@ -51,7 +56,7 @@ public class DownloadController {
                 throw new RuntimeException(e);
             }
         } else {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND, "文件不存在：" + fileName);
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, msg("file.result.downloadNotFound", fileName));
         }
     }
 
@@ -61,7 +66,7 @@ public class DownloadController {
     public void safe(@RequestParam("fileName") String fileName, HttpServletResponse response) throws IOException {
         String baseDir = sysConstant.getUploadFolder();
         if (!isValidFileName(fileName)) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "非法文件名：" + fileName);
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, msg("file.result.invalidFileName", fileName));
             return;
         }
         Path basePath = Paths.get(baseDir).toRealPath();
@@ -69,7 +74,7 @@ public class DownloadController {
         if (filePath.startsWith(basePath) && Files.isRegularFile(filePath)) {
             Path realFilePath = filePath.toRealPath();
             if (!realFilePath.startsWith(basePath)) {
-                response.sendError(HttpServletResponse.SC_FORBIDDEN, "文件真实路径不合法：" + fileName);
+                response.sendError(HttpServletResponse.SC_FORBIDDEN, msg("file.result.invalidRealPath", fileName));
                 return;
             }
             response.setContentType("application/octet-stream");
@@ -82,7 +87,7 @@ public class DownloadController {
                 throw new RuntimeException(e);
             }
         } else {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND, "文件不存在或不可访问：" + fileName);
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, msg("file.result.downloadNotAccessible", fileName));
         }
     }
 
@@ -90,5 +95,8 @@ public class DownloadController {
         return fileName != null && fileName.matches("^[\\w,\\s-]+\\.[A-Za-z]{3,4}$");
     }
 
+    private String msg(String code, Object... args) {
+        return messageSource.getMessage(code, args, LocaleContextHolder.getLocale());
+    }
 
 }

@@ -10,13 +10,13 @@
             <div class="layui-col-md12">
                 <fieldset class="layui-elem-field layui-field-title">
                     <legend>
-                        <a style="color: rgb(30 159 255)" class="memshell-info">内存马 - Servlet型</a>
+                        <a style="color: rgb(30 159 255)" class="memshell-info" th:text="#{mshell.servlet.title}">内存马 - Servlet型</a>
                     </legend>
                     <blockquote class="layui-elem-quote layui-quote-nm"
                               style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
                         <p>
-                        <pre>  Servlet型内存马是一种通过动态注册Servlet到Web容器中实现的内存马。它可以处理特定URL的HTTP请求，执行恶意代码。</pre>
-                        <pre>  注入原理：通过获取StandardContext对象，创建并注册恶意Servlet，从而实现对特定URL请求的处理。</pre>
+                        <pre th:text="#{mshell.servlet.intro}">  Servlet型内存马是一种通过动态注册Servlet到Web容器中实现的内存马。它可以处理特定URL的HTTP请求，执行恶意代码。</pre>
+                        <pre th:text="#{mshell.servlet.principle}">  注入原理：通过获取StandardContext对象，创建并注册恶意Servlet，从而实现对特定URL请求的处理。</pre>
                         </p>
                     </blockquote>
                 </fieldset>
@@ -28,7 +28,7 @@
                     <!-- 左侧：注入和检测 -->
                     <div class="layui-col-md6">
                         <div class="layui-card">
-                            <div class="layui-card-header"><i class="fa fa-bug icon-tip"></i>漏洞场景</div>
+                            <div class="layui-card-header"><i class="fa fa-bug icon-tip"></i><span th:text="#{mshell.common.vul}">漏洞场景</span></div>
                             <div class="layui-card-body">
                                 <div class="layui-tab layui-tab-brief">
                                     <div class="layui-tab-content">
@@ -36,30 +36,30 @@
                                         <div class="layui-tab-item layui-show">
                                             <form class="layui-form" lay-filter="servletForm">
                                                 <div class="layui-form-item">
-                                                    <label class="layui-form-label">Servlet名称</label>
+                                                    <label class="layui-form-label" th:text="#{mshell.servlet.name}">Servlet名称</label>
                                                     <div class="layui-input-block">
-                                                        <input type="text" name="servletName" value="evilServlet" lay-verify="required" placeholder="请输入Servlet名称" class="layui-input">
+                                                        <input type="text" name="servletName" value="evilServlet" lay-verify="required" th:placeholder="#{mshell.servlet.namePlaceholder}" placeholder="请输入Servlet名称" class="layui-input">
                                                     </div>
                                                 </div>
                                                 <div class="layui-form-item">
-                                                    <label class="layui-form-label">URL Pattern</label>
+                                                    <label class="layui-form-label" th:text="#{mshell.common.urlPattern}">URL Pattern</label>
                                                     <div class="layui-input-block">
-                                                        <input type="text" name="urlPattern" value="/evil" lay-verify="required" placeholder="请输入URL匹配模式" class="layui-input">
+                                                        <input type="text" name="urlPattern" value="/evil" lay-verify="required" th:placeholder="#{mshell.servlet.urlPlaceholder}" placeholder="请输入URL匹配模式" class="layui-input">
                                                     </div>
                                                 </div>
                                                 <div class="layui-form-item">
-                                                    <label class="layui-form-label">命令参数</label>
+                                                    <label class="layui-form-label" th:text="#{mshell.common.commandParam}">命令参数</label>
                                                     <div class="layui-input-block">
-                                                        <input type="text" name="cmdParam" value="cmd" lay-verify="required" placeholder="请输入命令参数名" class="layui-input">
+                                                        <input type="text" name="cmdParam" value="cmd" lay-verify="required" th:placeholder="#{mshell.common.commandParamPlaceholder}" placeholder="请输入命令参数名" class="layui-input">
                                                     </div>
                                                 </div>
                                                 <div class="layui-form-item">
                                                     <div class="layui-input-block" style="text-align: right;">
                                                         <button class="layui-btn layui-btn-normal" lay-submit lay-filter="servletSubmit">
-                                                            <i class="layui-icon layui-icon-release"></i>注入内存马
+                                                            <i class="layui-icon layui-icon-release"></i><span th:text="#{mshell.common.inject}">注入内存马</span>
                                                         </button>
                                                         <button type="button" class="layui-btn layui-btn-primary" id="detectBtn">
-                                                            <i class="layui-icon layui-icon-search"></i>检测内存马
+                                                            <i class="layui-icon layui-icon-search"></i><span th:text="#{mshell.common.detect}">检测内存马</span>
                                                         </button>
                                                     </div>
                                                 </div>
@@ -72,9 +72,9 @@
 
                         <!-- 使用说明 -->
                         <div class="layui-card" style="margin-top: 10px;">
-                            <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>使用说明</div>
+                            <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{mshell.common.usage}">使用说明</span></div>
                             <div class="layui-card-body layui-text">
-                                <pre style="color: #28333e;font-size: 15px;">1. 配置Servlet名称、URL Pattern和命令参数
+                                <pre style="color: #28333e;font-size: 15px;" th:text="#{mshell.servlet.usage}">1. 配置Servlet名称、URL Pattern和命令参数
 2. 点击"注入内存马"按钮进行注入
 3. 使用以下命令测试：
    curl "http://localhost:8080/evil?cmd=whoami"
@@ -86,14 +86,14 @@
                     <!-- 右侧：检测结果和代码 -->
                     <div class="layui-col-md6">
                         <div class="layui-card">
-                            <div class="layui-card-header"><i class="fa fa-terminal icon-tip"></i>检测结果</div>
+                            <div class="layui-card-header"><i class="fa fa-terminal icon-tip"></i><span th:text="#{mshell.common.detectResult}">检测结果</span></div>
                             <div class="layui-card-body">
                                 <pre id="detectResult" class="layui-code" style="margin: 0;"></pre>
                             </div>
                         </div>
 
                         <div class="layui-card" style="margin-top: 10px;">
-                            <div class="layui-card-header"><i class="fa fa-code icon-tip"></i>示例代码</div>
+                            <div class="layui-card-header"><i class="fa fa-code icon-tip"></i><span th:text="#{mshell.common.sampleCode}">示例代码</span></div>
                             <div class="layui-card-body">
                                 <pre class="layui-code" lay-title="Java" lay-skin="notepad">
 Servlet evilServlet = new HttpServlet() {
@@ -120,7 +120,7 @@ Servlet evilServlet = new HttpServlet() {
 </div>
 
 <script th:src="@{/layui/layui.js}"></script>
-<script>
+<script th:inline="javascript">
     layui.use(['form', 'layer', 'code'], function(){
         var form = layui.form;
         var layer = layui.layer;
@@ -144,14 +144,14 @@ Servlet evilServlet = new HttpServlet() {
                 success: function(res){
                     layer.close(loadingIndex);
                     if(res.code === 0){
-                        layer.msg('内存马注入成功', {icon: 1});
+                        layer.msg(/*[[#{mshell.common.injectSuccess}]]*/ '内存马注入成功', {icon: 1});
                     } else {
-                        layer.msg('注入失败：' + res.msg, {icon: 2});
+                        layer.msg((/*[[#{mshell.common.injectFailed}]]*/ '注入失败：{0}').replace('{0}', res.msg), {icon: 2});
                     }
                 },
                 error: function(){
                     layer.close(loadingIndex);
-                    layer.msg('请求失败', {icon: 2});
+                    layer.msg(/*[[#{mshell.common.requestFailed}]]*/ '请求失败', {icon: 2});
                 }
             });
             return false;
@@ -172,12 +172,12 @@ Servlet evilServlet = new HttpServlet() {
                         $('#detectResult').html(res.data.replace(/\n/g, '<br>'));
                         layui.code();
                     } else {
-                        layer.msg('检测失败：' + res.msg, {icon: 2});
+                        layer.msg((/*[[#{mshell.common.detectFailed}]]*/ '检测失败：{0}').replace('{0}', res.msg), {icon: 2});
                     }
                 },
                 error: function(){
                     layer.close(loadingIndex);
-                    layer.msg('请求失败', {icon: 2});
+                    layer.msg(/*[[#{mshell.common.requestFailed}]]*/ '请求失败', {icon: 2});
                 }
             });
         });
@@ -185,7 +185,7 @@ Servlet evilServlet = new HttpServlet() {
         // 添加信息提示
         $('.memshell-info').hover(function () {
             $(this).css('cursor', 'pointer');
-            layer.tips('点击查看内存马原理图', this, {
+            layer.tips(/*[[#{mshell.common.flowTip}]]*/ '点击查看内存马原理图', this, {
                 tips: [1, '#0051ff'],
                 time: 2000
             });

@@ -8,6 +8,8 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
@@ -83,6 +85,9 @@ public class OtherController {
     @Autowired
     private UploadUtil uploadUtil;
 
+    @Autowired
+    private MessageSource messageSource;
+
     // 文件上传接口
     @ApiOperation(value = "漏洞场景：文件上传导致存储XSS", notes = "上传可被浏览器或预览服务解析的文件，后续访问文件时可能触发XSS")
     @RequestMapping("/vul1Upload")
@@ -108,7 +113,7 @@ public class OtherController {
                         log.info("解析后的XML内容：" + xmlString);
                     }
                 } catch (Exception e) {
-                    return R.error("上传错误，请检查后重新上传：" + e.getMessage());
+                    return R.error(msg("xss.other.upload.parseFailed", e.getMessage()));
                 }
             // XML解析成功后继续落盘，便于演示“解析 + 可访问文件”组合场景。
             case "html":
@@ -116,11 +121,10 @@ public class OtherController {
             case "pdf":
             case "swf":
                 log.info("后缀名：" + suffix);
-                res = uploadUtil.uploadFile(file, suffix,path);
-                return R.ok(res);
+                res = uploadUtil.uploadFileAndReturnUrl(file, suffix,path);
+                return R.ok(msg("xss.other.upload.success", res));
             default:
-                res = "上传错误，请检查后重新上传！";
-                return R.error(res);
+                return R.error(msg("xss.other.upload.invalid"));
         }
     }
     @ApiOperation(value = "漏洞场景：模板引擎不安全渲染导致XSS", notes = "th:utext会把内容作为HTML渲染，th:text会进行转义")
@@ -133,6 +137,10 @@ public class OtherController {
             model.addAttribute("text", payload);
         }
         return "vul/xss/other";
+    }
+
+    private String msg(String code, Object... args) {
+        return messageSource.getMessage(code, args, LocaleContextHolder.getLocale());
     }
 
 }

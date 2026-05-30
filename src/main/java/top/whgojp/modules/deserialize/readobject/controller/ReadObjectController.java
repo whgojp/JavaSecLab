@@ -4,6 +4,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.serialization.ValidatingObjectInputStream;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import top.whgojp.common.utils.R;
@@ -26,6 +28,12 @@ import java.util.Base64;
 @CrossOrigin(origins = "*")
 @RequestMapping("/readObject")
 public class ReadObjectController {
+    private final MessageSource messageSource;
+
+    public ReadObjectController(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
+
     @RequestMapping("")
     public String readObject(){
         return "vul/deserialize/readObject";
@@ -60,9 +68,9 @@ public class ReadObjectController {
                 obj = in.readObject();
             }
             log.info("反序列化对象：" + obj.toString());
-            return R.ok("[+]Java反序列化："+obj);
+            return R.ok(msg("deserialize.readObject.result.vul", obj));
         } catch (Exception e) {
-            return R.error("[-] 请输入正确的 Payload！\n" + e.getMessage());
+            return R.error(msg("deserialize.result.invalidPayload", e.getMessage()));
         }
     }
 
@@ -79,9 +87,9 @@ public class ReadObjectController {
             try (ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(bytes))) {
                 in.readObject();
             }
-            return R.ok("[+]Java反序列化：禁用Commons Collections不安全反序列化开关");
+            return R.ok(msg("deserialize.readObject.result.safeSwitch"));
         } catch (Exception e) {
-            return R.error("[-]请输入正确的Payload！\n"+e.getMessage());
+            return R.error(msg("deserialize.result.invalidPayload", e.getMessage()));
         }
     }
     @RequestMapping("/safe2")
@@ -99,17 +107,21 @@ public class ReadObjectController {
                 ois.accept(Sqli.class);
                 ois.readObject();
             }
-            return R.ok("[+]Java反序列化：ObjectInputStream.readObject()");
+            return R.ok(msg("deserialize.readObject.result.safeAllowlist"));
         } catch (Exception e) {
-            return R.error("[-]请输入正确的Payload！\n"+e.getMessage());
+            return R.error(msg("deserialize.result.invalidPayload", e.getMessage()));
         }
     }
 
     private byte[] decodePayload(String payload) {
         if (payload == null || payload.trim().isEmpty()) {
-            throw new IllegalArgumentException("Payload不能为空");
+            throw new IllegalArgumentException(msg("common.payload.empty"));
         }
         return Base64.getDecoder().decode(payload.replace(" ", "+"));
+    }
+
+    private String msg(String key, Object... args) {
+        return messageSource.getMessage(key, args, LocaleContextHolder.getLocale());
     }
 
     /**

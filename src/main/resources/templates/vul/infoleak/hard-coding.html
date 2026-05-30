@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Login Page</title>
+    <title th:text="#{infoleak.js.login.title}">Login Page</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -61,11 +61,12 @@
             margin-top: 10px;
         }
     </style>
-    <script>
+    <script th:inline="javascript">
         function login() {
-            // 硬编码的用户名和密码
+            // Hardcoded username and password.
             const hardcodedUsername = "superadmin";
             const hardcodedPassword = "Admin@1024.com";
+            const invalidMessage = /*[[#{infoleak.js.login.error}]]*/ "Username or password is incorrect.";
 
             const username = document.getElementById("username").value;
             const password = document.getElementById("password").value;
@@ -73,25 +74,25 @@
             if (username === hardcodedUsername && password === hardcodedPassword) {
                 window.location.href = "/infoLeak/js/loginSuccess";
             } else {
-                document.getElementById("error").textContent = "用户名或密码错误！";
+                document.getElementById("error").textContent = invalidMessage;
             }
         }
     </script>
 </head>
 <body>
 <div class="login-container">
-    <h1>登录页面</h1>
+    <h1 th:text="#{infoleak.js.login.heading}">Login Page</h1>
     <form onsubmit="event.preventDefault(); login();">
         <div>
-            <label for="username">用户名:</label>
+            <label for="username" th:text="#{infoleak.js.login.username}">Username:</label>
             <input type="text" id="username" name="username">
         </div>
         <div>
-            <label for="password">密码:</label>
+            <label for="password" th:text="#{infoleak.js.login.password}">Password:</label>
             <input type="password" id="password" name="password">
         </div>
         <div>
-            <button type="submit">登录</button>
+            <button type="submit" th:text="#{infoleak.js.login.submit}">Login</button>
         </div>
         <div id="error" class="error-message"></div>
     </form>

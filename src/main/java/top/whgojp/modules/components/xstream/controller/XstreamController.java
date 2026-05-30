@@ -4,6 +4,8 @@ import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.security.*;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,6 +27,12 @@ import java.util.Date;
 @CrossOrigin(origins = "*")
 @RequestMapping("/xstream")
 public class XstreamController {
+    private final MessageSource messageSource;
+
+    public XstreamController(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
+
     @RequestMapping("")
     public String xstream() {
         return "vul/components/xstream";
@@ -51,10 +59,10 @@ public class XstreamController {
             Object result = xs.fromXML(content);  // 反序列化得到的对象
 
             // 检查反序列化后的结果并返回相关信息
-            return "组件漏洞-Xstream Vul, 反序列化结果: \n" + result;
+            return msg("component.xstream.result.vul", result);
         } catch (Exception e) {
             log.error("XStream反序列化失败", e);
-            return "组件漏洞-Xstream Vul 执行失败：" + e.getMessage();
+            return msg("component.xstream.result.vulFailed", e.getMessage());
         }
     }
 
@@ -69,10 +77,10 @@ public class XstreamController {
             // 黑名单示例：拒绝已知危险类型。
             xstream.denyPermission(new ExplicitTypePermission(new Class[]{ImageIO.class}));
             Object result = xstream.fromXML(content);
-            return "组件漏洞-Xstream Safe-BlackList, 解析结果：" + result;
+            return msg("component.xstream.result.blacklist", result);
         } catch (Exception e) {
             log.error("XStream黑名单场景解析失败", e);
-            return "组件漏洞-Xstream Safe-BlackList 执行失败：" + e.getMessage();
+            return msg("component.xstream.result.blacklistFailed", e.getMessage());
         }
     }
     @RequestMapping("/safe2")
@@ -92,11 +100,15 @@ public class XstreamController {
             // 添加自定义的类列表
             xstream.addPermission(new ExplicitTypePermission(new Class[]{Date.class}));
             Object result = xstream.fromXML(content);
-            return "组件漏洞-Xstream Safe-WhiteList, 解析结果：" + result;
+            return msg("component.xstream.result.allowlist", result);
         } catch (Exception e) {
             log.error("XStream白名单场景解析失败", e);
-            return "组件漏洞-Xstream Safe-WhiteList 执行失败：" + e.getMessage();
+            return msg("component.xstream.result.allowlistFailed", e.getMessage());
         }
+    }
+
+    private String msg(String key, Object... args) {
+        return messageSource.getMessage(key, args, LocaleContextHolder.getLocale());
     }
 
     // CVE-2020-26259 任意文件删除示例

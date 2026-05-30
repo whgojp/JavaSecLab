@@ -8,12 +8,11 @@
             <div class="layui-col-md12">
                 <fieldset class="layui-elem-field layui-field-title">
                     <legend>
-                        <a style="color: rgb(30 159 255)" class="xss-reflect">跨站脚本攻击 - 反射型XSS</a>
+	                        <a style="color: rgb(30 159 255)" class="xss-reflect" th:text="#{xss.reflect.title}">跨站脚本攻击 - 反射型XSS</a>
                     </legend>
                     <blockquote class="layui-elem-quote layui-quote-nm"
                                 style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
-                        <pre>  XSS(跨站脚本攻击)的本质是：不可信数据进入页面执行上下文后，被浏览器当作脚本或可执行HTML解析。修复时不要只依赖“过滤某个关键词”，而要结合输入校验、上下文输出编码、模板安全用法和CSP等多层防护。
-  反射型XSS：攻击载荷通常来自URL参数、表单、Header或路径等请求数据，服务端未做合适的输出编码或上下文处理，就把载荷立即返回到响应页面中执行。该类型通常不依赖数据库，特点是“请求即触发”。</pre>
+	                        <pre th:text="#{xss.reflect.intro.safe}">  XSS(跨站脚本攻击)的本质是：不可信数据进入页面执行上下文后，被浏览器当作脚本或可执行HTML解析。</pre>
                     </blockquote>
                 </fieldset>
             </div>
@@ -21,11 +20,11 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-anquan"> 安全场景：用户输入白名单过滤</span></h1>
+	                        <h1><span class="iconfont icon-anquan" th:text="| #{xss.reflect.safe.whitelist}|"> 安全场景：用户输入白名单过滤</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <ul class="layui-tab-title">
-                                <li class="layui-this">前端白名单</li>
-                                <li>后端白名单</li>
+	                                <li class="layui-this" th:text="#{xss.reflect.safe.frontWhitelist}">前端白名单</li>
+	                                <li th:text="#{xss.reflect.safe.backWhitelist}">后端白名单</li>
                             </ul>
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
@@ -37,7 +36,7 @@
                                                    class="layui-input" id="safe1-CheckUserInput-front-input">
                                             <div style="display: flex; align-items: center;">
                                                 <select class="layui-form-select" lay-filter="safe1-CheckUserInput-front">
-                                                    <option value="">示例Payload</option>
+	                                                    <option value="" th:text="#{xss.reflect.payload.example}">示例Payload</option>
                                                     <option value="123&lt;u&gt;A&lt;/u&gt;123">123&lt;u&gt;A&lt;/u&gt;123</option>
                                                     <option value="123&lt;script&gt;alert(/xss/)&lt;/script&gt;123">
                                                         123&lt;script&gt;alert(/xss/)&lt;/script&gt;123
@@ -50,7 +49,7 @@
                                                     </option>
                                                 </select>
                                                 <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;" lay-filter="safe1-CheckUserInput-front" lay-submit="">
-                                                    <span class="iconfont icon-zhihang">Run</span>
+	                                                    <span class="iconfont icon-zhihang" th:text="#{button.run}">Run</span>
                                                 </button>
                                             </div>
                                         </form>
@@ -64,7 +63,7 @@
                                                    lay-verify="required" value="<script>alert(/xss/)</script>" autocomplete="off"
                                                    class="layui-input" id="safe1-CheckUserInput-back">
                                             <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;" lay-filter="safe1-CheckUserInput-back" lay-submit="">
-                                                <span class="iconfont icon-zhihang">Run</span>
+	                                                <span class="iconfont icon-zhihang" th:text="#{button.run}">Run</span>
                                             </button>
                                         </form>
                                     </blockquote>
@@ -72,13 +71,12 @@
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+	                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{common.tips}">tips</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">  前端白名单：用于改善交互体验和提前提示用户，不能作为安全边界，攻击者可以绕过浏览器直接请求接口
-  后端白名单：在服务端业务逻辑或数据持久化前执行，适合限制“应该输入什么”，但仍不能替代最终输出位置的上下文编码</pre>
+	                                            <pre style="color: #28333e;font-size: 15px;" th:text="#{xss.reflect.safe.whitelistTips}">前端白名单：用于改善交互体验和提前提示用户。</pre>
                                             <div class="layui-col-md12">
                                                 <div class="layui-card">
-                                                    <div class="layui-card-header"><i class="fa fa-warning icon-output-safe"></i>测试结果</div>
+	                                                    <div class="layui-card-header"><i class="fa fa-warning icon-output-safe"></i><span th:text="#{common.testResult}">测试结果</span></div>
                                                     <div class="layui-card-body layui-text layadmin-text">
                                                         <pre id="safe1-CheckUserInput-result" style="color: red;font-size: 15px;"></pre>
                                                     </div>
@@ -92,7 +90,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code"> 安全代码</span></h1>
+	                        <h1><span class="iconfont icon-code" th:text="| #{common.safeCode}|"> 安全代码</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="safe1CheckUserInput"></div>
                         </div>
@@ -103,19 +101,19 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-anquan"> 安全场景：内容安全策略-CSP防护</span></h1>
+	                        <h1><span class="iconfont icon-anquan" th:text="| #{xss.reflect.safe.csp}|"> 安全场景：内容安全策略-CSP防护</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <ul class="layui-tab-title">
-                                <li class="layui-this">前端Meta配置</li>
-                                <li>后端Header配置(推荐)</li>
+	                                <li class="layui-this" th:text="#{xss.reflect.safe.cspMeta}">前端Meta配置</li>
+	                                <li th:text="#{xss.reflect.safe.cspHeader}">后端Header配置(推荐)</li>
                             </ul>
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
-                                        <p>在HTML页面的头部添加meta标签来配置 CSP</p>
+	                                        <p th:text="#{xss.reflect.safe.cspMetaDesc}">在HTML页面的头部添加meta标签来配置 CSP</p>
                                         <a target="_blank" href="/xss/reflect/a-safe2-CSP-front">
                                             <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
-                                                <span class="iconfont icon-zhihang">Run</span>
+	                                                <span class="iconfont icon-zhihang" th:text="#{button.run}">Run</span>
                                             </button>
                                         </a>
                                     </blockquote>
@@ -123,10 +121,10 @@
 
                                 <div class="layui-tab-item">
                                     <blockquote class="layui-elem-quote main_btn">
-                                        <p>后端通过配置Content-Security-Policy响应头</p>
-                                        <a target="_blank" href="/xss/reflect/safe2?payload=可结合响应包分析🤔️123<u>A</u>123<script>alert(/xss/)</script>123">
+	                                        <p th:text="#{xss.reflect.safe.cspHeaderDesc}">后端通过配置Content-Security-Policy响应头</p>
+                                        <a target="_blank" th:href="@{/xss/reflect/safe2(payload=${#messages.msg('xss.reflect.payload.value.cspDemo')})}">
                                             <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
-                                                <span class="iconfont icon-zhihang">Run</span>
+	                                                <span class="iconfont icon-zhihang" th:text="#{button.run}">Run</span>
                                             </button>
                                         </a>
                                     </blockquote>
@@ -134,16 +132,9 @@
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+	                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{common.tips}">tips</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">  内容安全策略(CSP：Content Security Policy)是一种由浏览器实施的安全机制，可作为XSS的额外防护层，但不能替代输出编码和安全DOM/模板用法
-  核心原理：网站通过发送CSP Header头部(也可以在HTML中通过meta设置)，告诉浏览器哪些资源来源、脚本执行方式是允许的，从而降低恶意内容加载和执行的风险
-  CSP 指令说明：
-  default-src: 指定默认的加载内容的来源，如果未指定其他指令，则默认应用此指令
-  script-src: 指定允许加载 JavaScript 的来源
-  style-src: 指定允许加载样式表的来源
-  img-src: 指定允许加载图片的来源
-  connect-src: 指定允许向其发送请求的来源(例如 AJAX、WebSocket 连接等)</pre>
+	                                            <pre style="color: #28333e;font-size: 15px;" th:text="#{xss.reflect.safe.cspTips}">内容安全策略(CSP)是一种由浏览器实施的安全机制。</pre>
                                         </div>
                                     </div>
                                 </div>
@@ -152,7 +143,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code"> 安全代码</span></h1>
+	                        <h1><span class="iconfont icon-code" th:text="| #{common.safeCode}|"> 安全代码</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="safe2CSP"></div>
                         </div>
@@ -163,11 +154,11 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-anquan"> 安全场景：上下文输出编码</span></h1>
+	                        <h1><span class="iconfont icon-anquan" th:text="| #{xss.reflect.safe.outputEncoding}|"> 安全场景：上下文输出编码</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <ul class="layui-tab-title">
-                                <li class="layui-this">Manual自定义</li>
-                                <li>Spring框架</li>
+	                                <li class="layui-this" th:text="#{xss.reflect.safe.manual}">Manual自定义</li>
+	                                <li th:text="#{xss.reflect.safe.spring}">Spring框架</li>
                             </ul>
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
@@ -179,7 +170,7 @@
                                                    class="layui-input" id="safe3-EntityEscape-input">
                                             <div style="display: flex; align-items: center;">
                                                 <select class="layui-form-select" lay-filter="safe3-EntityEscape">
-                                                    <option value="">示例Payload</option>
+	                                                    <option value="" th:text="#{xss.reflect.payload.example}">示例Payload</option>
                                                     <option value="123&lt;u&gt;A&lt;/u&gt;123">123&lt;u&gt;A&lt;/u&gt;123</option>
                                                     <option value="123&lt;script&gt;alert(/xss/)&lt;/script&gt;123">
                                                         123&lt;script&gt;alert(/xss/)&lt;/script&gt;123
@@ -192,7 +183,7 @@
                                                     </option>
                                                 </select>
                                                 <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;" lay-filter="safe3-EntityEscape-manual" lay-submit="">
-                                                    <span class="iconfont icon-zhihang">Run</span>
+	                                                    <span class="iconfont icon-zhihang" th:text="#{button.run}">Run</span>
                                                 </button>
                                             </div>
                                         </form>
@@ -205,9 +196,9 @@
                                             <input type="text" name="payload" style="width: 300px;" required
                                                    lay-verify="required" value="<script>alert(/xss/)</script>" autocomplete="off"
                                                    class="layui-input" id="safe3-EntityEscape">
-                                            <p>使用Spring框架内置安全工具类实体转义</p>
+	                                            <p th:text="#{xss.reflect.safe.springDesc}">使用Spring框架内置安全工具类实体转义</p>
                                             <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;" lay-filter="safe3-EntityEscape-spring" lay-submit="">
-                                                <span class="iconfont icon-zhihang">Run</span>
+	                                                <span class="iconfont icon-zhihang" th:text="#{button.run}">Run</span>
                                             </button>
                                         </form>
                                     </blockquote>
@@ -215,18 +206,12 @@
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+	                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{common.tips}">tips</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">
-输出编码需要匹配具体输出上下文：
-  1. HTML正文文本：将 &lt;、&gt;、&amp;、"、' 等字符编码为HTML实体
-  2. HTML属性、URL、JavaScript字符串、CSS等位置：需要使用对应上下文的编码或白名单校验
-  3. 富文本场景：单纯编码会破坏格式，通常应使用HTML白名单净化库
-PS：这里演示的是HTML正文文本场景的编码，存储型XSS模块中还有表格渲染阶段的输出编码示例
-                                            </pre>
+	                                            <pre style="color: #28333e;font-size: 15px;" th:text="#{xss.reflect.safe.encodingTips}">输出编码需要匹配具体输出上下文。</pre>
                                             <div class="layui-col-md12">
                                                 <div class="layui-card">
-                                                    <div class="layui-card-header"><i class="fa fa-warning icon-output-safe"></i>测试结果</div>
+	                                                    <div class="layui-card-header"><i class="fa fa-warning icon-output-safe"></i><span th:text="#{common.testResult}">测试结果</span></div>
                                                     <div class="layui-card-body layui-text layadmin-text">
                                                         <pre id="safe3-EntityEscape-result" style="color: red;font-size: 15px;"></pre>
                                                     </div>
@@ -240,7 +225,7 @@ PS：这里演示的是HTML正文文本场景的编码，存储型XSS模块中�
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code"> 安全代码</span></h1>
+	                        <h1><span class="iconfont icon-code" th:text="| #{common.safeCode}|"> 安全代码</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="safe3EntityEscape"></div>
                         </div>
@@ -251,7 +236,7 @@ PS：这里演示的是HTML正文文本场景的编码，存储型XSS模块中�
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-anquan"> 安全场景：HttpOnly配置</span></h1>
+	                        <h1><span class="iconfont icon-anquan" th:text="| #{xss.reflect.safe.httpOnly}|"> 安全场景：HttpOnly配置</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
@@ -263,7 +248,7 @@ PS：这里演示的是HTML正文文本场景的编码，存储型XSS模块中�
                                                    class="layui-input" id="safe4-HttpOnly-input">
                                             <div style="display: flex; align-items: center;">
                                                 <select class="layui-form-select" lay-filter="safe4-HttpOnly">
-                                                    <option value="">示例Payload</option>
+	                                                    <option value="" th:text="#{xss.reflect.payload.example}">示例Payload</option>
                                                     <option value="123&lt;u&gt;A&lt;/u&gt;123">123&lt;u&gt;A&lt;/u&gt;123</option>
                                                     <option value="123&lt;script&gt;alert(document.cookie)&lt;/script&gt;123">
                                                         123&lt;script&gt;alert(document.cookie)&lt;/script&gt;123
@@ -276,7 +261,7 @@ PS：这里演示的是HTML正文文本场景的编码，存储型XSS模块中�
                                                     </option>
                                                 </select>
                                                 <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;" lay-filter="safe4-HttpOnly" lay-submit="">
-                                                    <span class="iconfont icon-zhihang">Run</span>
+	                                                    <span class="iconfont icon-zhihang" th:text="#{button.run}">Run</span>
                                                 </button>
                                             </div>
                                         </form>
@@ -285,15 +270,12 @@ PS：这里演示的是HTML正文文本场景的编码，存储型XSS模块中�
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+	                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{common.tips}">tips</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">  HttpOnly不能修复XSS本身，它只能降低“脚本直接读取Cookie”的风险。页面一旦存在XSS，攻击者仍可能发起用户态请求、篡改页面或诱导操作。
-  单个接口配置：并非所有的cookie都必须设置为HttpOnly，可能有一些cookie是需要客户端JavaScript访问的，例如用于前端操作或分析目的的cookie
-  全局配置场景：在整个应用程序中所有的cookie都具有HttpOnly属性，可以考虑在全局配置中进行设置
-  建议同时配合Secure、SameSite、会话失效策略、CSRF防护和前面的输出编码/CSP策略。</pre>
+	                                            <pre style="color: #28333e;font-size: 15px;" th:text="#{xss.reflect.safe.httpOnlyTips}">HttpOnly不能修复XSS本身。</pre>
                                             <div class="layui-col-md12">
                                                 <div class="layui-card">
-                                                    <div class="layui-card-header"><i class="fa fa-warning icon-output-safe"></i>测试结果</div>
+	                                                    <div class="layui-card-header"><i class="fa fa-warning icon-output-safe"></i><span th:text="#{common.testResult}">测试结果</span></div>
                                                     <div class="layui-card-body layui-text layadmin-text">
                                                         <pre id="safe4-HttpOnly-result" style="color: red;font-size: 15px;"></pre>
                                                     </div>
@@ -307,7 +289,7 @@ PS：这里演示的是HTML正文文本场景的编码，存储型XSS模块中�
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code"> 安全代码</span></h1>
+	                        <h1><span class="iconfont icon-code" th:text="| #{common.safeCode}|"> 安全代码</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="safe4HttpOnly"></div>
                         </div>
@@ -320,7 +302,7 @@ PS：这里演示的是HTML正文文本场景的编码，存储型XSS模块中�
 </div>
 
 <script th:replace="~{common/common::script}"></script>
-<script type="text/javascript">
+	<script type="text/javascript" th:inline="javascript">
     layui.use(['layer', 'miniTab', 'common', 'form'], function () {
         var $ = layui.jquery,
             layer = layui.layer,
@@ -328,7 +310,7 @@ PS：这里演示的是HTML正文文本场景的编码，存储型XSS模块中�
             common = layui.common,
             form = layui.form;
         miniTab.listen();
-        layer.msg("跨站脚本-反射型");
+	        layer.msg(/*[[#{xss.reflect.toast}]]*/ "跨站脚本-反射型");
 
         // 提交前做个前端校验 校验成功才发送请求
         common.formListenFun("safe1-CheckUserInput-front", "frontEnd", "/xss/reflect/safe1", "safe1-CheckUserInput-result", "get");
@@ -342,32 +324,120 @@ PS：这里演示的是HTML正文文本场景的编码，存储型XSS模块中�
         common.formListenFun("safe4-HttpOnly", "", "/xss/reflect/safe4", "safe4-HttpOnly-result", "get");
         common.selectListenFun("safe4-HttpOnly", "safe4-HttpOnly-input");
 
-        var cmConfigSafe = {
-            lineNumbers: true,
-            lineWrapping: false,
+	        var cmConfigSafe = {
+	            lineNumbers: true,
+	            lineWrapping: true,
             indentUnit: 4,
             indentWithTabs: true,
             theme: 'juejinsafe',
             styleActiveLine: {nonEmpty: true},
             fontSize: "18px",
-            mode: "text/x-java"
-        };
+	            mode: "text/x-java"
+	        };
+	        var isEnglishReflect = /*[[${#locale.language == 'en'}]]*/ false;
+	        var reflectSafeCode = isEnglishReflect ? {
+	            safe1: "// Use an allowlist to constrain input format. This is useful for typed fields, but final output still needs context-aware encoding\n" +
+	                "// Frontend validation\n" +
+	                "var whitelistRegex = /^[a-zA-Z0-9_\\\\s]+$/;\n" +
+	                "\n" +
+	                "// Check whether input matches the allowlist\n" +
+	                "if (!whitelistRegex.test(value)) {\n" +
+	                "    layer.msg('Input contains illegal characters. Please check it.', {icon: 2, offset: '10px'});\n" +
+	                "    return false; // cancel form submission\n" +
+	                "} else {\n" +
+	                "    // send request normally\n" +
+	                "}\n" +
+	                "\n" +
+	                "// Backend validation\n" +
+	                "private static final String WHITELIST_REGEX = \\\"^[a-zA-Z0-9_\\\\\\\\s]+$\\\";\n" +
+	                "private static final Pattern pattern = Pattern.compile(WHITELIST_REGEX);\n" +
+	                "\n" +
+	                "Matcher matcher = pattern.matcher(payload);\n" +
+	                "if (matcher.matches()) {\n" +
+	                "    return R.ok(payload);\n" +
+	                "} else return R.error(\\\"Input contains illegal characters. Please check it.\\\");",
+	            safe2: "// Content Security Policy is an additional browser-enforced protection layer. It can reduce malicious script loading and execution, but it does not replace output encoding or safe DOM/template usage\n" +
+	                "// Frontend meta configuration\n" +
+	                "<meta http-equiv=\\\"Content-Security-Policy\\\" content=\\\"default-src 'self'; script-src 'self' https://apis.example.com; style-src 'self' https://fonts.googleapis.com; img-src 'self' data: https://*.example.com;\\\">\n" +
+	                "\n" +
+	                "// Backend header configuration\n" +
+	                "public String safe2(String payload, HttpServletResponse response) {\n" +
+	                "    response.setHeader(\\\"Content-Security-Policy\\\", \\\"default-src 'self'; script-src 'self'\\\");\n" +
+	                "    response.setHeader(\\\"Content-Security-Policy-Report-Only\\\", \\\"default-src 'self'; report-uri /xss/reflect/csp-report-endpoint\\\");\n" +
+	                "    return payload;\n" +
+	                "}",
+	            safe3: "// HTML body output encoding converts special characters to HTML entities so the browser will not parse untrusted data as tags or scripts\n" +
+	                "// Note: HTML attributes, URLs, JavaScript strings, CSS, and other contexts require their own encoding or allowlist strategies\n" +
+	                "public R safe3(String type, String payload) {\n" +
+	                "    String filterContented = \\\"\\\";\n" +
+	                "    switch (type) {\n" +
+	                "        case \\\"manual\\\":\n" +
+	                "            payload = StringUtils.replace(payload, \\\"&\\\", \\\"&amp;\\\");\n" +
+	                "            payload = StringUtils.replace(payload, \\\"<\\\", \\\"&lt;\\\");\n" +
+	                "            payload = StringUtils.replace(payload, \\\">\\\", \\\"&gt;\\\");\n" +
+	                "            payload = StringUtils.replace(payload, \\\"\\\\\\\"\\\", \\\"&quot;\\\");\n" +
+	                "            payload = StringUtils.replace(payload, \\\"'\\\", \\\"&#x27;\\\");\n" +
+	                "            payload = StringUtils.replace(payload, \\\"/\\\", \\\"&#x2F;\\\");\n" +
+	                "            filterContented = payload;\n" +
+	                "            break;\n" +
+	                "        case \\\"spring\\\":\n" +
+	                "            filterContented = HtmlUtils.htmlEscape(payload);\n" +
+	                "            break;\n" +
+	                "            ...\n" +
+	                "    }\n" +
+	                "}",
+	            safe4: "// HttpOnly prevents client-side scripts from directly reading cookies with this attribute. It reduces cookie theft impact but does not fix XSS itself\n" +
+	                "// Single endpoint configuration\n" +
+	                "public R safe4(String payload, HttpServletRequest request, HttpServletResponse response) {\n" +
+	                "    Cookie cookie = request.getCookies()[0];\n" +
+	                "    cookie.setHttpOnly(true); // set HttpOnly\n" +
+	                "    cookie.setMaxAge(600); // effective for ten minutes\n" +
+	                "    cookie.setPath(\\\"/\\\");\n" +
+	                "    response.addCookie(cookie);\n" +
+	                "    return R.ok(payload);\n" +
+	                "}\n" +
+	                "\n" +
+	                "// Global configuration\n" +
+	                "// application.yml\n" +
+	                "server:\n" +
+	                "  servlet:\n" +
+	                "    session:\n" +
+	                "      cookie:\n" +
+	                "        http-only: true\n" +
+	                "\n" +
+	                "// Spring Boot configuration class\n" +
+	                "@Configuration\n" +
+	                "public class ServerConfig {\n" +
+	                "    @Bean\n" +
+	                "    public WebServerFactoryCustomizer<ConfigurableWebServerFactory> webServerFactoryCustomizer() {\n" +
+	                "        return factory -> {\n" +
+	                "            Session session = new Session();\n" +
+	                "            session.getCookie().setHttpOnly(true);\n" +
+	                "            factory.setSession(session);\n" +
+	                "            ...\n" +
+	                "}"
+	        } : {
+	            safe1: safe1CheckUserInput,
+	            safe2: safe2CSP,
+	            safe3: safe3EntityEscape,
+	            safe4: safe4HttpOnly
+	        };
 
-        CodeMirror(document.getElementById("safe1CheckUserInput"), Object.assign({}, cmConfigSafe, {
-            value: safe1CheckUserInput
-        }));
-        CodeMirror(document.getElementById("safe2CSP"), Object.assign({}, cmConfigSafe, {
-            value: safe2CSP
-        }));
-        CodeMirror(document.getElementById("safe3EntityEscape"), Object.assign({}, cmConfigSafe, {
-            value: safe3EntityEscape
-        }));
-        CodeMirror(document.getElementById("safe4HttpOnly"), Object.assign({}, cmConfigSafe, {
-            value: safe4HttpOnly
-        }));
+	        CodeMirror(document.getElementById("safe1CheckUserInput"), Object.assign({}, cmConfigSafe, {
+	            value: reflectSafeCode.safe1
+	        }));
+	        CodeMirror(document.getElementById("safe2CSP"), Object.assign({}, cmConfigSafe, {
+	            value: reflectSafeCode.safe2
+	        }));
+	        CodeMirror(document.getElementById("safe3EntityEscape"), Object.assign({}, cmConfigSafe, {
+	            value: reflectSafeCode.safe3
+	        }));
+	        CodeMirror(document.getElementById("safe4HttpOnly"), Object.assign({}, cmConfigSafe, {
+	            value: reflectSafeCode.safe4
+	        }));
         $('.xss-reflect').hover(function () {
             $(this).css('cursor', 'pointer');
-            layer.tips('攻击流程图', this, {
+	            layer.tips(/*[[#{xss.reflect.flowTip}]]*/ '攻击流程图', this, {
                 tips: [1, '#0051ff'],
                 time: 2000
             });

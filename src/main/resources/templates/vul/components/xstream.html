@@ -8,12 +8,12 @@
         <div class="layui-row layui-col-space15">
             <div class="layui-col-md12">
                 <fieldset class="layui-elem-field layui-field-title">
-                    <legend style="color: rgb(30 159 255)">组件漏洞 - XStream反序列化</legend>
+                    <legend style="color: rgb(30 159 255)" th:text="#{component.xstream.title}">Component Vulnerability - XStream Deserialization</legend>
                     <blockquote class="layui-elem-quote layui-quote-nm"
                                 style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
                         <p>
-                        <pre>  Xstream是一种OXMapping技术，是用来处理XML文件序列化的框架，将Java对象序列化为XML或将XML反序列化为Java对象</pre>
-                        <pre>  XStream框架的反序列化漏洞在于其支持的某些转换器（如DynamicProxyConverter）允许攻击者通过构造包含特殊标签（如dynamic-proxy标签）的恶意XML，并通过handler标签指向可执行任意代码的类或对象，从而在反序列化过程中触发任意代码执行</pre>
+                        <pre th:text="#{component.xstream.intro1}">XStream serializes Java objects to XML and back.</pre>
+                        <pre th:text="#{component.xstream.intro2}">Crafted XML can trigger code execution during deserialization.</pre>
                         </p>
                     </blockquote>
                 </fieldset>
@@ -21,35 +21,25 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-bug"> 漏洞场景</span></h1>
+                        <h1><span class="iconfont icon-bug" th:text="| #{component.common.vul.title}|"> Vulnerable Scenario</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
-                                        <p>点击跳转后需要自行构造触发payload</p>
+                                        <p th:text="#{component.common.manualPayload}">Open the target page and build the payload manually.</p>
                                         <a target="_blank" href='/xstream/vul'>
                                             <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
-                                                <span class="iconfont icon-zhihang">Run</span>
+                                                <span class="iconfont icon-zhihang" th:text="#{button.run}">Run</span>
                                             </button>
                                         </a>
                                     </blockquote>
                                 </div>
-
-<!--                                <div class="layui-col-md12">-->
-<!--                                    <div class="layui-card">-->
-<!--                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>-->
-<!--                                        <div class="layui-card-body layui-text layadmin-text">-->
-<!--                                            <pre style="color: #28333e;font-size: 15px;">测试Payload：{"test":{"@type":"java.net.Inet4Address","val":"dnslog.com"}}</pre>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-
                             </div>
                         </div>
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="| #{common.vulnerableCode}|"> Vulnerable Code</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="vulXstream"></div>
                         </div>
@@ -59,15 +49,15 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-anquan"> 安全场景：黑名单</span></h1>
+                        <h1><span class="iconfont icon-anquan" th:text="| #{component.xstream.safe.blacklist.title}|"> Safe Scenario: Blacklist</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
-                                        <p>黑名单过滤</p>
+                                        <p th:text="#{component.xstream.safe.blacklist.desc}">Blacklist filtering</p>
                                         <a target="_blank" href='/xstream/safe1'>
                                             <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
-                                                <span class="iconfont icon-zhihang">Run</span>
+                                                <span class="iconfont icon-zhihang" th:text="#{button.run}">Run</span>
                                             </button>
                                         </a>
                                     </blockquote>
@@ -78,7 +68,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code"> 安全代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="| #{common.safeCode}|"> Safe Code</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="safeXstreamBlackList"></div>
                         </div>
@@ -89,15 +79,15 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-anquan"> 安全场景：白名单</span></h1>
+                        <h1><span class="iconfont icon-anquan" th:text="| #{component.xstream.safe.allowlist.title}|"> Safe Scenario: Allowlist</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
-                                        <p>白名单过滤</p>
+                                        <p th:text="#{component.xstream.safe.allowlist.desc}">Allowlist filtering</p>
                                         <a target="_blank" href='/xstream/safe2'>
                                             <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
-                                                <span class="iconfont icon-zhihang">Run</span>
+                                                <span class="iconfont icon-zhihang" th:text="#{button.run}">Run</span>
                                             </button>
                                         </a>
                                     </blockquote>
@@ -105,11 +95,9 @@
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{common.tips}">tips</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">安全编码规范：
-  1、升级方案：升级Xstream组件到1.4.17或最新版本
-  2、非升级修复：1.4.10后可启动默认安全配置 setupDefaultSecurity()</pre>
+                                            <pre style="color: #28333e;font-size: 15px;" th:text="#{component.xstream.safe.tips}">Secure coding guidance.</pre>
                                         </div>
                                     </div>
                                 </div>
@@ -119,7 +107,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code"> 安全代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="| #{common.safeCode}|"> Safe Code</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="safeXstreamWhiteList"></div>
                         </div>
@@ -133,7 +121,7 @@
 </div>
 
 <div th:replace="~{common/common::script}"></div>
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
     document.addEventListener("DOMContentLoaded", function () {
 
         layui.use(['layer', 'miniTab', 'common', 'form'], function () {
@@ -142,7 +130,13 @@
                 miniTab = layui.miniTab,
                 common = layui.common;
             miniTab.listen();
-            layer.msg("组件漏洞 - XStream反序列化")
+            layer.msg(/*[[#{component.xstream.title}]]*/ "Component Vulnerability - XStream Deserialization")
+            var isEnglish = /*[[${#locale.language == 'en'}]]*/ false;
+            var codeSnippets = window.componentCodeSnippets || {};
+
+            function codeSnippet(enName, zhName) {
+                return codeSnippets[isEnglish ? enName : zhName] || codeSnippets[enName] || "";
+            }
 
             var cmConfig = {
                 lineNumbers: true,
@@ -167,13 +161,13 @@
             };
 
             CodeMirror(document.getElementById("vulXstream"), Object.assign({}, cmConfig, {
-                value: vulXstream
+                value: codeSnippet("vulXstream", "vulXstreamZh")
             }));
             CodeMirror(document.getElementById("safeXstreamBlackList"), Object.assign({}, cmConfigSafe, {
-                value: safeXstreamBlackList
+                value: codeSnippet("safeXstreamBlackList", "safeXstreamBlackListZh")
             }));
             CodeMirror(document.getElementById("safeXstreamWhiteList"), Object.assign({}, cmConfigSafe, {
-                value: safeXstreamWhiteList
+                value: codeSnippet("safeXstreamWhiteList", "safeXstreamWhiteListZh")
             }));
         });
     });

@@ -2,6 +2,8 @@ package top.whgojp.modules.infoleak.controller;
 
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -27,6 +29,11 @@ import java.util.regex.Pattern;
 @RequestMapping("/infoLeak/ceShiPage")
 public class CeshiController {
     private static final Pattern SAFE_HOST_PATTERN = Pattern.compile("^[A-Za-z0-9.-]{1,253}$");
+    private final MessageSource messageSource;
+
+    public CeshiController(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
 
     @RequestMapping("")
     public String CeShi() {
@@ -42,7 +49,7 @@ public class CeshiController {
         if (ip != null && !ip.isEmpty()) {
             try {
                 // 这里存在命令注入漏洞，用户输入没有经过过滤直接拼接到命令中执行
-                log.info("测试命令："+ip);
+                log.info("Ping test command input: {}", ip);
                 String command = "ping -c 4 " + ip;
 //                Process process = Runtime.getRuntime().exec(command);
                 Process process = Runtime.getRuntime().exec(new String[]{"/bin/sh", "-c", command});
@@ -67,14 +74,14 @@ public class CeshiController {
         String result = "";
         if (ip != null && !ip.isEmpty()) {
             if (!SAFE_HOST_PATTERN.matcher(ip).matches() || ip.contains("..")) {
-                result = "非法目标地址";
+                result = msg("infoleak.test.result.invalidTarget");
             } else {
                 try {
                     Process process = new ProcessBuilder("ping", "-c", "4", ip).start();
                     boolean finished = process.waitFor(5, TimeUnit.SECONDS);
                     if (!finished) {
                         process.destroyForcibly();
-                        result = "Ping执行超时";
+                        result = msg("infoleak.test.result.timeout");
                     } else {
                         BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
                         String line;
@@ -92,6 +99,10 @@ public class CeshiController {
         }
         model.addAttribute("safeResult", result);
         return "vul/infoleak/ping";
+    }
+
+    private String msg(String key, Object... args) {
+        return messageSource.getMessage(key, args, LocaleContextHolder.getLocale());
     }
 
 }

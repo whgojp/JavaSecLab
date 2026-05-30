@@ -2,11 +2,15 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>XFF访问控制演示</title>
+    <title th:text="#{other.xff.result.title}">XFF Access Control Demo</title>
 </head>
 <body>
-<h1>only For 8.8.8.8</h1>
-<p th:text="'你的ip为: ' + ${clientIP} + '；仅允许 8.8.8.8 访问'"></p>
+<h1 th:text="#{other.xff.result.heading}">Only For 8.8.8.8</h1>
+<p>
+    <span th:text="#{other.xff.result.ipPrefix}">Your IP is:</span>
+    <span th:text="${clientIP}"></span>
+    <span th:text="#{other.xff.result.ipSuffix}">Only 8.8.8.8 is allowed.</span>
+</p>
 <p th:text="${sensitiveInfo}"></p>
 </body>
 </html>

@@ -101,7 +101,7 @@ public class JdbcController {
                     //关闭ResultSet结果集 Statement对象 以及数据库Connection对象 释放资源
                     stmt.close();
                     conn.close();
-                    message = (rowsAffected > 0) ? "数据插入成功 username:" + username + " password:" + password : "数据插入失败";
+                    message = (rowsAffected > 0) ? "Data inserted successfully. username:" + username + " password:" + password : "Data insertion failed.";
                     log.info(message);
                     return R.ok(message);
                 case "delete":
@@ -110,7 +110,7 @@ public class JdbcController {
                     rowsAffected = stmt.executeUpdate(sql);
                     stmt.close();
                     conn.close();
-                    message = (rowsAffected > 0) ? "数据删除成功" : "数据删除失败 用户ID:" + id + " 不存在!";
+                    message = (rowsAffected > 0) ? "Data deleted successfully." : "Delete failed. User ID: " + id + " does not exist.";
                     log.info(message);
                     return R.ok(message);
                 case "update":
@@ -121,7 +121,7 @@ public class JdbcController {
                     rowsAffected = stmt.executeUpdate(sql);
                     stmt.close();
                     conn.close();
-                    message = (rowsAffected > 0) ? "数据更新成功" : "数据更新失败 用户ID不存在!";
+                    message = (rowsAffected > 0) ? "Data updated successfully." : "Update failed. User ID does not exist.";
                     log.info(message);
                     return R.ok(message);
                 case "select":
@@ -133,20 +133,20 @@ public class JdbcController {
                     if (!rs.next()) {
                         stmt.close();
                         conn.close();
-                        return R.error("用户ID不存在");
+                        return R.error("User ID does not exist.");
                     }
 
                     // 用户ID存在，继续处理查询结果
                     String user = rs.getString("username");
                     String pass = rs.getString("password");
 
-                    message = "查询成功，用户名：" + user + " 密码：" + pass;
+                    message = "Query succeeded. Username: " + user + " Password: " + pass;
 
                     stmt.close();
                     conn.close();
                     return R.ok(message);
                 default:
-                    return R.error("type字段有误：传输数据异常,请检查^_^");
+                    return R.error("Invalid type field. Transport data is abnormal. Please check it.");
             }
 
         } catch (Exception e) {
@@ -192,7 +192,7 @@ public class JdbcController {
                         rowsAffected = stmt.executeUpdate(sql);
                         stmt.close();
                         conn.close();
-                        message = (rowsAffected > 0) ? "数据插入成功 username:" + username + ";password:" + password : "数据插入失败";
+                        message = (rowsAffected > 0) ? "Data inserted successfully. username:" + username + "; password:" + password : "Data insertion failed.";
                         log.info(message);
                         return R.ok(message);
                     case "delete":
@@ -202,7 +202,7 @@ public class JdbcController {
                         rowsAffected = stmt.executeUpdate(sql);
                         stmt.close();
                         conn.close();
-                        message = (rowsAffected > 0) ? "数据删除成功" : "数据删除失败 用户ID:" + id + " 不存在!";
+                        message = (rowsAffected > 0) ? "Data deleted successfully." : "Delete failed. User ID: " + id + " does not exist.";
                         log.info(message);
                         return R.ok(message);
                     case "update":
@@ -212,7 +212,7 @@ public class JdbcController {
                         rowsAffected = stmt.executeUpdate(sql);
                         stmt.close();
                         conn.close();
-                        message = (rowsAffected > 0) ? "数据更新成功" : "数据更新失败 用户ID不存在!";
+                        message = (rowsAffected > 0) ? "Data updated successfully." : "Update failed. User ID does not exist.";
                         log.info(message);
                         return R.ok(message);
                     case "select":
@@ -223,17 +223,17 @@ public class JdbcController {
                         if (!rs.next()) {
                             stmt.close();
                             conn.close();
-                            return R.error("用户ID不存在");
+                            return R.error("User ID does not exist.");
                         }
                         String user = rs.getString("username");
                         String pass = rs.getString("password");
                         stmt.close();
                         conn.close();
-                        message = "查询成功，用户名：" + user + " 密码：" + pass;
+                        message = "Query succeeded. Username: " + user + " Password: " + pass;
 
                         return R.ok(message);
                     default:
-                        return R.error("type字段有误：传输数据异常,请检查^_^");
+                        return R.error("Invalid type field. Transport data is abnormal. Please check it.");
                 }
             } catch (Exception e) {
                 log.error(e.toString());
@@ -272,35 +272,35 @@ public class JdbcController {
                     sql = "INSERT INTO sqli (username, password) VALUES ('" + username + "', '" + password + "')";
                     log.info("当前执行数据插入操作:" + sql);
                     rowsAffected = jdbctemplate.update(sql);        //Spring的JdbcTemplate会自动管理连接的获取和释放，不需要手动关闭连接
-                    message = (rowsAffected > 0) ? "数据插入成功 username:" + username + ";password:" + password : "数据插入失败";
+                    message = (rowsAffected > 0) ? "Data inserted successfully. username:" + username + "; password:" + password : "Data insertion failed.";
                     log.info(message);
                     return R.ok(message);
                 case "delete":
                     sql = "DELETE FROM sqli WHERE id = '" + id + "'";
                     log.info("当前执行数据删除操作:" + sql);
                     rowsAffected = jdbctemplate.update(sql);
-                    message = (rowsAffected > 0) ? "数据删除成功" : "数据删除失败 用户ID:" + id + " 不存在!";
+                    message = (rowsAffected > 0) ? "Data deleted successfully." : "Delete failed. User ID: " + id + " does not exist.";
                     log.info(message);
                     return R.ok(message);
                 case "update":
                     sql = "UPDATE sqli SET username = '" + username + "', password = '" + password + "' WHERE id = '" + id + "'";
                     log.info("当前执行数据更新操作:" + sql);
                     rowsAffected = jdbctemplate.update(sql);
-                    message = (rowsAffected > 0) ? "数据更新成功" : "数据更新失败 用户ID不存在!";
+                    message = (rowsAffected > 0) ? "Data updated successfully." : "Update failed. User ID does not exist.";
                     log.info(message);
                     return R.ok(message);
                 case "select":
                     sql = "SELECT * FROM sqli WHERE id  = " + id;
                     List<Map<String, Object>> resultList = jdbctemplate.queryForList(sql);
                     if (resultList.isEmpty()) {
-                        return R.error("用户ID不存在");
+                        return R.error("User ID does not exist.");
                     }
                     log.info(resultList.toString());
-                    message = "查询成功，找到 " + resultList.size() + " 条记录 " + JSONUtil.toJsonStr(resultList);
+                    message = "Query succeeded. Found " + resultList.size() + " records " + JSONUtil.toJsonStr(resultList);
                     return R.ok(message);
 
                 default:
-                    return R.error("type字段有误：传输数据异常,请检查^_^");
+                    return R.error("Invalid type field. Transport data is abnormal. Please check it.");
             }
 
         } catch (Exception e) {
@@ -342,7 +342,7 @@ public class JdbcController {
                     rowsAffected = stmt.executeUpdate();                    // 使用预编译时 不需要传递sql语句
                     stmt.close();
                     conn.close();
-                    message = (rowsAffected > 0) ? "数据插入成功 username:" + username + ";password:" + password : "数据插入失败";
+                    message = (rowsAffected > 0) ? "Data inserted successfully. username:" + username + "; password:" + password : "Data insertion failed.";
                     log.info(message);
                     return R.ok(message);
                 case "delete":
@@ -354,7 +354,7 @@ public class JdbcController {
                     rowsAffected = stmt.executeUpdate();
                     stmt.close();
                     conn.close();
-                    message = (rowsAffected > 0) ? "数据删除成功" : "数据删除失败 用户ID:" + id + " 不存在!";
+                    message = (rowsAffected > 0) ? "Data deleted successfully." : "Delete failed. User ID: " + id + " does not exist.";
                     log.info(message);
                     return R.ok(message);
                 case "update":
@@ -368,7 +368,7 @@ public class JdbcController {
                     rowsAffected = stmt.executeUpdate();
                     stmt.close();
                     conn.close();
-                    message = (rowsAffected > 0) ? "数据更新成功" : "数据更新失败 用户ID不存在!";
+                    message = (rowsAffected > 0) ? "Data updated successfully." : "Update failed. User ID does not exist.";
                     log.info(message);
                     return R.ok(message);
                 case "select":
@@ -380,16 +380,16 @@ public class JdbcController {
                     if (!rs.next()) {
                         stmt.close();
                         conn.close();
-                        return R.error("用户ID不存在");
+                        return R.error("User ID does not exist.");
                     }
                     String user = rs.getString("username");
                     String pass = rs.getString("password");
                     stmt.close();
                     conn.close();
-                    message = "查询成功，用户名：" + user + " 密码：" + pass;
+                    message = "Query succeeded. Username: " + user + " Password: " + pass;
                     return R.ok(message);
                 default:
-                    return R.error("type字段有误：传输数据异常,请检查^_^");
+                    return R.error("Invalid type field. Transport data is abnormal. Please check it.");
             }
 
         } catch (Exception e) {
@@ -428,21 +428,21 @@ public class JdbcController {
                     sql = "INSERT INTO sqli (username, password) VALUES (?,?)";
                     log.info("当前执行数据插入操作:" + sql);
                     rowsAffected = jdbctemplate.update(sql, username, password);
-                    message = (rowsAffected > 0) ? "数据插入成功 username:" + username + ";password:" + password : "数据插入失败";
+                    message = (rowsAffected > 0) ? "Data inserted successfully. username:" + username + "; password:" + password : "Data insertion failed.";
                     log.info(message);
                     return R.ok(message);
                 case "delete":
                     sql = "DELETE FROM sqli WHERE id = ?";
                     log.info("当前执行数据删除操作:" + sql);
                     rowsAffected = jdbctemplate.update(sql, id);
-                    message = (rowsAffected > 0) ? "数据删除成功" : "数据删除失败 用户ID:" + id + " 不存在!";
+                    message = (rowsAffected > 0) ? "Data deleted successfully." : "Delete failed. User ID: " + id + " does not exist.";
                     log.info(message);
                     return R.ok(message);
                 case "update":
                     sql = "UPDATE sqli SET username = ?, password = ? WHERE id = ?";
                     log.info("当前执行数据更新操作:" + sql);
                     rowsAffected = jdbctemplate.update(sql, username,password,id);
-                    message = (rowsAffected > 0) ? "数据更新成功" : "数据更新失败 用户ID不存在!";
+                    message = (rowsAffected > 0) ? "Data updated successfully." : "Update failed. User ID does not exist.";
                     log.info(message);
                     return R.ok(message);
                 case "select":
@@ -452,15 +452,15 @@ public class JdbcController {
                     try {
                         stringObjectMap = jdbctemplate.queryForMap(sql, id);
                     } catch (EmptyResultDataAccessException e) {
-                        return R.error("用户ID不存在");
+                        return R.error("User ID does not exist.");
                     }
                     String user = (String) stringObjectMap.get("username");
                     String pass = (String) stringObjectMap.get("password");
 
-                    message = "查询成功，用户名：" + user + " 密码：" + pass;
+                    message = "Query succeeded. Username: " + user + " Password: " + pass;
                     return R.ok(message);
                 default:
-                    return R.error("type字段有误：传输数据异常,请检查^_^");
+                    return R.error("Invalid type field. Transport data is abnormal. Please check it.");
             }
         } catch (Exception e) {
             log.error(e.toString());
@@ -492,50 +492,50 @@ public class JdbcController {
             switch (type) {
                 case "add":
                     if (checkUserInput.checkSqlBlackList(username) || checkUserInput.checkSqlBlackList(password)) {
-                        log.warn("黑名单检测到非法SQL注入!");
-                        return R.error("黑名单检测到非法SQL注入!");
+                        log.warn("Blacklist detected an illegal SQL injection payload.");
+                        return R.error("Blacklist detected an illegal SQL injection payload.");
                     } else {
                         sql = "INSERT INTO sqli (username, password) VALUES ('" + username + "', '" + password + "')";
                         log.info("当前执行数据插入操作:" + sql);
                         rowsAffected = stmt.executeUpdate(sql);
                         stmt.close();
                         conn.close();
-                        message = (rowsAffected > 0) ? "数据插入成功 username:" + username + ";password:" + password : "数据插入失败";
+                        message = (rowsAffected > 0) ? "Data inserted successfully. username:" + username + "; password:" + password : "Data insertion failed.";
                         log.info(message);
                         return R.ok(message);
                     }
                 case "delete":
                     if (checkUserInput.checkSqlBlackList(id)) {
-                        log.warn("黑名单检测到非法SQL注入!");
-                        return R.error("黑名单检测到非法SQL注入!");
+                        log.warn("Blacklist detected an illegal SQL injection payload.");
+                        return R.error("Blacklist detected an illegal SQL injection payload.");
                     } else {
                         sql = "DELETE FROM sqli WHERE id = '" + id + "'";
                         log.info("当前执行数据删除操作:" + sql);
                         rowsAffected = stmt.executeUpdate(sql);
                         stmt.close();
                         conn.close();
-                        message = (rowsAffected > 0) ? "数据删除成功" : "数据删除失败 用户ID:" + id + " 不存在!";
+                        message = (rowsAffected > 0) ? "Data deleted successfully." : "Delete failed. User ID: " + id + " does not exist.";
                         log.info(message);
                         return R.ok(message);
                     }
                 case "update":
                     if (checkUserInput.checkSqlBlackList(id) || checkUserInput.checkSqlBlackList(username) || checkUserInput.checkSqlBlackList(password)) {
-                        log.warn("黑名单检测到非法SQL注入!");
-                        return R.error("黑名单检测到非法SQL注入!");
+                        log.warn("Blacklist detected an illegal SQL injection payload.");
+                        return R.error("Blacklist detected an illegal SQL injection payload.");
                     } else {
                         sql = "UPDATE sqli SET password = '" + password + "', username = '" + username + "' WHERE id = '" + id + "'";
                         log.info("当前执行数据更新操作:" + sql);
                         rowsAffected = stmt.executeUpdate(sql);
                         stmt.close();
                         conn.close();
-                        message = (rowsAffected > 0) ? "数据更新成功" : "数据更新失败 用户ID不存在!";
+                        message = (rowsAffected > 0) ? "Data updated successfully." : "Update failed. User ID does not exist.";
                         log.info(message);
                         return R.ok(message);
                     }
                 case "select":
                     if (checkUserInput.checkSqlBlackList(id)) {
-                        log.warn("黑名单检测到非法SQL注入!");
-                        return R.error("黑名单检测到非法SQL注入!");
+                        log.warn("Blacklist detected an illegal SQL injection payload.");
+                        return R.error("Blacklist detected an illegal SQL injection payload.");
                     } else {
                         sql = "SELECT * FROM sqli WHERE id  = " + id;
                         log.info("当前执行数据查询操作:" + sql);
@@ -543,18 +543,18 @@ public class JdbcController {
                         if (!rs.next()) {
                             stmt.close();
                             conn.close();
-                            return R.ok("用户ID不存在");
+                            return R.ok("User ID does not exist.");
                         }
                         String user = rs.getString("username");
                         String pass = rs.getString("password");
-                        message = "查询成功，用户名：" + user + " 密码：" + pass;
+                        message = "Query succeeded. Username: " + user + " Password: " + pass;
 
                         stmt.close();
                         conn.close();
                         return R.ok(message);
                     }
                 default:
-                    return R.error("type字段有误：传输数据异常,请检查^_^");
+                    return R.error("Invalid type field. Transport data is abnormal. Please check it.");
             }
         } catch (Exception e) {
             log.error(e.toString());
@@ -574,13 +574,13 @@ public class JdbcController {
         String sql = "";
         try {
             if (id == null || id.trim().isEmpty()) {
-                return R.error("请输入用户id");
+                return R.error("Please enter user ID.");
             }
             Integer userId;
             try {
                 userId = Integer.valueOf(id);
             } catch (NumberFormatException e) {
-                return R.error("用户ID必须为整数");
+                return R.error("User ID must be an integer.");
             }
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPass);
@@ -594,11 +594,11 @@ public class JdbcController {
             if (!rs.next()) {
                 stmt.close();
                 conn.close();
-                return R.ok("用户ID不存在");
+                return R.ok("User ID does not exist.");
             }
             String user = rs.getString("username");
             String pass = rs.getString("password");
-            message = "查询成功，用户名：" + user + " 密码：" + pass;
+            message = "Query succeeded. Username: " + user + " Password: " + pass;
             stmt.close();
             conn.close();
             return R.ok(message);
@@ -628,13 +628,13 @@ public class JdbcController {
             if (!rs.next()) {
                 stmt.close();
                 conn.close();
-                return R.error("用户ID不存在");
+                return R.error("User ID does not exist.");
             }
 
             // 用户ID存在，继续处理查询结果
             String user = rs.getString("username");
             String pass = rs.getString("password");
-            String message = "查询成功，用户名：" + user + " 密码：" + pass;
+            String message = "Query succeeded. Username: " + user + " Password: " + pass;
 
             stmt.close();
             conn.close();
@@ -711,8 +711,8 @@ public class JdbcController {
                     return R.ok(jsonArray.toString());
                 case "writeList":
                     if (!checkUserInput.checkSqlWhiteList(field)) {
-                        log.error("field字段不合法！field:" + field);
-                        return R.error("field字段不合法！");
+                        log.error("Invalid field.field:" + field);
+                        return R.error("Invalid field.");
                     }
                     sql = "SELECT * FROM sqli ORDER BY " + field;
                     log.info("当前执行数据排序操作：" + sql + " 参数：" + field);
@@ -732,7 +732,7 @@ public class JdbcController {
                     }
                     return R.ok(jsonArray.toString());
                 default:
-                    return R.error("type字段有误：传输数据异常,请检查^_^");
+                    return R.error("Invalid type field. Transport data is abnormal. Please check it.");
             }
         } catch (Exception e) {
             log.error(e.toString());
@@ -768,7 +768,7 @@ public class JdbcController {
 //                    if (!rs.next()) {
 //                        stmt.close();
 //                        conn.close();
-//                        return R.error("没有相关用户信息");
+//                        return R.error("No matching user information.");
 //                    }
 
                     JSONArray jsonArray = new JSONArray();
@@ -805,7 +805,7 @@ public class JdbcController {
                     }
                     return R.ok(jsonArray.toString());
                 default:
-                    return R.error("type字段有误：传输数据异常,请检查^_^");
+                    return R.error("Invalid type field. Transport data is abnormal. Please check it.");
             }
         } catch (Exception e) {
             log.error(e.toString());
@@ -847,7 +847,7 @@ public class JdbcController {
                     stmt.close();
                     conn.close();
                     if (jsonArray.isEmpty()) {
-                        return R.error("没有相关用户信息");
+                        return R.error("No matching user information.");
                     }
                     return R.ok(jsonArray.toString());
                 case "prepareStatement":                                         // 使用预编译
@@ -857,7 +857,7 @@ public class JdbcController {
                     try {
                         limitSize = Integer.parseInt(size);
                     } catch (NumberFormatException e) {
-                        return R.error("size必须为整数");
+                        return R.error("Size must be an integer.");
                     }
                     preparedStatement = conn.prepareStatement(sql);
                     preparedStatement.setInt(1, limitSize);
@@ -876,7 +876,7 @@ public class JdbcController {
                     }
                     return R.ok(jsonArray.toString());
                 default:
-                    return R.error("type字段有误：传输数据异常,请检查^_^");
+                    return R.error("Invalid type field. Transport data is abnormal. Please check it.");
             }
         } catch (Exception e) {
             log.error(e.toString());
@@ -899,7 +899,7 @@ public class JdbcController {
                 switch (type) {
                     case "store":
                         if (username == null || username.trim().isEmpty()) {
-                            return R.error("username不能为空!");
+                            return R.error("Username cannot be empty.");
                         }
                         String insertSql = "INSERT INTO sqli (username, password) VALUES (?, ?)";
                         log.info("二次注入第一步，参数化写入数据: {}", insertSql);
@@ -913,14 +913,14 @@ public class JdbcController {
                                     newId = generatedKeys.getString(1);
                                 }
                             }
-                            return R.ok("数据写入成功，影响行数：" + rowsAffected + "，新用户ID：" + newId + "。下一步使用该ID触发二次查询。");
+                            return R.ok("Data written successfully. Affected rows: " + rowsAffected + ", new user ID: " + newId + ". Use this ID in the next step to trigger the second query.");
                         }
                     case "trigger":
                         return queryByStoredUsername(conn, id, false);
                     case "safeTrigger":
                         return queryByStoredUsername(conn, id, true);
                     default:
-                        return R.error("type字段有误：传输数据异常,请检查^_^");
+                        return R.error("Invalid type field. Transport data is abnormal. Please check it.");
                 }
             }
         } catch (Exception e) {
@@ -958,7 +958,7 @@ public class JdbcController {
                             return R.ok(resultSetToJsonArray(rs).toString());
                         }
                     default:
-                        return R.error("type字段有误：传输数据异常,请检查^_^");
+                        return R.error("Invalid type field. Transport data is abnormal. Please check it.");
                 }
             }
         } catch (Exception e) {
@@ -969,7 +969,7 @@ public class JdbcController {
 
     private R queryByStoredUsername(Connection conn, String id, boolean safe) throws SQLException {
         if (id == null || id.trim().isEmpty()) {
-            return R.error("id不能为空!");
+            return R.error("ID cannot be empty.");
         }
         String usernameSql = "SELECT username FROM sqli WHERE id = ?";
         String storedUsername;
@@ -977,7 +977,7 @@ public class JdbcController {
             preparedStatement.setString(1, id);
             try (ResultSet rs = preparedStatement.executeQuery()) {
                 if (!rs.next()) {
-                    return R.error("用户ID不存在!");
+                    return R.error("User ID does not exist.");
                 }
                 storedUsername = rs.getString("username");
             }

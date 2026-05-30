@@ -4,6 +4,8 @@ import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.ShearCaptcha;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -38,6 +40,8 @@ public class LoginController {
     private AuthenticationManager authenticationManager;
     @Autowired
     private JwtUtil jwtUtil;
+    @Autowired
+    private MessageSource messageSource;
 
     @RequestMapping({"/","/index","/homePage"})
     public String index(){
@@ -48,7 +52,7 @@ public class LoginController {
     public String login(HttpServletRequest request, Model model){
         LoginError loginError = determineErrorType(request);
 
-        model.addAttribute("errorMessage", loginError != null ? loginError.getMessage() : null);
+        model.addAttribute("errorMessage", loginError != null ? msg(loginError.getMessageCode()) : null);
 
         return "login";
     }
@@ -133,6 +137,10 @@ public class LoginController {
     @RequestMapping("/home")
     public String homePage() {
         return "system/home";
+    }
+
+    private String msg(String key, Object... args) {
+        return messageSource.getMessage(key, args, LocaleContextHolder.getLocale());
     }
 
 }
