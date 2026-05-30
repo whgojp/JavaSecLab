@@ -19,9 +19,9 @@ JavaSecLab is a comprehensive Java vulnerability lab for application security le
 
 The goal is practical: help users understand not only how a vulnerability is exploited, but also why it exists in code and how it should be fixed.
 
-![home](./pic/home.png)
+![home](./pic/home-en.png)
 
-![show](./pic/show.png)
+![show](./pic/show-en.png)
 
 ## Who Is It For?
 
@@ -123,7 +123,7 @@ Requirements:
 
 Default account: `admin/admin`
 
-![login](./pic/login.png)
+![login](./pic/login-en.png)
 
 ### Docker Deployment
 
