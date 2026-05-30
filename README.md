@@ -67,7 +67,7 @@ The same vulnerability type often appears through multiple trigger paths in real
 
 JavaSecLab includes vulnerability traffic-analysis examples to help learners connect request/response behavior with code execution. Contributions with clearer packets, better reproduction notes, or additional analysis examples are welcome.
 
-![flow1](./pic/flow1.png)
+![flow1](./pic/flow1-en.png)
 
 For example, in a time-based SQL injection scenario, the traffic pattern can be observed through response latency: the server responds after roughly five seconds.
 
