@@ -132,11 +132,17 @@ Requirements:
 - Docker
 - Docker Compose
 
-Build and start the lab:
+Option 1: start with the published image:
+
+```shell
+docker compose -f docker-compose.image.yml up -d
+```
+
+Option 2: build the image locally and start the lab:
 
 ```shell
 mvn clean package -DskipTests
-docker-compose -p javaseclab up -d
+docker compose -p javaseclab up -d
 ```
 
 If the database is empty after startup, manually import [sql/JavaSecLab.sql](./sql/JavaSecLab.sql).

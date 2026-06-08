@@ -132,11 +132,17 @@ cd JavaSecLab
 - Docker
 - Docker Compose
 
-构建并启动：
+方式一：直接使用已发布镜像启动：
+
+```shell
+docker compose -f docker-compose.image.yml up -d
+```
+
+方式二：本地构建镜像并启动：
 
 ```shell
 mvn clean package -DskipTests
-docker-compose -p javaseclab up -d
+docker compose -p javaseclab up -d
 ```
 
 如果容器启动后数据库为空，请手动导入 [sql/JavaSecLab.sql](./sql/JavaSecLab.sql)。
