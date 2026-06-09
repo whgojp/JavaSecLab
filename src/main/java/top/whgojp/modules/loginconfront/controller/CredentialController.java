@@ -4,6 +4,8 @@ import io.jsonwebtoken.*;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import top.whgojp.common.utils.R;
@@ -24,6 +26,12 @@ import java.security.Key;
 @CrossOrigin(origins = "*")
 @RequestMapping("/loginconfront/credential")
 public class CredentialController {
+    private final MessageSource messageSource;
+
+    public CredentialController(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
+
     @RequestMapping("")
     public String credential() {
         return "vul/loginconfront/credential";
@@ -43,7 +51,7 @@ public class CredentialController {
                 .claim("role", role)
                 .signWith(jwtKey())
                 .compact();
-        log.info("生成的JWT: " + jwt);
+        log.info("Generated JWT: {}", jwt);
         return R.ok(jwt);
     }
 
@@ -51,9 +59,9 @@ public class CredentialController {
     @ResponseBody
     public R vul1(@RequestHeader(value = "Auth_Token", required = false) String jwt) {  // 从请求头获取 JWT
         if (jwt == null || jwt.trim().isEmpty()) {
-            return R.error("缺少Auth_Token请求头");
+            return R.error(msg("login.credential.result.missing"));
         }
-        log.info("获取到的JWT：" + jwt);
+        log.info("Received JWT: {}", jwt);
         try {
             String user = Jwts.parser()
                     .setSigningKey(jwtKey())
@@ -67,11 +75,11 @@ public class CredentialController {
                     .getBody()
                     .get("role", String.class);
 
-            log.info("JWT解析成功，用户：" + user);
-            return R.ok("JWT解析成功，user：" + user+",role："+role);
+            log.info("JWT parsed successfully, user: {}", user);
+            return R.ok(msg("login.credential.result.success", user, role));
         } catch (Exception e) {
-            log.info("JWT解析失败：" + e.getMessage());
-            return R.error("JWT解析失败：" + e.getMessage());
+            log.info("JWT parsing failed: {}", e.getMessage());
+            return R.error(msg("login.credential.result.failed", e.getMessage()));
         }
     }
 
@@ -82,6 +90,10 @@ public class CredentialController {
 
     private Key jwtKey() {
         return new SecretKeySpec(secretKey.getBytes(StandardCharsets.UTF_8), SignatureAlgorithm.HS256.getJcaName());
+    }
+
+    private String msg(String key, Object... args) {
+        return messageSource.getMessage(key, args, LocaleContextHolder.getLocale());
     }
 
 }

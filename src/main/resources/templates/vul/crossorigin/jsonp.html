@@ -9,13 +9,13 @@
       <div class="layui-col-md12">
         <fieldset class="layui-elem-field layui-field-title">
           <legend>
-            <a style="color: rgb(30 159 255)" class="CrossOrigin">其他漏洞 - 跨源安全问题</a>
+            <a style="color: rgb(30 159 255)" class="CrossOrigin" th:text="#{crossorigin.title}">其他漏洞 - 跨源安全问题</a>
           </legend>
           <blockquote class="layui-elem-quote layui-quote-nm"
                       style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
             <p>
-            <pre>  同源策略(Same Origin Policy)：浏览器限制脚本读取不同源的响应内容；协议、域名、端口三者完全一致才属于同源。script 标签加载脚本不受同源读取限制，这是 JSONP 能工作的基础。</pre>
-            <pre>  JSONP(JSON with Padding)：服务端把 JSON 数据包进 callback(...) 形式，让页面通过 script 标签跨源加载执行。它只支持 GET，缺少现代 CORS 的细粒度控制，不适合承载账号、权限、订单等敏感数据。</pre>
+            <pre th:text="#{crossorigin.jsonp.intro.sameOrigin}">同源策略(Same Origin Policy)：浏览器限制脚本读取不同源的响应内容；协议、域名、端口三者完全一致才属于同源。script 标签加载脚本不受同源读取限制，这是 JSONP 能工作的基础。</pre>
+            <pre th:text="#{crossorigin.jsonp.intro.jsonp}">JSONP(JSON with Padding)：服务端把 JSON 数据包进 callback(...) 形式，让页面通过 script 标签跨源加载执行。它只支持 GET，缺少现代 CORS 的细粒度控制，不适合承载账号、权限、订单等敏感数据。</pre>
             </p>
           </blockquote>
         </fieldset>
@@ -24,15 +24,15 @@
       <div class="layui-col-md12" style="margin-top: 10px">
         <div class="layui-row layui-col-space15">
           <div class="layui-col-md6">
-            <h1><span class="iconfont icon-bug"> 漏洞场景：JSONP劫持</span></h1>
+            <h1><span class="iconfont icon-bug" th:text="| #{crossorigin.jsonp.vul.title}|"> 漏洞场景：JSONP劫持</span></h1>
             <div class="layui-tab layui-tab-brief">
               <div class="layui-tab-content">
                 <div class="layui-tab-item layui-show">
                   <blockquote class="layui-elem-quote main_btn">
-                    <p>接口把敏感数据包进未校验的 callback 参数，任意站点都可以通过 script 标签读取</p>
+                    <p th:text="#{crossorigin.jsonp.vul.desc}">接口把敏感数据包进未校验的 callback 参数，任意站点都可以通过 script 标签读取</p>
                     <a target="_blank" href="/crossorigin/jsonpVul?callback=stealData">
                       <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
-                        <span class="iconfont icon-zhihang">Run</span>
+                        <span class="iconfont icon-zhihang" th:text="#{crossorigin.run}">Run</span>
                       </button>
                     </a>
                   </blockquote>
@@ -40,12 +40,9 @@
 
                 <div class="layui-col-md12">
                   <div class="layui-card">
-                    <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                    <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{crossorigin.tips}">tips</span></div>
                     <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">问题点：
-  1、JSONP 响应会被浏览器当作脚本执行，不受普通 XHR/fetch 的同源读取限制。
-  2、callback 未校验可能造成脚本注入；即使校验了 callback，敏感数据仍可能被任意站点通过 script 标签读取。
-  3、JSONP 只适合公开只读数据，不能用于登录态相关或含隐私信息的接口。</pre>
+                                            <pre style="color: #28333e;font-size: 15px;" th:text="#{crossorigin.jsonp.vul.tips}">问题点</pre>
                     </div>
                   </div>
                 </div>
@@ -55,7 +52,7 @@
           </div>
 
           <div class="layui-col-md6">
-            <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
+            <h1><span class="iconfont icon-code" th:text="| #{crossorigin.vulnerableCode}|"> 缺陷代码</span></h1>
             <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
               <div class="code-editor" id="vulJSONP"></div>
             </div>
@@ -66,15 +63,15 @@
       <div class="layui-col-md12" style="margin-top: 10px">
         <div class="layui-row layui-col-space15">
           <div class="layui-col-md6">
-            <h1><span class="iconfont icon-anquan"> 安全场景：callback校验与公开数据</span></h1>
+            <h1><span class="iconfont icon-anquan" th:text="| #{crossorigin.jsonp.safe.title}|"> 安全场景：callback校验与公开数据</span></h1>
             <div class="layui-tab layui-tab-brief">
               <div class="layui-tab-content">
                 <div class="layui-tab-item layui-show">
                   <blockquote class="layui-elem-quote main_btn">
-                    <p>校验 callback 格式，并且只返回公开数据；敏感接口应迁移到受控 CORS</p>
+                    <p th:text="#{crossorigin.jsonp.safe.desc}">校验 callback 格式，并且只返回公开数据；敏感接口应迁移到受控 CORS</p>
                     <a target="_blank" href="/crossorigin/jsonpSafe?callback=stealData">
                       <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
-                        <span class="iconfont icon-zhihang">Run</span>
+                        <span class="iconfont icon-zhihang" th:text="#{crossorigin.run}">Run</span>
                       </button>
                     </a>
                   </blockquote>
@@ -82,13 +79,9 @@
 
                 <div class="layui-col-md12">
                   <div class="layui-card">
-                    <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                    <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{crossorigin.tips}">tips</span></div>
                     <div class="layui-card-body layui-text layadmin-text">
-                      <pre style="color: #28333e;font-size: 15px;">安全编码建议：
-  1、能不用 JSONP 就不用 JSONP，优先迁移到 CORS、鉴权和标准 JSON API。
-  2、必须保留 JSONP 时，callback 只允许合法 JavaScript 标识符或受控白名单函数名。
-  3、JSONP 接口只返回公开、只读、可缓存数据，不返回用户身份、权限、订单、Token 等敏感信息。
-  4、设置 application/javascript;charset=UTF-8 和 X-Content-Type-Options: nosniff，降低错误解析风险。</pre>
+                      <pre style="color: #28333e;font-size: 15px;" th:text="#{crossorigin.jsonp.safe.tips}">安全编码建议</pre>
                     </div>
                   </div>
                 </div>
@@ -98,7 +91,7 @@
           </div>
 
           <div class="layui-col-md6">
-            <h1><span class="iconfont icon-code">安全代码</span></h1>
+            <h1><span class="iconfont icon-code" th:text="#{crossorigin.safeCode}">安全代码</span></h1>
             <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
               <div class="code-editor" id="safeJSONP"></div>
             </div>
@@ -112,7 +105,7 @@
 </div>
 
 <div th:replace="~{common/common::script}"></div>
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
   document.addEventListener("DOMContentLoaded", function () {
 
     layui.use(['layer', 'miniTab', 'common', 'form'], function () {
@@ -122,7 +115,8 @@
               common = layui.common,
               form = layui.form;
       miniTab.listen();
-      layer.msg("其他漏洞-跨域资源共享")
+      layer.msg(/*[[#{crossorigin.jsonp.toast}]]*/ "其他漏洞-JSONP跨域")
+      var isEnglishCrossOrigin = /*[[${#locale.language == 'en'}]]*/ false;
 
       var cmConfig = {
         lineNumbers: true,
@@ -146,15 +140,15 @@
       };
 
       CodeMirror(document.getElementById("vulJSONP"), Object.assign({}, cmConfig, {
-        value: vulJSONP
+        value: isEnglishCrossOrigin ? vulJSONP : vulJSONPZh
       }));
       CodeMirror(document.getElementById("safeJSONP"), Object.assign({}, cmConfigSafe, {
-        value: safeJSONP
+        value: isEnglishCrossOrigin ? safeJSONP : safeJSONPZh
       }));
 
       $('.CrossOrigin').hover(function () {
         $(this).css('cursor', 'pointer');
-        layer.tips('攻击流程图', this, {
+        layer.tips(/*[[#{crossorigin.sameOriginFlow}]]*/ '攻击流程图', this, {
           tips: [1, '#0051ff'],
           time: 2000
         });

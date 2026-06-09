@@ -8,11 +8,11 @@
         <div class="layui-row layui-col-space15">
             <div class="layui-col-md12">
                 <fieldset class="layui-elem-field layui-field-title">
-                    <legend style="color: rgb(30 159 255)">敏感信息泄漏 - 测试页面</legend>
+                    <legend style="color: rgb(30 159 255)" th:text="#{infoleak.test.title}">Information Leakage - Test Page</legend>
                     <blockquote class="layui-elem-quote layui-quote-nm"
                                 style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
                         <p>
-                        <pre>  测试页面泄漏：开发、联调或运维排障页面被部署到生产环境后，可能暴露内部工具、调试参数、环境信息或高危操作入口。此类页面常缺少鉴权、审计和输入限制，容易演变为命令执行、SSRF、文件读取等更高风险漏洞。</pre>
+                        <pre th:text="#{infoleak.test.intro}">Test page leakage may expose internal tools and debug parameters.</pre>
                         </p>
                     </blockquote>
                 </fieldset>
@@ -21,15 +21,15 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-bug"> 漏洞场景：网络连通性测试</span></h1>
+                        <h1><span class="iconfont icon-bug" th:text="| #{infoleak.test.ping.title}|"> Vulnerable Scenario: Network Connectivity Test</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <div class="layui-tab-content">
 
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
                                         <div style="display: flex; align-items: center;">
-                                            <p>点击访问链接：</p>
-                                            <a style="color: red" target="_blank" href="/infoLeak/ceShiPage/pingPage">PING页面</a>
+                                            <p th:text="#{infoleak.test.openLink}">Open link:</p>
+                                            <a style="color: red" target="_blank" href="/infoLeak/ceShiPage/pingPage" th:text="#{infoleak.test.ping.link}">PING Page</a>
 
                                         </div>
                                     </blockquote>
@@ -37,9 +37,9 @@
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{infoleak.test.tips}">Tips</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">Ping 页面用于演示测试入口遗留风险。漏洞场景会把参数拼接进 shell 命令；安全场景使用参数白名单和 ProcessBuilder 参数数组，避免 shell 元字符生效。</pre>
+                                            <pre style="color: #28333e;font-size: 15px;" th:text="#{infoleak.test.ping.tips}">The Ping page demonstrates the risk of leftover test entry points.</pre>
                                         </div>
                                     </div>
                                 </div>
@@ -48,7 +48,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code">  缺陷代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="|  #{infoleak.test.vulnerableCode}|">  Vulnerable Code</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="infoLeakCeShi">
                             </div>
@@ -64,7 +64,7 @@
 </div>
 
 <div th:replace="~{common/common::script}"></div>
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
     document.addEventListener("DOMContentLoaded", function () {
 
         layui.use(['layer', 'miniTab', 'common', 'form'], function () {
@@ -74,7 +74,8 @@
                 common = layui.common,
                 form = layui.form;
             miniTab.listen();
-            layer.msg("敏感信息泄漏-测试页面")
+            layer.msg(/*[[#{infoleak.test.toast}]]*/ "Information Leakage - Test Page")
+            var isEnglishInfoLeakTest = /*[[${#locale.language == 'en'}]]*/ false;
 
 
             var cmConfig = {
@@ -89,7 +90,7 @@
             };
 
             CodeMirror(document.getElementById("infoLeakCeShi"), Object.assign({}, cmConfig, {
-                value: infoLeakCeShi
+                value: isEnglishInfoLeakTest ? infoLeakCeShi : infoLeakCeShiZh
             }));
 
         });

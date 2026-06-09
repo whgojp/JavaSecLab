@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Success Page</title>
+    <title th:text="#{infoleak.js.success.title}">Success Page</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -44,9 +44,9 @@
 </head>
 <body>
 <div class="success-container">
-    <h1>Welcome!</h1>
-    <p>You have successfully logged in.</p>
-    <a href="/login">Log out</a>
+    <h1 th:text="#{infoleak.js.success.heading}">Welcome!</h1>
+    <p th:text="#{infoleak.js.success.message}">You have successfully logged in.</p>
+    <a href="/login" th:text="#{infoleak.js.success.logout}">Log out</a>
 </div>
 </body>
 </html>

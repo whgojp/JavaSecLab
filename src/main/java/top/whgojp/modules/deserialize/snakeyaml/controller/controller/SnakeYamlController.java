@@ -4,6 +4,8 @@ import groovy.sql.Sql;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +26,12 @@ import top.whgojp.modules.sqli.entity.Sqli;
 @CrossOrigin(origins = "*")
 @RequestMapping("/snakeYaml")
 public class SnakeYamlController {
+    private final MessageSource messageSource;
+
+    public SnakeYamlController(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
+
     @RequestMapping("")
     public String snakeYaml(){
         return "vul/deserialize/snakeYaml";
@@ -35,14 +43,14 @@ public class SnakeYamlController {
         try {
             log.info("payload：" + payload);
             if (payload == null || payload.trim().isEmpty()) {
-                return R.error("Payload不能为空");
+                return R.error(msg("common.payload.empty"));
             }
             Yaml y = new Yaml();
             Object result = y.load(payload);
-            return R.ok("[+]Java反序列化：SnakeYaml原生漏洞，解析结果：" + result);
+            return R.ok(msg("deserialize.snakeYaml.result.vul", result));
         } catch (Exception e) {
             log.error("SnakeYaml反序列化失败", e);
-            return R.error("[-]Java反序列化：SnakeYaml反序列化失败：" + e.getMessage());
+            return R.error(msg("deserialize.snakeYaml.result.failed", e.getMessage()));
         }
     }
 
@@ -52,11 +60,15 @@ public class SnakeYamlController {
         try {
             Yaml y = new Yaml(new SafeConstructor());
             Object result = y.load(payload);
-            return R.ok("[+]Java反序列化：SnakeYaml安全构造，解析结果：" + result);
+            return R.ok(msg("deserialize.snakeYaml.result.safe", result));
         } catch (Exception e) {
             log.error("SnakeYaml安全解析失败", e);
-            return R.error("[-]Java反序列化：SnakeYaml反序列化失败：" + e.getMessage());
+            return R.error(msg("deserialize.snakeYaml.result.failed", e.getMessage()));
         }
+    }
+
+    private String msg(String key, Object... args) {
+        return messageSource.getMessage(key, args, LocaleContextHolder.getLocale());
     }
 
     /**

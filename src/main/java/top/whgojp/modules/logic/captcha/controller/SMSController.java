@@ -2,6 +2,8 @@ package top.whgojp.modules.logic.captcha.controller;
 
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import top.whgojp.common.utils.R;
@@ -21,6 +23,12 @@ import java.util.Random;
 @CrossOrigin(origins = "*")
 @RequestMapping("/logic/captcha/sms")
 public class SMSController {
+    private final MessageSource messageSource;
+
+    public SMSController(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
+
     @RequestMapping("")
     public String sms() {
         return "vul/logic/captcha/sms";
@@ -30,56 +38,56 @@ public class SMSController {
     @ResponseBody
     public R code(String phone, HttpSession session) {
         if (phone == null || phone.isEmpty() || !phone.matches("^1[3-9]\\d{9}$")) {
-            return R.error("手机号格式不正确！");
+            return R.error(msg("logic.captcha.result.phoneInvalid"));
         }
 
         Random random = new Random();
-        // 随机生成6位数验证码
+        // Randomly generate a 6-digit captcha.
         String captcha = String.valueOf(100000 + random.nextInt(900000));
         session.setAttribute("phone", phone);
         session.setAttribute("smsCode", captcha);
         session.setAttribute("captchaTimestamp", System.currentTimeMillis());
 
-        System.out.println("发送短信验证码：" + captcha + " 给手机号：" + phone);
+        log.info("send SMS captcha {} to phone {}", captcha, phone);
 
-        return R.ok("发送验证码成功！" + captcha);
+        return R.ok(msg("logic.captcha.result.smsSentEcho", captcha));
     }
 
     @RequestMapping("/vul1")
     @ResponseBody
     public R vul1(String phone, String code, HttpSession session) {
         if (phone == null || phone.isEmpty()) {
-            return R.error("手机号不能为空！");
+            return R.error(msg("logic.captcha.result.phoneRequired"));
         }
         String sessionPhone = (String) session.getAttribute("phone");
         String sessionCaptcha = (String) session.getAttribute("smsCode");
         Long captchaTimestamp = (Long) session.getAttribute("captchaTimestamp");
         if (sessionPhone == null || sessionCaptcha == null || captchaTimestamp == null) {
-            return R.error("验证码已失效，请重新获取！");
+            return R.error(msg("logic.captcha.result.smsExpired"));
         }
         if (!sessionPhone.equals(phone)) {
-            return R.error("手机号与验证码不匹配！");
+            return R.error(msg("logic.captcha.result.phoneMismatch"));
         }
         if (System.currentTimeMillis() - captchaTimestamp > 5 * 60 * 1000) {
             session.removeAttribute("phone");
             session.removeAttribute("smsCode");
             session.removeAttribute("captchaTimestamp");
-            return R.error("验证码已过期，请重新获取！");
+            return R.error(msg("logic.captcha.result.smsTimeout"));
         }
         if (!sessionCaptcha.equals(code)) {
-            return R.error("验证码错误，请重新输入！");
+            return R.error(msg("logic.captcha.result.smsWrong"));
         }
         session.removeAttribute("phone");
         session.removeAttribute("smsCode");
         session.removeAttribute("captchaTimestamp");
-        return R.ok("验证通过！用户："+phone);
+        return R.ok(msg("logic.captcha.result.smsVerified", phone));
     }
 
     @GetMapping("/code2")
     @ResponseBody
     public R code2(String phone, HttpSession session) {
         if (phone == null || phone.isEmpty() || !phone.matches("^1[3-9]\\d{9}$")) {
-            return R.error("手机号格式不正确！");
+            return R.error(msg("logic.captcha.result.phoneInvalid"));
         }
 
         Random random = new Random();
@@ -88,40 +96,44 @@ public class SMSController {
         session.setAttribute("smsCode", captcha);
         session.setAttribute("captchaTimestamp", System.currentTimeMillis());
 
-        System.out.println("发送短信验证码：" + captcha + " 给手机号：" + phone);
+        log.info("send SMS captcha {} to phone {}", captcha, phone);
 
-        return R.ok("发送验证码成功！");
+        return R.ok(msg("logic.captcha.result.smsSent"));
     }
     @RequestMapping("/vul2")
     @ResponseBody
     public R vul2(String phone, String code, @RequestParam(required = false, defaultValue = "false") boolean code_verify, HttpSession session) {
         if (phone == null || phone.isEmpty()) {
-            return R.error("手机号不能为空！");
+            return R.error(msg("logic.captcha.result.phoneRequired"));
         }
         String sessionPhone = (String) session.getAttribute("phone");
         String sessionCaptcha = (String) session.getAttribute("smsCode");
         Long captchaTimestamp = (Long) session.getAttribute("captchaTimestamp");
         if (sessionPhone == null || sessionCaptcha == null || captchaTimestamp == null) {
-            return R.error("验证码已失效，请重新获取！");
+            return R.error(msg("logic.captcha.result.smsExpired"));
         }
         if (!sessionPhone.equals(phone)) {
-            return R.error("手机号与验证码不匹配！");
+            return R.error(msg("logic.captcha.result.phoneMismatch"));
         }
         if (System.currentTimeMillis() - captchaTimestamp > 5 * 60 * 1000) {
             session.removeAttribute("phone");
             session.removeAttribute("smsCode");
             session.removeAttribute("captchaTimestamp");
-            return R.error("验证码已过期，请重新获取！");
+            return R.error(msg("logic.captcha.result.smsTimeout"));
         }
         if (code_verify){
-            return R.ok("验证通过！用户："+phone);
+            return R.ok(msg("logic.captcha.result.smsVerified", phone));
         }
         if (!sessionCaptcha.equals(code)) {
-            return R.error("验证码错误，请重新输入！");
+            return R.error(msg("logic.captcha.result.smsWrong"));
         }
         session.removeAttribute("phone");
         session.removeAttribute("smsCode");
         session.removeAttribute("captchaTimestamp");
-        return R.ok("验证通过！用户："+phone);
+        return R.ok(msg("logic.captcha.result.smsVerified", phone));
+    }
+
+    private String msg(String code, Object... args) {
+        return messageSource.getMessage(code, args, LocaleContextHolder.getLocale());
     }
 }

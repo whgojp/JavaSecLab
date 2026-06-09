@@ -8,12 +8,12 @@
         <div class="layui-row layui-col-space15">
             <div class="layui-col-md12">
                 <fieldset class="layui-elem-field layui-field-title">
-                    <legend style="color: rgb(30 159 255)">SSTI - 模板引擎注入</legend>
+                    <legend style="color: rgb(30 159 255)" th:text="#{ssti.title}">SSTI - Template Engine Injection</legend>
                     <blockquote class="layui-elem-quote layui-quote-nm"
                                 style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
                         <p>
-                        <pre>  SSTI(Server Side Template Injection) 是不可信输入进入服务端模板解析上下文后，被模板引擎当作模板语法执行的问题。风险不只来自页面变量输出，也可能来自视图名、模板片段名、模板内容、邮件模板和报表模板等动态渲染入口。</pre>
-                        <pre>  本模块以 Thymeleaf 为例，重点演示 Spring MVC 返回视图名可控、URL 路径参数拼接进视图名两类触发方式。修复时应避免用户控制模板名或模板内容，确需动态选择模板时使用固定映射或白名单，并用 HttpServletResponse/@ResponseBody 等方式明确跳过视图解析。</pre>
+                        <pre th:text="#{ssti.intro.core}">SSTI occurs when untrusted input enters a server-side template parsing context.</pre>
+                        <pre th:text="#{ssti.intro.thymeleaf}">This module uses Thymeleaf to demonstrate controllable view name paths.</pre>
                         </p>
                     </blockquote>
                 </fieldset>
@@ -22,15 +22,15 @@
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
                             <h1 style="display: flex; justify-content: space-between; align-items: center">
-                                <span class="iconfont icon-bug">  漏洞场景：thymeleaf模版注入</span>
+                                <span class="iconfont icon-bug" th:text="| #{ssti.vul.title}|"> Vulnerable Scenario: Thymeleaf View Name Injection</span>
 
                                 <span class="iconfont icon-liuliang1 custom-flow-select"
                                       style="display: flex; align-items: center; gap: 5px;">
                             <form class="layui-form">
                                 <select lay-verify="" lay-filter="sstiFlowSelect">
-                                    <option value="">流量分析</option>
-                                    <option value="ssti_return">return可控</option>
-                                    <option value="ssti_url">URL可控</option>
+                                    <option value="" th:text="#{ssti.traffic}">Traffic Analysis</option>
+                                    <option value="ssti_return" th:text="#{ssti.flow.return}">Controllable return</option>
+                                    <option value="ssti_url" th:text="#{ssti.flow.url}">Controllable URL</option>
                                 </select>
                             </form>
                         </span>
@@ -39,17 +39,16 @@
 
                         <div class="layui-tab layui-tab-brief">
                             <ul class="layui-tab-title">
-                                <li class="layui-this">return可控</li>
-                                <li>URL可控</li>
-<!--                                <li>模板可控</li>-->
+                                <li class="layui-this" th:text="#{ssti.flow.return}">Controllable return</li>
+                                <li th:text="#{ssti.flow.url}">Controllable URL</li>
                             </ul>
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
-                                        <p>攻击者可控 Controller 返回的视图名时，Thymeleaf 会先处理 <code>__${...}__</code> 预处理表达式，再解析模板名。</p>
+                                        <p th:utext="#{ssti.vul.return.desc}">When an attacker controls the Controller returned view name, Thymeleaf preprocesses expressions.</p>
                                         <a target="_blank" href="/ssti/vul1?para=__$%7b7*7%7d__::.x">
                                             <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
-                                                <span class="iconfont icon-zhihang">Run</span>
+                                                <span class="iconfont icon-zhihang" th:text="#{button.run}">Run</span>
                                             </button>
                                         </a>
                                     </blockquote>
@@ -57,10 +56,10 @@
 
                                 <div class="layui-tab-item">
                                     <blockquote class="layui-elem-quote main_btn">
-                                        <p>URL 路径变量被拼接进 Controller 返回的视图名时，同样会进入 Thymeleaf 视图解析和预处理流程。</p>
+                                        <p th:text="#{ssti.vul.url.desc}">URL path variables concatenated into view names enter Thymeleaf view resolution.</p>
                                         <a target="_blank" href="/ssti/vul2/__$%7b7*7%7d__::.x">
                                             <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
-                                                <span class="iconfont icon-zhihang">Run</span>
+                                                <span class="iconfont icon-zhihang" th:text="#{button.run}">Run</span>
                                             </button>
                                         </a>
                                     </blockquote>
@@ -68,9 +67,9 @@
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{ssti.tips}">Tips</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">  典型审计点是 Controller 返回的视图名、fragment 名或模板路径是否可被用户控制，例如 return "vul/ssti/" + para 或 return "vul/ssti/" + path。访问 __${7*7}__::.x 时，如果错误信息中的模板名变为 49，说明表达式已被 Thymeleaf 预处理执行。命令执行 payload 仅用于安全测试环境，日常验证优先使用 7*7 这类无副作用表达式。</pre>
+                                            <pre style="color: #28333e;font-size: 15px;" th:text="#{ssti.vul.tips}">Typical audit points are whether returned view names or template paths are user controlled.</pre>
                                         </div>
                                     </div>
                                 </div>
@@ -81,7 +80,7 @@
 
                     <div class="layui-col-md6">
                         <h1 style="display: flex; align-items: center; height: 33.5px;">
-                            <span class="iconfont icon-code" style="height: 22.5px;">缺陷代码</span>
+                            <span class="iconfont icon-code" style="height: 22.5px;" th:text="| #{ssti.vulnerableCode}|"> Vulnerable Code</span>
                         </h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="sstiVul"></div>
@@ -93,20 +92,19 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-anquan"> 安全场景：thymeleaf模版注入</span></h1>
+                        <h1><span class="iconfont icon-anquan" th:text="| #{ssti.safe.title}|"> Safe Scenario: Fixed View Mapping and Bypassing View Resolution</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <ul class="layui-tab-title">
-                                <li class="layui-this">白名单</li>
+                                <li class="layui-this" th:text="#{ssti.safe.allowlist.tab}">Allowlist</li>
                                 <li>HttpServletResponse</li>
-                                <!--                                <li>模板可控</li>-->
                             </ul>
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
-                                        <p>基于固定模板白名单选择视图，用户只能命中预定义模板名。</p>
+                                        <p th:text="#{ssti.safe.allowlist.desc}">Select views through a fixed template allowlist.</p>
                                         <a target="_blank" href="/ssti/safe1?para=__$%7bnew%20java.util.Scanner(T(java.lang.Runtime).getRuntime().exec(%27id%27).getInputStream()).next()%7d__::.x">
                                             <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
-                                                <span class="iconfont icon-zhihang">Run</span>
+                                                <span class="iconfont icon-zhihang" th:text="#{button.run}">Run</span>
                                             </button>
                                         </a>
                                     </blockquote>
@@ -114,10 +112,10 @@
 
                                 <div class="layui-tab-item">
                                     <blockquote class="layui-elem-quote main_btn">
-                                        <p>控制器写入 HttpServletResponse 后，Spring MVC 不再用 URL 路径推导视图名。</p>
+                                        <p th:text="#{ssti.safe.skip.desc}">Return plain text through HttpServletResponse and explicitly skip view name resolution.</p>
                                         <a target="_blank" href="/ssti/safe2/__$%7bnew%20java.util.Scanner(T(java.lang.Runtime).getRuntime().exec(%27id%27).getInputStream()).next()%7d__::.x">
                                             <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
-                                                <span class="iconfont icon-zhihang">Run</span>
+                                                <span class="iconfont icon-zhihang" th:text="#{button.run}">Run</span>
                                             </button>
                                         </a>
                                     </blockquote>
@@ -125,13 +123,9 @@
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{ssti.tips}">Tips</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">安全编码规范：
-  1、不要把用户输入拼接进模板名、模板路径、fragment 表达式或模板内容。
-  2、动态模板选择应使用枚举/白名单映射到固定模板，拒绝直接透传用户输入。
-  3、需要返回字符串内容时使用 @ResponseBody、ResponseEntity 或显式写入 HttpServletResponse，避免进入视图解析。
-  4、变量输出优先使用 th:text 等自动转义能力，th:utext 只用于可信 HTML 内容。</pre>
+                                            <pre style="color: #28333e;font-size: 15px;" th:text="#{ssti.safe.tips}">Secure coding recommendations.</pre>
                                         </div>
                                     </div>
                                 </div>
@@ -141,7 +135,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code"> 安全代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="| #{ssti.safeCode}|"> Safe Code</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="sstiSafe"></div>
                         </div>
@@ -155,7 +149,7 @@
 </div>
 
 <div th:replace="~{common/common::script}"></div>
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
     document.addEventListener("DOMContentLoaded", function () {
 
         layui.use(['layer', 'miniTab', 'common', 'form'], function () {
@@ -165,7 +159,8 @@
                 form = layui.form,
                 common = layui.common;
             miniTab.listen();
-            layer.msg("SSTI - 模板注入")
+            layer.msg(/*[[#{ssti.toast}]]*/ "SSTI - Template Injection")
+            var isEnglishSsti = /*[[${#locale.language == 'en'}]]*/ false;
 
             function triggerDownload(fileMap, selectedValue) {
                 if (fileMap[selectedValue]) {
@@ -210,10 +205,10 @@
             };
 
             CodeMirror(document.getElementById("sstiVul"), Object.assign({}, cmConfig, {
-                value: sstiVul
+                value: isEnglishSsti ? sstiVul : sstiVulZh
             }));
             CodeMirror(document.getElementById("sstiSafe"), Object.assign({}, cmConfigSafe, {
-                value: sstiSafe
+                value: isEnglishSsti ? sstiSafe : sstiSafeZh
             }));
 
         });

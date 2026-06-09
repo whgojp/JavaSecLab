@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>PostMessage XSS Receiver</title>
+    <title th:text="#{xss.postMessage.receiver.title}">PostMessage XSS Receiver</title>
     <link rel="stylesheet" href="/lib/layui-v2.5.5/css/layui.css" media="all">
     <style>
         #messageContainer {
@@ -18,34 +18,27 @@
 <body>
 <div class="layui-container">
     <div class="layui-card">
-        <div class="layui-card-header">PostMessage XSS演示 - 接收端</div>
+        <div class="layui-card-header" th:text="#{xss.postMessage.receiver.title}">PostMessage XSS 演示 - 接收端</div>
         <div class="layui-card-body">
-            <div id="messageContainer">等待接收消息...</div>
+            <div id="messageContainer" th:text="#{xss.postMessage.waiting}">等待接收消息...</div>
         </div>
     </div>
 </div>
 
-<script>
+<script th:inline="javascript">
 document.addEventListener('DOMContentLoaded', function() {
     var container = document.getElementById('messageContainer');
     
-    // 立即通知父窗口接收端已准备就绪
     if (window.opener) {
-        console.log('发送ready消息');
+        console.log(/*[[#{xss.postMessage.readyLog}]]*/ '发送ready消息');
         window.opener.postMessage('receiver_ready', '*');
     }
 
-    // 监听消息
     window.addEventListener('message', function(event) {
-        // 故意不验证origin，用于演示XSS风险
-        console.log('收到消息:', event.data);
-        
-        // 故意使用innerHTML来演示XSS风险
+        console.log(/*[[#{xss.postMessage.receivedLog}]]*/ '收到消息:', event.data);
         container.innerHTML = event.data;
-        
-        // 回复消息给发送者
         if (event.source) {
-            event.source.postMessage('接收窗口已收到消息：' + event.data, '*');
+            event.source.postMessage((/*[[#{xss.postMessage.reply}]]*/ '接收窗口已收到消息：{0}').replace('{0}', event.data), '*');
         }
     });
 });

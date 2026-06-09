@@ -7,10 +7,10 @@
         <div class="layui-row layui-col-space15">
             <div class="layui-col-md12">
                 <fieldset class="layui-elem-field layui-field-title">
-                    <legend><a style="color: rgb(30 159 255)" class="xss-store">跨站脚本攻击 - 存储型XSS</a></legend>
+                    <legend><a style="color: rgb(30 159 255)" class="xss-store" th:text="#{xss.store.title}">跨站脚本攻击 - 存储型XSS</a></legend>
                     <blockquote class="layui-elem-quote layui-quote-nm"
                                 style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
-                        <pre>  存储型XSS：攻击者把恶意内容提交到目标系统，系统将其保存到数据库、缓存、文件、对象存储、日志等持久化位置；其他用户访问相关页面时，服务端或前端把这段内容取出并以不安全方式渲染，最终在用户浏览器中执行。该类型的关键特征是“先存储、后触发”，不一定只经过数据库。</pre>
+                        <pre th:text="#{xss.store.intro}">  存储型XSS：攻击者把恶意内容提交到目标系统。</pre>
                     </blockquote>
                 </fieldset>
             </div>
@@ -19,10 +19,10 @@
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
                         <h1 style="display: flex; justify-content: space-between; align-items: center;margin-top: 10px">
-                            <span class="iconfont icon-bug">  漏洞场景：原生无过滤</span>
+                            <span class="iconfont icon-bug" th:text="|  #{xss.store.vul.raw}|">  漏洞场景：原生无过滤</span>
                             <span class="iconfont icon-liuliang1">
                                 <a href="/other/datapackage/xss/xss_store.pcapng" download="xss_store.pcapng"
-                                   style="margin-right: 19px;color: #00bb00">流量分析</a>
+                                   style="margin-right: 19px;color: #00bb00" th:text="#{button.trafficAnalysis}">流量分析</a>
                             </span>
                         </h1>
                         <div class="layui-tab-content">
@@ -33,12 +33,12 @@
                                         <div style="display: flex; align-items: center;">
                                             <input type="text" name="payload" style="width: 300px;" required
                                                    lay-verify="required" value="<script>alert(/xss/)</script>"
-                                                   placeholder="请求内容" autocomplete="off"
+                                                   th:placeholder="#{xss.store.input.placeholder}" placeholder="请求内容" autocomplete="off"
                                                    class="layui-input" id="vul1-store-raw-input">
                                         </div>
                                         <div style="display: flex; align-items: center;">
                                             <select class="layui-form-select" lay-filter="vul1-store-raw">
-                                                <option value="">示例Payload</option>
+                                                <option value="" th:text="#{xss.reflect.payload.example}">示例Payload</option>
                                                 <option value="123&lt;u&gt;A&lt;/u&gt;123">123&lt;u&gt;A&lt;/u&gt;123
                                                 </option>
                                                 <option value="123&lt;script&gt;alert(/xss/)&lt;/script&gt;123">
@@ -54,7 +54,7 @@
                                             <button class="layui-btn layui-btn-normal"
                                                     style="width: 100px; margin-left: 10px;"
                                                     lay-filter="vul1-store-raw-submit" lay-submit="">
-                                                <span class="iconfont icon-zhihang">Run</span>
+                                                <span class="iconfont icon-zhihang" th:text="#{button.run}">Run</span>
                                             </button>
                                         </div>
                                     </form>
@@ -63,18 +63,15 @@
 
                             <div class="layui-col-md12">
                                 <div class="layui-card">
-                                    <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                    <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{common.tips}">tips</span></div>
                                     <div class="layui-card-body layui-text layadmin-text">
-                                        <pre style="color: #28333e;font-size: 15px;">漏洞场景：
-  输入来源：GET/POST参数、Header、User-Agent、评论、留言、富文本编辑器、标签、自定义字段、文件元数据
-  持久化位置：数据库、缓存、文件、对象存储、搜索索引、日志系统
-  输出位置：用户资料、评论列表、后台审核页、关键词、标签、说明、文件预览页等</pre>
+                                        <pre style="color: #28333e;font-size: 13px;line-height: 1.65;" th:text="#{xss.store.vul.tips}">漏洞场景：</pre>
                                     </div>
                                 </div>
                             </div>
                             <div class="layui-col-md12">
                                 <div class="layui-card">
-                                    <div class="layui-card-header"><i class="fa fa-warning icon-output"></i>测试结果
+                                    <div class="layui-card-header"><i class="fa fa-warning icon-output"></i><span th:text="#{common.testResult}">测试结果</span>
                                     </div>
 
                                     <div style="width: 727.5px">
@@ -82,7 +79,7 @@
                                                lay-filter="xssStoreFilter"></table>
                                         <script type="text/html" id="deleteById">
                                             <a class="layui-btn layui-btn-danger layui-btn-xs"
-                                               lay-event="delete">删除</a>
+                                               lay-event="delete" th:text="#{button.delete}">删除</a>
                                         </script>
                                     </div>
 
@@ -96,7 +93,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code">  缺陷代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="|  #{common.vulnerableCode}|">  缺陷代码</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="vul1StoreRaw">
                             </div>
@@ -109,7 +106,7 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-anquan">  安全场景：输出编码</span></h1>
+                        <h1><span class="iconfont icon-anquan" th:text="|  #{xss.store.safe.encoding}|">  安全场景：输出编码</span></h1>
                         <div class="layui-tab-content">
                             <div class="layui-tab-item layui-show">
                                 <blockquote class="layui-elem-quote main_btn">
@@ -118,13 +115,13 @@
                                         <div style="display: flex; align-items: center;">
                                             <input type="text" name="payload" style="width: 300px;" required
                                                    lay-verify="required" value="<script>alert(/xss/)</script>"
-                                                   placeholder="请求内容" autocomplete="off"
+                                                   th:placeholder="#{xss.store.input.placeholder}" placeholder="请求内容" autocomplete="off"
                                                    class="layui-input" id="safe1-store-EntityEscape-front-input">
                                         </div>
                                         <div style="display: flex; align-items: center;">
                                             <select class="layui-form-select"
                                                     lay-filter="safe1-store-EntityEscape-front">
-                                                <option value="">示例Payload</option>
+                                                <option value="" th:text="#{xss.reflect.payload.example}">示例Payload</option>
                                                 <option value="123&lt;u&gt;A&lt;/u&gt;123">123&lt;u&gt;A&lt;/u&gt;123
                                                 </option>
                                                 <option value="123&lt;script&gt;alert(/xss/)&lt;/script&gt;123">
@@ -140,7 +137,7 @@
                                             <button class="layui-btn layui-btn-normal"
                                                     style="width: 100px; margin-left: 10px;"
                                                     lay-filter="safe1-store-EntityEscape-front-submit" lay-submit="">
-                                                <span class="iconfont icon-zhihang">Run</span>
+                                                <span class="iconfont icon-zhihang" th:text="#{button.run}">Run</span>
                                             </button>
                                         </div>
                                     </form>
@@ -149,20 +146,15 @@
 
                             <div class="layui-col-md12">
                                 <div class="layui-card">
-                                    <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                    <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{common.tips}">tips</span></div>
                                     <div class="layui-card-body layui-text layadmin-text">
-                                        <pre style="color: #28333e;font-size: 15px;">存储型XSS的关键修复点是“危险数据进入页面前必须按输出上下文处理”：
-  1. 普通文本展示：输出时进行HTML实体编码，避免浏览器把内容当作标签或脚本解析
-  2. 富文本业务：入库前使用白名单净化，只允许业务需要的标签、属性和协议
-  3. URL、HTML属性、JavaScript、CSS等不同上下文，需要使用对应的上下文编码或白名单校验
-
-当前安全场景用于演示表格渲染阶段的输出编码：数据库中仍保存原始输入，但页面展示时将Content和User-Agent编码后再渲染。真实业务中还应根据字段类型做输入约束，并对富文本等特殊内容做白名单净化。</pre>
+                                        <pre style="color: #28333e;font-size: 13px;line-height: 1.65;" th:text="#{xss.store.safe.tips}">存储型XSS的关键修复点是输出编码。</pre>
                                     </div>
                                 </div>
                             </div>
                             <div class="layui-col-md12">
                                 <div class="layui-card">
-                                    <div class="layui-card-header"><i class="fa fa-warning icon-output-safe"></i>测试结果
+                                    <div class="layui-card-header"><i class="fa fa-warning icon-output-safe"></i><span th:text="#{common.testResult}">测试结果</span>
                                     </div>
 
                                     <div style="width: 727.5px">
@@ -170,7 +162,7 @@
                                                id="xssStoreSafe" lay-filter="xssStoreSafeFilter"></table>
                                     </div>
                                     <script type="text/html" id="deleteById">
-                                        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
+                                        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete" th:text="#{button.delete}">删除</a>
                                     </script>
 
                                     <div class="layui-card-body layui-text layadmin-text">
@@ -184,7 +176,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code">  安全代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="|  #{common.safeCode}|">  安全代码</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="safe1StoreEntityEscape">
                             </div>
@@ -199,7 +191,7 @@
 </div>
 
 <script th:replace="~{common/common::script}"></script>
-<script type="text/javascript">
+    <script type="text/javascript" th:inline="javascript">
     layui.use(['layer', 'miniTab', 'common', 'table', 'form'], function () {
         var $ = layui.jquery,
             layer = layui.layer,
@@ -209,7 +201,7 @@
             form = layui.form;
 
         miniTab.listen();
-        layer.msg("跨站脚本-存储型");
+        layer.msg(/*[[#{xss.store.toast}]]*/ "跨站脚本-存储型");
 
         // 将表单提交替换为AJAX请求
         form.on('submit(vul1-store-raw-submit)', function (data) {
@@ -218,10 +210,13 @@
                 url: '/xss/store/vul',
                 data: data.field,
                 success: function (response) {
-                    location.reload(); // 请求成功后刷新页面
+                    $('#vul1-store-raw-result').html(response && response.msg ? response.msg : '');
+                    setTimeout(function () {
+                        location.reload();
+                    }, 600);
                 },
                 error: function (error) {
-                    console.log('Error:', error);
+                    layer.msg(error && error.statusText ? error.statusText : 'Error', {icon: 2, offset: '10px'});
                 }
             });
             return false; // 阻止表单默认提交
@@ -233,10 +228,13 @@
                 url: '/xss/store/vul',
                 data: data.field,
                 success: function (response) {
-                    location.reload(); // 请求成功后刷新页面
+                    $('#safe1-store-EntityEscape-front-result').html(response && response.msg ? response.msg : '');
+                    setTimeout(function () {
+                        location.reload();
+                    }, 600);
                 },
                 error: function (error) {
-                    console.log('Error:', error);
+                    layer.msg(error && error.statusText ? error.statusText : 'Error', {icon: 2, offset: '10px'});
                 }
             });
             return false; // 阻止表单默认提交
@@ -250,7 +248,7 @@
 
         var cmConfig = {
             lineNumbers: true,
-            lineWrapping: false,
+            lineWrapping: true,
             indentUnit: 4,
             indentWithTabs: true,
             theme: 'juejin',
@@ -260,7 +258,7 @@
         };
         var cmConfigSafe = {
             lineNumbers: true,
-            lineWrapping: false,
+            lineWrapping: true,
             indentUnit: 4,
             indentWithTabs: true,
             theme: 'juejinsafe',
@@ -269,12 +267,44 @@
             mode: "text/x-java"
         };
 
+        var isEnglishXssStore = /*[[${#locale.language == 'en'}]]*/ false;
         CodeMirror(document.getElementById("vul1StoreRaw"), Object.assign({}, cmConfig, {
-            value: vul1StoreRaw
+            value: isEnglishXssStore ? [
+                "// Raw vulnerable scenario: user input and User-Agent are stored without filtering; later unsafe rendering triggers stored XSS",
+                "// Controller layer",
+                "public R vul(String payload, HttpServletRequest request) {",
+                "    String ua = request.getHeader(\"User-Agent\");",
+                "    int code = xssService.insertOne(payload, ua);",
+                "    ...",
+                "}",
+                "// Service layer",
+                "public int insertOne(String content, String ua) {",
+                "    return xssMapper.insertAll(content, ua, DateUtil.now());",
+                "}",
+                "// Mapper layer",
+                "int insertAll(String content, String ua, String date);"
+            ].join("\n") : vul1StoreRaw
         }));
 
         CodeMirror(document.getElementById("safe1StoreEntityEscape"), Object.assign({}, cmConfigSafe, {
-            value: safe1StoreEntityEscape
+            value: isEnglishXssStore ? [
+                "// Table rendering: the database still stores raw values; encode HTML body text before output",
+                "table.render({",
+                "    cols: [",
+                "        {field: 'content', title: 'Content', templet: function(d) {",
+                "            return escapeHtml(d.content);",
+                "        }},",
+                "        {field: 'ua', title: 'User-Agent', templet: function(d) {",
+                "            return escapeHtml(d.ua);",
+                "        }}",
+                "    ]",
+                "});",
+                "function escapeHtml(html) {",
+                "    var text = document.createElement(\"textarea\");",
+                "    text.textContent = String(html);",
+                "    return text.innerHTML;",
+                "}"
+            ].join("\n") : safe1StoreEntityEscape
         }));
 
         // 渲染表格
@@ -289,7 +319,7 @@
                     {field: 'content', title: 'Content', width: '200'},
                     {field: 'ua', title: 'User-Agent', width: '200'},
                     {field: 'date', title: 'Date', width: '170'},
-                    {fixed: 'right', title: '删除', toolbar: '#deleteById', width: 86} // 添加操作列
+                    {fixed: 'right', title: (window.I18N && window.I18N.delete) || '删除', toolbar: '#deleteById', width: 86}
                 ]
             ],
             parseData: function (res) { //res 即为原始返回的数据
@@ -321,7 +351,7 @@
                         }
                     },
                     {field: 'date', title: 'Date', width: '170'},
-                    {fixed: 'right', title: '删除', toolbar: '#deleteById', width: 86} // 添加操作列
+                    {fixed: 'right', title: (window.I18N && window.I18N.delete) || '删除', toolbar: '#deleteById', width: 86}
                 ]
             ],
             parseData: function (res) {
@@ -346,7 +376,7 @@
 
         $('.xss-store').hover(function () {
             $(this).css('cursor', 'pointer');
-            layer.tips('攻击流程图', this, {
+            layer.tips(/*[[#{xss.reflect.flowTip}]]*/ '攻击流程图', this, {
                 tips: [1, '#0051ff'],
                 time: 2000
             });

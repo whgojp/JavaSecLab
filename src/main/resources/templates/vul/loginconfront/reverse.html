@@ -24,11 +24,11 @@
         <div class="layui-row layui-col-space15">
             <div class="layui-col-md12">
                 <fieldset class="layui-elem-field layui-field-title">
-                    <legend style="color: rgb(30 159 255)">登录对抗 - JS逆向</legend>
+                    <legend style="color: rgb(30 159 255)" th:text="#{login.reverse.title}">Login Confrontation - JS Reverse</legend>
                     <blockquote class="layui-elem-quote layui-quote-nm"
                                 style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
                         <p>
-                        <pre>  这里以请求签名和前端RSA加密为例，演示把安全边界建立在前端算法、固定密钥或可逆向代码上时，攻击者仍可复现请求并绕过校验。</pre>
+                        <pre th:text="#{login.reverse.intro}">This page demonstrates JS reverse risks.</pre>
                         </p>
                     </blockquote>
                 </fieldset>
@@ -37,7 +37,7 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-bug"> 漏洞场景：sign请求签名绕过</span></h1>
+                        <h1><span class="iconfont icon-bug" th:text="| #{login.reverse.sign.title}|"> Vulnerable Scenario: Sign Request Signature Bypass</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
@@ -45,18 +45,18 @@
                                         <form class="layui-form" style="display: flex; justify-content: space-between;">
                                             <div style="display: flex; align-items: center;">
                                                 <input type="text" name="username" style="width: 150px;" required
-                                                       lay-verify="required" placeholder="用户名" value="admin"
+                                                       lay-verify="required" th:placeholder="#{login.reverse.username}" placeholder="Username" value="admin"
                                                        autocomplete="off"
                                                        class="layui-input">
                                                 <input type="text" name="password" style="width: 150px;" required
-                                                       lay-verify="required" placeholder="密码" autocomplete="off"
+                                                       lay-verify="required" th:placeholder="#{login.reverse.password}" placeholder="Password" autocomplete="off"
                                                        class="layui-input">
                                             </div>
                                             <div style="display: flex; align-items: center;">
                                                 <button class="layui-btn layui-btn-normal"
                                                         style="width: 100px; margin-left: 10px;"
                                                         lay-filter="vul1-reverse-button" lay-submit="">
-                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                    <span class="iconfont icon-zhihang" th:text="#{login.reverse.run}">Run</span>
                                                 </button>
                                             </div>
                                         </form>
@@ -67,16 +67,16 @@
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{login.reverse.tips}">Tips</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">  请求签名能提高伪造成本，但如果签名密钥写在前端、算法只是固定参数拼接后MD5，攻击者通过逆向JS即可复现sign。修复时签名密钥应只存在服务端，并结合随机数、时间窗口、重放缓存和服务端业务鉴权。</pre>
+                                            <pre style="color: #28333e;font-size: 15px;" th:text="#{login.reverse.sign.tips}">Request signatures can raise forgery cost, but frontend keys are reversible.</pre>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i>测试结果
+                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i><span th:text="#{login.reverse.testResult}">Test Result</span>
                                         </div>
                                         <div class="layui-card-body layui-text layadmin-text">
                                             <pre id="vul1-reverse-result"
@@ -90,7 +90,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="| #{login.reverse.vulnerableCode}|"> Vulnerable Code</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="vul1Reverse"></div>
                         </div>
@@ -102,7 +102,7 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-bug"> 漏洞场景：RSA前端加密绕过</span></h1>
+                        <h1><span class="iconfont icon-bug" th:text="| #{login.reverse.rsa.title}|"> Vulnerable Scenario: Frontend RSA Encryption Bypass</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
@@ -110,18 +110,18 @@
                                         <form class="layui-form" style="display: flex; justify-content: space-between;">
                                             <div style="display: flex; align-items: center;">
                                                 <input type="text" name="username" style="width: 150px;" required
-                                                       lay-verify="required" placeholder="用户名" value="admin"
+                                                       lay-verify="required" th:placeholder="#{login.reverse.username}" placeholder="Username" value="admin"
                                                        autocomplete="off"
                                                        class="layui-input">
                                                 <input type="text" name="password" style="width: 150px;" required
-                                                       lay-verify="required" placeholder="密码" autocomplete="off"
+                                                       lay-verify="required" th:placeholder="#{login.reverse.password}" placeholder="Password" autocomplete="off"
                                                        class="layui-input">
                                             </div>
                                             <div style="display: flex; align-items: center;">
                                                 <button class="layui-btn layui-btn-normal"
                                                         style="width: 100px; margin-left: 10px;"
                                                         lay-filter="vul2-reverse-button" lay-submit="">
-                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                    <span class="iconfont icon-zhihang" th:text="#{login.reverse.run}">Run</span>
                                                 </button>
                                             </div>
                                         </form>
@@ -132,16 +132,16 @@
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{login.reverse.tips}">Tips</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">  前端RSA加密只能保护传输内容不被直接明文观察，不能证明请求来自可信前端。公钥天然可公开，攻击者拿到公钥后同样可以加密任意账号密码并调用接口。修复时应依赖HTTPS、服务端认证、风控和重放防护，不能把“前端加密”当作访问控制。</pre>
+                                            <pre style="color: #28333e;font-size: 15px;" th:text="#{login.reverse.rsa.tips}">Frontend RSA encryption does not prove the request came from trusted frontend code.</pre>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i>测试结果
+                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i><span th:text="#{login.reverse.testResult}">Test Result</span>
                                         </div>
                                         <div class="layui-card-body layui-text layadmin-text">
                                             <pre id="vul2-reverse-result"
@@ -155,7 +155,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="| #{login.reverse.vulnerableCode}|"> Vulnerable Code</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="vul2Reverse"></div>
                         </div>
@@ -174,7 +174,7 @@
 <script th:src="@{/js/md5.min.js}" charset="utf-8"></script>
 <script th:src="@{/js/jsencrypt.min.js}" charset="utf-8"></script>
 
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
     document.addEventListener("DOMContentLoaded", function () {
 
         layui.use(['layer', 'miniTab', 'common', 'form'], function () {
@@ -184,9 +184,10 @@
                 common = layui.common,
                 form = layui.form;
             miniTab.listen();
-            layer.msg("登录对抗 - JS逆向")
+            layer.msg(/*[[#{login.reverse.toast}]]*/ "Login Confrontation - JS Reverse")
+            var isEnglishLoginReverse = /*[[${#locale.language == 'en'}]]*/ false;
 
-            // 请求签名绕过
+            // Request signature bypass
             form.on('submit(vul1-reverse-button)', function (data) {
                 const key = "FF38DC304A1D74B19F24A36C09FD6B72";
 
@@ -195,7 +196,7 @@
                         .sort()
                         .map(k => `${k}=${params[k]}`)
                         .join("&");
-                    return md5(query + key); // 使用 MD5 加密生成签名
+                    return md5(query + key); // Generate a signature with MD5
                 }
 
                 const params = {
@@ -222,15 +223,15 @@
                         }
                     },
                     error: function (err) {
-                        console.error("请求失败：", err);
-                        $("#vul1-reverse-result").text("请求失败，请稍后重试！");
+                        console.error("Request failed:", err);
+                        $("#vul1-reverse-result").text(/*[[#{login.reverse.ajaxFailed}]]*/ "Request failed. Please try again later.");
                     }
                 });
 
                 return false;
             });
 
-            // 代码混淆
+            // Frontend RSA encryption
             form.on('submit(vul2-reverse-button)', function (data) {
                 const publicKey = `-----BEGIN PUBLIC KEY-----
 MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAx6Iq6tBvjNHqczQmJJAo
@@ -245,8 +246,8 @@ oQIDAQAB
 
                 const encryptField = (field) => {
                     const encryptor = new JSEncrypt();
-                    encryptor.setPublicKey(publicKey); // 设置公钥
-                    return encryptor.encrypt(field); // 返回加密后的 Base64 字符串
+                    encryptor.setPublicKey(publicKey); // Set the public key
+                    return encryptor.encrypt(field); // Return the encrypted Base64 string
                 };
 
                 const encryptedUsername = encryptField(data.field.username);
@@ -268,12 +269,12 @@ oQIDAQAB
                         }
                     },
                     error: function (err) {
-                        console.error("请求失败：", err);
-                        $("#vul2-reverse-result").text("请求失败，请稍后重试！");
+                        console.error("Request failed:", err);
+                        $("#vul2-reverse-result").text(/*[[#{login.reverse.ajaxFailed}]]*/ "Request failed. Please try again later.");
                     }
                 });
 
-                return false; // 阻止表单默认提交
+                return false; // Prevent the default form submission
             });
 
 
@@ -289,10 +290,10 @@ oQIDAQAB
             };
 
             CodeMirror(document.getElementById("vul1Reverse"), Object.assign({}, cmConfig, {
-                value: vul1Reverse
+                value: isEnglishLoginReverse ? vul1Reverse : vul1ReverseZh
             }));
             CodeMirror(document.getElementById("vul2Reverse"), Object.assign({}, cmConfig, {
-                value: vul2Reverse
+                value: isEnglishLoginReverse ? vul2Reverse : vul2ReverseZh
             }));
 
         });

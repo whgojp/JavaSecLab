@@ -1,0 +1,39 @@
+version: "3"
+
+services:
+  mysql:
+    image: mysql:8.0.33
+    container_name: Container-MYSQL8
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: QWE123qwe
+      MYSQL_DATABASE: JavaSecLab
+    volumes:
+      - ./sql/JavaSecLab.sql:/docker-entrypoint-initdb.d/JavaSecLab.sql
+    networks:
+      - JavaSecLabNet
+
+  JavaSecLab:
+    image: whgojp/javaseclab:1.5
+    container_name: Container-JavaSecLab
+    restart: always
+    ports:
+      - 80:80
+    environment:
+      - TZ=Asia/Shanghai
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - mysql
+    volumes:
+      - ./logs:/logs
+    networks:
+      - JavaSecLabNet
+
+networks:
+  JavaSecLabNet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.1.0/24

@@ -422,16 +422,19 @@ layui.define(["jquery", "layer"], function (exports) {
                 var loading = layer.load(0, {shade: false, time: 2 * 1000});
                 var clientHeight = (document.documentElement.clientHeight) - 60;
                 var bgColorHtml = miniTheme.buildBgColorHtml(options);
+                var themeTitle = (window.I18N && window.I18N.themeTitle) || 'Theme';
+                var authorBlog = (window.I18N && window.I18N.authorBlog) || 'Author Blog';
+                var projectUrl = (window.I18N && window.I18N.projectUrl) || 'Project';
                 var html = '<div class="layuimini-color">\n' +
                     '<div class="color-title">\n' +
-                    '<span>配色方案</span>\n' +
+                    '<span>' + themeTitle + '</span>\n' +
                     '</div>\n' +
                     '<div class="color-content">\n' +
                     '<ul>\n' + bgColorHtml + '</ul>\n' +
                     '</div>\n' +
                     '<div class="more-menu-list">\n' +
-                    '<a class="more-menu-item" href="https://blog.csdn.net/weixin_53009585" target="_blank"><span class="iconfont icon-csdn48" style="font-size: 20px"></span> 作者博客</a>\n' +
-                    '<a class="more-menu-item" href="https://github.com/whgojp/JavaSecLab" target="_blank"><span class="iconfont icon-github" style="font-size: 18px"></span> 项目地址</a>\n' +
+                    '<a class="more-menu-item" href="https://blog.csdn.net/weixin_53009585" target="_blank"><span class="iconfont icon-csdn48" style="font-size: 20px"></span> ' + authorBlog + '</a>\n' +
+                    '<a class="more-menu-item" href="https://github.com/whgojp/JavaSecLab" target="_blank"><span class="iconfont icon-github" style="font-size: 18px"></span> ' + projectUrl + '</a>\n' +
                     '</div>' +
                     '</div>';
                 layer.open({

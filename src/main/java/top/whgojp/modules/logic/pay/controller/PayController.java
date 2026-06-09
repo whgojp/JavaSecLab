@@ -3,6 +3,8 @@ package top.whgojp.modules.logic.pay.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,11 +31,17 @@ import java.util.HashMap;
 @CrossOrigin(origins = "*")
 @RequestMapping("/logic/pay")
 public class PayController {
-    // 用户余额
+    private final MessageSource messageSource;
+
+    public PayController(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
+
+    // User balance.
     private final AtomicReference<BigDecimal> userMoney = new AtomicReference<>(new BigDecimal("1000.00"));
-    // 订单状态缓存
+    // Order status cache.
     private final Map<String, OrderStatus> orderStatusMap = new ConcurrentHashMap<>();
-    // 支付状态缓存（用于防止重复支付）
+    // Payment status cache, used to prevent repeated payments.
     private final Map<String, Boolean> paymentStatusMap = new ConcurrentHashMap<>();
     
     @RequestMapping("")
@@ -66,15 +74,15 @@ public class PayController {
     public R vul1(@RequestParam String count, @RequestParam String price) {
         try {
             double totalPrice = Integer.parseInt(count) * Double.parseDouble(price);
-            log.info("用户需支付金额：" + totalPrice);
+            log.info("amount to pay: {}", totalPrice);
             
-            // 直接使用客户端传入的价格，未与服务端商品实际价格进行校验
+            // Directly uses the client-submitted price without checking it against the server-side product price.
             BigDecimal currentMoney = userMoney.get();
             if (currentMoney.compareTo(BigDecimal.valueOf(totalPrice)) < 0) {
-                return R.error("支付金额不足，支付失败！");
+                return R.error(msg("logic.pay.result.insufficient"));
             }
             userMoney.set(currentMoney.subtract(BigDecimal.valueOf(totalPrice)));
-            return R.ok("支付成功！剩余余额：" + userMoney.get());
+            return R.ok(msg("logic.pay.result.paymentSuccess", userMoney.get()));
         } catch (Exception e) {
             return R.error(e.toString());
         }
@@ -88,14 +96,14 @@ public class PayController {
     @RequestMapping("/vul2")
     @ResponseBody
     public R vul2(@RequestParam String orderId, @RequestParam double amount) {
-        // 未检查订单是否已支付
-        // 这里应该使用paymentStatusMap检查订单是否已支付，但为了演示漏洞，故意不检查
+        // Does not check whether the order has been paid.
+        // This should use paymentStatusMap, but the check is intentionally omitted for the vulnerable demo.
         BigDecimal currentMoney = userMoney.get();
         if (currentMoney.compareTo(BigDecimal.valueOf(amount)) < 0) {
-            return R.error("余额不足");
+            return R.error(msg("logic.pay.result.insufficientBalance"));
         }
         userMoney.set(currentMoney.subtract(BigDecimal.valueOf(amount)));
-        return R.ok("支付成功！剩余余额：" + userMoney.get());
+        return R.ok(msg("logic.pay.result.paymentSuccess", userMoney.get()));
     }
 
     /**
@@ -106,7 +114,7 @@ public class PayController {
     @RequestMapping("/vul3")
     @ResponseBody
     public R vul3(@RequestParam String orderId, @RequestParam double amount) {
-        // 模拟处理延迟
+        // Simulate processing delay.
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
@@ -115,10 +123,10 @@ public class PayController {
 
         BigDecimal currentMoney = userMoney.get();
         if (currentMoney.compareTo(BigDecimal.valueOf(amount)) < 0) {
-            return R.error("余额不足");
+            return R.error(msg("logic.pay.result.insufficientBalance"));
         }
         userMoney.set(currentMoney.subtract(BigDecimal.valueOf(amount)));
-        return R.ok("支付成功！剩余余额：" + userMoney.get());
+        return R.ok(msg("logic.pay.result.paymentSuccess", userMoney.get()));
     }
 
     /**
@@ -134,7 +142,7 @@ public class PayController {
         Map<String, Object> data = new HashMap<>();
         data.put("orderId", orderId);
         data.put("amount", amount);
-        return R.ok("订单创建成功").put("data", data);
+        return R.ok(msg("logic.pay.result.orderCreated")).put("data", data);
     }
 
     @ApiOperation("支付流程绕过漏洞 - 查询订单状态")
@@ -143,7 +151,7 @@ public class PayController {
     public R getOrderStatus(@RequestParam String orderId) {
         OrderStatus status = orderStatusMap.get(orderId);
         if (status == null) {
-            return R.error("订单不存在");
+            return R.error(msg("logic.pay.result.orderNotFound"));
         }
         Map<String, Object> data = new HashMap<>();
         data.put("orderId", status.orderId);
@@ -156,13 +164,13 @@ public class PayController {
     @RequestMapping("/vul4/notify")
     @ResponseBody
     public R paymentNotify(@RequestParam String orderId, @RequestParam boolean success) {
-        // 未验证通知来源，直接更新订单状态
+        // Updates the order status directly without validating the notification source.
         OrderStatus status = orderStatusMap.get(orderId);
         if (status == null) {
-            return R.error("订单不存在");
+            return R.error(msg("logic.pay.result.orderNotFound"));
         }
         status.isPaid = success;
-        return R.ok("状态更新成功");
+        return R.ok(msg("logic.pay.result.statusUpdated"));
     }
 
 
@@ -178,18 +186,18 @@ public class PayController {
             Integer countValue = Integer.valueOf(count);
             Integer priceValue = Integer.valueOf(price);
 
-            // 整数溢出场景：当 count 或 price 数值过大时，可能会导致溢出
+            // Integer overflow scenario: overly large count or price values may overflow.
             int totalAmount = countValue * priceValue;
-            log.info("用户需支付金额：" + totalAmount);
+            log.info("amount to pay: {}", totalAmount);
 
             BigDecimal currentMoney = userMoney.get();
             if (currentMoney.compareTo(BigDecimal.valueOf(totalAmount)) < 0) {
-                return R.error("支付金额不足，支付失败！");
+                return R.error(msg("logic.pay.result.insufficient"));
             }
             userMoney.set(currentMoney.subtract(BigDecimal.valueOf(totalAmount)));
-            return R.ok("支付成功！剩余余额：" + userMoney.get());
+            return R.ok(msg("logic.pay.result.paymentSuccess", userMoney.get()));
         } catch (Exception e) {
-            return R.error("无效的输入，请输入有效的数量和价格！");
+            return R.error(msg("logic.pay.result.invalidInput"));
         }
     }
 
@@ -203,18 +211,18 @@ public class PayController {
     public R floatingPointPrecision(@RequestParam String count, @RequestParam String price) {
         try {
             double totalAmount = Double.parseDouble(count) * Double.parseDouble(price);
-            // 漏洞点：把二进制浮点计算结果直接转成金额，可能引入精度误差
+            // Vulnerable point: converting binary floating-point results directly to money may introduce precision errors.
             BigDecimal amountValue = new BigDecimal(totalAmount);
-            log.info("用户需支付金额：" + amountValue);
+            log.info("amount to pay: {}", amountValue);
 
             BigDecimal currentMoney = userMoney.get();
             if (currentMoney.compareTo(amountValue) < 0) {
-                return R.error("支付金额不足，支付失败！");
+                return R.error(msg("logic.pay.result.insufficient"));
             }
             userMoney.set(currentMoney.subtract(amountValue));
-            return R.ok("支付成功！实际扣款金额：" + amountValue + "，剩余余额：" + userMoney.get());
+            return R.ok(msg("logic.pay.result.paymentWithActual", amountValue, userMoney.get()));
         } catch (Exception e) {
-            return R.error("无效的输入，请输入有效的数量和价格！");
+            return R.error(msg("logic.pay.result.invalidInput"));
         }
     }
 
@@ -223,6 +231,10 @@ public class PayController {
     @ResponseBody
     public R resetBalance() {
         userMoney.set(new BigDecimal("1000.00"));
-        return R.ok("余额已重置为1000.00元");
+        return R.ok(msg("logic.pay.result.balanceReset"));
+    }
+
+    private String msg(String code, Object... args) {
+        return messageSource.getMessage(code, args, LocaleContextHolder.getLocale());
     }
 }

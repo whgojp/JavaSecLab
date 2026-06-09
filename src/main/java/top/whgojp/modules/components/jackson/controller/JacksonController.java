@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +25,12 @@ import java.util.Map;
 @CrossOrigin(origins = "*")
 @RequestMapping("/jackson")
 public class JacksonController {
+    private final MessageSource messageSource;
+
+    public JacksonController(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
+
     @RequestMapping("")
     public String jackson() {
         return "vul/components/jackson";
@@ -40,10 +48,10 @@ public class JacksonController {
 
             // 反序列化接收的JSON数据，触发漏洞
             Object obj = mapper.readValue(content, Object.class);
-            return "[+]Jackson 反序列化: " + obj.toString();
+            return msg("component.jackson.result.vul", obj);
         } catch (Exception e) {
             e.printStackTrace();
-            return "[-]Jackson反序列化失败";
+            return msg("component.jackson.result.failed");
         }
     }
 
@@ -63,8 +71,12 @@ public class JacksonController {
             return mapper.writeValueAsString(safePayload);
         } catch (Exception e) {
             e.printStackTrace();
-            return "Jackson Safe Deserialization Error";
+            return msg("component.jackson.result.safeFailed");
         }
+    }
+
+    private String msg(String key, Object... args) {
+        return messageSource.getMessage(key, args, LocaleContextHolder.getLocale());
     }
 
 

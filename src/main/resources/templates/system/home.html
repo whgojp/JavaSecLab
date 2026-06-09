@@ -311,26 +311,26 @@
     <div class="layuimini-main">
         <div class="home-toolbar">
             <div class="home-title">
-                <h2>JavaSecLab 漏洞靶场</h2>
-                <p>按漏洞类型快速进入场景，支持模块名、关键词和英文缩写检索。</p>
+                <h2 th:text="#{home.title}">JavaSecLab 漏洞靶场</h2>
+                <p th:text="#{home.subtitle}">按漏洞类型快速进入场景，支持模块名、关键词和英文缩写检索。</p>
             </div>
             <div class="home-search">
-                <input id="moduleSearch" type="text" class="layui-input" placeholder="搜索模块，如 SQL、SSTI、反序列化、Fastjson">
+                <input id="moduleSearch" type="text" class="layui-input" th:placeholder="#{home.search.placeholder}" placeholder="搜索模块，如 SQL、SSTI、反序列化、Fastjson">
             </div>
             <div class="home-stats">
-                <div class="home-stat"><strong>10</strong><span>漏洞分类</span></div>
-                <div class="home-stat"><strong>37+</strong><span>功能场景</span></div>
-                <div class="home-stat"><strong>V1.5</strong><span>当前版本</span></div>
+                <div class="home-stat"><strong>10</strong><span th:text="#{home.stats.category}">漏洞分类</span></div>
+                <div class="home-stat"><strong>37+</strong><span th:text="#{home.stats.scene}">功能场景</span></div>
+                <div class="home-stat"><strong>V1.5</strong><span th:text="#{home.stats.version}">当前版本</span></div>
             </div>
         </div>
-        <div id="moduleEmpty" class="module-empty">没有找到匹配模块，试试 SQL、RCE、SSTI、登录、组件 等关键词。</div>
+        <div id="moduleEmpty" class="module-empty" th:text="#{home.empty}">没有找到匹配模块，试试 SQL、RCE、SSTI、登录、组件 等关键词。</div>
         <div class="layui-row layui-col-space15">
             <div class="layui-col-md6 module-cards">
                 <div class="layui-col-md6">
                     <div class="layui-card">
                         <div class="layui-card-header">
                             <span class="iconfont icon-kuazhanjiaobengongji icon icon-blue"></span>
-                            跨站脚本
+                            <span th:text="#{module.xss}">跨站脚本</span>
                         </div>
                         <div class="layui-card-body">
                             <div class="welcome-module">
@@ -338,36 +338,36 @@
                                     <div class="layui-col-xs3 layuimini-qiuck-module">
                                         <div class="custom-a">
                                             <a href="javascript:;" layuimini-content-href="xss/reflect/vul"
-                                               data-title="反射型">
+                                               th:attr="data-title=#{module.xss.reflect}">
                                                 <span class="iconfont icon-R"></span>
-                                                <cite>反射型</cite>
+                                                <cite th:text="#{module.xss.reflect}">反射型</cite>
                                             </a>
                                         </div>
                                     </div>
                                     <div class="layui-col-xs3 layuimini-qiuck-module">
                                         <div class="custom-a">
                                             <a href="javascript:;" layuimini-content-href="xss/store"
-                                               data-title="存储型">
+                                               th:attr="data-title=#{module.xss.store}">
                                                 <span class="iconfont icon-S"></span>
-                                                <cite>存储型</cite>
+                                                <cite th:text="#{module.xss.store}">存储型</cite>
                                             </a>
                                         </div>
                                     </div>
                                     <div class="layui-col-xs3 layuimini-qiuck-module">
                                         <div class="custom-a">
                                             <a href="javascript:;" layuimini-content-href="xss/dom"
-                                               data-title="DOM型">
+                                               th:attr="data-title=#{module.xss.dom}">
                                                 <span class="iconfont icon-dom"></span>
-                                                <cite>DOM型</cite>
+                                                <cite th:text="#{module.xss.dom}">DOM型</cite>
                                             </a>
                                         </div>
                                     </div>
                                     <div class="layui-col-xs3 layuimini-qiuck-module">
                                         <div class="custom-a">
                                             <a href="javascript:;" layuimini-content-href="xss/other"
-                                               data-title="图标列表">
+                                               th:attr="data-title=#{module.xss.other}">
                                                 <span class="iconfont icon-qita"></span>
-                                                <cite>其他场景</cite>
+                                                <cite th:text="#{module.xss.other}">其他场景</cite>
                                             </a>
                                         </div>
                                     </div>
@@ -381,7 +381,7 @@
                     <div class="layui-card">
                         <div class="layui-card-header">
                             <span class="iconfont icon-SQLzhurugongji icon icon-blue"></span>
-                            SQL注入
+                            <span th:text="#{module.sql}">SQL注入</span>
                         </div>
                         <div class="layui-card-body">
                             <div class="welcome-module">
@@ -433,7 +433,7 @@
                     <div class="layui-card">
                         <div class="layui-card-header">
                             <span class="iconfont icon-wenjian1 icon icon-blue"></span>
-                            任意文件类
+                            <span th:text="#{module.file}">任意文件类</span>
                         </div>
                         <div class="layui-card-body">
                             <div class="welcome-module">
@@ -441,36 +441,36 @@
                                     <div class="layui-col-xs3 layuimini-qiuck-module">
                                         <div class="custom-a">
                                             <a href="javascript:;" layuimini-content-href="file/upload"
-                                               data-title="文件上传">
+                                               th:attr="data-title=#{module.file.upload}">
                                                 <span class="iconfont icon-wenjian-shangchuan"></span>
-                                                <cite>文件上传</cite>
+                                                <cite th:text="#{module.file.upload}">文件上传</cite>
                                             </a>
                                         </div>
                                     </div>
                                     <div class="layui-col-xs3 layuimini-qiuck-module">
                                         <div class="custom-a">
                                             <a href="javascript:;" layuimini-content-href="file/read"
-                                               data-title="文件读取">
+                                               th:attr="data-title=#{module.file.read}">
                                                 <span class="iconfont icon-duqu"></span>
-                                                <cite>文件读取</cite>
+                                                <cite th:text="#{module.file.read}">文件读取</cite>
                                             </a>
                                         </div>
                                     </div>
                                     <div class="layui-col-xs3 layuimini-qiuck-module">
                                         <div class="custom-a">
                                             <a href="javascript:;" layuimini-content-href="file/download"
-                                               data-title="文件下载">
+                                               th:attr="data-title=#{module.file.download}">
                                                 <span class="iconfont icon-wenjian-xiazai"></span>
-                                                <cite>文件下载</cite>
+                                                <cite th:text="#{module.file.download}">文件下载</cite>
                                             </a>
                                         </div>
                                     </div>
                                     <div class="layui-col-xs3 layuimini-qiuck-module">
                                         <div class="custom-a">
                                             <a href="javascript:;" layuimini-content-href="file/delete"
-                                               data-title="文件删除">
+                                               th:attr="data-title=#{module.file.delete}">
                                                 <span class="iconfont icon-wenjian-shanchu"></span>
-                                                <cite>文件删除</cite>
+                                                <cite th:text="#{module.file.delete}">文件删除</cite>
                                             </a>
                                         </div>
                                     </div>
@@ -485,7 +485,7 @@
                     <div class="layui-card">
                         <div class="layui-card-header">
                             <span class="iconfont icon-minglingzhihang icon icon-blue"></span>
-                            RCE
+                            <span th:text="#{module.rce}">RCE</span>
                         </div>
 
                         <div class="layui-card-body">
@@ -494,18 +494,18 @@
                                     <div class="layui-col-xs6 layuimini-qiuck-module-two">
                                         <div class="custom-a-two">
                                             <a href="javascript:;" layuimini-content-href="command"
-                                               data-title="命令注入">
+                                               th:attr="data-title=#{module.rce.command}">
                                                 <span class="iconfont icon-minglingzhihang"></span>
-                                                <cite>命令注入</cite>
+                                                <cite th:text="#{module.rce.command}">命令注入</cite>
                                             </a>
                                         </div>
                                     </div>
                                     <div class="layui-col-xs6 layuimini-qiuck-module-two">
                                         <div class="custom-a-two">
                                             <a href="javascript:;" layuimini-content-href="code"
-                                               data-title="代码注入">
+                                               th:attr="data-title=#{module.rce.code}">
                                                 <span class="iconfont icon-minglingzhihang"></span>
-                                                <cite>代码注入</cite>
+                                                <cite th:text="#{module.rce.code}">代码注入</cite>
                                             </a>
                                         </div>
                                     </div>
@@ -519,7 +519,7 @@
                     <div class="layui-card">
                         <div class="layui-card-header">
                             <span class="iconfont icon-qita icon icon-blue"></span>
-                            请求交互安全
+                            <span th:text="#{module.request}">请求交互安全</span>
                         </div>
                         <div class="layui-card-body">
                             <div class="welcome-module">
@@ -554,9 +554,9 @@
                                     <div class="layui-col-xs3 layuimini-qiuck-module">
                                         <div class="custom-a">
                                             <a href="javascript:;" layuimini-content-href="crossorigin/cors"
-                                               data-title="跨源安全">
+                                               th:attr="data-title=#{module.request.crossOrigin}">
                                                 <span class="iconfont icon-origin"></span>
-                                                <cite>跨源安全</cite>
+                                                <cite th:text="#{module.request.crossOrigin}">跨源安全</cite>
                                             </a>
                                         </div>
                                     </div>
@@ -571,7 +571,7 @@
                     <div class="layui-card">
                         <div class="layui-card-header">
                             <span class="iconfont icon-luojiloudongjiance icon icon-blue"></span>
-                            逻辑漏洞
+                            <span th:text="#{module.logic}">逻辑漏洞</span>
                         </div>
                         <div class="layui-card-body">
                             <div class="welcome-module">
@@ -579,9 +579,9 @@
                                     <div class="layui-col-xs3 layuimini-qiuck-module">
                                         <div class="custom-a">
                                             <a href="javascript:;" layuimini-content-href="logic/idor/horizontal"
-                                               data-title="越权漏洞">
+                                               th:attr="data-title=#{module.logic.idor}">
                                                 <span class="iconfont icon-24gl-swapHorizontal3"></span>
-                                                <cite>越权漏洞</cite>
+                                                <cite th:text="#{module.logic.idor}">越权漏洞</cite>
                                             </a>
                                         </div>
                                     </div>
@@ -589,27 +589,27 @@
                                         <div class="custom-a">
                                             <a href="javascript:;"
                                                layuimini-content-href="logic/pay"
-                                               data-title="支付漏洞">
+                                               th:attr="data-title=#{module.logic.pay}">
                                                 <span class="iconfont icon-zhifu"></span>
-                                                <cite>支付漏洞</cite>
+                                                <cite th:text="#{module.logic.pay}">支付漏洞</cite>
                                             </a>
                                         </div>
                                     </div>
                                     <div class="layui-col-xs3 layuimini-qiuck-module">
                                         <div class="custom-a">
                                             <a href="javascript:;" layuimini-content-href="logic/concurrent"
-                                               data-title="并发安全">
+                                               th:attr="data-title=#{module.logic.concurrent}">
                                                 <span class="iconfont icon-gaobingfa"></span>
-                                                <cite>并发安全</cite>
+                                                <cite th:text="#{module.logic.concurrent}">并发安全</cite>
                                             </a>
                                         </div>
                                     </div>
                                     <div class="layui-col-xs3 layuimini-qiuck-module">
                                         <div class="custom-a">
                                             <a href="javascript:;" layuimini-content-href="logic/captcha/graphic"
-                                               data-title="验证码安全">
+                                               th:attr="data-title=#{module.logic.captcha}">
                                                 <span class="iconfont icon-yanzhengma"></span>
-                                                <cite>验证码安全</cite>
+                                                <cite th:text="#{module.logic.captcha}">验证码安全</cite>
                                             </a>
                                         </div>
                                     </div>
@@ -626,7 +626,7 @@
                     <div class="layui-card">
                         <div class="layui-card-header">
                             <span class="iconfont icon-qita icon icon-blue"></span>
-                            其他漏洞
+                            <span th:text="#{module.other}">其他漏洞</span>
                         </div>
                         <div class="layui-card-body">
                             <div class="welcome-module">
@@ -634,36 +634,36 @@
                                     <div class="layui-col-xs3 layuimini-qiuck-module">
                                         <div class="custom-a">
                                             <a href="javascript:;" layuimini-content-href="other/URLRedirect/vul"
-                                               data-title="URL重定向">
+                                               th:attr="data-title=#{module.other.redirect}">
                                                 <span class="iconfont icon-redirect"></span>
-                                                <cite>URL重定向</cite>
+                                                <cite th:text="#{module.other.redirect}">URL重定向</cite>
                                             </a>
                                         </div>
                                     </div>
                                     <div class="layui-col-xs3 layuimini-qiuck-module">
                                         <div class="custom-a">
                                             <a href="javascript:;" layuimini-content-href="other/xff"
-                                               data-title="XFF伪造">
+                                               th:attr="data-title=#{module.other.xff}">
                                                 <span class="iconfont icon-laiyuan"></span>
-                                                <cite>XFF伪造</cite>
+                                                <cite th:text="#{module.other.xff}">XFF伪造</cite>
                                             </a>
                                         </div>
                                     </div>
                                     <div class="layui-col-xs3 layuimini-qiuck-module">
                                         <div class="custom-a">
                                             <a href="javascript:;" layuimini-content-href="other/dos"
-                                               data-title="拒绝服务">
+                                               th:attr="data-title=#{module.other.dos}">
                                                 <span class="iconfont icon-DOSgongji"></span>
-                                                <cite>拒绝服务</cite>
+                                                <cite th:text="#{module.other.dos}">拒绝服务</cite>
                                             </a>
                                         </div>
                                     </div>
                                     <div class="layui-col-xs3 layuimini-qiuck-module">
                                         <div class="custom-a">
                                             <a href="javascript:;" layuimini-content-href="other/xpath"
-                                               data-title="XPATH注入">
+                                               th:attr="data-title=#{module.other.xpath}">
                                                 <span class="iconfont icon-XPath"></span>
-                                                <cite>XPATH注入</cite>
+                                                <cite th:text="#{module.other.xpath}">XPATH注入</cite>
                                             </a>
                                         </div>
                                     </div>
@@ -679,7 +679,7 @@
                     <div class="layui-card">
                         <div class="layui-card-header">
                             <span class="iconfont icon-minganxinxi icon icon-blue"></span>
-                            敏感信息泄漏
+                            <span th:text="#{module.infoLeak}">敏感信息泄漏</span>
                         </div>
                         <div class="layui-card-body">
                             <div class="welcome-module">
@@ -687,36 +687,36 @@
                                     <div class="layui-col-xs3 layuimini-qiuck-module">
                                         <div class="custom-a">
                                             <a href="javascript:;" layuimini-content-href="infoLeak/js"
-                                               data-title="JS泄漏">
+                                               th:attr="data-title=#{module.infoLeak.js}">
                                                 <span class="iconfont icon-js"></span>
-                                                <cite>JS泄漏</cite>
+                                                <cite th:text="#{module.infoLeak.js}">JS泄漏</cite>
                                             </a>
                                         </div>
                                     </div>
                                     <div class="layui-col-xs3 layuimini-qiuck-module">
                                         <div class="custom-a">
                                             <a href="javascript:;" layuimini-content-href="infoLeak/dirTraversal"
-                                               data-title="目录遍历">
+                                               th:attr="data-title=#{module.infoLeak.dir}">
                                                 <span class="iconfont icon-catalog"></span>
-                                                <cite>目录遍历</cite>
+                                                <cite th:text="#{module.infoLeak.dir}">目录遍历</cite>
                                             </a>
                                         </div>
                                     </div>
                                     <div class="layui-col-xs3 layuimini-qiuck-module">
                                         <div class="custom-a">
                                             <a href="javascript:;" layuimini-content-href="infoLeak/ceShiPage"
-                                               data-title="测试页面">
+                                               th:attr="data-title=#{module.infoLeak.test}">
                                                 <span class="iconfont icon-ceshiliucheng"></span>
-                                                <cite>测试页面</cite>
+                                                <cite th:text="#{module.infoLeak.test}">测试页面</cite>
                                             </a>
                                         </div>
                                     </div>
                                     <div class="layui-col-xs3 layuimini-qiuck-module">
                                         <div class="custom-a">
                                             <a href="javascript:;" layuimini-content-href="infoLeak/backUp"
-                                               data-title="备份文件">
+                                               th:attr="data-title=#{module.infoLeak.backup}">
                                                 <span class="iconfont icon-yasuobao"></span>
-                                                <cite>备份文件</cite>
+                                                <cite th:text="#{module.infoLeak.backup}">备份文件</cite>
                                             </a>
                                         </div>
                                     </div>
@@ -733,7 +733,7 @@
                     <div class="layui-card">
                         <div class="layui-card-header">
                             <span class="iconfont icon-denglukuang icon icon-blue"></span>
-                            登录对抗
+                            <span th:text="#{module.login}">登录对抗</span>
                         </div>
                         <div class="layui-card-body">
                             <div class="welcome-module">
@@ -741,36 +741,36 @@
                                     <div class="layui-col-xs3 layuimini-qiuck-module">
                                         <div class="custom-a">
                                             <a href="javascript:;" layuimini-content-href="/loginconfront/account"
-                                               data-title="账号安全">
+                                               th:attr="data-title=#{module.login.account}">
                                                 <span class="iconfont icon-zhanghao"></span>
-                                                <cite>账号安全</cite>
+                                                <cite th:text="#{module.login.account}">账号安全</cite>
                                             </a>
                                         </div>
                                     </div>
                                     <div class="layui-col-xs3 layuimini-qiuck-module">
                                         <div class="custom-a">
                                             <a href="javascript:;" layuimini-content-href="/loginconfront/bypass"
-                                               data-title="登录绕过">
+                                               th:attr="data-title=#{module.login.bypass}">
                                                 <span class="iconfont icon-mimazhaohui"></span>
-                                                <cite>登录绕过</cite>
+                                                <cite th:text="#{module.login.bypass}">登录绕过</cite>
                                             </a>
                                         </div>
                                     </div>
                                     <div class="layui-col-xs3 layuimini-qiuck-module">
                                         <div class="custom-a">
                                             <a href="javascript:;" layuimini-content-href="/loginconfront/reverse"
-                                               data-title="JS逆向">
+                                               th:attr="data-title=#{module.login.reverse}">
                                                 <span class="iconfont icon-JS"></span>
-                                                <cite>JS逆向</cite>
+                                                <cite th:text="#{module.login.reverse}">JS逆向</cite>
                                             </a>
                                         </div>
                                     </div>
                                     <div class="layui-col-xs3 layuimini-qiuck-module">
                                         <div class="custom-a">
                                             <a href="javascript:;" layuimini-content-href="/loginconfront/credential"
-                                               data-title="凭证安全">
+                                               th:attr="data-title=#{module.login.credential}">
                                                 <span class="iconfont icon-quanxianweizao"></span>
-                                                <cite>凭证安全</cite>
+                                                <cite th:text="#{module.login.credential}">凭证安全</cite>
                                             </a>
                                         </div>
                                     </div>
@@ -787,7 +787,7 @@
                     <div class="layui-card">
                         <div class="layui-card-header">
                             <span class="iconfont icon-java icon icon-blue"></span>
-                            Java
+                            <span th:text="#{module.java}">Java</span>
                         </div>
                         <div class="layui-card-body">
                             <div class="welcome-module">
@@ -795,36 +795,36 @@
                                     <div class="layui-col-xs3 layuimini-qiuck-module">
                                         <div class="custom-a">
                                             <a href="javascript:;" layuimini-content-href="springboot"
-                                               data-title="SpringBoot">
+                                               th:attr="data-title=#{module.java.springBoot}">
                                                 <span class="iconfont icon-spring"></span>
-                                                <cite>SpringBoot</cite>
+                                                <cite th:text="#{module.java.springBoot}">SpringBoot</cite>
                                             </a>
                                         </div>
                                     </div>
                                     <div class="layui-col-xs3 layuimini-qiuck-module">
                                         <div class="custom-a">
                                             <a href="javascript:;" layuimini-content-href="spel"
-                                               data-title="SPEL注入">
+                                               th:attr="data-title=#{module.java.spel}">
                                                 <span class="iconfont icon-spring"></span>
-                                                <cite>SPEL注入</cite>
+                                                <cite th:text="#{module.java.spel}">SPEL注入</cite>
                                             </a>
                                         </div>
                                     </div>
                                     <div class="layui-col-xs3 layuimini-qiuck-module">
                                         <div class="custom-a">
                                             <a href="javascript:;" layuimini-content-href="ssti"
-                                               data-title="SSTI注入">
+                                               th:attr="data-title=#{module.java.ssti}">
                                                 <span class="iconfont icon-thymeleaf"></span>
-                                                <cite>SSTI注入</cite>
+                                                <cite th:text="#{module.java.ssti}">SSTI注入</cite>
                                             </a>
                                         </div>
                                     </div>
                                     <div class="layui-col-xs3 layuimini-qiuck-module">
                                         <div class="custom-a">
                                             <a href="javascript:;" layuimini-content-href="readObject"
-                                               data-title="反序列化">
+                                               th:attr="data-title=#{module.java.deserialize}">
                                                 <span class="iconfont icon-fanxuliehuaJson"></span>
-                                                <cite>反序列化</cite>
+                                                <cite th:text="#{module.java.deserialize}">反序列化</cite>
                                             </a>
                                         </div>
                                     </div>
@@ -839,7 +839,7 @@
                     <div class="layui-card">
                         <div class="layui-card-header">
                             <span class="iconfont icon-zujian icon icon-blue"></span>
-                            组件漏洞
+                            <span th:text="#{module.component}">组件漏洞</span>
                         </div>
                         <div class="layui-card-body">
                             <div class="welcome-module-five">
@@ -898,12 +898,12 @@
             </div>
             <div class="layui-col-md6">
                 <div class="layui-card">
-                    <div class="layui-card-header"><i class="iconfont icon-anonymity-101 icon"></i>关于项目</div>
+                    <div class="layui-card-header"><i class="iconfont icon-anonymity-101 icon"></i><span th:text="#{home.about}">关于项目</span></div>
                     <div class="layui-card-body layui-text layadmin-text">
                         <ul>
-                            <li>安全服务方面：帮助安全服务人员理解漏洞原理(产生、修复、审计)，以及对应漏洞流量分析</li>
-                            <li>甲方安全方面：可作为开发安全培训演示，友好的交互方式，帮助研发同学更容易理解漏洞</li>
-                            <li>安全研究方面：各种漏洞的不同触发场景，可用于xAST等安全工具测试</li>
+                            <li th:text="#{home.about.service}">安全服务方面：帮助安全服务人员理解漏洞原理(产生、修复、审计)，以及对应漏洞流量分析</li>
+                            <li th:text="#{home.about.training}">甲方安全方面：可作为开发安全培训演示，友好的交互方式，帮助研发同学更容易理解漏洞</li>
+                            <li th:text="#{home.about.research}">安全研究方面：各种漏洞的不同触发场景，可用于xAST等安全工具测试</li>
                         </ul>
                     </div>
                 </div>
@@ -913,12 +913,12 @@
                         <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
                         <div class="layui-timeline-content layui-text">
                             <h3 class="layui-timeline-title">V1.5</h3>
-                            <p>支持漏洞模块：</p>
+                            <p th:text="#{home.release.support}">支持漏洞模块：</p>
                             <ul>
-                                <li>跨站脚本攻击、跨站请求伪造、CORS、JSONP、URL重定向、XFF伪造、拒绝服务、XPATH注入</li>
-                                <li>SQL注入、任意文件系列、跨服务端请求伪造、XML实体注入、RCE</li>
-                                <li>逻辑漏洞(IDOR、验证码安全、支付漏洞、并发安全)、敏感信息泄漏系列、登录对抗系列</li>
-                                <li>SPEL注入、SSTI注入、反序列化、组件漏洞</li>
+                                <li th:text="#{home.release.item1}">跨站脚本攻击、跨站请求伪造、CORS、JSONP、URL重定向、XFF伪造、拒绝服务、XPATH注入</li>
+                                <li th:text="#{home.release.item2}">SQL注入、任意文件系列、跨服务端请求伪造、XML实体注入、RCE</li>
+                                <li th:text="#{home.release.item3}">逻辑漏洞(IDOR、验证码安全、支付漏洞、并发安全)、敏感信息泄漏系列、登录对抗系列</li>
+                                <li th:text="#{home.release.item4}">SPEL注入、SSTI注入、反序列化、组件漏洞</li>
                             </ul>
                         </div>
                     </li>
@@ -927,11 +927,11 @@
                         <div class="layui-timeline-content layui-text">
                             <h3 class="layui-timeline-title">2024-05</h3>
                             <p>
-                                完成系统技术选型、架构设计、相关靶场项目调研……
-                                <br>技术栈：<b>SpringBoot+Spring Security+MyBatis+Thymeleaf+Layui</b>
-                                <br>这里暂时只做了简单认证实现、权限分级/人员管理等复杂鉴权功能后续待实现……
-                                <br>架构设计：前后端不分离，在通用后端管理框架基础上，添加一个个漏洞模块……
-                                <br>参考项目：<a target="_blank" href="https://github.com/j3ers3/Hello-Java-Sec">Hello-Java-Sec</a>
+                                <span th:text="#{home.history.202405.1}">完成系统技术选型、架构设计、相关靶场项目调研……</span>
+                                <br><span th:text="#{home.history.202405.2}">技术栈：</span><b>SpringBoot+Spring Security+MyBatis+Thymeleaf+Layui</b>
+                                <br><span th:text="#{home.history.202405.3}">这里暂时只做了简单认证实现、权限分级/人员管理等复杂鉴权功能后续待实现……</span>
+                                <br><span th:text="#{home.history.202405.4}">架构设计：前后端不分离，在通用后端管理框架基础上，添加一个个漏洞模块……</span>
+                                <br><span th:text="#{home.history.reference}">参考项目：</span><a target="_blank" href="https://github.com/j3ers3/Hello-Java-Sec">Hello-Java-Sec</a>
                                 <a target="_blank" href="https://github.com/j3ers3/Hello-Java-Sec">JavaSec</a>
                             </p>
                         </div>
@@ -940,7 +940,7 @@
                         <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
                         <div class="layui-timeline-content layui-text">
                             <h3 class="layui-timeline-title">2024-03</h3>
-                            <p>一个想法💡</p>
+                            <p th:text="#{home.history.202403}">一个想法💡</p>
                         </div>
                     </li>
                 </ul>

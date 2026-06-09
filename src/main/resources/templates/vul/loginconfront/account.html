@@ -8,11 +8,11 @@
         <div class="layui-row layui-col-space15">
             <div class="layui-col-md12">
                 <fieldset class="layui-elem-field layui-field-title">
-                    <legend style="color: rgb(30 159 255)">登录对抗 - 账号安全</legend>
+                    <legend style="color: rgb(30 159 255)" th:text="#{login.account.title}">Login Confrontation - Account Security</legend>
                     <blockquote class="layui-elem-quote layui-quote-nm"
                                 style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
                         <p>
-                        <pre>  这里以用户名枚举、弱口令为例，演示认证阶段信息暴露和口令强度不足带来的账号接管风险。验证码等相关问题详见逻辑漏洞模块。</pre>
+                        <pre th:text="#{login.account.intro}">This page demonstrates account takeover risks caused by username enumeration and weak passwords.</pre>
                         </p>
                     </blockquote>
                 </fieldset>
@@ -21,7 +21,7 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-bug"> 漏洞场景：用户名枚举</span></h1>
+                        <h1><span class="iconfont icon-bug" th:text="| #{login.account.enum.title}|"> Vulnerable Scenario: Username Enumeration</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
@@ -29,18 +29,18 @@
                                         <form class="layui-form" style="display: flex; justify-content: space-between;">
                                             <div style="display: flex; align-items: center;">
                                                 <input type="text" name="username" style="width: 150px;" required
-                                                       lay-verify="required" placeholder="用户名" value="qwer"
+                                                       lay-verify="required" th:placeholder="#{login.account.username}" placeholder="Username" value="qwer"
                                                        autocomplete="off"
                                                        class="layui-input">
                                                 <input type="text" name="password" style="width: 150px;" required
-                                                       lay-verify="required" placeholder="密码" autocomplete="off"
+                                                       lay-verify="required" th:placeholder="#{login.account.password}" placeholder="Password" autocomplete="off"
                                                        class="layui-input">
                                             </div>
                                             <div style="display: flex; align-items: center;">
                                                 <button class="layui-btn layui-btn-normal"
                                                         style="width: 100px; margin-left: 10px;"
                                                         lay-filter="vul1-account-button" lay-submit="">
-                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                    <span class="iconfont icon-zhihang" th:text="#{login.account.run}">Run</span>
                                                 </button>
                                             </div>
                                         </form>
@@ -51,16 +51,16 @@
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{login.account.tips}">Tips</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">  登录失败时分别返回“用户不存在”和“密码错误”，会暴露账号是否存在。攻击者可先枚举有效用户名，再对有效账号做密码爆破。修复时应统一失败提示、控制登录频率，并记录异常登录行为。</pre>
+                                            <pre style="color: #28333e;font-size: 15px;" th:text="#{login.account.enum.tips}">Returning different messages during login failure reveals whether an account exists.</pre>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i>测试结果
+                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i><span th:text="#{login.account.testResult}">Test Result</span>
                                         </div>
                                         <div class="layui-card-body layui-text layadmin-text">
                                             <pre id="vul1-account-result"
@@ -74,7 +74,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="| #{login.account.vulnerableCode}|"> Vulnerable Code</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="vul1Account"></div>
                         </div>
@@ -86,7 +86,7 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-bug"> 漏洞场景：弱口令问题</span></h1>
+                        <h1><span class="iconfont icon-bug" th:text="| #{login.account.weak.title}|"> Vulnerable Scenario: Weak Password</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
@@ -94,18 +94,18 @@
                                         <form class="layui-form" style="display: flex; justify-content: space-between;">
                                             <div style="display: flex; align-items: center;">
                                                 <input type="text" name="username" style="width: 150px;" required
-                                                       lay-verify="required" placeholder="用户名" value="admin"
+                                                       lay-verify="required" th:placeholder="#{login.account.username}" placeholder="Username" value="admin"
                                                        autocomplete="off"
                                                        class="layui-input">
                                                 <input type="text" name="password" style="width: 150px;" required
-                                                       lay-verify="required" placeholder="密码" autocomplete="off"
+                                                       lay-verify="required" th:placeholder="#{login.account.password}" placeholder="Password" autocomplete="off"
                                                        class="layui-input">
                                             </div>
                                             <div style="display: flex; align-items: center;">
                                                 <button class="layui-btn layui-btn-normal"
                                                         style="width: 100px; margin-left: 10px;"
                                                         lay-filter="vul2-account-button" lay-submit="">
-                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                    <span class="iconfont icon-zhihang" th:text="#{login.account.run}">Run</span>
                                                 </button>
                                             </div>
                                         </form>
@@ -116,16 +116,16 @@
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{login.account.tips}">Tips</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">  弱口令是认证体系中最常见的低成本突破口。默认密码、测试账号密码、常见字典口令会被自动化工具快速命中。修复时应启用强密码策略、默认口令强制修改、泄露密码库检测、多因素认证和登录失败限速。</pre>
+                                            <pre style="color: #28333e;font-size: 15px;" th:text="#{login.account.weak.tips}">Weak passwords are among the most common low-cost entry points in authentication systems.</pre>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i>测试结果
+                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i><span th:text="#{login.account.testResult}">Test Result</span>
                                         </div>
                                         <div class="layui-card-body layui-text layadmin-text">
                                             <pre id="vul2-account-result"
@@ -139,7 +139,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="| #{login.account.vulnerableCode}|"> Vulnerable Code</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="vul2Account"></div>
                         </div>
@@ -155,7 +155,7 @@
 </div>
 
 <div th:replace="~{common/common::script}"></div>
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
     document.addEventListener("DOMContentLoaded", function () {
 
         layui.use(['layer', 'miniTab', 'common', 'form'], function () {
@@ -165,7 +165,8 @@
                 common = layui.common,
                 form = layui.form;
             miniTab.listen();
-            layer.msg("登录对抗 - 账号安全")
+            layer.msg(/*[[#{login.account.toast}]]*/ "Login Confrontation - Account Security")
+            var isEnglishLoginAccount = /*[[${#locale.language == 'en'}]]*/ false;
 
             common.formListenFun("vul1-account-button", "", "/loginconfront/account/vul1", "vul1-account-result", "post");
             common.formListenFun("vul2-account-button", "", "/loginconfront/account/vul2", "vul2-account-result", "post");
@@ -183,10 +184,10 @@
             };
 
             CodeMirror(document.getElementById("vul1Account"), Object.assign({}, cmConfig, {
-                value: vul1Account
+                value: isEnglishLoginAccount ? vul1Account : vul1AccountZh
             }));
             CodeMirror(document.getElementById("vul2Account"), Object.assign({}, cmConfig, {
-                value: vul2Account
+                value: isEnglishLoginAccount ? vul2Account : vul2AccountZh
             }));
 
         });

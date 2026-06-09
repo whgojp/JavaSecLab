@@ -7,26 +7,26 @@
 <body>
 <div class="layuimini-container">
     <div class="layuimini-main">
-        <!-- XPATH 注入攻击部分 -->
+        <!-- XPath injection demo -->
         <div class="layui-row layui-col-space15">
             <div class="layui-col-md12">
                 <fieldset class="layui-elem-field layui-field-title">
                     <legend>
-                        <a class="dos" style="color: #1e9fff;">其他漏洞 - XPATH注入</a>
+                        <a class="dos" style="color: #1e9fff;" th:text="#{other.xpath.title}">Other Vulnerabilities - XPath Injection</a>
                     </legend>
                     <blockquote class="layui-elem-quote layui-quote-nm" style="background-color: #e0f7fa;">
                         <p>
-                        <pre>  XPath是一种用于查询XML文档的表达式语言，常见于配置、身份数据、SOAP/XML接口或本地XML文件查询。</pre>
-                        <pre>  XPath注入发生在用户输入被拼接进XPath表达式时，攻击者可改变查询条件，绕过认证或读取非预期节点。</pre>
+                        <pre th:text="#{other.xpath.intro.core}">XPath is an expression language for querying XML documents.</pre>
+                        <pre th:text="#{other.xpath.intro.risk}">XPath injection occurs when user input is concatenated into an XPath expression.</pre>
                         </p>
                     </blockquote>
                 </fieldset>
             </div>
             <div class="layui-col-md12" style="margin-top: 10px;">
                 <div class="layui-row layui-col-space15">
-                    <!-- 漏洞场景部分 -->
+                    <!-- Vulnerable scenario -->
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-bug"> 漏洞场景：原生漏洞场景</span></h1>
+                        <h1><span class="iconfont icon-bug" th:text="| #{other.xpath.vul.title}|"> Vulnerable Scenario: Raw XPath Concatenation</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
@@ -34,20 +34,20 @@
                                         <form class="layui-form" style="display: flex; justify-content: space-between;">
                                             <div style="display: flex; align-items: center;">
                                                 <input type="text" name="username" style="width: 150px;" required
-                                                       lay-verify="required" value="admin" placeholder="用户名"
+                                                       lay-verify="required" value="admin" th:placeholder="#{other.xpath.username}" placeholder="Username"
                                                        autocomplete="off"
                                                        class="layui-input">
                                                 <input type="text" name="password" style="width: 150px" required
                                                        lay-verify="required"
                                                        value=" ' or '1'='1"
-                                                       placeholder="密码" autocomplete="off"
+                                                       th:placeholder="#{other.xpath.password}" placeholder="Password" autocomplete="off"
                                                        class="layui-input">
                                             </div>
                                             <div style="display: flex; align-items: center;">
                                                 <button class="layui-btn layui-btn-normal"
                                                         style="width: 100px; margin-left: 10px;"
                                                         lay-filter="vul-xpath-button" lay-submit="">
-                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                    <span class="iconfont icon-zhihang" th:text="#{other.xpath.run}">Run</span>
                                                 </button>
                                             </div>
                                         </form>
@@ -55,16 +55,16 @@
                                 </div>
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i> tips
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{other.xpath.tips}"> Tips</span>
                                         </div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e; font-size: 15px;">类似于SQL注入，可使用万能条件让谓词恒真，例如：' or '1'='1</pre>
+                                            <pre style="color: #28333e; font-size: 15px;" th:text="#{other.xpath.vul.tips}">Similar to SQL injection, a tautology can make the predicate always true.</pre>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i> 测试结果
+                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i><span th:text="#{other.xpath.testResult}"> Test Result</span>
                                         </div>
                                         <div class="layui-card-body layui-text layadmin-text">
                                             <pre id="vul-xpath-result" style="color: red; font-size: 15px;"></pre>
@@ -75,7 +75,7 @@
                         </div>
                     </div>
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="| #{other.xpath.vulnerableCode}|"> Vulnerable Code</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="vulXpath"></div>
                         </div>
@@ -85,9 +85,9 @@
             </div>
             <div class="layui-col-md12" style="margin-top: 10px;">
                 <div class="layui-row layui-col-space15">
-                    <!-- 漏洞场景部分 -->
+                    <!-- Safe scenario -->
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-anquan"> 安全场景：XPath变量绑定</span></h1>
+                        <h1><span class="iconfont icon-anquan" th:text="| #{other.xpath.safe.title}|"> Safe Scenario: XPath Variable Binding</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
@@ -95,20 +95,20 @@
                                         <form class="layui-form" style="display: flex; justify-content: space-between;">
                                             <div style="display: flex; align-items: center;">
                                                 <input type="text" name="username" style="width: 150px;" required
-                                                       lay-verify="required" value="admin" placeholder="用户名"
+                                                       lay-verify="required" value="admin" th:placeholder="#{other.xpath.username}" placeholder="Username"
                                                        autocomplete="off"
                                                        class="layui-input">
                                                 <input type="text" name="password" style="width: 150px" required
                                                        lay-verify="required"
                                                        value=" ' or '1'='1"
-                                                       placeholder="密码" autocomplete="off"
+                                                       th:placeholder="#{other.xpath.password}" placeholder="Password" autocomplete="off"
                                                        class="layui-input">
                                             </div>
                                             <div style="display: flex; align-items: center;">
                                                 <button class="layui-btn layui-btn-normal"
                                                         style="width: 100px; margin-left: 10px;"
                                                         lay-filter="safe-xpath-button" lay-submit="">
-                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                    <span class="iconfont icon-zhihang" th:text="#{other.xpath.run}">Run</span>
                                                 </button>
                                             </div>
                                         </form>
@@ -116,16 +116,16 @@
                                 </div>
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i> tips
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{other.xpath.tips}"> Tips</span>
                                         </div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e; font-size: 15px;">  不把用户输入拼接进XPath表达式，而是使用变量绑定或业务层精确匹配；XML实体转义适合写入XML文本，不能等同于XPath注入修复。</pre>
+                                            <pre style="color: #28333e; font-size: 15px;" th:text="#{other.xpath.safe.tips}">Do not concatenate user input into XPath expressions.</pre>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-warning icon-output-safe"></i> 测试结果
+                                        <div class="layui-card-header"><i class="fa fa-warning icon-output-safe"></i><span th:text="#{other.xpath.testResult}"> Test Result</span>
                                         </div>
                                         <div class="layui-card-body layui-text layadmin-text">
                                             <pre id="safe-xpath-result" style="color: red; font-size: 15px;"></pre>
@@ -136,7 +136,7 @@
                         </div>
                     </div>
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code"> 安全代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="| #{other.xpath.safeCode}|"> Safe Code</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="safeXpath"></div>
                         </div>
@@ -151,7 +151,7 @@
 
 <div th:replace="~{common/common::script}"></div>
 
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
     document.addEventListener("DOMContentLoaded", function () {
         layui.use(['layer', 'miniTab', 'common', 'form'], function () {
             var $ = layui.jquery,
@@ -162,7 +162,8 @@
                 upload = layui.upload;
 
             miniTab.listen();
-            layer.msg("其他漏洞 - XPATH注入");
+            layer.msg(/*[[#{other.xpath.toast}]]*/ "Other Vulnerabilities - XPath Injection");
+            var isEnglishXpath = /*[[${#locale.language == 'en'}]]*/ false;
 
             common.formListenFun("vul-xpath-button", "", "/other/xpath/vul", "vul-xpath-result", "get");
 
@@ -189,8 +190,12 @@
                 mode: "text/x-java"
             };
 
-            CodeMirror(document.getElementById("vulXpath"), Object.assign({}, cmConfig, {value: vulXpath}));
-            CodeMirror(document.getElementById("safeXpath"), Object.assign({}, cmConfigSafe, {value: safeXpath}));
+            CodeMirror(document.getElementById("vulXpath"), Object.assign({}, cmConfig, {
+                value: isEnglishXpath ? vulXpath : vulXpathZh
+            }));
+            CodeMirror(document.getElementById("safeXpath"), Object.assign({}, cmConfigSafe, {
+                value: isEnglishXpath ? safeXpath : safeXpathZh
+            }));
         });
     });
 </script>

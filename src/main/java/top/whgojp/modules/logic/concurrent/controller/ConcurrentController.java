@@ -3,6 +3,8 @@ package top.whgojp.modules.logic.concurrent.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,9 +29,14 @@ import java.util.concurrent.atomic.AtomicReference;
 @CrossOrigin(origins = "*")
 @RequestMapping("/logic/concurrent")
 public class ConcurrentController {
+    private final MessageSource messageSource;
     private final AtomicReference<BigDecimal> userMoney = new AtomicReference<>(new BigDecimal("1000.00"));
     private final Set<String> paidOrders = ConcurrentHashMap.newKeySet();
     private final Object paymentLock = new Object();
+
+    public ConcurrentController(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
 
     @RequestMapping("")
     public String concurrent() {
@@ -49,10 +56,10 @@ public class ConcurrentController {
         BigDecimal currentMoney = userMoney.get();
         BigDecimal payAmount = BigDecimal.valueOf(amount);
         if (currentMoney.compareTo(payAmount) < 0) {
-            return R.error("余额不足");
+            return R.error(msg("logic.concurrent.result.insufficientBalance"));
         }
         userMoney.set(currentMoney.subtract(payAmount));
-        return R.ok("支付成功！订单：" + orderId + "，剩余余额：" + userMoney.get());
+        return R.ok(msg("logic.concurrent.result.paymentSuccess", orderId, userMoney.get()));
     }
 
     @ApiOperation("安全场景：同步锁和幂等校验")
@@ -62,15 +69,15 @@ public class ConcurrentController {
         BigDecimal payAmount = BigDecimal.valueOf(amount);
         synchronized (paymentLock) {
             if (paidOrders.contains(orderId)) {
-                return R.error("订单已支付，拒绝重复扣款：" + orderId);
+                return R.error(msg("logic.concurrent.result.orderPaid", orderId));
             }
             BigDecimal currentMoney = userMoney.get();
             if (currentMoney.compareTo(payAmount) < 0) {
-                return R.error("余额不足");
+                return R.error(msg("logic.concurrent.result.insufficientBalance"));
             }
             paidOrders.add(orderId);
             userMoney.set(currentMoney.subtract(payAmount));
-            return R.ok("支付成功！订单：" + orderId + "，剩余余额：" + userMoney.get());
+            return R.ok(msg("logic.concurrent.result.paymentSuccess", orderId, userMoney.get()));
         }
     }
 
@@ -80,6 +87,10 @@ public class ConcurrentController {
     public R reset() {
         userMoney.set(new BigDecimal("1000.00"));
         paidOrders.clear();
-        return R.ok("余额已重置为1000.00元，订单状态已清空");
+        return R.ok(msg("logic.concurrent.result.reset"));
+    }
+
+    private String msg(String code, Object... args) {
+        return messageSource.getMessage(code, args, LocaleContextHolder.getLocale());
     }
 }

@@ -9,12 +9,12 @@
             <div class="layui-col-md12">
                 <fieldset class="layui-elem-field layui-field-title">
                     <legend>
-                        <a style="color: rgb(30 159 255)" class="deserialize">反序列化 - XMLDecoder</a>
+                        <a style="color: rgb(30 159 255)" class="deserialize" th:text="#{deserialize.xmlDecoder.title}">Deserialization - XMLDecoder</a>
                     </legend>
                     <blockquote class="layui-elem-quote layui-quote-nm"
                                 style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
                         <p>
-                        <pre>  XMLDecoder 是 JavaBeans 提供的对象图反序列化能力，不是普通 XML 解析器。它会根据 XML 中声明的 class、object、void、method 等节点实例化对象并调用方法，处理不可信 XML 时可能直接进入命令执行链路。</pre>
+                        <pre th:text="#{deserialize.xmlDecoder.intro}">XMLDecoder is a JavaBeans object graph deserialization feature.</pre>
                         </p>
                     </blockquote>
                 </fieldset>
@@ -23,7 +23,7 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-bug"> 漏洞场景：xmlDecoder.readObject()</span></h1>
+                        <h1><span class="iconfont icon-bug" th:text="| #{deserialize.xmlDecoder.vul.title}|"> Vulnerable Scenario: XMLDecoder.readObject()</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
@@ -35,16 +35,14 @@
                                                    class="layui-input" id="vul-XmlDecoder-input">
                                             <div style="display: flex; align-items: center;">
                                                 <select class="layui-form-select" lay-filter="vul-XmlDecoder-select">
-                                                    <option value="">示例Payload</option>
-                                                    <option value="open -a Calculator">MAC弹计算器</option>
-                                                    <option value="cmd /c calc">
-                                                        WIN弹计算器
-                                                    </option>
+                                                    <option value="" th:text="#{deserialize.payload.sample}">Sample Payload</option>
+                                                    <option value="open -a Calculator" th:text="#{deserialize.payload.calcMac}">Open Calculator - macOS</option>
+                                                    <option value="cmd /c calc" th:text="#{deserialize.payload.calcWin}">Open Calculator - Windows</option>
                                                 </select>
                                                 <button class="layui-btn layui-btn-normal"
                                                         style="width: 100px; margin-left: 10px;"
                                                         lay-filter="vul-XmlDecoder-submit" lay-submit="">
-                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                    <span class="iconfont icon-zhihang" th:text="#{button.run}">Run</span>
                                                 </button>
                                             </div>
                                         </form>
@@ -53,16 +51,16 @@
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{common.tips}">Tips</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">  用户输入被构建为包含ProcessBuilder对象的XML结构，并传入命令数组。生成的XML被XMLDecoder解析，反序列化后通过ProcessBuilder执行命令</pre>
+                                            <pre style="color: #28333e;font-size: 15px;" th:text="#{deserialize.xmlDecoder.vul.tips}">User input is built into XML containing ProcessBuilder.</pre>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i>测试结果
+                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i><span th:text="#{common.testResult}">Test Result</span>
                                         </div>
                                         <div class="layui-card-body layui-text layadmin-text">
                                             <pre id="vul-XmlDecoder-result" style="color: red;font-size: 15px;"></pre>
@@ -75,7 +73,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="| #{common.vulnerableCode}|"> Vulnerable Code</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="vulXmlDecoder"></div>
                         </div>
@@ -86,7 +84,7 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-anquan"> 安全场景：使用普通XML解析器</span></h1>
+                        <h1><span class="iconfont icon-anquan" th:text="| #{deserialize.xmlDecoder.safe.title}|"> Safe Scenario: Use a Normal XML Parser</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
@@ -98,16 +96,14 @@
                                                    class="layui-input" id="safe-XmlDecoder-input">
                                             <div style="display: flex; align-items: center;">
                                                 <select class="layui-form-select" lay-filter="safe-XmlDecoder-select">
-                                                    <option value="">示例Payload</option>
-                                                    <option value="open -a Calculator">MAC弹计算器</option>
-                                                    <option value="cmd /c calc">
-                                                        WIN弹计算器
-                                                    </option>
+                                                    <option value="" th:text="#{deserialize.payload.sample}">Sample Payload</option>
+                                                    <option value="open -a Calculator" th:text="#{deserialize.payload.calcMac}">Open Calculator - macOS</option>
+                                                    <option value="cmd /c calc" th:text="#{deserialize.payload.calcWin}">Open Calculator - Windows</option>
                                                 </select>
                                                 <button class="layui-btn layui-btn-normal"
                                                         style="width: 100px; margin-left: 10px;"
                                                         lay-filter="safe-XmlDecoder-submit" lay-submit="">
-                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                    <span class="iconfont icon-zhihang" th:text="#{button.run}">Run</span>
                                                 </button>
                                             </div>
                                         </form>
@@ -116,16 +112,16 @@
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{common.tips}">Tips</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">SAX 只按 XML 文本结构读取节点，不会按 class 属性实例化 Java 对象，也不会调用 ProcessBuilder.start()。真实业务应使用普通 XML/JSON 解析器绑定到固定 DTO，并禁用外部实体、DTD 和危险类型映射。</pre>
+                                            <pre style="color: #28333e;font-size: 15px;" th:text="#{deserialize.xmlDecoder.safe.tips}">SAX reads XML text nodes only.</pre>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i>测试结果
+                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i><span th:text="#{common.testResult}">Test Result</span>
                                         </div>
                                         <div class="layui-card-body layui-text layadmin-text">
                                             <pre id="safe-XmlDecoder-result" style="color: red;font-size: 15px;"></pre>
@@ -138,7 +134,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code"> 安全代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="| #{common.safeCode}|"> Safe Code</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="safeXmlDecoder"></div>
                         </div>
@@ -153,7 +149,7 @@
 </div>
 
 <div th:replace="~{common/common::script}"></div>
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
     document.addEventListener("DOMContentLoaded", function () {
 
         layui.use(['layer', 'miniTab', 'common', 'form'], function () {
@@ -164,7 +160,8 @@
                 form = layui.form;
 
             miniTab.listen();
-            layer.msg("反序列化 - XmlDecoder");
+            layer.msg(/*[[#{deserialize.xmlDecoder.title}]]*/ "Deserialization - XMLDecoder");
+            var isEnglish = /*[[${#locale.language == 'en'}]]*/ false;
 
             common.formListenFun("vul-XmlDecoder-submit", "", "/xmlDecoder/vul", "vul-XmlDecoder-result", "post");
             common.selectListenFun("vul-XmlDecoder-select", "vul-XmlDecoder-input");
@@ -194,17 +191,17 @@
             };
 
             CodeMirror(document.getElementById("vulXmlDecoder"), Object.assign({}, cmConfig, {
-                value: vulXmlDecoder
+                value: isEnglish ? vulXmlDecoder : vulXmlDecoderZh
             }));
             CodeMirror(document.getElementById("safeXmlDecoder"), Object.assign({}, cmConfigSafe, {
-                value: safeXmlDecoder
+                value: isEnglish ? safeXmlDecoder : safeXmlDecoderZh
             }));
 
         });
 
         $('.deserialize').hover(function () {
             $(this).css('cursor', 'pointer');
-            layer.tips('漏洞原理', this, {
+            layer.tips(/*[[#{common.principle}]]*/ 'Principle', this, {
                 tips: [1, '#0051ff'],
                 time: 2000
             });
@@ -215,7 +212,7 @@
                 type: 1,
                 title: false,
                 closeBtn: 1,
-                area: ['781px', '440px'], // 宽高可以根据需要调整
+                area: ['781px', '440px'],
                 shadeClose: true,
                 content: '<div style="text-align: center;"><img src="/images/vul/components/deserialize.jpg" style="width: 100%; height: 50%;"></div>'
             });

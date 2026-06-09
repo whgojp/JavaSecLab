@@ -9,13 +9,13 @@
             <div class="layui-col-md12">
                 <fieldset class="layui-elem-field layui-field-title">
                     <legend>
-                        <a style="color: rgb(30 159 255)" class="jackson">组件漏洞 - Jackson反序列化</a>
+                        <a style="color: rgb(30 159 255)" class="jackson" th:text="#{component.jackson.title}">Component Vulnerability - Jackson Deserialization</a>
                     </legend>
                     <blockquote class="layui-elem-quote layui-quote-nm"
                                 style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
                         <p>
-                        <pre>  Jackson是一个强大而高效的Java库，类似于Fastjson，可以方便地在Java对象和JSON之间进行转换</pre>
-                        <pre>  在Jackson 2.9及之前版本中，启用Default Typing或使用@JsonTypeInfo注解时，存在反序列化漏洞的风险</pre>
+                        <pre th:text="#{component.jackson.intro1}">Jackson converts between Java objects and JSON.</pre>
+                        <pre th:text="#{component.jackson.intro2}">Default Typing can expose deserialization risks.</pre>
                         </p>
                     </blockquote>
                 </fieldset>
@@ -24,16 +24,16 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-bug"> 漏洞场景</span></h1>
+                        <h1><span class="iconfont icon-bug" th:text="| #{component.common.vul.title}|"> Vulnerable Scenario</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
-                                        <p>点击跳转后需要自行构造触发payload</p>
+                                        <p th:text="#{component.common.manualPayload}">Open the target page and build the payload manually.</p>
                                         <a target="_blank" href='/jackson/vul'>
                                             <button class="layui-btn layui-btn-normal"
                                                     style="width: 100px; margin-left: 10px;">
-                                                <span class="iconfont icon-zhihang">Run</span>
+                                                <span class="iconfont icon-zhihang" th:text="#{button.run}">Run</span>
                                             </button>
                                         </a>
                                     </blockquote>
@@ -44,7 +44,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="| #{common.vulnerableCode}|"> Vulnerable Code</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="vulJackson"></div>
                         </div>
@@ -54,16 +54,16 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-anquan"> 安全场景：禁止开启DefaultTyping</span></h1>
+                        <h1><span class="iconfont icon-anquan" th:text="| #{component.jackson.safe.title}|"> Safe Scenario: Disable DefaultTyping</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
-                                        <p>禁止开启DefaultTyping功能</p>
+                                        <p th:text="#{component.jackson.safe.desc}">Do not enable DefaultTyping.</p>
                                         <a target="_blank" href='/jackson/safe'>
                                             <button class="layui-btn layui-btn-normal"
                                                     style="width: 100px; margin-left: 10px;">
-                                                <span class="iconfont icon-zhihang">Run</span>
+                                                <span class="iconfont icon-zhihang" th:text="#{button.run}">Run</span>
                                             </button>
                                         </a>
                                     </blockquote>
@@ -71,11 +71,9 @@
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{common.tips}">tips</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">安全编码规范：
-  1、升级方案：升级Jackson组件到或最新版本
-  2、非升级修复：1.4.10后可启动默认安全配置 setupDefaultSecurity()</pre>
+                                            <pre style="color: #28333e;font-size: 15px;" th:text="#{component.jackson.safe.tips}">Secure coding guidance.</pre>
                                         </div>
                                     </div>
                                 </div>
@@ -85,7 +83,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code"> 安全代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="| #{common.safeCode}|"> Safe Code</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="safeJackson"></div>
                         </div>
@@ -99,7 +97,7 @@
 </div>
 
 <div th:replace="~{common/common::script}"></div>
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
     document.addEventListener("DOMContentLoaded", function () {
 
         layui.use(['layer', 'miniTab', 'common', 'form'], function () {
@@ -110,7 +108,13 @@
                 form = layui.form;
 
             miniTab.listen();
-            layer.msg("组件漏洞 - Jackson反序列化");
+            layer.msg(/*[[#{component.jackson.title}]]*/ "Component Vulnerability - Jackson Deserialization");
+            var isEnglish = /*[[${#locale.language == 'en'}]]*/ false;
+            var codeSnippets = window.componentCodeSnippets || {};
+
+            function codeSnippet(enName, zhName) {
+                return codeSnippets[isEnglish ? enName : zhName] || codeSnippets[enName] || "";
+            }
 
             var cmConfig = {
                 lineNumbers: true,
@@ -135,16 +139,16 @@
             };
 
             CodeMirror(document.getElementById("vulJackson"), Object.assign({}, cmConfig, {
-                value: vulJackson
+                value: codeSnippet("vulJackson", "vulJacksonZh")
             }));
             CodeMirror(document.getElementById("safeJackson"), Object.assign({}, cmConfigSafe, {
-                value: safeJackson
+                value: codeSnippet("safeJackson", "safeJacksonZh")
             }));
         });
 
         $('.jackson').hover(function () {
             $(this).css('cursor', 'pointer');
-            layer.tips('攻击流程图', this, {
+            layer.tips(/*[[#{component.common.attackFlow}]]*/ 'Attack Flow', this, {
                 tips: [1, '#0051ff'],
                 time: 2000
             });
@@ -155,7 +159,7 @@
                 type: 1,
                 title: false,
                 closeBtn: 1,
-                area: ['1116px', '572px'], // 宽高可以根据需要调整
+                area: ['1116px', '572px'],
                 shadeClose: true,
                 content: '<div style="text-align: center;"><img src="/images/vul/components/fastjson.png" style="width: 100%; height: 50%;"></div>'
             });

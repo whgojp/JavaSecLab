@@ -9,40 +9,39 @@
             <div class="layui-col-md12">
                 <fieldset class="layui-elem-field layui-field-title">
                     <legend>
-                        <a style="color: rgb(30 159 255)" class="shiro">娱乐模块 - 监听与劫持</a>
+                        <a style="color: rgb(30 159 255)" class="hijack" th:text="#{funny.hijack.title}">娱乐模块 - 监听与劫持</a>
                     </legend>
                     <blockquote class="layui-elem-quote layui-quote-nm"
                                 style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
                         <p>
-                        <pre>  Apache Shiro是一个强大的开源安全框架，主要用于Java应用程序的认证、授权、加密和会话管理。在1.2.4及以前版本存在多个反序列化漏洞(例如：Shiro-550 Shiro-721)。</pre>
-                        <pre>  Shiro 550漏洞利用过程：攻击者通过已知的Shiro默认加密密钥解密、修改并重新加密恶意序列化对象到remember-me Cookie中，服务器在处理该Cookie时反序列化恶意对象，导致远程代码执行(RCE)。</pre>
+                        <pre th:text="#{funny.hijack.intro1}">  该场景用于演示浏览器高危能力被滥用时的风险：摄像头、麦克风、键盘输入、定位等能力一旦被诱导授权或被嵌入到不可信页面中，可能造成隐私泄露。</pre>
+                        <pre th:text="#{funny.hijack.intro2}">  真实业务应通过 HTTPS、明确授权提示、最小化权限申请、权限状态提示、禁止不可信嵌入和敏感操作审计来降低风险。</pre>
                         </p>
                     </blockquote>
                 </fieldset>
             </div>
-            <!--            劫持摄像头-->
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-bug"> 摄像头劫持</span></h1>
+                        <h1><span class="iconfont icon-bug" th:text="#{funny.hijack.camera}"> 摄像头劫持</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
                                         <form class="layui-form" style="display: flex; justify-content: space-between;">
                                             <div style="display: flex; align-items: center;">
-                                                <p>获取Shiro硬编码密钥做演示</p>
+                                                <p th:text="#{funny.hijack.desc}">演示摄像头权限申请与关闭流程</p>
                                             </div>
                                             <div style="display: flex; align-items: center;">
                                                 <button class="layui-btn layui-btn-normal"
                                                         style="width: 100px; margin-left: 10px;"
                                                         lay-filter="shot" lay-submit="">
-                                                    打开摄像头
+                                                    <span th:text="#{funny.hijack.openCamera}">打开摄像头</span>
                                                 </button>
                                                 <button class="layui-btn layui-btn-normal"
                                                         style="width: 100px; margin-left: 10px;"
                                                         lay-filter="shut" lay-submit="">
-                                                    关闭摄像头
+                                                    <span th:text="#{funny.hijack.closeCamera}">关闭摄像头</span>
                                                 </button>
                                             </div>
                                         </form>
@@ -51,19 +50,19 @@
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{common.tips}">tips</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">  服务器接收cookie处理的流程：得到RememberMe的cookie值->Base64解码->AES解密->反序列化</pre>
+                                            <pre style="color: #28333e;font-size: 15px;" th:text="#{funny.hijack.tips}">  浏览器会在调用摄像头前请求用户授权。安全设计应避免诱导式授权，清晰展示权限用途，并在不需要时及时释放媒体流。</pre>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i>测试结果
+                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i><span th:text="#{common.testResult}">测试结果</span>
                                         </div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre id="vul-shiro-result" style="color: red;font-size: 15px;"></pre>
+                                            <pre id="camera-result" style="color: red;font-size: 15px;"></pre>
                                         </div>
                                     </div>
                                 </div>
@@ -73,21 +72,21 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
-                        <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
-                            <div class="code-editor" id="vulShiro"></div>
-                        </div>
+                        <h1><span class="iconfont icon-code" th:text="#{common.vulnerableCode}"> 缺陷代码</span></h1>
+                        <pre class="layui-code" lay-title="JavaScript" lay-skin="notepad">
+navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+    .then(function(stream) {
+        video.srcObject = stream;
+    });
+
+function stopCamera(stream) {
+    stream.getTracks().forEach(function(track) {
+        track.stop();
+    });
+}</pre>
                     </div>
                 </div>
             </div>
-
-            <!--            监听麦克风-->
-
-            <!--            键盘记录-->
-
-            <!--            定位追踪-->
-
-            <!--            webshell-->
 
         </div>
     </div>
@@ -95,7 +94,7 @@
 </div>
 
 <div th:replace="~{common/common::script}"></div>
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
     document.addEventListener("DOMContentLoaded", function () {
 
         layui.use(['layer', 'miniTab', 'common', 'form'], function () {
@@ -106,65 +105,40 @@
                 form = layui.form;
 
             miniTab.listen();
-            layer.msg("组件漏洞 - Shiro反序列化");
+            layer.msg(/*[[#{funny.hijack.title}]]*/ "娱乐模块 - 监听与劫持");
 
 
             form.on('submit(shot)', function (data) {
 
-                alert("open camera")
+                alert(/*[[#{funny.hijack.openToast}]]*/ "打开摄像头")
             });
             form.on('submit(shut)', function (data) {
-                alert("close camera")
+                alert(/*[[#{funny.hijack.closeToast}]]*/ "关闭摄像头")
             });
 
 
-            var cmConfig = {
-                lineNumbers: true,
-                lineWrapping: false,
-                indentUnit: 4,
-                indentWithTabs: true,
-                theme: 'juejin',
-                styleActiveLine: {nonEmpty: true},
-                fontSize: "18px",
-                mode: "text/x-java"
-            };
-
-            var cmConfigSafe = {
-                lineNumbers: true,
-                lineWrapping: false,
-                indentUnit: 4,
-                indentWithTabs: true,
-                theme: 'juejinsafe',
-                styleActiveLine: {nonEmpty: true},
-                fontSize: "18px",
-                mode: "text/x-java"
-            };
-
-            CodeMirror(document.getElementById("vulShiro"), Object.assign({}, cmConfig, {
-                value: vulShiro
-            }));
-            CodeMirror(document.getElementById("safeShiro"), Object.assign({}, cmConfigSafe, {
-                value: safeShiro
-            }));
+            layui.code({
+                about: false
+            });
 
         });
 
-        $('.shiro').hover(function () {
+        $('.hijack').hover(function () {
             $(this).css('cursor', 'pointer');
-            layer.tips('RememberMe序列化过程', this, {
+            layer.tips(/*[[#{funny.hijack.flowTip}]]*/ '摄像头权限风险说明', this, {
                 tips: [1, '#0051ff'],
                 time: 2000
             });
         });
 
-        $('.shiro').on('click', function () {
+        $('.hijack').on('click', function () {
             layer.open({
                 type: 1,
                 title: false,
                 closeBtn: 1,
-                area: ['975px', '672px'], // 宽高缩小为0.9倍
+                area: ['859px', '506px'],
                 shadeClose: true,
-                content: '<div style="text-align: center;"><img src="/static/images/vul/components/shiro.png" style="width: 100%; height: 100%;"></div>'
+                content: '<div style="text-align: center;"><img src="/static/images/vul/xss/dom.png" style="width: 100%; height: 100%;"></div>'
             });
         });
 

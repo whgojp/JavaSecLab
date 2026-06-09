@@ -7,11 +7,11 @@
         <div class="layui-row layui-col-space15">
             <div class="layui-col-md12">
                 <fieldset class="layui-elem-field layui-field-title">
-                    <legend style="color: rgb(30 159 255)">任意文件操作 - 文件读取</legend>
+                    <legend style="color: rgb(30 159 255)" th:text="#{file.read.title}">任意文件操作 - 文件读取</legend>
                     <blockquote class="layui-elem-quote layui-quote-nm"
                                 style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
                         <p>
-                        <pre>  任意文件读取：应用将用户可控的文件名或路径直接用于文件读取，未做目录边界限制和路径标准化，攻击者可通过绝对路径或 ../ 目录穿越读取敏感文件，造成配置、密钥、源码或系统信息泄露。</pre>
+                        <pre th:text="#{file.read.intro}">  任意文件读取：应用将用户可控的文件名或路径直接用于文件读取，未做目录边界限制和路径标准化，攻击者可通过绝对路径或 ../ 目录穿越读取敏感文件，造成配置、密钥、源码或系统信息泄露。</pre>
                         </p>
                     </blockquote>
                 </fieldset>
@@ -21,10 +21,10 @@
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
                         <h1 style="display: flex; justify-content: space-between; align-items: center;height: 33.5px">
-                            <span class="iconfont icon-bug"> 漏洞场景：原生漏洞场景</span>
+                            <span class="iconfont icon-bug" th:text="| #{file.common.vul.native}|"> 漏洞场景：原生漏洞场景</span>
                             <span class="iconfont icon-liuliang1">
                                 <a href="/other/datapackage/file/read.pcapng" download="read.pcapng"
-                                   style="margin-right: 19px;color: #00bb00">流量分析</a>
+                                   style="margin-right: 19px;color: #00bb00" th:text="#{file.common.traffic}">流量分析</a>
                             </span>
                         </h1>
                         <div class="layui-tab layui-tab-brief">
@@ -32,10 +32,10 @@
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
-                                        <p>文件路径没做限制，可使用绝对路径或 ../ 遍历读取文件</p>
+                                        <p th:text="#{file.read.vulDesc}">文件路径没做限制，可使用绝对路径或 ../ 遍历读取文件</p>
                                         <a target="_blank" href="/file/read/vul?fileName=/etc/hosts">
                                             <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
-                                                <span class="iconfont icon-zhihang">Run</span>
+                                                <span class="iconfont icon-zhihang" th:text="#{file.common.run}">Run</span>
                                             </button>
                                         </a>
                                     </blockquote>
@@ -48,7 +48,7 @@
 
                     <div class="layui-col-md6">
                         <h1 style="display: flex; align-items: center; height: 33.5px;">
-                            <span class="iconfont icon-code" style="height: 22.5px;">缺陷代码</span>
+                            <span class="iconfont icon-code" style="height: 22.5px;" th:text="#{file.common.vulnerableCode}">缺陷代码</span>
                         </h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="readFile">
@@ -61,16 +61,16 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-anquan">  安全场景：文件读取目录限制</span></h1>
+                        <h1><span class="iconfont icon-anquan" th:text="|  #{file.common.safe.readScope}|">  安全场景：文件读取目录限制</span></h1>
                         <div class="layui-tab layui-tab-brief">
 
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
-                                        <p>安全场景将读取范围限制在上传目录内，可尝试读取目录内文件或使用 /etc/hosts 验证拦截效果</p>
+                                        <p th:text="#{file.read.safeDesc}">安全场景将读取范围限制在上传目录内，可尝试读取目录内文件或使用 /etc/hosts 验证拦截效果</p>
                                         <a target="_blank" href="/file/read/safe?fileName=/etc/hosts">
                                             <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;">
-                                                <span class="iconfont icon-zhihang">Run</span>
+                                                <span class="iconfont icon-zhihang" th:text="#{file.common.run}">Run</span>
                                             </button>
                                         </a>
                                     </blockquote>
@@ -78,14 +78,9 @@
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{file.common.tips}">tips</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">安全编码建议：
-  1、先确定允许访问的根目录，再使用 resolve + normalize 标准化目标路径。
-  2、使用 startsWith(basePath) 校验目录边界，避免只做字符串替换或黑名单过滤。
-  3、对已存在文件再校验 toRealPath，避免通过符号链接绕出允许目录。
-  4、按业务使用文件 ID、枚举名或白名单映射，尽量不让用户直接传入物理路径。
-  5、只读取普通文件，并结合权限控制、审计日志和敏感文件隔离。</pre>
+                                            <pre style="color: #28333e;font-size: 15px;" th:text="#{file.read.safeTips}">安全编码建议</pre>
                                         </div>
                                     </div>
                                 </div>
@@ -94,7 +89,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code">  安全代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="|  #{file.common.safeCode}|">  安全代码</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="safeReadFile">
                             </div>
@@ -107,13 +102,14 @@
 </div>
 
 <div th:replace="~{common/common::script}"></div>
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
     layui.use(['layer', 'miniTab', 'common', 'upload'], function () {
         var $ = layui.jquery,
             layer = layui.layer,
             miniTab = layui.miniTab;
         miniTab.listen();
-        layer.msg("任意文件类-文件读取")
+        layer.msg(/*[[#{file.read.toast}]]*/ "任意文件类-文件读取")
+        var isEnglishFile = /*[[${#locale.language == 'en'}]]*/ false;
 
 
         var cmConfig = {
@@ -139,10 +135,10 @@
         };
 
         CodeMirror(document.getElementById("readFile"), Object.assign({}, cmConfig, {
-            value: readFile
+            value: isEnglishFile ? readFile : readFileZh
         }));
         CodeMirror(document.getElementById("safeReadFile"), Object.assign({}, cmConfigSafe, {
-            value: safeReadFile
+            value: isEnglishFile ? safeReadFile : safeReadFileZh
         }));
 
 

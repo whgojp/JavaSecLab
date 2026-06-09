@@ -7,17 +7,16 @@
 <body>
 <div class="layuimini-container">
     <div class="layuimini-main">
-        <!-- DoS攻击部分 -->
         <div class="layui-row layui-col-space15">
             <div class="layui-col-md12">
                 <fieldset class="layui-elem-field layui-field-title">
                     <legend>
-                        <a class="idor" style="color: rgb(30 159 255)">逻辑漏洞 - 越权漏洞</a>
+                        <a class="idor" style="color: rgb(30 159 255)" th:text="#{logic.idor.title}">逻辑漏洞 - 越权漏洞</a>
                     </legend>
                     <blockquote class="layui-elem-quote layui-quote-nm" style="background-color: #a7deefab;">
                         <p>
-                        <pre>  IDOR(不安全的直接对象引用)：服务端把用户可控的对象标识符直接用于查询或操作资源，但没有校验该资源是否属于当前登录用户。</pre>
-                        <pre>  水平越权：低权限差异不明显的同级用户之间，通过修改用户名、用户ID、订单ID、文件名等标识访问他人资源。</pre>
+                        <pre th:text="#{logic.idor.intro.core}">IDOR(不安全的直接对象引用)：服务端把用户可控的对象标识符直接用于查询或操作资源，但没有校验该资源是否属于当前登录用户。</pre>
+                        <pre th:text="#{logic.idor.intro.horizontal}">水平越权：低权限差异不明显的同级用户之间，通过修改用户名、用户ID、订单ID、文件名等标识访问他人资源。</pre>
                         </p>
                     </blockquote>
                 </fieldset>
@@ -26,7 +25,7 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-bug"> 漏洞场景：水平遍历用户信息</span></h1>
+                        <h1><span class="iconfont icon-bug" th:text="| #{logic.idor.horizontal.vul.title}|"> 漏洞场景：水平遍历用户信息</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
@@ -39,7 +38,7 @@
                                                 <button class="layui-btn layui-btn-normal"
                                                         style="width: 100px; margin-left: 10px;"
                                                         lay-filter="vul-horizontal-button" lay-submit="">
-                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                    <span class="iconfont icon-zhihang" th:text="#{logic.idor.run}">Run</span>
                                                 </button>
                                             </div>
                                         </form>
@@ -48,19 +47,16 @@
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{logic.idor.tips}">tips</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">问题点：
-  1、接口直接信任请求参数中的 username，没有校验资源归属。
-  2、URL、POST参数、Cookie、Header、文件名、订单号等对象标识都可能成为越权入口。
-  3、返回密码等敏感字段会进一步扩大越权影响。</pre>
+                                            <pre style="color: #28333e;font-size: 15px;" th:text="#{logic.idor.horizontal.vul.tips}">问题点</pre>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i>测试结果
+                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i><span th:text="#{logic.idor.testResult}">测试结果</span>
                                         </div>
                                         <div class="layui-card-body layui-text layadmin-text">
                                             <pre id="vul-horizontal-result"
@@ -74,7 +70,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="| #{logic.idor.vulnerableCode}|"> 缺陷代码</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="vulHorizon"></div>
                         </div>
@@ -86,7 +82,7 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-anquan"> 安全场景：验证Session</span></h1>
+                        <h1><span class="iconfont icon-anquan" th:text="| #{logic.idor.horizontal.safe.title}|"> 安全场景：验证Session</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
@@ -99,7 +95,7 @@
                                                 <button class="layui-btn layui-btn-normal"
                                                         style="width: 100px; margin-left: 10px;"
                                                         lay-filter="safe-horizontal-button" lay-submit="">
-                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                    <span class="iconfont icon-zhihang" th:text="#{logic.idor.run}">Run</span>
                                                 </button>
                                             </div>
                                         </form>
@@ -108,19 +104,16 @@
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{logic.idor.tips}">tips</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">安全编码建议：
-  1、当前用户身份从 Session、JWT、OAuth Token 等可信上下文获取，不从请求参数决定。
-  2、每次读取或修改资源前，都校验资源 owner 与当前用户是否匹配。
-  3、不可预测ID只能降低枚举概率，不能替代服务端授权校验。</pre>
+                                            <pre style="color: #28333e;font-size: 15px;" th:text="#{logic.idor.horizontal.safe.tips}">安全编码建议</pre>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-warning icon-output-safe"></i>测试结果
+                                        <div class="layui-card-header"><i class="fa fa-warning icon-output-safe"></i><span th:text="#{logic.idor.testResult}">测试结果</span>
                                         </div>
                                         <div class="layui-card-body layui-text layadmin-text">
                                             <pre id="safe-horizontal-result"
@@ -134,7 +127,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code"> 安全代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="| #{logic.idor.safeCode}|"> 安全代码</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="safeHorizon"></div>
                         </div>
@@ -149,7 +142,7 @@
 
 <div th:replace="~{common/common::script}"></div>
 
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
     layui.use(['layer', 'miniTab', 'common', 'form'], function () {
         var $ = layui.jquery,
             layer = layui.layer,
@@ -163,7 +156,8 @@
 
 
         miniTab.listen();
-        layer.msg("其他漏洞-水平越权");
+        layer.msg(/*[[#{logic.idor.horizontal.toast}]]*/ "其他漏洞-水平越权");
+        var isEnglishIdor = /*[[${#locale.language == 'en'}]]*/ false;
 
         var cmConfig = {
             lineNumbers: true,
@@ -187,12 +181,12 @@
             mode: "text/x-java"
         };
 
-        CodeMirror(document.getElementById("vulHorizon"), Object.assign({}, cmConfig, { value: vulHorizon }));
-        CodeMirror(document.getElementById("safeHorizon"), Object.assign({}, cmConfigSafe, { value: safeHorizon }));
+        CodeMirror(document.getElementById("vulHorizon"), Object.assign({}, cmConfig, { value: isEnglishIdor ? vulHorizon : vulHorizonZh }));
+        CodeMirror(document.getElementById("safeHorizon"), Object.assign({}, cmConfigSafe, { value: isEnglishIdor ? safeHorizon : safeHorizonZh }));
 
         $('.idor').hover(function () {
             $(this).css('cursor', 'pointer');
-            layer.tips('漏洞示意图', this, {
+            layer.tips(/*[[#{logic.idor.diagramTip}]]*/ '漏洞示意图', this, {
                 tips: [1, '#0051ff'],
                 time: 2000
             });

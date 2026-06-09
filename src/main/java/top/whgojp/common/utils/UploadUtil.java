@@ -17,6 +17,11 @@ public class UploadUtil {
     private SysConstant sysConstant;
 
     public String uploadFile(MultipartFile file, String suffix, String path) throws IOException {
+        String fileUrl = uploadFileAndReturnUrl(file, suffix, path);
+        return "上传文件成功，文件路径：" + fileUrl;
+    }
+
+    public String uploadFileAndReturnUrl(MultipartFile file, String suffix, String path) throws IOException {
         // 从配置中获取上传目录
         String uploadFolderPath = sysConstant.getUploadFolder();
         try {
@@ -31,7 +36,7 @@ public class UploadUtil {
             // 保存文件
             file.transferTo(new File(newFilePath));
             log.info("上传文件成功，文件路径：" + newFilePath);
-            return "上传文件成功，文件路径：" + path + fileName;
+            return path + fileName;
         } catch (IOException e) {
             log.error("文件上传失败：{}", e.getMessage(), e);
             throw e; // 重新抛出异常供上层处理

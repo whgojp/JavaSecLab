@@ -13,24 +13,24 @@ import java.util.Map;
 public enum LoginError {
 
 
-    FAILURE(0, "登录失败！"),
+    FAILURE(0, "login.error.failure"),
 
-    BADCREDENTIALS(1, "用户名或密码错误!"),
+    BADCREDENTIALS(1, "login.error.badCredentials"),
 
-    LOCKED(2, "用户已被锁定，无法登录！"),
+    LOCKED(2, "login.error.locked"),
 
-    ACCOUNTEXPIRED(3, "用户已过时，无法登录！"),
+    ACCOUNTEXPIRED(3, "login.error.accountExpired"),
 
-    USERNAMENOTFOUND(4, "用户不存在！"),
+    USERNAMENOTFOUND(4, "login.error.usernameNotFound"),
 
-    CAPTCHANOTFOUND(5,"验证码不能为空！"),
-    CAPTCHAEXPIRED(6,"验证码已过期！"),
-    CAPTCHAERROR(7,"验证码错误！");
+    CAPTCHANOTFOUND(5,"login.error.captchaNotFound"),
+    CAPTCHAEXPIRED(6,"login.error.captchaExpired"),
+    CAPTCHAERROR(7,"login.error.captchaError");
 
 
     private Integer type;
 
-    private String message;
+    private String messageCode;
 
     private final static Map<Integer, LoginError> mappings = new HashMap<>();
 
@@ -50,15 +50,15 @@ public enum LoginError {
         return type != null ? mappings.get(type) : null;
     }
 
-    public static String getMessage(Integer type) {
+    public static String getMessageCode(Integer type) {
         LoginError loginError = resolve(type);
 
-        return loginError != null ? loginError.message : null;
+        return loginError != null ? loginError.messageCode : null;
     }
 
-    LoginError(Integer type, String message) {
+    LoginError(Integer type, String messageCode) {
         this.type = type;
-        this.message = message;
+        this.messageCode = messageCode;
     }
 
     public Integer getType() {
@@ -69,11 +69,11 @@ public enum LoginError {
         this.type = type;
     }
 
-    public String getMessage() {
-        return message;
+    public String getMessageCode() {
+        return messageCode;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setMessageCode(String messageCode) {
+        this.messageCode = messageCode;
     }
 }

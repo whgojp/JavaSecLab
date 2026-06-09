@@ -8,14 +8,14 @@
 
             <div class="layui-col-md12">
                 <fieldset class="layui-elem-field layui-field-title">
-                    <legend><a style="color: rgb(30 159 255)" class="sqli-jdbc">SQL注入攻击 - JDBC</a></legend>
+                    <legend><a style="color: rgb(30 159 255)" class="sqli-jdbc" th:text="#{sqli.common.title.jdbc}">SQL注入攻击 - JDBC</a></legend>
                     <blockquote class="layui-elem-quote layui-quote-nm"
                                 style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
                         <p>
-                        <pre>  SQL注入的本质是：不可信输入被拼接进SQL语法结构，导致攻击者改变原SQL语义，进而造成越权查询、数据泄露、数据篡改或破坏。</pre>
-                        <pre>  注入点不只来自输入框，也可能来自URL参数、Header、JSON字段、排序字段、分页参数以及ORM查询语句等位置。</pre>
-                        <pre>  修复优先级：参数值使用PreparedStatement/JdbcTemplate参数绑定；列名、排序方向、表名等SQL结构必须使用枚举或白名单映射。</pre>
-                        <pre>  JDBC(Java Database Connectivity)是一套用于在Java程序中操作关系型数据库的API。它提供了一种标准的Java方法来连接和执行SQL查询，从而实现与数据库的交互</pre>
+                        <pre th:text="#{sqli.common.intro.core}">  SQL注入的本质是：不可信输入被拼接进SQL语法结构，导致攻击者改变原SQL语义，进而造成越权查询、数据泄露、数据篡改或破坏。</pre>
+                        <pre th:text="#{sqli.common.intro.entry}">  注入点不只来自输入框，也可能来自URL参数、Header、JSON字段、排序字段、分页参数以及ORM查询语句等位置。</pre>
+                        <pre th:text="#{sqli.common.intro.fix}">  修复优先级：参数值使用PreparedStatement/JdbcTemplate参数绑定；列名、排序方向、表名等SQL结构必须使用枚举或白名单映射。</pre>
+                        <pre th:text="#{sqli.jdbc.intro}">  JDBC(Java Database Connectivity)是一套用于在Java程序中操作关系型数据库的API。它提供了一种标准的Java方法来连接和执行SQL查询，从而实现与数据库的交互</pre>
                         </p>
                     </blockquote>
                 </fieldset>
@@ -25,16 +25,16 @@
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
                         <h1 style="display: flex; justify-content: space-between; align-items: center;margin-top: 10px">
-                            <span class="iconfont icon-bug">  漏洞场景：JDBC-原生SQL语句拼接</span>
+                            <span class="iconfont icon-bug" th:text="#{sqli.common.vul.nativeSql}">  漏洞场景：JDBC-原生SQL语句拼接</span>
                             <span class="iconfont icon-liuliang1 custom-flow-select"
                                   style="display: flex; align-items: center; gap: 5px;">
                                 <form class="layui-form">
                                     <select lay-verify="" lay-filter="sqliFlowSelect">
-                                        <option value="">流量分析</option>
-                                        <option value="sqli_time">延时注入</option>
-                                        <option value="sqli_boolean">布尔注入</option>
-                                        <option value="sqli_error">报错注入</option>
-                                        <option value="sqli_xpath">Xpath注入</option>
+                                        <option value="" th:text="#{sqli.common.traffic}">流量分析</option>
+                                        <option value="sqli_time" th:text="#{sqli.common.payload.time}">延时注入</option>
+                                        <option value="sqli_boolean" th:text="#{sqli.common.payload.boolean}">布尔注入</option>
+                                        <option value="sqli_error" th:text="#{sqli.common.payload.error}">报错注入</option>
+                                        <option value="sqli_xpath" th:text="#{sqli.common.payload.xpath}">Xpath注入</option>
                                     </select>
                                 </form>
                         </span>
@@ -52,10 +52,10 @@
                         </h1>
                         <div class="layui-tab layui-tab-brief">
                             <ul class="layui-tab-title">
-                                <li class="layui-this">增加-add</li>
-                                <li>删除-delete</li>
-                                <li>修改-update</li>
-                                <li>查询-select</li>
+                                <li class="layui-this" th:text="#{sqli.common.action.add}">增加-add</li>
+                                <li th:text="#{sqli.common.action.delete}">删除-delete</li>
+                                <li th:text="#{sqli.common.action.update}">修改-update</li>
+                                <li th:text="#{sqli.common.action.select}">查询-select</li>
                             </ul>
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
@@ -63,20 +63,20 @@
                                         <form class="layui-form" style="display: flex; justify-content: space-between;">
                                             <div style="display: flex; align-items: center;">
                                                 <input type="text" name="username" style="width: 150px;" required
-                                                       lay-verify="required" value="test" placeholder="用户名" autocomplete="off"
+                                                       lay-verify="required" value="test" placeholder="用户名" th:placeholder="#{sqli.common.username}" autocomplete="off"
                                                        class="layui-input">
                                                 <input type="text" name="password" style="width: 150px" required
-                                                       lay-verify="required" value="1' and updatexml(1,concat(0x7e,(SELECT user()),0x7e),1) AND '1'='1" placeholder="密码" autocomplete="off"
+                                                       lay-verify="required" value="1' and updatexml(1,concat(0x7e,(SELECT user()),0x7e),1) AND '1'='1" placeholder="密码" th:placeholder="#{sqli.common.password}" autocomplete="off"
                                                        class="layui-input" id="vul1-raw-joint-add-pass">
                                             </div>
                                             <div style="display: flex; align-items: center;">
                                                 <select class="layui-form-select"
                                                         style="background-color: #5eb878;!important;"lay-filter="vul1-raw-joint-add-select">
-                                                    <option value="">示例Payload</option>
-                                                    <option value="1' AND (SELECT 4804 FROM (SELECT(SLEEP(5)))iBHa) AND '1'='1">延时注入</option>
-                                                    <option value="1' AND ELT(5753=5754,6782) AND '1'='1">布尔盲注</option>
-                                                    <option value="1' AND GTID_SUBSET(CONCAT(0x71706a7a71,(SELECT (ELT(7170=7170,1))),0x7171717071),7170) AND '1'='1">报错注入</option>
-                                                    <option value="1' and updatexml(1,concat(0x7e,(SELECT user()),0x7e),1) AND '1'='1">xpath注入</option>
+                                                    <option value="" th:text="#{sqli.common.payload.example}">示例Payload</option>
+                                                    <option value="1' AND (SELECT 4804 FROM (SELECT(SLEEP(5)))iBHa) AND '1'='1" th:text="#{sqli.common.payload.time}">延时注入</option>
+                                                    <option value="1' AND ELT(5753=5754,6782) AND '1'='1" th:text="#{sqli.common.payload.booleanBlind}">布尔盲注</option>
+                                                    <option value="1' AND GTID_SUBSET(CONCAT(0x71706a7a71,(SELECT (ELT(7170=7170,1))),0x7171717071),7170) AND '1'='1" th:text="#{sqli.common.payload.error}">报错注入</option>
+                                                    <option value="1' and updatexml(1,concat(0x7e,(SELECT user()),0x7e),1) AND '1'='1" th:text="#{sqli.common.payload.xpath}">xpath注入</option>
                                                 </select>
                                                 <button class="layui-btn layui-btn-normal"
                                                         style="width: 100px; margin-left: 10px;"
@@ -93,7 +93,7 @@
                                         <form class="layui-form" style="display: flex; justify-content: space-between;">
                                             <div style="display: flex; align-items: center;">
                                                 <input type="text" name="id" style="width: 150px;" required
-                                                       lay-verify="required" placeholder="用户id" autocomplete="off"
+                                                       lay-verify="required" placeholder="用户id" th:placeholder="#{sqli.common.userId}" autocomplete="off"
                                                        class="layui-input">
                                             </div>
                                             <div style="display: flex; align-items: center;">
@@ -111,13 +111,13 @@
                                         <form class="layui-form" style="display: flex; justify-content: space-between;">
                                             <div style="display: flex; align-items: center;">
                                                 <input type="text" name="id" style="width: 150px;" required
-                                                       lay-verify="required" placeholder="用户id" autocomplete="off"
+                                                       lay-verify="required" placeholder="用户id" th:placeholder="#{sqli.common.userId}" autocomplete="off"
                                                        class="layui-input">
                                                 <input type="text" name="username" style="width: 150px;" required
-                                                       lay-verify="required" placeholder="用户名" autocomplete="off"
+                                                       lay-verify="required" placeholder="用户名" th:placeholder="#{sqli.common.username}" autocomplete="off"
                                                        class="layui-input">
                                                 <input type="text" name="password" style="width: 150px;" required
-                                                       lay-verify="required" placeholder="密码" autocomplete="off"
+                                                       lay-verify="required" placeholder="密码" th:placeholder="#{sqli.common.password}" autocomplete="off"
                                                        class="layui-input">
                                             </div>
                                             <div style="display: flex; align-items: center;">
@@ -135,7 +135,7 @@
                                         <form class="layui-form" style="display: flex; justify-content: space-between;">
                                             <div style="display: flex; align-items: center;">
                                                 <input type="text" name="id" style="width: 150px;" required
-                                                       lay-verify="required" placeholder="用户id" autocomplete="off"
+                                                       lay-verify="required" placeholder="用户id" th:placeholder="#{sqli.common.userId}" autocomplete="off"
                                                        class="layui-input">
                                             </div>
                                             <div style="display: flex; align-items: center;">
@@ -150,7 +150,7 @@
                                 </div>
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i>测试结果</div>
+                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i><span th:text="#{sqli.common.testResult}">测试结果</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
                                             <pre id="vul1-raw-joint-result" style="color: red;font-size: 15px;"></pre>
                                         </div>
@@ -161,7 +161,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code">  缺陷代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="#{sqli.common.vulnerableCode}">  缺陷代码</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="vul1RawJoint">
                             </div>
@@ -173,13 +173,13 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-bug">  漏洞场景：JDBC-伪预编译拼接</span></h1>
+                        <h1><span class="iconfont icon-bug" th:text="#{sqli.common.vul.fakePrepared}">  漏洞场景：JDBC-伪预编译拼接</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <ul class="layui-tab-title">
-                                <li class="layui-this">增加</li>
-                                <li>删除</li>
-                                <li>修改</li>
-                                <li>查询</li>
+                                <li class="layui-this" th:text="#{sqli.common.action.add}">增加</li>
+                                <li th:text="#{sqli.common.action.delete}">删除</li>
+                                <li th:text="#{sqli.common.action.update}">修改</li>
+                                <li th:text="#{sqli.common.action.select}">查询</li>
                             </ul>
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
@@ -187,20 +187,20 @@
                                         <form class="layui-form" style="display: flex; justify-content: space-between;">
                                             <div style="display: flex; align-items: center;">
                                                 <input type="text" name="username" style="width: 150px;" required
-                                                       lay-verify="required" value="test" placeholder="用户名" autocomplete="off"
+                                                       lay-verify="required" value="test" placeholder="用户名" th:placeholder="#{sqli.common.username}" autocomplete="off"
                                                        class="layui-input">
                                                 <input type="text" name="password" style="width: 150px" required
-                                                       lay-verify="required" value="1' and updatexml(1,concat(0x7e,(SELECT user()),0x7e),1) AND '1'='1" placeholder="密码" autocomplete="off"
+                                                       lay-verify="required" value="1' and updatexml(1,concat(0x7e,(SELECT user()),0x7e),1) AND '1'='1" placeholder="密码" th:placeholder="#{sqli.common.password}" autocomplete="off"
                                                        class="layui-input" id="vul2-prepareStatement-joint-add-pass">
                                             </div>
                                             <div style="display: flex; align-items: center;">
                                                 <select class="layui-form-select"
                                                         style="background-color: #5eb878;!important;"lay-filter="vul2-prepareStatement-joint-add-select">
-                                                    <option value="">示例Payload</option>
-                                                    <option value="1' AND (SELECT 4804 FROM (SELECT(SLEEP(5)))iBHa) AND '1'='1">延时注入</option>
-                                                    <option value="1' AND ELT(5753=5754,6782) AND '1'='1">布尔盲注</option>
-                                                    <option value="1' AND GTID_SUBSET(CONCAT(0x71706a7a71,(SELECT (ELT(7170=7170,1))),0x7171717071),7170) AND '1'='1">报错注入</option>
-                                                    <option value="1' and updatexml(1,concat(0x7e,(SELECT user()),0x7e),1) AND '1'='1">xpath注入</option>
+                                                    <option value="" th:text="#{sqli.common.payload.example}">示例Payload</option>
+                                                    <option value="1' AND (SELECT 4804 FROM (SELECT(SLEEP(5)))iBHa) AND '1'='1" th:text="#{sqli.common.payload.time}">延时注入</option>
+                                                    <option value="1' AND ELT(5753=5754,6782) AND '1'='1" th:text="#{sqli.common.payload.booleanBlind}">布尔盲注</option>
+                                                    <option value="1' AND GTID_SUBSET(CONCAT(0x71706a7a71,(SELECT (ELT(7170=7170,1))),0x7171717071),7170) AND '1'='1" th:text="#{sqli.common.payload.error}">报错注入</option>
+                                                    <option value="1' and updatexml(1,concat(0x7e,(SELECT user()),0x7e),1) AND '1'='1" th:text="#{sqli.common.payload.xpath}">xpath注入</option>
                                                 </select>
                                                 <button class="layui-btn layui-btn-normal"
                                                         style="width: 100px; margin-left: 10px;"
@@ -217,7 +217,7 @@
                                         <form class="layui-form" style="display: flex; justify-content: space-between;">
                                             <div style="display: flex; align-items: center;">
                                                 <input type="text" name="id" style="width: 150px;" required
-                                                       lay-verify="required" placeholder="用户id" autocomplete="off"
+                                                       lay-verify="required" placeholder="用户id" th:placeholder="#{sqli.common.userId}" autocomplete="off"
                                                        class="layui-input">
                                             </div>
                                             <div style="display: flex; align-items: center;">
@@ -235,13 +235,13 @@
                                         <form class="layui-form" style="display: flex; justify-content: space-between;">
                                             <div style="display: flex; align-items: center;">
                                                 <input type="text" name="id" style="width: 150px;" required
-                                                       lay-verify="required" placeholder="用户id" autocomplete="off"
+                                                       lay-verify="required" placeholder="用户id" th:placeholder="#{sqli.common.userId}" autocomplete="off"
                                                        class="layui-input">
                                                 <input type="text" name="username" style="width: 150px;" required
-                                                       lay-verify="required" placeholder="用户名" autocomplete="off"
+                                                       lay-verify="required" placeholder="用户名" th:placeholder="#{sqli.common.username}" autocomplete="off"
                                                        class="layui-input">
                                                 <input type="text" name="password" style="width: 150px;" required
-                                                       lay-verify="required" placeholder="密码" autocomplete="off"
+                                                       lay-verify="required" placeholder="密码" th:placeholder="#{sqli.common.password}" autocomplete="off"
                                                        class="layui-input">
                                             </div>
                                             <div style="display: flex; align-items: center;">
@@ -259,7 +259,7 @@
                                         <form class="layui-form" style="display: flex; justify-content: space-between;">
                                             <div style="display: flex; align-items: center;">
                                                 <input type="text" name="id" style="width: 150px;" required
-                                                       lay-verify="required" placeholder="用户id" autocomplete="off"
+                                                       lay-verify="required" placeholder="用户id" th:placeholder="#{sqli.common.userId}" autocomplete="off"
                                                        class="layui-input">
                                             </div>
                                             <div style="display: flex; align-items: center;">
@@ -274,7 +274,7 @@
                                 </div>
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i>测试结果</div>
+                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i><span th:text="#{sqli.common.testResult}">测试结果</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
                                             <pre id="vul2-prepareStatement-joint-result"
                                                  style="color: red;font-size: 15px;"></pre>
@@ -286,7 +286,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code">  缺陷代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="#{sqli.common.vulnerableCode}">  缺陷代码</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="vul2prepareStatementJoint">
                             </div>
@@ -298,13 +298,13 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-bug">  漏洞场景：JdbcTemplate-SQL语句拼接</span></h1>
+                        <h1><span class="iconfont icon-bug" th:text="#{sqli.common.vul.jdbcTemplate}">  漏洞场景：JdbcTemplate-SQL语句拼接</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <ul class="layui-tab-title">
-                                <li class="layui-this">增加</li>
-                                <li>删除</li>
-                                <li>修改</li>
-                                <li>查询</li>
+                                <li class="layui-this" th:text="#{sqli.common.action.add}">增加</li>
+                                <li th:text="#{sqli.common.action.delete}">删除</li>
+                                <li th:text="#{sqli.common.action.update}">修改</li>
+                                <li th:text="#{sqli.common.action.select}">查询</li>
                             </ul>
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
@@ -312,20 +312,20 @@
                                         <form class="layui-form" style="display: flex; justify-content: space-between;">
                                             <div style="display: flex; align-items: center;">
                                                 <input type="text" name="username" style="width: 150px;" required
-                                                       lay-verify="required" value="test" placeholder="用户名" autocomplete="off"
+                                                       lay-verify="required" value="test" placeholder="用户名" th:placeholder="#{sqli.common.username}" autocomplete="off"
                                                        class="layui-input">
                                                 <input type="text" name="password" style="width: 150px" required
-                                                       lay-verify="required" value="1' and updatexml(1,concat(0x7e,(SELECT user()),0x7e),1) AND '1'='1" placeholder="密码" autocomplete="off"
+                                                       lay-verify="required" value="1' and updatexml(1,concat(0x7e,(SELECT user()),0x7e),1) AND '1'='1" placeholder="密码" th:placeholder="#{sqli.common.password}" autocomplete="off"
                                                        class="layui-input" id="vul3-JdbcTemplate-joint-add-pass">
                                             </div>
                                             <div style="display: flex; align-items: center;">
                                                 <select class="layui-form-select"
                                                         style="background-color: #5eb878;!important;"lay-filter="vul3-JdbcTemplate-joint-add-select">
-                                                    <option value="">示例Payload</option>
-                                                    <option value="1' AND (SELECT 4804 FROM (SELECT(SLEEP(5)))iBHa) AND '1'='1">延时注入</option>
-                                                    <option value="1' AND ELT(5753=5754,6782) AND '1'='1">布尔盲注</option>
-                                                    <option value="1' AND GTID_SUBSET(CONCAT(0x71706a7a71,(SELECT (ELT(7170=7170,1))),0x7171717071),7170) AND '1'='1">报错注入</option>
-                                                    <option value="1' and updatexml(1,concat(0x7e,(SELECT user()),0x7e),1) AND '1'='1">xpath注入</option>
+                                                    <option value="" th:text="#{sqli.common.payload.example}">示例Payload</option>
+                                                    <option value="1' AND (SELECT 4804 FROM (SELECT(SLEEP(5)))iBHa) AND '1'='1" th:text="#{sqli.common.payload.time}">延时注入</option>
+                                                    <option value="1' AND ELT(5753=5754,6782) AND '1'='1" th:text="#{sqli.common.payload.booleanBlind}">布尔盲注</option>
+                                                    <option value="1' AND GTID_SUBSET(CONCAT(0x71706a7a71,(SELECT (ELT(7170=7170,1))),0x7171717071),7170) AND '1'='1" th:text="#{sqli.common.payload.error}">报错注入</option>
+                                                    <option value="1' and updatexml(1,concat(0x7e,(SELECT user()),0x7e),1) AND '1'='1" th:text="#{sqli.common.payload.xpath}">xpath注入</option>
                                                 </select>
                                                 <button class="layui-btn layui-btn-normal"
                                                         style="width: 100px; margin-left: 10px;"
@@ -342,7 +342,7 @@
                                         <form class="layui-form" style="display: flex; justify-content: space-between;">
                                             <div style="display: flex; align-items: center;">
                                                 <input type="text" name="id" style="width: 150px;" required
-                                                       lay-verify="required" placeholder="用户id" autocomplete="off"
+                                                       lay-verify="required" placeholder="用户id" th:placeholder="#{sqli.common.userId}" autocomplete="off"
                                                        class="layui-input">
                                             </div>
                                             <div style="display: flex; align-items: center;">
@@ -360,13 +360,13 @@
                                         <form class="layui-form" style="display: flex; justify-content: space-between;">
                                             <div style="display: flex; align-items: center;">
                                                 <input type="text" name="id" style="width: 150px;" required
-                                                       lay-verify="required" placeholder="用户id" autocomplete="off"
+                                                       lay-verify="required" placeholder="用户id" th:placeholder="#{sqli.common.userId}" autocomplete="off"
                                                        class="layui-input">
                                                 <input type="text" name="username" style="width: 150px;" required
-                                                       lay-verify="required" placeholder="用户名" autocomplete="off"
+                                                       lay-verify="required" placeholder="用户名" th:placeholder="#{sqli.common.username}" autocomplete="off"
                                                        class="layui-input">
                                                 <input type="text" name="password" style="width: 150px;" required
-                                                       lay-verify="required" placeholder="密码" autocomplete="off"
+                                                       lay-verify="required" placeholder="密码" th:placeholder="#{sqli.common.password}" autocomplete="off"
                                                        class="layui-input">
                                             </div>
                                             <div style="display: flex; align-items: center;">
@@ -384,7 +384,7 @@
                                         <form class="layui-form" style="display: flex; justify-content: space-between;">
                                             <div style="display: flex; align-items: center;">
                                                 <input type="text" name="id" style="width: 150px;" required
-                                                       lay-verify="required" placeholder="用户id" autocomplete="off"
+                                                       lay-verify="required" placeholder="用户id" th:placeholder="#{sqli.common.userId}" autocomplete="off"
                                                        class="layui-input">
                                             </div>
                                             <div style="display: flex; align-items: center;">
@@ -399,7 +399,7 @@
                                 </div>
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i>测试结果</div>
+                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i><span th:text="#{sqli.common.testResult}">测试结果</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
                                             <pre id="vul3-JdbcTemplate-joint-result"
                                                  style="color: red;font-size: 15px;"></pre>
@@ -411,7 +411,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code">  缺陷代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="#{sqli.common.vulnerableCode}">  缺陷代码</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="vul3JdbcTemplateJoint">
                             </div>
@@ -426,7 +426,7 @@
 </div>
 <div th:replace="~{common/common::script}"></div>
 
-<script type="text/javascript">
+<script th:inline="javascript" type="text/javascript">
     layui.use(['layer', 'miniTab', 'common','form'], function () {
         var $ = layui.jquery,
             layer = layui.layer,
@@ -434,7 +434,8 @@
             form = layui.form,
             common = layui.common;
         miniTab.listen();
-        layer.msg("SQL注入-JDBC")
+        layer.msg(/*[[#{sqli.common.toast.jdbc}]]*/ "SQL注入-JDBC")
+        var isEnglishSqli = /*[[${#locale.language == 'en'}]]*/ false;
 
         function triggerDownload(fileMap, selectedValue) {
             if (fileMap[selectedValue]) {
@@ -444,7 +445,7 @@
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
-                layer.msg("正在下载流量包：" + selectedValue + ".pcapng");
+                layer.msg((/*[[#{sqli.common.downloading('__FILE__')}]]*/ "Downloading traffic package: __FILE__.pcapng").replace("__FILE__", selectedValue));
             }
         }
         form.on('select(sqliFlowSelect)', function (data) {
@@ -489,13 +490,13 @@
 
 
         CodeMirror(document.getElementById("vul1RawJoint"), Object.assign({}, cmConfig, {
-            value: vul1RawJoint
+            value: isEnglishSqli ? vul1RawJoint : vul1RawJointZh
         }));
         CodeMirror(document.getElementById("vul2prepareStatementJoint"), Object.assign({}, cmConfig, {
-            value: vul2prepareStatementJoint
+            value: isEnglishSqli ? vul2prepareStatementJoint : vul2prepareStatementJointZh
         }));
         CodeMirror(document.getElementById("vul3JdbcTemplateJoint"), Object.assign({}, cmConfig, {
-            value: vul3JdbcTemplateJoint
+            value: isEnglishSqli ? vul3JdbcTemplateJoint : vul3JdbcTemplateJointZh
         }));
 
     });

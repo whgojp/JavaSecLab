@@ -2,6 +2,8 @@ package top.whgojp.modules.system.controller;
 
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import top.whgojp.common.utils.R;
@@ -9,9 +11,6 @@ import top.whgojp.modules.system.entity.User;
 import top.whgojp.modules.system.service.UserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-
-import javax.servlet.http.HttpSession;
-import java.util.Map;
 
 /**
  * @description 已登录用户相关接口
@@ -27,6 +26,8 @@ public class SysController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private MessageSource messageSource;
 
     @GetMapping("/password")
     public String chPwdView() {
@@ -39,13 +40,13 @@ public class SysController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         if (old_password == null || new_password == null || again_password == null) {
-            return R.error("输入不能为空!");
+            return R.error(msg("system.password.result.empty"));
         }
         if (old_password.equals(new_password)) {
-            return R.error("新密码不能与旧密码一致!");
+            return R.error(msg("system.password.result.same"));
         }
         if (!new_password.equals(again_password)) {
-            return R.error("新密码两次输入不一致!");
+            return R.error(msg("system.password.result.mismatch"));
         }
 
         // 使用旧密码尝试登录
@@ -53,13 +54,17 @@ public class SysController {
         if (user != null) {
             if (userService.changePassword(username, new_password) != 0) {
 //                session.invalidate();
-                return R.ok("密码修改成功");
+                return R.ok(msg("system.password.result.success"));
             } else {
-                return R.error("密码修改失败!");
+                return R.error(msg("system.password.result.failed"));
             }
         } else {
-            return R.error("旧密码输入错误!");
+            return R.error(msg("system.password.result.oldWrong"));
         }
 
+    }
+
+    private String msg(String key, Object... args) {
+        return messageSource.getMessage(key, args, LocaleContextHolder.getLocale());
     }
 }

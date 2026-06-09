@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>JavaSeclab平台登录</title>
+    <title th:text="#{login.title}">JavaSeclab平台登录</title>
     <link rel="stylesheet" href="/static/lib/layui-v2.6.3/css/layui.css" media="all">
     <link rel="stylesheet" href="/static/lib/custom-icon/iconfont.css">
     <meta name="viewport"
@@ -164,6 +164,10 @@
 
 <body class="container">
 <div id="particles-js"></div>
+<div style="position: fixed; top: 18px; right: 24px; z-index: 3;">
+    <a th:href="@{?lang=zh_CN}" th:text="#{language.zh}" style="color: #fff;margin-right: 12px;">中文</a>
+    <a th:href="@{?lang=en_US}" th:text="#{language.en}" style="color: #fff;">English</a>
+</div>
 <div class="admin-login-container">
 
     <div class="admin-login-background-left">
@@ -173,8 +177,8 @@
             <pre><div id="quote-answer"></div></pre>
         </div>
         <div class="about-me">
-            <div style="font-weight: bold;margin-bottom: 5px">技术栈： SpringBoot+SpringSecurity+MyBatis+Thymeleaf+Layui</div>
-            <pre><div id="description" style="margin-bottom: 5px">  JavaSecLab是一款综合型Java漏洞平台，提供相关缺陷代码、修复代码、审计SINK点、安全编码规范、漏洞流量分析，覆盖多种漏洞场景，友好用户交互UI……</div></pre>
+            <div style="font-weight: bold;margin-bottom: 5px" th:text="#{login.techStack}">技术栈： SpringBoot+SpringSecurity+MyBatis+Thymeleaf+Layui</div>
+            <pre><div id="description" style="margin-bottom: 5px" th:text="#{login.description}">  JavaSecLab是一款综合型Java漏洞平台，提供相关缺陷代码、修复代码、审计SINK点、安全编码规范、漏洞流量分析，覆盖多种漏洞场景，友好用户交互UI……</div></pre>
             <p class="about-author"><a href="https://github.com/whgojp/JavaSecLab" target="_blank"><span class="iconfont icon-github" style="font-size: 25px"></span></a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <a href="https://blog.csdn.net/weixin_53009585" target="_blank"><span class="iconfont icon-csdn48" style="font-size: 25px"></span></a>
@@ -201,17 +205,17 @@
         <form class="layui-form-div" th:action="@{/loginProcess}" method="post">
             <div class="item">
                 <span class="iconfont icon-icon_username" style="font-size: 25px"></span>
-                <input type="text" name="username" required placeholder="请输入用户名">
+                <input type="text" name="username" required th:placeholder="#{login.username}" placeholder="请输入用户名">
             </div>
             <div class="item">
                 <span class="iconfont icon-mima1" style="font-size: 20px"></span>
-                <input style="padding-left: 5px" type="password" name="password" required placeholder="请输入密码">
+                <input style="padding-left: 5px" type="password" name="password" required th:placeholder="#{login.password}" placeholder="请输入密码">
             </div>
 
             <div class="item">
             <span class="iconfont icon-yanzhengyanzhengma" style="font-size: 20px">
 
-            <input type="text" name="captcha" placeholder="请输入验证码" autocomplete="off"
+            <input type="text" name="captcha" th:placeholder="#{login.captcha}" placeholder="请输入验证码" autocomplete="off"
                    style="padding-left: 5px">
         <img id="captcha" class="admin-captcha" width="90" height="30" th:src="@{/captcha}"
              onclick="this.src='/captcha?' + Math.random()">
@@ -221,14 +225,14 @@
 
             <div class="checkbox mb-3">
                 <label>
-                    <input type="checkbox" value="remember-me">&nbsp;&nbsp;记住密码
+                    <input type="checkbox" value="remember-me">&nbsp;&nbsp;<span th:text="#{login.remember}">记住密码</span>
                 </label>
             </div>
 
             <div style="text-align: center">
 
                 <button class="layui-btn layui-btn-normal layui-btn-lg"
-                        style="border-radius: .3rem;width: 100%; font-size: 20px " type="submit">登录
+                        style="border-radius: .3rem;width: 100%; font-size: 20px " type="submit" th:text="#{login.submit}">登录
                 </button>
             </div>
 
@@ -239,18 +243,54 @@
 </div>
 
 <script src="/static/js/formatTime.js"></script>
-<script src="/static/js/sec-tip.js"></script>
 <script src="/static/lib/jquery-3.4.1/jquery-3.4.1.min.js"></script>
 <script src="/static/lib/particles/particles.js"></script>
 <script src="/static/lib/particles/assert/js/app.js"></script>
 <script src="/static/lib/particles/assert/js/lib/stats.js"></script>
 <script src="/static/lib/layui-v2.6.3/layui.js"></script>
-<script>
-    let current_time = formatDate(new Date(), 'YYYY-mm-dd HH:MM:SS WWW QQQQ');
+<script th:inline="javascript">
+    const loginLocale = /*[[${#locale.toLanguageTag()}]]*/ 'zh-CN';
+    const quarterNames = [
+        /*[[#{login.time.quarter1}]]*/ '第一季度',
+        /*[[#{login.time.quarter2}]]*/ '第二季度',
+        /*[[#{login.time.quarter3}]]*/ '第三季度',
+        /*[[#{login.time.quarter4}]]*/ '第四季度'
+    ];
+    const loginTips = [
+        {
+            question: /*[[#{login.tip.iso.question}]]*/ '什么是ISO27000?',
+            answer: /*[[#{login.tip.iso.answer}]]*/ 'ISO 27000系列标准，即信息安全管理体系标准，是由国际标准化组织（ISO）发布的一套聚焦信息安全的管理标准。'
+        },
+        {
+            question: /*[[#{login.tip.owasp.question}]]*/ 'OWASP Top 10是什么?',
+            answer: /*[[#{login.tip.owasp.answer}]]*/ 'OWASP Top 10总结了Web应用中常见且高风险的安全问题，可作为安全培训、审计和修复优先级参考。'
+        },
+        {
+            question: /*[[#{login.tip.secure.question}]]*/ '安全编码的核心是什么?',
+            answer: /*[[#{login.tip.secure.answer}]]*/ '安全编码强调输入验证、输出编码、最小权限、鉴权校验、依赖治理和安全日志，让漏洞在编码阶段尽早被发现和修复。'
+        }
+    ];
+
+    function formatLoginTime(date) {
+        const dateTime = new Intl.DateTimeFormat(loginLocale, {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            weekday: 'long',
+            hour12: false
+        }).format(date);
+        const quarter = Math.floor(date.getMonth() / 3);
+        return `${dateTime} ${quarterNames[quarter]}`;
+    }
+
+    let current_time = formatLoginTime(new Date());
     const curTimeEl = document.getElementById("current-time");
     curTimeEl.innerHTML = current_time;
     setInterval(() => {
-        current_time = formatDate(new Date(), 'YYYY-mm-dd HH:MM:SS WWW QQQQ');
+        current_time = formatLoginTime(new Date());
         curTimeEl.innerHTML = current_time;
     }, 1000);
 
@@ -260,7 +300,7 @@
         return Math.floor(Math.random() * (max - min)) + min;
     }
 
-    const quotation = secTip[getRandomInt(0, secTip.length)];
+    const quotation = loginTips[getRandomInt(0, loginTips.length)];
     document.getElementById("quote-question").innerHTML = quotation.question;
     document.getElementById("quote-answer").innerHTML = quotation.answer;
 
@@ -268,7 +308,7 @@
         var layer = layui.layer;
 
         $('#get-wechat').hover(function () {
-            layer.tips('交个朋友～', '#get-wechat', {
+            layer.tips(/*[[#{login.wechatTip}]]*/ '交个朋友～', '#get-wechat', {
                 tips: [1, '#3fa807'],
                 time: 2000
             });

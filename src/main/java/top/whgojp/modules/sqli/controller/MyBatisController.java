@@ -63,23 +63,23 @@ public class MyBatisController {
             switch (type) {
                 case "add":
                     rowsAffected = sqliService.nativeInsert(new Sqli(id, username, password));
-                    message = (rowsAffected > 0) ? "数据插入成功 username:" + username + " password:" + password : "数据插入失败";
+                    message = (rowsAffected > 0) ? "Data inserted successfully. username:" + username + " password:" + password : "Data insertion failed.";
                     log.info(message);
                     return R.ok(message);
                 case "delete":
                     if (id == null) {
-                        return R.error("id不能为空!");
+                        return R.error("ID cannot be empty.");
                     }
                     rowsAffected = sqliService.nativeDelete(id);
-                    message = (rowsAffected > 0) ? "数据删除成功" : "数据删除失败 用户ID:" + id + " 不存在!";
+                    message = (rowsAffected > 0) ? "Data deleted successfully." : "Delete failed. User ID: " + id + " does not exist.";
                     log.info(message);
                     return R.ok(message);
                 case "update":
                     if (id == null) {
-                        return R.error("id不能为空!");
+                        return R.error("ID cannot be empty.");
                     }
                     rowsAffected = sqliService.nativeUpdate(new Sqli(id, username, password));
-                    message = (rowsAffected > 0) ? "数据更新成功" : "数据更新失败 用户ID不存在!";
+                    message = (rowsAffected > 0) ? "Data updated successfully." : "Update failed. User ID does not exist.";
                     log.info(message);
                     return R.ok(message);
                 case "select":
@@ -87,15 +87,15 @@ public class MyBatisController {
                         Sqli user;
                         if (sqliService.nativeSelect(id) != null) {
                             user = sqliService.nativeSelect(id);
-                        } else return R.ok("用户ID不存在!");
-                        message = "查询成功，用户名：" + user.getUsername() + " 密码：" + user.getPassword();
+                        } else return R.ok("User ID does not exist.");
+                        message = "Query succeeded. Username: " + user.getUsername() + " Password: " + user.getPassword();
                         return R.ok(message);
                     } else {
-                        return R.error("id为空!");
+                        return R.error("ID cannot be empty.");
                     }
 
                 default:
-                    return R.error("type字段有误：传输数据异常,请检查^_^");
+                    return R.error("Invalid type field. Transport data is abnormal. Please check it.");
             }
         } catch (Exception e) {
             log.error(e.toString());
@@ -125,39 +125,39 @@ public class MyBatisController {
                 case "add":
                     //这里插入数据使用MyBatiX插件生成的方法
                     rowsAffected = sqliService.customInsert(new Sqli(id, username, password));
-                    message = (rowsAffected > 0) ? "数据插入成功 username:" + username + " password:" + password : "数据插入失败";
+                    message = (rowsAffected > 0) ? "Data inserted successfully. username:" + username + " password:" + password : "Data insertion failed.";
                     log.info(message);
                     return R.ok(message);
                 case "delete":
                     //这里删除数据使用自定义代码
                     if (id == null) {
-                        return R.error("id不能为空!");
+                        return R.error("ID cannot be empty.");
                     }
                     rowsAffected = sqliService.customDelete(id);
-                    message = (rowsAffected > 0) ? "数据删除成功" : "数据删除失败 用户ID:" + id + " 不存在!";
+                    message = (rowsAffected > 0) ? "Data deleted successfully." : "Delete failed. User ID: " + id + " does not exist.";
                     log.info(message);
                     return R.ok(message);
                 case "update":
                     //使用MyBatis注解
                     if (id == null) {
-                        return R.error("id不能为空!");
+                        return R.error("ID cannot be empty.");
                     }
                     rowsAffected = sqliService.customUpdate(new Sqli(id, username, password));
-                    message = (rowsAffected > 0) ? "数据更新成功" : "数据更新失败 用户ID不存在!";
+                    message = (rowsAffected > 0) ? "Data updated successfully." : "Update failed. User ID does not exist.";
                     log.info(message);
                     return R.ok(message);
                 case "select":
                     if (id == null) {
-                        return R.error("id不能为空!");
+                        return R.error("ID cannot be empty.");
                     }
                     final Sqli user = sqliService.customSelect(id);
                     if (user == null) {
-                        return R.ok("用户ID不存在!");
+                        return R.ok("User ID does not exist.");
                     }
-                    message = "查询成功，用户名：" + user.getUsername() + " 密码：" + user.getPassword();
+                    message = "Query succeeded. Username: " + user.getUsername() + " Password: " + user.getPassword();
                     return R.ok(message);
                 default:
-                    return R.error("type字段有误：传输数据异常,请检查^_^");
+                    return R.error("Invalid type field. Transport data is abnormal. Please check it.");
             }
         } catch (Exception e) {
             return R.error(e.toString());
@@ -189,13 +189,13 @@ public class MyBatisController {
                     break;
                 case "writeList":
                     if (!checkUserInput.checkSqlWhiteList(field)) {
-                        log.error("field字段不合法！field:" + field);
-                        return R.error("field字段不合法！");
+                        log.error("Invalid field.field:" + field);
+                        return R.error("Invalid field.");
                     }
                     sqlis = sqliService.orderByWriteList(field);
                     break;
                 default:
-                    return R.error("type字段有误：传输数据异常,请检查^_^");
+                    return R.error("Invalid type field. Transport data is abnormal. Please check it.");
             }
             JSONArray jsonArray = convertToJsonArray(sqlis);
             return R.ok(jsonArray.toString());
@@ -241,7 +241,7 @@ public class MyBatisController {
                     sqlis = sqliService.likePrepareStatement(keyword);
                     break;
                 default:
-                    return R.error("type字段有误：传输数据异常,请检查^_^");
+                    return R.error("Invalid type field. Transport data is abnormal. Please check it.");
             }
             JSONArray jsonArray = convertToJsonArray(sqlis);
             return R.ok(jsonArray.toString());
@@ -273,12 +273,12 @@ public class MyBatisController {
                 case "Foreach":
                     List<Integer> idList = parseInputToList(scope);
                     if (idList.isEmpty()) {
-                        return R.error("scope中没有合法整数ID!");
+                        return R.error("Scope does not contain any valid integer ID.");
                     }
                     sqlis = sqliService.inSafeForeach(idList);
                     break;
                 default:
-                    return R.error("type字段有误：传输数据异常,请检查^_^");
+                    return R.error("Invalid type field. Transport data is abnormal. Please check it.");
             }
             JSONArray jsonArray = convertToJsonArray(sqlis);
             return R.ok(jsonArray.toString());

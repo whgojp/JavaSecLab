@@ -8,26 +8,26 @@
         <div class="layui-row layui-col-space15">
             <div class="layui-col-md12">
                 <fieldset class="layui-elem-field layui-field-title">
-                    <legend><a style="color: rgb(30 159 255)" class="xss-dom">跨站脚本攻击 - DOM型XSS</a></legend>
+                    <legend><a style="color: rgb(30 159 255)" class="xss-dom" th:text="#{xss.dom.title}">跨站脚本攻击 - DOM型XSS</a></legend>
                     <blockquote class="layui-elem-quote layui-quote-nm"
                                 style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
-                        <pre>  DOM（Document Object Model）即文档对象模型，是HTML和XML文档的编程接口</pre>
-                        <pre>  DOM型XSS：不可信数据在客户端JavaScript中流向危险DOM Sink，例如innerHTML、document.write、location、eval等，最终被浏览器解析执行。典型载荷可来自location.hash、location.search、localStorage、postMessage等；其中hash场景通常不会发送到服务器，但DOM XSS并不等于“绝对不经过服务端”，关键判断点是漏洞触发和危险写入发生在客户端。</pre>
+                        <pre th:text="#{xss.dom.intro1}">  DOM（Document Object Model）即文档对象模型，是HTML和XML文档的编程接口</pre>
+                        <pre th:text="#{xss.dom.intro2}">  DOM型XSS：不可信数据在客户端JavaScript中流向危险DOM Sink。</pre>
                     </blockquote>
                 </fieldset>
             </div>
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-bug">  漏洞场景：多种代码场景</span></h1>
+                        <h1><span class="iconfont icon-bug" th:text="|  #{xss.dom.vul.multi}|">  漏洞场景：多种代码场景</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <ul class="layui-tab-title">
                                 <li class="layui-this">innerHTML</li>
                                 <li>LocalStorage</li>
-                                <li>href跳转</li>
-                                <li>location对象</li>
-                                <li>eval执行</li>
-                                <li>document对象</li>
+                                <li th:text="#{xss.dom.hrefJump}">href跳转</li>
+                                <li th:text="#{xss.dom.locationObject}">location对象</li>
+                                <li th:text="#{xss.dom.evalExec}">eval执行</li>
+                                <li th:text="#{xss.dom.documentObject}">document对象</li>
                             </ul>
                             <div class="layui-tab-content">
                                 <!-- innerHTML -->
@@ -37,12 +37,12 @@
                                               style="display: flex; justify-content: space-between;">
                                             <div style="display: flex; align-items: center;">
                                                 <input type="text" name="content" style="width: 300px;" required
-                                                       lay-verify="required" value="123<img src onerror=alert(/xss/)>123" placeholder="请求内容" autocomplete="off"
+                                                       lay-verify="required" value="123<img src onerror=alert(/xss/)>123" th:placeholder="#{xss.store.input.placeholder}" placeholder="请求内容" autocomplete="off"
                                                        class="layui-input" id="vul1-dom-raw-input">
                                             </div>
                                             <div style="display: flex; align-items: center;">
                                                 <select class="layui-form-select" lay-filter="vul1-dom-raw">
-                                                    <option value="">示例Payload</option>
+                                                    <option value="" th:text="#{xss.reflect.payload.example}">示例Payload</option>
                                                     <option value="123&lt;u&gt;A&lt;/u&gt;123">123&lt;u&gt;A&lt;/u&gt;123</option>
                                                     <option value="123&lt;script&gt;alert(/xss/)&lt;/script&gt;123">
                                                         123&lt;script&gt;alert(/xss/)&lt;/script&gt;123
@@ -57,7 +57,7 @@
                                                 <button class="layui-btn layui-btn-normal"
                                                         style="width: 100px; margin-left: 10px;"
                                                         lay-filter="vul1-dom-raw-submit" lay-submit="">
-                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                    <span class="iconfont icon-zhihang" th:text="#{button.run}">Run</span>
                                                 </button>
                                             </div>
                                         </form>
@@ -71,15 +71,15 @@
                                               style="display: flex; justify-content: space-between;">
                                             <div style="display: flex; align-items: center;">
                                                 <input type="text" name="content" style="width: 300px;" required
-                                                       lay-verify="required" value="123<img src onerror=alert(/xss/)>123" placeholder="请求内容" autocomplete="off"
+                                                       lay-verify="required" value="123<img src onerror=alert(/xss/)>123" th:placeholder="#{xss.store.input.placeholder}" placeholder="请求内容" autocomplete="off"
                                                        class="layui-input" id="vul3-dom-raw-input">
-                                                <p>从LocalStorage中读取并插入到DOM中</p>
+                                                <p th:text="#{xss.dom.localStorageDesc}">从LocalStorage中读取并插入到DOM中</p>
                                             </div>
                                             <div style="display: flex; align-items: center;">
                                                 <button class="layui-btn layui-btn-normal"
                                                         style="width: 100px; margin-left: 10px;"
                                                         lay-filter="vul3-dom-raw-submit" lay-submit="">
-                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                    <span class="iconfont icon-zhihang" th:text="#{button.run}">Run</span>
                                                 </button>
                                             </div>
                                         </form>
@@ -90,13 +90,13 @@
                                 <div class="layui-tab-item">
                                     <blockquote class="layui-elem-quote main_btn">
                                         <div style="display: flex; align-items: center;">
-                                            <p>使用#实现页面跳转。hash不会随HTTP请求发送到服务端，但前端脚本读取后如果直接赋值给location.href，可能触发DOM XSS</p>
+                                            <p th:text="#{xss.dom.hrefDesc}">使用#实现页面跳转。</p>
                                         </div>
                                         <div style="display: flex; align-items: center;">
                                             <a target="_blank" href="/xss/dom/href#javascript:alert(/xss/)">
                                                 <button class="layui-btn layui-btn-normal"
                                                         style="width: 100px; margin-left: 10px;">
-                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                    <span class="iconfont icon-zhihang" th:text="#{button.run}">Run</span>
                                                 </button>
                                             </a>
                                         </div>
@@ -110,7 +110,7 @@
                                             <div class="layui-form-item" style="margin: 0; flex-grow: 1;">
                                                 <div class="layui-input-block" style="margin-left: 0;">
                                                     <input type="text" name="locationPayload" style="width: 300px;" required
-                                                           lay-verify="required" value="javascript:alert(1)" placeholder="请求内容" autocomplete="off"
+                                                           lay-verify="required" value="javascript:alert(1)" th:placeholder="#{xss.store.input.placeholder}" placeholder="请求内容" autocomplete="off"
                                                            class="layui-input">
 <!--                                                    <input type="text" name="locationPayload" placeholder="输入location payload" class="layui-input">-->
                                                 </div>
@@ -119,7 +119,7 @@
                                                 <button class="layui-btn layui-btn-normal"
                                                         style="width: 100px; margin-left: 10px;"
                                                         lay-filter="location-xss" lay-submit="">
-                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                    <span class="iconfont icon-zhihang" th:text="#{button.run}">Run</span>
                                                 </button>
                                             </div>
                                         </form>
@@ -133,7 +133,7 @@
                                             <div class="layui-form-item" style="margin: 0; flex-grow: 1;">
                                                 <div class="layui-input-block" style="margin-left: 0;">
                                                     <input type="text" name="evalPayload" style="width: 300px;" required
-                                                           lay-verify="required" value="javascript:alert(1)" placeholder="请求内容" autocomplete="off"
+                                                           lay-verify="required" value="javascript:alert(1)" th:placeholder="#{xss.store.input.placeholder}" placeholder="请求内容" autocomplete="off"
                                                            class="layui-input" >
                                                 </div>
                                             </div>
@@ -141,7 +141,7 @@
                                                 <button class="layui-btn layui-btn-normal"
                                                         style="width: 100px; margin-left: 10px;"
                                                         lay-filter="eval-xss" lay-submit="">
-                                                    <span class="iconfont icon-zhihang">Run</span>
+                                                    <span class="iconfont icon-zhihang" th:text="#{button.run}">Run</span>
                                                 </button>
                                             </div>
                                         </form>
@@ -155,13 +155,13 @@
                                             <div class="layui-form-item" style="margin: 0; flex-grow: 1;">
                                                 <div class="layui-input-block" style="margin-left: 0;">
                                                     <input type="text" name="documentPayload" style="width: 300px;" required
-                                                           lay-verify="required" value="<img src=x onerror=alert(1)>" placeholder="请求内容" autocomplete="off"
+                                                           lay-verify="required" value="<img src=x onerror=alert(1)>" th:placeholder="#{xss.store.input.placeholder}" placeholder="请求内容" autocomplete="off"
                                                            class="layui-input" >
                                                 </div>
                                             </div>
                                             <div class="layui-form-item" style="margin: 0 0 0 10px;">
-                                                <button class="layui-btn layui-btn-normal" lay-submit lay-filter="document-write">测试document.write</button>
-                                                <button class="layui-btn layui-btn-normal" lay-submit lay-filter="document-domain">测试document.domain</button>
+                                                <button class="layui-btn layui-btn-normal" lay-submit lay-filter="document-write" th:text="#{button.testDocumentWrite}">测试document.write</button>
+                                                <button class="layui-btn layui-btn-normal" lay-submit lay-filter="document-domain" th:text="#{button.testDocumentDomain}">测试document.domain</button>
                                             </div>
                                         </form>
                                     </blockquote>
@@ -170,11 +170,9 @@
                                 <!-- Tips -->
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{common.tips}">tips</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">  DOM XSS可以按“Source -> Sink”审计：
-  常见Source：location.href、location.search、location.hash、document.referrer、localStorage、sessionStorage、postMessage消息、WebSocket消息
-  常见Sink：document.write()、element.innerHTML、element.outerHTML、insertAdjacentHTML()、事件属性、location跳转、eval()、Function()、setTimeout字符串参数</pre>
+                                            <pre style="color: #28333e;font-size: 15px;" th:text="#{xss.dom.vul.tips}">  DOM XSS可以按“Source -> Sink”审计：</pre>
                                         </div>
                                     </div>
                                 </div>
@@ -182,7 +180,7 @@
                                 <!-- 测试结果 -->
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i>测试结果
+                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i><span th:text="#{common.testResult}">测试结果</span>
                                         </div>
                                         <div class="layui-card-body layui-text layadmin-text">
                                             <pre id="vul-dom-raw-result" style="color: red;font-size: 15px;"></pre>
@@ -195,7 +193,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code">  缺陷代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="|  #{common.vulnerableCode}|">  缺陷代码</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="vul1DomRaw">
                             </div>
@@ -208,13 +206,13 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-anquan">  安全场景：按上下文安全写入</span></h1>
+                        <h1><span class="iconfont icon-anquan" th:text="|  #{xss.dom.safe.title}|">  安全场景：按上下文安全写入</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <ul class="layui-tab-title">
-                                <li class="layui-this">文本输出</li>
-                                <li>URL跳转</li>
-                                <li>替代eval</li>
-                                <li>DOM API</li>
+                                <li class="layui-this" th:text="#{xss.dom.safe.text}">文本输出</li>
+                                <li th:text="#{xss.dom.safe.url}">URL跳转</li>
+                                <li th:text="#{xss.dom.safe.eval}">替代eval</li>
+                                <li th:text="#{xss.dom.safe.domApi}">DOM API</li>
                             </ul>
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
@@ -222,10 +220,10 @@
                                         <form class="layui-form" style="display: flex; justify-content: space-between;">
                                             <input type="text" name="safeTextPayload" style="width: 300px;" required
                                                    lay-verify="required" value="123<img src onerror=alert(/xss/)>123"
-                                                   placeholder="文本内容" autocomplete="off" class="layui-input">
+                                                   th:placeholder="#{xss.dom.safe.placeholder.text}" placeholder="文本内容" autocomplete="off" class="layui-input">
                                             <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;"
                                                     lay-filter="safe-dom-text" lay-submit="">
-                                                <span class="iconfont icon-zhihang">Run</span>
+                                                <span class="iconfont icon-zhihang" th:text="#{button.run}">Run</span>
                                             </button>
                                         </form>
                                     </blockquote>
@@ -236,10 +234,10 @@
                                         <form class="layui-form" style="display: flex; justify-content: space-between;">
                                             <input type="text" name="safeUrlPayload" style="width: 300px;" required
                                                    lay-verify="required" value="javascript:alert(1)"
-                                                   placeholder="URL" autocomplete="off" class="layui-input">
+                                                   th:placeholder="#{xss.dom.safe.placeholder.url}" placeholder="URL" autocomplete="off" class="layui-input">
                                             <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;"
                                                     lay-filter="safe-dom-url" lay-submit="">
-                                                <span class="iconfont icon-zhihang">Run</span>
+                                                <span class="iconfont icon-zhihang" th:text="#{button.run}">Run</span>
                                             </button>
                                         </form>
                                     </blockquote>
@@ -255,7 +253,7 @@
                                             </select>
                                             <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;"
                                                     lay-filter="safe-dom-command" lay-submit="">
-                                                <span class="iconfont icon-zhihang">Run</span>
+                                                <span class="iconfont icon-zhihang" th:text="#{button.run}">Run</span>
                                             </button>
                                         </form>
                                     </blockquote>
@@ -266,10 +264,10 @@
                                         <form class="layui-form" style="display: flex; justify-content: space-between;">
                                             <input type="text" name="safeNodePayload" style="width: 300px;" required
                                                    lay-verify="required" value="<img src=x onerror=alert(1)>"
-                                                   placeholder="节点文本" autocomplete="off" class="layui-input">
+                                                   th:placeholder="#{xss.dom.safe.placeholder.node}" placeholder="节点文本" autocomplete="off" class="layui-input">
                                             <button class="layui-btn layui-btn-normal" style="width: 100px; margin-left: 10px;"
                                                     lay-filter="safe-dom-node" lay-submit="">
-                                                <span class="iconfont icon-zhihang">Run</span>
+                                                <span class="iconfont icon-zhihang" th:text="#{button.run}">Run</span>
                                             </button>
                                         </form>
                                     </blockquote>
@@ -277,20 +275,16 @@
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{common.tips}">tips</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">DOM XSS修复重点：
-  1. 普通文本输出使用textContent、innerText或createTextNode，不要使用innerHTML
-  2. URL跳转前校验协议和目标域名，拒绝javascript:、data:等危险协议
-  3. 不要把用户输入交给eval、Function、setTimeout字符串参数执行
-  4. 需要展示富文本时，使用白名单HTML净化库，再按业务允许的标签和属性渲染</pre>
+                                            <pre style="color: #28333e;font-size: 15px;" th:text="#{xss.dom.safe.tips}">DOM XSS修复重点：</pre>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-warning icon-output-safe"></i>测试结果</div>
+                                        <div class="layui-card-header"><i class="fa fa-warning icon-output-safe"></i><span th:text="#{common.testResult}">测试结果</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
                                             <pre id="safe-dom-result" style="color: green;font-size: 15px;"></pre>
                                         </div>
@@ -301,7 +295,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code">  安全代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="|  #{common.safeCode}|">  安全代码</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="safeDomCode">
                             </div>
@@ -316,7 +310,7 @@
 </div>
 
 <div th:replace="~{common/common::script}"></div>
-<script type="text/javascript">
+    <script type="text/javascript" th:inline="javascript">
     document.addEventListener("DOMContentLoaded", function () {
         layui.use(['layer', 'miniTab', 'common', 'form'], function () {
             var $ = layui.jquery,
@@ -325,7 +319,7 @@
                 common = layui.common,
                 form = layui.form;
             miniTab.listen();
-            layer.msg("跨站脚本-DOM型");
+            layer.msg(/*[[#{xss.dom.toast}]]*/ "跨站脚本-DOM型");
 
             // innerHTML
             form.on('submit(vul1-dom-raw-submit)', function (data) {
@@ -365,7 +359,7 @@
 
             var cmConfig = {
                 lineNumbers: true,
-                lineWrapping: false,
+                lineWrapping: true,
                 indentUnit: 4,
                 indentWithTabs: true,
                 theme: 'juejin',
@@ -374,12 +368,46 @@
                 mode: "text/x-java"
             };
 
+            var isEnglishDom = /*[[${#locale.language == 'en'}]]*/ false;
             CodeMirror(document.getElementById("vul1DomRaw"), Object.assign({}, cmConfig, {
-                value: vul1DomRaw
+                value: isEnglishDom ? [
+                    "// 1. innerHTML XSS",
+                    "outputDiv.innerHTML = userInput; // vulnerable: user input is inserted as HTML",
+                    "",
+                    "// 2. LocalStorage XSS",
+                    "localStorage.setItem('vul3-dom-raw', input.value);",
+                    "result.innerHTML = localStorage.getItem('vul3-dom-raw');",
+                    "",
+                    "// 3. href/location XSS",
+                    "window.location = payload; // vulnerable: javascript: can execute",
+                    "",
+                    "// 4. eval XSS",
+                    "eval(payload); // vulnerable: executes user-controlled JavaScript",
+                    "",
+                    "// 5. document.write XSS",
+                    "document.write(payload);"
+                ].join("\n") : vul1DomRaw
             }));
             CodeMirror(document.getElementById("safeDomCode"), Object.assign({}, cmConfig, {
                 theme: 'juejinsafe',
-                value: safeDomCode
+                value: isEnglishDom ? [
+                    "// 1. Plain text output: use textContent instead of parsing HTML",
+                    "result.textContent = userInput;",
+                    "",
+                    "// 2. URL navigation: allow only safe protocols",
+                    "var url = new URL(userInput, window.location.origin);",
+                    "if (!['http:', 'https:'].includes(url.protocol)) {",
+                    "    throw new Error('dangerous protocol');",
+                    "}",
+                    "",
+                    "// 3. Replace eval with command allowlist mapping",
+                    "var actions = { showTime: () => new Date().toLocaleString() };",
+                    "var action = actions[userInput];",
+                    "if (action) action();",
+                    "",
+                    "// 4. DOM API: create text nodes instead of concatenating HTML",
+                    "element.appendChild(document.createTextNode(userInput));"
+                ].join("\n") : safeDomCode
             }));
 
             form.on('submit(safe-dom-text)', function (data) {
@@ -393,12 +421,12 @@
                     var url = new URL(rawUrl, window.location.origin);
                     var allowedProtocols = ['http:', 'https:'];
                     if (allowedProtocols.indexOf(url.protocol) === -1) {
-                        document.getElementById('safe-dom-result').textContent = '已拦截危险协议：' + url.protocol;
+                        document.getElementById('safe-dom-result').textContent = /*[[#{xss.dom.result.blockedProtocol}]]*/ '已拦截危险协议：' + ' ' + url.protocol;
                         return false;
                     }
-                    document.getElementById('safe-dom-result').textContent = 'URL校验通过：' + url.href;
+                    document.getElementById('safe-dom-result').textContent = /*[[#{xss.dom.result.urlAllowed}]]*/ 'URL校验通过：' + ' ' + url.href;
                 } catch (e) {
-                    document.getElementById('safe-dom-result').textContent = 'URL格式非法：' + e.message;
+                    document.getElementById('safe-dom-result').textContent = /*[[#{xss.dom.result.invalidUrl}]]*/ 'URL格式非法：' + ' ' + e.message;
                 }
                 return false;
             });
@@ -406,14 +434,14 @@
             form.on('submit(safe-dom-command)', function (data) {
                 var actions = {
                     showTime: function () {
-                        return '当前时间：' + new Date().toLocaleString();
+                        return (/*[[#{xss.dom.result.currentTime}]]*/ '当前时间：') + ' ' + new Date().toLocaleString();
                     },
                     showLocation: function () {
-                        return '当前路径：' + window.location.pathname;
+                        return (/*[[#{xss.dom.result.currentPath}]]*/ '当前路径：') + ' ' + window.location.pathname;
                     }
                 };
                 var action = actions[data.field.safeCommand];
-                document.getElementById('safe-dom-result').textContent = action ? action() : '未知命令，拒绝执行';
+                document.getElementById('safe-dom-result').textContent = action ? action() : (/*[[#{xss.dom.result.unknownCommand}]]*/ '未知命令，拒绝执行');
                 return false;
             });
 
@@ -430,7 +458,7 @@
 
     $('.xss-dom').hover(function () {
         $(this).css('cursor', 'pointer');
-        layer.tips('攻击流程图', this, {
+        layer.tips(/*[[#{xss.reflect.flowTip}]]*/ '攻击流程图', this, {
             tips: [1, '#0051ff'],
             time: 2000
         });
@@ -453,7 +481,7 @@
         form.on('submit(location-xss)', function(data) {
             var payload = data.field.locationPayload;
             // 故意使用不安全的方式处理location
-            var result = 'Location对象当前值：<br>' +
+            var result = (/*[[#{xss.dom.result.locationCurrent}]]*/ 'Location对象当前值：') + '<br>' +
                 'Hash: ' + location.hash + '<br>' +
                 'Search: ' + location.search + '<br>' +
                 'Pathname: ' + location.pathname;
@@ -472,9 +500,9 @@
             try {
                 // 故意使用不安全的方式执行代码
                 var result = eval(payload);
-                document.getElementById('vul-dom-raw-result').innerHTML = 'Eval执行结果: ' + result;
+                document.getElementById('vul-dom-raw-result').innerHTML = (/*[[#{xss.dom.result.evalResult}]]*/ 'Eval执行结果：') + ' ' + result;
             } catch(e) {
-                document.getElementById('vul-dom-raw-result').innerHTML = 'Eval执行错误: ' + e.message;
+                document.getElementById('vul-dom-raw-result').innerHTML = (/*[[#{xss.dom.result.evalError}]]*/ 'Eval执行错误：') + ' ' + e.message;
             }
             return false;
         });
@@ -487,7 +515,7 @@
         // document.write测试
         form.on('submit(document-write)', function(data) {
             var payload = data.field.documentPayload;
-            document.getElementById('vul-dom-raw-result').innerHTML = 'Document.write执行内容：<br>' + payload;
+            document.getElementById('vul-dom-raw-result').innerHTML = (/*[[#{xss.dom.result.documentWrite}]]*/ 'Document.write执行内容：') + '<br>' + payload;
             // 故意使用不安全的document.write
             setTimeout(function() {
                 document.write(payload);
@@ -502,9 +530,9 @@
             try {
                 // 故意使用不安全的方式设置domain
                 document.domain = payload;
-                document.getElementById('vul-dom-raw-result').innerHTML = 'Domain已设置为: ' + document.domain;
+                document.getElementById('vul-dom-raw-result').innerHTML = (/*[[#{xss.dom.result.domainSet}]]*/ 'Domain已设置为：') + ' ' + document.domain;
             } catch(e) {
-                document.getElementById('vul-dom-raw-result').innerHTML = '设置Domain失败: ' + e.message;
+                document.getElementById('vul-dom-raw-result').innerHTML = (/*[[#{xss.dom.result.domainFailed}]]*/ '设置Domain失败：') + ' ' + e.message;
             }
             return false;
         });

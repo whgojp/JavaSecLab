@@ -19,9 +19,9 @@ JavaSecLab is a comprehensive Java vulnerability lab for application security le
 
 The goal is practical: help users understand not only how a vulnerability is exploited, but also why it exists in code and how it should be fixed.
 
-![home](./pic/home.png)
+![home](./pic/home-en.png)
 
-![show](./pic/show.png)
+![show](./pic/show-en.png)
 
 ## Who Is It For?
 
@@ -67,7 +67,7 @@ The same vulnerability type often appears through multiple trigger paths in real
 
 JavaSecLab includes vulnerability traffic-analysis examples to help learners connect request/response behavior with code execution. Contributions with clearer packets, better reproduction notes, or additional analysis examples are welcome.
 
-![flow1](./pic/flow1.png)
+![flow1](./pic/flow1-en.png)
 
 For example, in a time-based SQL injection scenario, the traffic pattern can be observed through response latency: the server responds after roughly five seconds.
 
@@ -123,7 +123,7 @@ Requirements:
 
 Default account: `admin/admin`
 
-![login](./pic/login.png)
+![login](./pic/login-en.png)
 
 ### Docker Deployment
 
@@ -132,11 +132,17 @@ Requirements:
 - Docker
 - Docker Compose
 
-Build and start the lab:
+Option 1: start with the published image:
+
+```shell
+docker compose -f docker-compose.image.yml up -d
+```
+
+Option 2: build the image locally and start the lab:
 
 ```shell
 mvn clean package -DskipTests
-docker-compose -p javaseclab up -d
+docker compose -p javaseclab up -d
 ```
 
 If the database is empty after startup, manually import [sql/JavaSecLab.sql](./sql/JavaSecLab.sql).
@@ -176,6 +182,23 @@ Issues and pull requests are welcome. Good contributions include:
 **When we speak of free software, we are referring to freedom, not price.**
 
 JavaSecLab is released under the [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0). See [LICENSE](./LICENSE) for details.
+
+## Star History
+
+<picture>
+  <source
+    media="(prefers-color-scheme: dark)"
+    srcset="https://api.star-history.com/svg?repos=whgojp/JavaSecLab&type=Date&theme=dark"
+  />
+  <source
+    media="(prefers-color-scheme: light)"
+    srcset="https://api.star-history.com/svg?repos=whgojp/JavaSecLab&type=Date"
+  />
+  <img
+    alt="Star History Chart"
+    src="https://api.star-history.com/svg?repos=whgojp/JavaSecLab&type=Date"
+  />
+</picture>
 
 ## Changelog
 

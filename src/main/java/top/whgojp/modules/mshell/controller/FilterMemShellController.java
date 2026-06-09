@@ -46,7 +46,7 @@ public class FilterMemShellController extends BaseMemShellController {
         try {
             Context context = getContext();
             if (context == null) {
-                return R.error("获取Context失败");
+                return R.error(msg("mshell.result.contextFailed"));
             }
 
             // 创建恶意Filter
@@ -103,12 +103,12 @@ public class FilterMemShellController extends BaseMemShellController {
 
             log.info("Filter型内存马注入成功，名称: {}, URL Pattern: {}, 命令参数: {}", 
                     filterName, urlPattern, cmdParam);
-            return R.ok("内存马注入成功").put("data", String.format(
-                    "Filter名称: %s\nURL Pattern: %s\n命令参数: %s", 
+            return R.ok(msg("mshell.result.injectSuccess")).put("data", String.format(
+                    msg("mshell.result.filterInjectData"),
                     filterName, urlPattern, cmdParam));
         } catch (Exception e) {
             log.error("注入失败", e);
-            return R.error("注入失败：" + e.getMessage());
+            return R.error(msg("mshell.result.injectFailed", e.getMessage()));
         }
     }
 
@@ -119,26 +119,26 @@ public class FilterMemShellController extends BaseMemShellController {
         try {
             Context context = getContext();
             if (context == null) {
-                return R.error("获取Context失败");
+                return R.error(msg("mshell.result.contextFailed"));
             }
 
             StringBuilder result = new StringBuilder();
-            result.append("已注入的过滤器列表：\n");
+            result.append(msg("mshell.result.filterList")).append("\n");
 
             // 获取所有Filter配置
             FilterDef[] filterDefs = ((StandardContext) context).findFilterDefs();
             for (FilterDef filterDef : filterDefs) {
-                result.append("- Filter名称: ").append(filterDef.getFilterName())
-                      .append("\n  类型: ").append(filterDef.getFilterClass())
-                      .append("\n  实例: ").append(filterDef.getFilter() != null ? 
-                              filterDef.getFilter().getClass().getName() : "未实例化")
+                result.append("- ").append(msg("mshell.result.filterName")).append(": ").append(filterDef.getFilterName())
+                      .append("\n  ").append(msg("mshell.result.type")).append(": ").append(filterDef.getFilterClass())
+                      .append("\n  ").append(msg("mshell.result.instance")).append(": ").append(filterDef.getFilter() != null ?
+                              filterDef.getFilter().getClass().getName() : msg("mshell.result.notInstantiated"))
                       .append("\n");
             }
 
             return R.ok().put("data", result.toString());
         } catch (Exception e) {
             log.error("检测失败", e);
-            return R.error("检测失败：" + e.getMessage());
+            return R.error(msg("mshell.result.detectFailed", e.getMessage()));
         }
     }
 }

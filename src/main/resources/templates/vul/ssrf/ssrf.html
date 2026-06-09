@@ -52,12 +52,12 @@
             <div class="layui-col-md12">
                 <fieldset class="layui-elem-field layui-field-title">
                     <legend>
-                        <a style="color: rgb(30 159 255)" class="ssrf">SSRF (Server-Side Request Forgery)</a>
+                        <a style="color: rgb(30 159 255)" class="ssrf" th:text="#{ssrf.title}">SSRF (Server-Side Request Forgery)</a>
                     </legend>
                     <blockquote class="layui-elem-quote layui-quote-nm"
                                 style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
-                        <pre>  SSRF：服务端把用户可控的 URL、主机名或资源地址用于发起网络请求，且未限制协议、目标主机、解析后的 IP 和跳转链路，攻击者可借服务端网络身份访问内网服务、云元数据、管理端口、本地文件或第三方资源。</pre>
-                        <pre>  常见入口：远程图片/附件抓取、Webhook、URL 预览、文档转换、订阅源、代理下载、XML/图片处理、数据库或中间件的外连功能，以及 source、share、link、src、imageUrl、target 等参数。</pre>
+                        <pre th:text="#{ssrf.intro.core}">  SSRF：服务端把用户可控的 URL、主机名或资源地址用于发起网络请求，且未限制协议、目标主机、解析后的 IP 和跳转链路，攻击者可借服务端网络身份访问内网服务、云元数据、管理端口、本地文件或第三方资源。</pre>
+                        <pre th:text="#{ssrf.intro.entry}">  常见入口：远程图片/附件抓取、Webhook、URL 预览、文档转换、订阅源、代理下载、XML/图片处理、数据库或中间件的外连功能，以及 source、share、link、src、imageUrl、target 等参数。</pre>
                     </blockquote>
                 </fieldset>
             </div>
@@ -66,11 +66,11 @@
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
                         <h1 style="display: flex; justify-content: space-between; align-items: center;height: 33.5px">
-                            <span class="iconfont icon-bug"> 漏洞场景：原生漏洞场景</span>
+                            <span class="iconfont icon-bug" th:text="| #{ssrf.vul.native}|"> 漏洞场景：原生漏洞场景</span>
                             <span class="iconfont icon-liuliang1">
                                 <a href="/other/datapackage/ssrf/ssrf.pcapng"
                                    download="ssrf.pcapng"
-                                   style="margin-right: 19px;color: #00bb00">流量分析</a>
+                                   style="margin-right: 19px;color: #00bb00" th:text="#{ssrf.traffic}">流量分析</a>
                             </span>
                         </h1>
 
@@ -78,7 +78,7 @@
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn ssrf-action-panel">
-                                        <p class="action-desc">可尝试使用 file、http(s)、dict、gopher 等协议进行测试</p>
+                                        <p class="action-desc" th:text="#{ssrf.vul.desc}">可尝试使用 file、http(s)、dict、gopher 等协议进行测试</p>
                                         <div class="action-buttons">
                                             <a target="_blank" href="/ssrf/vul?url=file:///etc/passwd">
                                                 <button class="layui-btn layui-btn-normal">
@@ -87,12 +87,12 @@
                                             </a>
                                             <a target="_blank" href="/ssrf/vul?url=http://127.0.0.1/ssrf/internal/metadata">
                                                 <button class="layui-btn layui-btn-normal">
-                                                    <span class="iconfont icon-zhihang">内网HTTP</span>
+                                                    <span class="iconfont icon-zhihang" th:text="#{ssrf.button.internalHttp}">内网HTTP</span>
                                                 </button>
                                             </a>
                                             <a target="_blank" href="/ssrf/vul?url=http://127.0.0.1/ssrf/redirect?target=http://127.0.0.1/ssrf/internal/metadata">
                                                 <button class="layui-btn layui-btn-normal">
-                                                    <span class="iconfont icon-zhihang">跳转链</span>
+                                                    <span class="iconfont icon-zhihang" th:text="#{ssrf.button.redirectChain}">跳转链</span>
                                                 </button>
                                             </a>
                                         </div>
@@ -101,14 +101,9 @@
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{ssrf.tips}">tips</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">代码审计 SINK 点：
-  URL、URLConnection、HttpURLConnection、HttpClient、OkHttp、RestTemplate、WebClient、Socket、ImageIO、JNDI、DriverManager.getConnection
-  Linux：file:///etc/hosts
-  Windows：file:///C:\windows\win.ini
-  内网HTTP：http://127.0.0.1/ssrf/internal/metadata
-  跳转链：http://127.0.0.1/ssrf/redirect?target=http://127.0.0.1/ssrf/internal/metadata</pre>
+                                            <pre style="color: #28333e;font-size: 15px;" th:text="#{ssrf.auditTips}">代码审计 SINK 点</pre>
                                         </div>
                                     </div>
                                 </div>
@@ -119,7 +114,7 @@
 
                     <div class="layui-col-md6">
                         <h1 style="display: flex; align-items: center; height: 33.5px;">
-                            <span class="iconfont icon-code" style="height: 22.5px;">缺陷代码</span>
+                            <span class="iconfont icon-code" style="height: 22.5px;" th:text="#{ssrf.vulnerableCode}">缺陷代码</span>
                         </h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="vul1URLConnection"></div>
@@ -131,31 +126,31 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-anquan"> 安全场景：协议、域名与 IP 校验</span></h1>
+                        <h1><span class="iconfont icon-anquan" th:text="| #{ssrf.safe.title}|"> 安全场景：协议、域名与 IP 校验</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn ssrf-action-panel">
-                                        <p class="action-desc">限制 http(s) 协议、白名单域名，并校验域名解析后的 IP</p>
+                                        <p class="action-desc" th:text="#{ssrf.safe.desc}">限制 http(s) 协议、白名单域名，并校验域名解析后的 IP</p>
                                         <div class="action-buttons">
                                             <a target="_blank" href="/ssrf/safe?url=http://baidu.com">
                                                 <button class="layui-btn layui-btn-normal">
-                                                    <span class="iconfont icon-zhihang">白名单</span>
+                                                    <span class="iconfont icon-zhihang" th:text="#{ssrf.button.allowlist}">白名单</span>
                                                 </button>
                                             </a>
                                             <a target="_blank" href="/ssrf/safe?url=file:///etc/passwd">
                                                 <button class="layui-btn layui-btn-normal">
-                                                    <span class="iconfont icon-zhihang">协议拦截</span>
+                                                    <span class="iconfont icon-zhihang" th:text="#{ssrf.button.protocolBlocked}">协议拦截</span>
                                                 </button>
                                             </a>
                                             <a target="_blank" href="/ssrf/safe?url=http://127.0.0.1/ssrf/internal/metadata">
                                                 <button class="layui-btn layui-btn-normal">
-                                                    <span class="iconfont icon-zhihang">内网拦截</span>
+                                                    <span class="iconfont icon-zhihang" th:text="#{ssrf.button.internalBlocked}">内网拦截</span>
                                                 </button>
                                             </a>
                                             <a target="_blank" href="/ssrf/safe?url=http://127.0.0.1/ssrf/redirect?target=http://127.0.0.1/ssrf/internal/metadata">
                                                 <button class="layui-btn layui-btn-normal">
-                                                    <span class="iconfont icon-zhihang">跳转拦截</span>
+                                                    <span class="iconfont icon-zhihang" th:text="#{ssrf.button.redirectBlocked}">跳转拦截</span>
                                                 </button>
                                             </a>
                                         </div>
@@ -164,14 +159,9 @@
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{ssrf.tips}">tips</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">安全编码建议：
-  1、优先使用业务枚举或服务端映射，不直接让用户提交完整 URL。
-  2、只允许 http/https，拒绝 file、gopher、dict、ftp、jar、ldap 等高危协议。
-  3、域名白名单校验后，还要解析所有 IP 并拦截内网、回环、链路本地、组播等地址。
-  4、禁用自动 30x 跳转；如必须跟随跳转，每一跳都重新执行协议、域名和 IP 校验。
-  5、设置连接/读取超时、限制响应大小，并校验返回内容是否符合业务预期。</pre>
+                                            <pre style="color: #28333e;font-size: 15px;" th:text="#{ssrf.safeTips}">安全编码建议</pre>
                                         </div>
                                     </div>
                                 </div>
@@ -181,7 +171,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code"> 安全代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="| #{ssrf.safeCode}|"> 安全代码</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="safe1WhiteList"></div>
                         </div>
@@ -193,14 +183,15 @@
 </div>
 
 <div th:replace="~{common/common::script}"></div>
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
     layui.use(['layer', 'miniTab', 'common', 'upload'], function () {
         var $ = layui.jquery,
             layer = layui.layer,
             miniTab = layui.miniTab;
 
         miniTab.listen();
-        layer.msg("SSRF-服务端请求伪造");
+        layer.msg(/*[[#{ssrf.toast}]]*/ "SSRF-服务端请求伪造");
+        var isEnglishSsrf = /*[[${#locale.language == 'en'}]]*/ false;
 
         var cmConfig = {
             lineNumbers: true,
@@ -225,18 +216,18 @@
         };
 
         CodeMirror(document.getElementById("vul1URLConnection"), Object.assign({}, cmConfig, {
-            value: vul1URLConnection
+            value: isEnglishSsrf ? vul1URLConnection : vul1URLConnectionZh
         }));
 
         CodeMirror(document.getElementById("safe1WhiteList"), Object.assign({}, cmConfigSafe, {
-            value: safe1WhiteList
+            value: isEnglishSsrf ? safe1WhiteList : safe1WhiteListZh
         }));
 
     });
 
     $('.ssrf').hover(function () {
         $(this).css('cursor', 'pointer');
-        layer.tips('攻击流程图', this, {
+        layer.tips(/*[[#{ssrf.flowTip}]]*/ '攻击流程图', this, {
             tips: [1, '#0051ff'],
             time: 2000
         });
@@ -247,7 +238,7 @@
             type: 1,
             title: false,
             closeBtn: 1,
-            area: ['903px', '529px'], // 宽高可以根据需要调整
+            area: ['903px', '529px'], // Width and height.
             shadeClose: true,
             content: '<div style="text-align: center;"><img src="/static/images/vul/ssrf/ssrf.jpg" style="width: 100%; height: 50%;"></div>'
         });

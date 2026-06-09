@@ -7,6 +7,9 @@ spring:
     active: docker
   main:
     allow-bean-definition-overriding: true
+  messages:
+    basename: i18n/messages
+    encoding: UTF-8
   thymeleaf:
     mode: LEGACYHTML5 #模板类型
     cache: false #缓存

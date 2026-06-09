@@ -2,7 +2,8 @@ package top.whgojp.modules.loginconfront.controller;
 
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +27,12 @@ import java.util.*;
 @CrossOrigin(origins = "*")
 @RequestMapping("/loginconfront/reverse")
 public class ReverseController {
+    private final MessageSource messageSource;
+
+    public ReverseController(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
+
     @RequestMapping("")
     public String reverse() {
         return "vul/loginconfront/reverse";
@@ -63,7 +70,7 @@ public class ReverseController {
 
         // 校验参数是否齐全
         if (username == null || password == null || timestamp == null || sign == null) {
-            return R.error("缺少必要参数");
+            return R.error(msg("login.reverse.result.missing"));
         }
 
         Map<String, String> sortedParams = new HashMap<>();
@@ -74,13 +81,13 @@ public class ReverseController {
         String generatedSign = generateSign(sortedParams);
 
         if (!generatedSign.equals(sign)) {
-            return R.error("签名验证失败");
+            return R.error(msg("login.reverse.result.signFailed"));
         }
 
         if (REAL_USERNAME.equals(username) && REAL_PASSWORD.equals(password)) {
-            return R.ok("登录成功！用户名：" + username + ",密码：" + password);
+            return R.ok(msg("login.reverse.result.success", username, password));
         } else {
-            return R.error("用户名或密码错误");
+            return R.error(msg("login.reverse.result.invalid"));
         }
     }
 
@@ -143,22 +150,25 @@ public class ReverseController {
     @PostMapping("/vul2")
     @ResponseBody
     public R vul2(@RequestBody LoginRequest request) {
-//        log.info("用户名："+request.getEncryptedUsername()+",密码："+request.getEncryptedPassword());
+//        log.info("Encrypted username: {}, encrypted password: {}", request.getEncryptedUsername(), request.getEncryptedPassword());
         try {
             String decryptedUsername = decryptData(request.getEncryptedUsername());
             String decryptedPassword = decryptData(request.getEncryptedPassword());
 
-//            log.info("解密后的用户名："+decryptedUsername+",密码："+decryptedPassword);
+//            log.info("Decrypted username: {}, password: {}", decryptedUsername, decryptedPassword);
 
             if (REAL_USERNAME.equals(decryptedUsername) && REAL_PASSWORD.equals(decryptedPassword)) {
-                return R.ok("登录成功！用户名：" + decryptedUsername + ",密码：" + decryptedPassword);
+                return R.ok(msg("login.reverse.result.success", decryptedUsername, decryptedPassword));
             } else {
-                return R.error("用户名或密码错误！");
+                return R.error(msg("login.reverse.result.invalid"));
             }
         } catch (Exception e) {
-            return R.error("解密失败！");
+            return R.error(msg("login.reverse.result.decryptFailed"));
         }
     }
 
+    private String msg(String key, Object... args) {
+        return messageSource.getMessage(key, args, LocaleContextHolder.getLocale());
+    }
 
 }

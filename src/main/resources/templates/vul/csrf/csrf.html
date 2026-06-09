@@ -9,13 +9,13 @@
             <div class="layui-col-md12">
                 <fieldset class="layui-elem-field layui-field-title">
                     <legend>
-                        <a style="color: rgb(30 159 255)" class="csrf">其他漏洞 - 跨站请求伪造</a>
+                        <a style="color: rgb(30 159 255)" class="csrf" th:text="#{csrf.title}">其他漏洞 - 跨站请求伪造</a>
                     </legend>
                     <blockquote class="layui-elem-quote layui-quote-nm"
                                 style="font-size: 15px;background-color: #a7deefab;box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important">
                         <p>
-                        <pre>  CSRF(跨站请求伪造)：攻击者诱导已登录用户访问恶意页面或触发恶意请求，浏览器会自动携带目标站点 Cookie 等凭证，导致服务端误以为请求来自用户本人，从而执行转账、改密、绑定账号等敏感操作。</pre>
-                        <pre>  触发条件：目标操作依赖 Cookie/Session 自动认证，且缺少不可预测的 CSRF Token、Origin/Referer 校验、SameSite Cookie 或二次确认等防护。GET 请求执行状态变更会显著放大风险。</pre>
+                        <pre th:text="#{csrf.intro.core}">  CSRF(跨站请求伪造)：攻击者诱导已登录用户访问恶意页面或触发恶意请求，浏览器会自动携带目标站点 Cookie 等凭证，导致服务端误以为请求来自用户本人，从而执行转账、改密、绑定账号等敏感操作。</pre>
+                        <pre th:text="#{csrf.intro.conditions}">  触发条件：目标操作依赖 Cookie/Session 自动认证，且缺少不可预测的 CSRF Token、Origin/Referer 校验、SameSite Cookie 或二次确认等防护。GET 请求执行状态变更会显著放大风险。</pre>
                         </p>
                     </blockquote>
                 </fieldset>
@@ -23,10 +23,10 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-bug">  漏洞场景：原生漏洞场景</span></h1>
+                        <h1><span class="iconfont icon-bug" th:text="|  #{csrf.vul.native}|">  漏洞场景：原生漏洞场景</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <ul class="layui-tab-title">
-                                <li class="layui-this">转账操作</li>
+                                <li class="layui-this" th:text="#{csrf.transferOperation}">转账操作</li>
                             </ul>
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
@@ -34,17 +34,17 @@
                                         <form class="layui-form" style="display: flex; justify-content: space-between;" th:action="@{/csrf/vul}" target="_blank">
                                             <div style="display: flex; align-items: center;">
                                                 <input type="text" name="receiver" style="width: 150px;" required
-                                                       lay-verify="required" value="zhangsan" placeholder="收款人" autocomplete="off"
+                                                       lay-verify="required" value="zhangsan" placeholder="收款人" th:placeholder="#{csrf.receiver}" autocomplete="off"
                                                        class="layui-input">
                                                 <input type="text" name="amount" style="width: 150px" required
-                                                       lay-verify="required" value="100" placeholder="转账金额" autocomplete="off"
+                                                       lay-verify="required" value="100" placeholder="转账金额" th:placeholder="#{csrf.amount}" autocomplete="off"
                                                        class="layui-input">
                                             </div>
                                             <div style="display: flex; align-items: center;">
                                                 <button class="layui-btn layui-btn-normal"
                                                         style="width: 100px; margin-left: 10px;"
                                                         lay-filter="vul-csrf" lay-submit="">
-                                                    <span class="iconfont icon-zhihang">转账</span>
+                                                    <span class="iconfont icon-zhihang" th:text="#{csrf.transfer}">转账</span>
                                                 </button>
                                             </div>
                                         </form>
@@ -53,12 +53,9 @@
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{csrf.tips}">tips</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">问题点：
-  1、转账这类状态变更操作不应使用 GET 请求；本实验保留 GET 便于构造演示。
-  2、接口只依赖登录态 Cookie，没有校验 CSRF Token、Origin/Referer 或二次确认。
-  3、当前项目为漏洞演示关闭了 Spring Security CSRF，全局关闭会扩大风险。</pre>
+                                            <pre style="color: #28333e;font-size: 15px;" th:text="#{csrf.vulTips}">问题点</pre>
                                         </div>
                                     </div>
 
@@ -69,7 +66,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code">  缺陷代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="|  #{csrf.vulnerableCode}|">  缺陷代码</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="vulCsrf">
                             </div>
@@ -82,10 +79,10 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-anquan">  安全场景：CSRF Token防护</span></h1>
+                        <h1><span class="iconfont icon-anquan" th:text="|  #{csrf.safe.token}|">  安全场景：CSRF Token防护</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <ul class="layui-tab-title">
-                                <li class="layui-this">转账操作</li>
+                                <li class="layui-this" th:text="#{csrf.transferOperation}">转账操作</li>
                             </ul>
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
@@ -94,17 +91,17 @@
                                             <div style="display: flex; align-items: center;">
                                                 <input type="hidden" name="csrfToken" th:value="${csrfToken}"/>
                                                 <input type="text" name="receiver" style="width: 150px;" required
-                                                       lay-verify="required" value="zhangsan" placeholder="收款人" autocomplete="off"
+                                                       lay-verify="required" value="zhangsan" placeholder="收款人" th:placeholder="#{csrf.receiver}" autocomplete="off"
                                                        class="layui-input">
                                                 <input type="text" name="amount" style="width: 150px" required
-                                                       lay-verify="required" value="100" placeholder="转账金额" autocomplete="off"
+                                                       lay-verify="required" value="100" placeholder="转账金额" th:placeholder="#{csrf.amount}" autocomplete="off"
                                                        class="layui-input">
                                             </div>
                                             <div style="display: flex; align-items: center;">
                                                 <button class="layui-btn layui-btn-normal"
                                                         style="width: 100px; margin-left: 10px;"
                                                         lay-filter="vul-csrf" lay-submit="">
-                                                    <span class="iconfont icon-zhihang">转账</span>
+                                                    <span class="iconfont icon-zhihang" th:text="#{csrf.transfer}">转账</span>
                                                 </button>
                                             </div>
                                         </form>
@@ -113,13 +110,9 @@
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{csrf.tips}">tips</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">安全编码建议：
-  1、真实业务中敏感操作使用 POST/PUT/DELETE 等非 GET 方法，并开启框架内置 CSRF 防护。
-  2、每个敏感请求携带不可预测的 CSRF Token，服务端与 Session 中的 Token 做校验。
-  3、Token 不应出现在可被第三方直接构造的固定 URL 中，真实业务中通常放在表单隐藏字段或自定义请求头。
-  4、配合 SameSite Cookie、二次确认、短有效期和操作审计提升防护强度。</pre>
+                                            <pre style="color: #28333e;font-size: 15px;" th:text="#{csrf.tokenTips}">安全编码建议</pre>
                                         </div>
                                     </div>
 
@@ -130,7 +123,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code">  安全代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="|  #{csrf.safeCode}|">  安全代码</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="safeCsrfToken">
                             </div>
@@ -143,10 +136,10 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-anquan">  辅助场景：Origin/Referer检测</span></h1>
+                        <h1><span class="iconfont icon-anquan" th:text="|  #{csrf.safe.originReferer}|">  辅助场景：Origin/Referer检测</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <ul class="layui-tab-title">
-                                <li class="layui-this">转账操作</li>
+                                <li class="layui-this" th:text="#{csrf.transferOperation}">转账操作</li>
                             </ul>
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
@@ -154,17 +147,17 @@
                                         <form class="layui-form" style="display: flex; justify-content: space-between;" th:action="@{/csrf/safe2}" target="_blank">
                                             <div style="display: flex; align-items: center;">
                                                 <input type="text" name="receiver" style="width: 150px;" required
-                                                       lay-verify="required" value="zhangsan" placeholder="收款人" autocomplete="off"
+                                                       lay-verify="required" value="zhangsan" placeholder="收款人" th:placeholder="#{csrf.receiver}" autocomplete="off"
                                                        class="layui-input">
                                                 <input type="text" name="amount" style="width: 150px" required
-                                                       lay-verify="required" value="100" placeholder="转账金额" autocomplete="off"
+                                                       lay-verify="required" value="100" placeholder="转账金额" th:placeholder="#{csrf.amount}" autocomplete="off"
                                                        class="layui-input">
                                             </div>
                                             <div style="display: flex; align-items: center;">
                                                 <button class="layui-btn layui-btn-normal"
                                                         style="width: 100px; margin-left: 10px;"
                                                         lay-filter="vul-csrf" lay-submit="">
-                                                    <span class="iconfont icon-zhihang">转账</span>
+                                                    <span class="iconfont icon-zhihang" th:text="#{csrf.transfer}">转账</span>
                                                 </button>
                                             </div>
                                         </form>
@@ -173,12 +166,9 @@
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i>tips</div>
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i><span th:text="#{csrf.tips}">tips</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">辅助检测说明：
-  Origin/Referer 可以作为 CSRF Token 之外的补充校验，但不应作为唯一防线。
-  校验时应解析 URL 后精确比较协议、域名和端口，不要使用 startsWith 这类字符串前缀判断。
-  某些隐私策略、跳转链路或客户端环境可能缺失 Referer，因此缺失时应拒绝敏感操作或走二次确认。</pre>
+                                            <pre style="color: #28333e;font-size: 15px;" th:text="#{csrf.originRefererTips}">辅助检测说明</pre>
                                         </div>
                                     </div>
 
@@ -189,7 +179,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code">  辅助代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="|  #{csrf.auxiliaryCode}|">  辅助代码</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="safeCsrfReferer">
                             </div>
@@ -206,7 +196,7 @@
 </div>
 
 <div th:replace="~{common/common::script}"></div>
-<script>
+<script th:inline="javascript">
     $(function() {
         $.ajax({
             url: '/csrf/getCsrfToken',
@@ -215,12 +205,12 @@
                 $('input[name="csrfToken"]').val(data.csrfToken);
             },
             error: function() {
-                console.error('获取csrfToken失败');
+                console.error(/*[[#{csrf.fetchTokenFailed}]]*/ '获取csrfToken失败');
             }
         });
     });
 </script>
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
     document.addEventListener("DOMContentLoaded", function () {
 
         layui.use(['layer', 'miniTab', 'common', 'form'], function () {
@@ -230,7 +220,8 @@
                 common = layui.common,
                 form = layui.form;
             miniTab.listen();
-            layer.msg("其他漏洞-跨站请求伪造")
+            layer.msg(/*[[#{csrf.toast}]]*/ "其他漏洞-跨站请求伪造")
+            var isEnglishCsrf = /*[[${#locale.language == 'en'}]]*/ false;
 
             var cmConfig = {
                 lineNumbers: true,
@@ -254,18 +245,18 @@
             };
 
             CodeMirror(document.getElementById("vulCsrf"), Object.assign({}, cmConfig, {
-                value: vulCsrf
+                value: isEnglishCsrf ? vulCsrf : vulCsrfZh
             }));
             CodeMirror(document.getElementById("safeCsrfToken"), Object.assign({}, cmConfigSafe, {
-                value: safeCsrfToken
+                value: isEnglishCsrf ? safeCsrfToken : safeCsrfTokenZh
             }));
             CodeMirror(document.getElementById("safeCsrfReferer"), Object.assign({}, cmConfigSafe, {
-                value: safeCsrfReferer
+                value: isEnglishCsrf ? safeCsrfReferer : safeCsrfRefererZh
             }));
 
             $('.csrf').hover(function () {
                 $(this).css('cursor', 'pointer');
-                layer.tips('攻击流程图', this, {
+                layer.tips(/*[[#{csrf.flowTip}]]*/ '攻击流程图', this, {
                     tips: [1, '#0051ff'],
                     time: 2000
                 });

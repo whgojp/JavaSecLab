@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <div th:replace="~{common/common::head}"></div>
 <head>
-    <title>Dom型XSS-href跳转demo</title>
+    <title th:text="#{xss.dom.href.title}">DOM型XSS - href跳转演示</title>
 </head>
 <body>
 <div class="layui-container">
@@ -10,18 +10,18 @@
         <div class="layui-col-md-offset1 layui-col-md10">
             <div class="layui-card">
                 <div class="layui-card-header">
-                    <h1>Dom型XSS-href跳转demo</h1>
+                    <h1 th:text="#{xss.dom.href.title}">DOM型XSS - href跳转演示</h1>
                 </div>
                 <div class="layui-card-body">
                     <p>
-                        hash 属性是一个可读可写的字符串，该字符串是 URL 的锚部分（从 # 号开始的部分）。当其作为可控参数进入 location.href、innerHTML、eval() 等危险 Sink 时，可能产生DOM型XSS漏洞。
+                        <span th:text="#{xss.dom.href.intro}">hash 属性是一个可读可写的字符串，该字符串是 URL 的锚部分（从 # 号开始的部分）。当其作为可控参数进入 location.href、innerHTML、eval() 等危险 Sink 时，可能产生DOM型XSS漏洞。
                         通过 <code>location.hash</code> 的方式，将参数写在 <code>#</code> 号后，既能让JS读取到该参数，
-                        又不让该参数传入到服务器，因此服务端日志或部分网关/WAF可能看不到这段载荷。
+                        又不让该参数传入到服务器，因此服务端日志或部分网关/WAF可能看不到这段载荷。</span>
                     </p>
                     <p>
-                        变量<code>hash</code>作为可控部分，并带入url中，变量<code>hash</code>控制的是<code>#</code>之后的部分，
+                        <span th:text="#{xss.dom.href.protocol}">变量<code>hash</code>作为可控部分，并带入url中，变量<code>hash</code>控制的是<code>#</code>之后的部分，
                         可以使用伪协议<code>#javascript:alert(1)</code>。常见的几种伪协议有<code>javascript:</code>、
-                        <code>vbscript:</code>、<code>data:</code>等。
+                        <code>vbscript:</code>、<code>data:</code>等。</span>
                     </p>
                 </div>
             </div>

@@ -4,6 +4,8 @@ import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.ShearCaptcha;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import top.whgojp.common.utils.R;
@@ -24,13 +26,18 @@ import java.io.IOException;
 @CrossOrigin(origins = "*")
 @RequestMapping("/logic/captcha/graphic")
 public class GraphicController {
+    private final MessageSource messageSource;
+
+    public GraphicController(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
 
     @RequestMapping("")
     public String graphic() {
         return "vul/logic/captcha/graphic";
     }
 
-    // 测试账号密码
+    // Test account credentials.
     final String REAL_USERNAME = "admin";
     final String REAL_PASSWORD = "admin123";
 
@@ -40,15 +47,15 @@ public class GraphicController {
         response.setHeader("Pragma", "no-cache");
         response.setHeader("Cache-Control", "no-cache");
 
-        //定义图形验证码的长、宽、验证码字符数、干扰线宽度
+        // Define width, height, captcha length, and interference line width.
         ShearCaptcha shearCaptcha = CaptchaUtil.createShearCaptcha(90, 30, 4, 3);
         try {
-            //输出
+            // Output the captcha image.
             shearCaptcha.write(response.getOutputStream());
             String captchaCode = shearCaptcha.getCode();
             session.setAttribute("vulCaptcha", captchaCode);
             session.setAttribute("captchaCreationTime", System.currentTimeMillis());
-            log.info("session id {}， 生成的验证码 {}", session.getId(), captchaCode);
+            log.info("session id {}, generated captcha {}", session.getId(), captchaCode);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -58,32 +65,32 @@ public class GraphicController {
     public Boolean verifyCaptcha(String captchaInput, HttpSession session) {
         String sessionCaptcha = (String) session.getAttribute("vulCaptcha");
         Long captchaCreationTime = (Long) session.getAttribute("captchaCreationTime");
-        // 如果没有验证码或生成时间，返回失败
+        // Return false if captcha or creation time is missing.
         if (sessionCaptcha == null || captchaCreationTime == null) {
-//            return R.error("验证码已失效，请刷新后重试");
+//            return false;
             return false;
         }
 
-        // 验证码有效期为300秒（5分钟）
-        long captchaExpiryTime = 300 * 1000; // 300秒转换为毫秒
+        // Captcha is valid for 300 seconds (5 minutes).
+        long captchaExpiryTime = 300 * 1000;
 
-        // 检查验证码是否过期
+        // Check whether the captcha has expired.
         if (System.currentTimeMillis() - captchaCreationTime > captchaExpiryTime) {
             session.removeAttribute("vulCaptcha");
             session.removeAttribute("captchaCreationTime");
-//            return R.error("验证码已过期，请刷新后重试");
+//            return false;
             return false;
         }
 
-        // 验证输入的验证码
+        // Validate the submitted captcha.
         if (sessionCaptcha.equalsIgnoreCase(captchaInput)) {
-            // 验证成功后清除 session 中的验证码
+            // Vulnerable demo: captcha is not cleared after successful validation.
 //            session.removeAttribute("vulCaptcha");
 //            session.removeAttribute("captchaCreationTime");
-//            return R.ok("验证码验证成功");
+//            return true;
             return true;
         } else {
-//            return R.ok("验证码错误，请重新输入");
+//            return false;
             return false;
         }
 
@@ -93,15 +100,15 @@ public class GraphicController {
     @ResponseBody
     public R vul1(String username, String password, String captcha, HttpSession session) {
         if (verifyCaptcha(captcha, session)) {
-            log.info("验证码有效，校验成功");
+            log.info("captcha is valid");
             if (REAL_USERNAME.equals(username) && REAL_PASSWORD.equals(password)) {
-                return R.ok("账号爆破成功！用户名：" + username + ",密码：" + password);
+                return R.ok(msg("logic.captcha.result.bruteForceSuccess", username, password));
             } else {
-                return R.error("账号或密码错误!");
+                return R.error(msg("logic.captcha.result.accountInvalid"));
             }
         } else {
-            log.info("验证码错误！(5分钟内有效)");
-            return R.error("验证码错误！(5分钟内有效)");
+            log.info("captcha is invalid, valid for 5 minutes");
+            return R.error(msg("logic.captcha.result.captchaInvalidFive"));
         }
     }
 
@@ -109,16 +116,16 @@ public class GraphicController {
     @ResponseBody
     public R vul2(String username, String password, String captcha, HttpSession session) {
         String sessionCaptcha = (String) session.getAttribute("vulCaptcha");
-        // 万能验证码：6666
+        // Universal captcha: 6666.
         if ("6666".equals(captcha) || (sessionCaptcha != null && sessionCaptcha.equalsIgnoreCase(captcha))) {
-            // 及时清除旧验证码
+            // Clear the old captcha.
             session.removeAttribute("vulCaptcha");
             if (REAL_USERNAME.equals(username) && REAL_PASSWORD.equals(password)) {
-                return R.ok("账号爆破成功！用户名：" + username + ",密码：" + password);
-            } else return R.error("账号或密码错误!");
+                return R.ok(msg("logic.captcha.result.bruteForceSuccess", username, password));
+            } else return R.error(msg("logic.captcha.result.accountInvalid"));
         } else {
             session.removeAttribute("vulCaptcha");
-            return R.error("验证码错误！");
+            return R.error(msg("logic.captcha.result.captchaInvalid"));
         }
     }
 
@@ -129,11 +136,11 @@ public class GraphicController {
         if (sessionCaptcha != null && sessionCaptcha.equalsIgnoreCase(captcha)) {
             session.removeAttribute("vulCaptcha");
             if (REAL_USERNAME.equals(username) && REAL_PASSWORD.equals(password)) {
-                return R.ok("账号爆破成功！用户名：" + username + ",密码：" + password);
-            } else return R.error("账号或密码错误!");
+                return R.ok(msg("logic.captcha.result.bruteForceSuccess", username, password));
+            } else return R.error(msg("logic.captcha.result.accountInvalid"));
         } else {
             session.removeAttribute("vulCaptcha");
-            return R.error("验证码错误！");
+            return R.error(msg("logic.captcha.result.captchaInvalid"));
         }
     }
     @GetMapping("/safeImg")
@@ -142,15 +149,15 @@ public class GraphicController {
         response.setHeader("Pragma", "no-cache");
         response.setHeader("Cache-Control", "no-cache");
 
-        //定义图形验证码的长、宽、验证码字符数、干扰线宽度
+        // Define width, height, captcha length, and interference line width.
         ShearCaptcha shearCaptcha = CaptchaUtil.createShearCaptcha(90, 30, 6, 3);
         try {
-            //输出
+            // Output the captcha image.
             shearCaptcha.write(response.getOutputStream());
             String captchaCode = shearCaptcha.getCode();
             session.setAttribute("safeCaptcha", captchaCode);
             session.setAttribute("captchaTimestamp", System.currentTimeMillis());
-            log.info("session id {}， 生成的验证码 {}", session.getId(), captchaCode);
+            log.info("session id {}, generated captcha {}", session.getId(), captchaCode);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -161,28 +168,31 @@ public class GraphicController {
     public R safe(String username, String password, String captcha, HttpSession session) {
         String sessionCaptcha = (String) session.getAttribute("safeCaptcha");
         Long captchaTimestamp = (Long) session.getAttribute("captchaTimestamp");
-        // 验证验证码是否已失效（1分钟有效）
+        // Check whether the captcha has expired (1-minute lifetime).
         if (captchaTimestamp == null || System.currentTimeMillis() - captchaTimestamp > 60 * 1000) {
             session.removeAttribute("safeCaptcha");
             session.removeAttribute("captchaTimestamp");
-            return R.error("验证码已失效，请重新获取！");
+            return R.error(msg("logic.captcha.result.captchaExpired"));
         }
-        // 校验验证码
+        // Validate captcha.
         if (sessionCaptcha != null && sessionCaptcha.equalsIgnoreCase(captcha)) {
             session.removeAttribute("safeCaptcha");
             session.removeAttribute("captchaTimestamp");
-            // 校验账号密码
+            // Validate account credentials.
             if (REAL_USERNAME.equals(username) && REAL_PASSWORD.equals(password)) {
-                return R.ok("登录成功！用户名：" + username + ",密码：" + password);
+                return R.ok(msg("logic.captcha.result.loginSuccess", username, password));
             } else {
-                return R.error("账号或密码错误!");
+                return R.error(msg("logic.captcha.result.accountInvalid"));
             }
         } else {
             session.removeAttribute("safeCaptcha");
             session.removeAttribute("captchaTimestamp");
-            return R.error("验证码错误，请重新输入！");
+            return R.error(msg("logic.captcha.result.captchaRetry"));
         }
     }
 
+    private String msg(String code, Object... args) {
+        return messageSource.getMessage(code, args, LocaleContextHolder.getLocale());
+    }
 
 }

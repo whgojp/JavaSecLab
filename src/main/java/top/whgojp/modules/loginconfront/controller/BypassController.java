@@ -2,6 +2,8 @@ package top.whgojp.modules.loginconfront.controller;
 
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import top.whgojp.common.utils.R;
@@ -21,6 +23,12 @@ import java.util.*;
 @CrossOrigin(origins = "*")
 @RequestMapping("/loginconfront/bypass")
 public class BypassController {
+    private final MessageSource messageSource;
+
+    public BypassController(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
+
     @RequestMapping("")
     public String bypass() {
         return "vul/loginconfront/bypass";
@@ -40,12 +48,12 @@ public class BypassController {
     @ResponseBody
     public R vul1step1(String username, String password) {
         if (username == null || username.trim().isEmpty() || password == null) {
-            return R.error("账号校验失败，请重试！");
+            return R.error(msg("login.bypass.result.accountFailed"));
         }
         if (REAL_USERNAME.equalsIgnoreCase(username) && REAL_PASSWORD.equalsIgnoreCase(password)) {
-            return R.ok("账号校验通过，请稍等！");
+            return R.ok(msg("login.bypass.result.accountPassed"));
         } else {
-            return R.error("账号校验失败，请重试！");
+            return R.error(msg("login.bypass.result.accountFailed"));
         }
     }
 
@@ -53,9 +61,9 @@ public class BypassController {
     @ResponseBody
     public R vul1step2(String code) {
         if ("0".equals(code)) {
-            return R.ok("登录成功，欢迎！");
+            return R.ok(msg("login.bypass.result.loginSuccess"));
         } else {
-            return R.error("登录失败！");
+            return R.error(msg("login.bypass.result.loginFailed"));
         }
     }
 
@@ -66,14 +74,14 @@ public class BypassController {
     @ResponseBody
     public R vul2Step1(@RequestParam String username, HttpSession session) {
         try {
-            log.info("用户名：" + username);
+            log.info("Password reset username: {}", username);
             if (username == null || username.trim().isEmpty()) {
-                return R.error("用户名不能为空");
+                return R.error(msg("login.bypass.result.usernameEmpty"));
             }
             flowData(session).put(1, username);
-            return R.ok("用户名验证成功！");
+            return R.ok(msg("login.bypass.result.usernamePassed"));
         } catch (Exception e) {
-            return R.error("服务器错误，请稍后再试");
+            return R.error(msg("login.bypass.result.serverError"));
         }
     }
 
@@ -83,13 +91,13 @@ public class BypassController {
     @ResponseBody
     public R vul2Step2(@RequestParam String oldPassword, HttpSession session) {
         if (oldPassword == null || oldPassword.isEmpty()) {
-            return R.error("旧密码不能为空！");
+            return R.error(msg("login.bypass.result.oldPasswordEmpty"));
         }
         if (!OLD_PASS.equals(oldPassword)) {
-            return R.error("旧密码错误！");
+            return R.error(msg("login.bypass.result.oldPasswordWrong"));
         }
         flowData(session).put(2, oldPassword);
-        return R.ok("密码验证成功！");
+        return R.ok(msg("login.bypass.result.oldPasswordPassed"));
     }
 
     // step3:设置新密码
@@ -97,12 +105,12 @@ public class BypassController {
     @ResponseBody
     public R vul2Step3(@RequestParam String newPassword, HttpSession session) {
         if (newPassword == null || newPassword.length() < 6) {
-            return R.error("密码长度必须大于6!");
+            return R.error(msg("login.bypass.result.newPasswordShort"));
         }
         Map<Integer, String> stepData = flowData(session);
         stepData.put(3, newPassword);
-        log.info("密码重置流程数据: {}", stepData);
-        return R.ok("密码重置成功！");
+        log.info("Password reset flow data: {}", stepData);
+        return R.ok(msg("login.bypass.result.resetSuccess"));
     }
 
     @SuppressWarnings("unchecked")
@@ -114,6 +122,10 @@ public class BypassController {
         Map<Integer, String> stepData = new HashMap<>();
         session.setAttribute(RESET_FLOW_DATA, stepData);
         return stepData;
+    }
+
+    private String msg(String key, Object... args) {
+        return messageSource.getMessage(key, args, LocaleContextHolder.getLocale());
     }
 
 }

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>系统管理页面 - 垂直越权演示</title>
+    <title th:text="#{logic.idor.admin.title}">系统管理页面 - 垂直越权演示</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -52,15 +52,15 @@
 <body>
 
 <div class="content-wrapper">
-    <div class="header">管理后台</div>
-    <div class="sub-header">访问了管理员权限的页面</div>
+    <div class="header" th:text="#{logic.idor.admin.header}">管理后台</div>
+    <div class="sub-header" th:text="#{logic.idor.admin.subHeader}">访问了管理员权限的页面</div>
 
     <table class="table table-custom table-bordered table-hover">
         <thead>
         <tr>
             <th>ID</th>
-            <th>用户名</th>
-            <th>密码</th>
+            <th th:text="#{logic.idor.admin.username}">用户名</th>
+            <th th:text="#{logic.idor.admin.password}">密码</th>
         </tr>
         </thead>
         <tbody>

@@ -11,6 +11,8 @@ import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.xpath.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -40,6 +42,9 @@ public class StoreController extends AbstractController{
     @Autowired
     private XssService xssService;
 
+    @Autowired
+    private MessageSource messageSource;
+
     @RequestMapping("")
     public String xssStore() {
         return "vul/xss/store";
@@ -55,8 +60,8 @@ public class StoreController extends AbstractController{
         final int code = xssService.insertOne(payload,ua);
         if (code == 1) {
             log.info("插入数据成功！");
-            return R.ok("插入数据成功！");
-        } else return R.error("数据插入失败");
+            return R.ok(msg("xss.store.result.insertSuccess"));
+        } else return R.error(msg("xss.store.result.insertFailed"));
     }
 
     @RequestMapping("/getXssList")
@@ -71,7 +76,11 @@ public class StoreController extends AbstractController{
     @ResponseBody
     public R deleteOne(@RequestParam int id){
         if (xssService.deleteById(id)==1){
-            return R.ok("删除成功！");
-        }else return R.error("删除失败！");
+            return R.ok(msg("common.deleteSuccess"));
+        }else return R.error(msg("common.deleteFailed"));
+    }
+
+    private String msg(String code, Object... args) {
+        return messageSource.getMessage(code, args, LocaleContextHolder.getLocale());
     }
 }

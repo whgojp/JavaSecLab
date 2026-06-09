@@ -10,43 +10,43 @@
         <div class="layui-row layui-col-space15">
             <div class="layui-col-md12">
                 <fieldset class="layui-elem-field layui-field-title">
-                    <legend style="color: rgb(30 159 255)">逻辑漏洞 - 并发安全</legend>
+                    <legend style="color: rgb(30 159 255)" th:text="#{logic.concurrent.title}">逻辑漏洞 - 并发安全</legend>
                     <blockquote class="layui-elem-quote layui-quote-nm" style="background-color: #a7deefab;">
-                        <pre>  并发安全问题通常发生在库存、余额、订单、优惠券等共享资源读写过程中。多个请求同时执行时，如果校验、扣减和状态更新不是一个原子操作，就可能出现重复扣款、超卖、重复领取或状态覆盖。</pre>
+                        <pre th:text="#{logic.concurrent.intro}">并发安全问题通常发生在库存、余额、订单、优惠券等共享资源读写过程中。多个请求同时执行时，如果校验、扣减和状态更新不是一个原子操作，就可能出现重复扣款、超卖、重复领取或状态覆盖。</pre>
                     </blockquote>
                 </fieldset>
             </div>
 
             <div class="layui-col-md12">
                 <button class="layui-btn layui-btn-normal" id="resetConcurrentBalance">
-                    <span class="iconfont icon-zhihang">重置测试数据</span>
+                    <span class="iconfont icon-zhihang" th:text="#{logic.concurrent.resetData}">重置测试数据</span>
                 </button>
             </div>
 
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-bug"> 漏洞场景：竞态条件重复支付</span></h1>
+                        <h1><span class="iconfont icon-bug" th:text="| #{logic.concurrent.vul.title}|"> 漏洞场景：竞态条件重复支付</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
                                         <form class="layui-form" style="display: flex; justify-content: space-between;">
                                             <div style="display: flex; align-items: center;">
-                                                订单ID:&nbsp;<input type="text" name="orderId" style="width: 130px;"
+                                                <span th:text="#{logic.concurrent.orderId}">订单ID</span>:&nbsp;<input type="text" name="orderId" style="width: 130px;"
                                                                     required lay-verify="required" value="race123"
-                                                                    placeholder="订单ID" autocomplete="off"
+                                                                    th:placeholder="#{logic.concurrent.orderId}" placeholder="Order ID" autocomplete="off"
                                                                     class="layui-input">
-                                                金额:&nbsp;<input type="text" name="amount" style="width: 120px;"
+                                                <span th:text="#{logic.concurrent.amount}">金额</span>:&nbsp;<input type="text" name="amount" style="width: 120px;"
                                                                   required lay-verify="required" value="100.00"
-                                                                  placeholder="金额" autocomplete="off"
+                                                                  th:placeholder="#{logic.concurrent.amount}" placeholder="Amount" autocomplete="off"
                                                                   class="layui-input">
                                             </div>
                                             <div style="display: flex; align-items: center;">
                                                 <button class="layui-btn layui-btn-normal"
                                                         style="width: 120px; margin-left: 10px;"
                                                         lay-filter="vul-concurrent-button" lay-submit="">
-                                                    <span class="iconfont icon-zhihang">并发请求</span>
+                                                    <span class="iconfont icon-zhihang" th:text="#{logic.concurrent.submit}">并发请求</span>
                                                 </button>
                                             </div>
                                         </form>
@@ -55,16 +55,16 @@
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i> tips</div>
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i> <span th:text="#{logic.concurrent.tips}">tips</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">同一订单会同时发送 3 个支付请求。漏洞接口没有订单幂等校验，也没有把余额读取和写回放入同一个临界区，因此可能出现重复扣款或余额结果不一致。</pre>
+                                            <pre style="color: #28333e;font-size: 15px;" th:text="#{logic.concurrent.vul.tips}">同一订单会同时发送 3 个支付请求。</pre>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i> 测试结果</div>
+                                        <div class="layui-card-header"><i class="fa fa-warning icon-output"></i> <span th:text="#{logic.concurrent.testResult}">测试结果</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
                                             <pre id="vul-concurrent-result" style="color: red;font-size: 15px;"></pre>
                                         </div>
@@ -75,7 +75,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code"> 缺陷代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="| #{logic.concurrent.vulnerableCode}|"> 缺陷代码</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="vulConcurrent"></div>
                         </div>
@@ -86,27 +86,27 @@
             <div class="layui-col-md12" style="margin-top: 10px">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-anquan"> 安全场景：加锁与幂等校验</span></h1>
+                        <h1><span class="iconfont icon-anquan" th:text="| #{logic.concurrent.safe.title}|"> 安全场景：加锁与幂等校验</span></h1>
                         <div class="layui-tab layui-tab-brief">
                             <div class="layui-tab-content">
                                 <div class="layui-tab-item layui-show">
                                     <blockquote class="layui-elem-quote main_btn">
                                         <form class="layui-form" style="display: flex; justify-content: space-between;">
                                             <div style="display: flex; align-items: center;">
-                                                订单ID:&nbsp;<input type="text" name="orderId" style="width: 130px;"
+                                                <span th:text="#{logic.concurrent.orderId}">订单ID</span>:&nbsp;<input type="text" name="orderId" style="width: 130px;"
                                                                     required lay-verify="required" value="safeRace123"
-                                                                    placeholder="订单ID" autocomplete="off"
+                                                                    th:placeholder="#{logic.concurrent.orderId}" placeholder="Order ID" autocomplete="off"
                                                                     class="layui-input">
-                                                金额:&nbsp;<input type="text" name="amount" style="width: 120px;"
+                                                <span th:text="#{logic.concurrent.amount}">金额</span>:&nbsp;<input type="text" name="amount" style="width: 120px;"
                                                                   required lay-verify="required" value="100.00"
-                                                                  placeholder="金额" autocomplete="off"
+                                                                  th:placeholder="#{logic.concurrent.amount}" placeholder="Amount" autocomplete="off"
                                                                   class="layui-input">
                                             </div>
                                             <div style="display: flex; align-items: center;">
                                                 <button class="layui-btn layui-btn-normal"
                                                         style="width: 120px; margin-left: 10px;"
                                                         lay-filter="safe-concurrent-button" lay-submit="">
-                                                    <span class="iconfont icon-zhihang">并发请求</span>
+                                                    <span class="iconfont icon-zhihang" th:text="#{logic.concurrent.submit}">并发请求</span>
                                                 </button>
                                             </div>
                                         </form>
@@ -115,16 +115,16 @@
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i> tips</div>
+                                        <div class="layui-card-header"><i class="fa fa-bullhorn icon-tip"></i> <span th:text="#{logic.concurrent.tips}">tips</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
-                                            <pre style="color: #28333e;font-size: 15px;">安全接口在服务端使用订单幂等集合和同步锁保护临界区，同一订单只能扣款一次；真实业务还应配合数据库唯一索引、事务隔离、乐观锁或分布式锁。</pre>
+                                            <pre style="color: #28333e;font-size: 15px;" th:text="#{logic.concurrent.safe.tips}">安全接口在服务端使用订单幂等集合和同步锁保护临界区。</pre>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="layui-col-md12">
                                     <div class="layui-card">
-                                        <div class="layui-card-header"><i class="fa fa-warning icon-output-safe"></i> 测试结果</div>
+                                        <div class="layui-card-header"><i class="fa fa-warning icon-output-safe"></i> <span th:text="#{logic.concurrent.testResult}">测试结果</span></div>
                                         <div class="layui-card-body layui-text layadmin-text">
                                             <pre id="safe-concurrent-result" style="color: red;font-size: 15px;"></pre>
                                         </div>
@@ -135,7 +135,7 @@
                     </div>
 
                     <div class="layui-col-md6">
-                        <h1><span class="iconfont icon-code"> 安全代码</span></h1>
+                        <h1><span class="iconfont icon-code" th:text="| #{logic.concurrent.safeCode}|"> 安全代码</span></h1>
                         <div class="m-auto div-shadow shadow p-3 mb-5 bg-white rounded">
                             <div class="code-editor" id="safeConcurrent"></div>
                         </div>
@@ -147,7 +147,7 @@
 </div>
 
 <div th:replace="~{common/common::script}"></div>
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
     document.addEventListener("DOMContentLoaded", function () {
         layui.use(['layer', 'miniTab', 'form'], function () {
             var $ = layui.jquery,
@@ -156,11 +156,12 @@
                 form = layui.form;
 
             miniTab.listen();
-            layer.msg("逻辑漏洞 - 并发安全");
+            layer.msg(/*[[#{logic.concurrent.toast}]]*/ "逻辑漏洞 - 并发安全");
+            var isEnglishConcurrent = /*[[${#locale.language == 'en'}]]*/ false;
 
             function sendConcurrentRequests(url, data, resultElem) {
                 $(resultElem).html("");
-                var loadingMsg = layer.msg('正在发送并发请求...', {icon: 16, time: 0});
+                var loadingMsg = layer.msg(/*[[#{logic.concurrent.loading}]]*/ '正在发送并发请求...', {icon: 16, time: 0});
                 var requestCount = 3;
                 var completedCount = 0;
 
@@ -172,15 +173,15 @@
                         data: requestData,
                         success: function (res) {
                             completedCount++;
-                            $(resultElem).append("请求 #" + completedCount + "：" +
-                                (res.code === 0 ? "成功 - " + res.msg : "失败 - " + res.msg) + "\n");
+                            $(resultElem).append((/*[[#{logic.concurrent.request}]]*/ "请求") + " #" + completedCount + "：" +
+                                (res.code === 0 ? (/*[[#{logic.concurrent.success}]]*/ "成功") + " - " + res.msg : (/*[[#{logic.concurrent.failure}]]*/ "失败") + " - " + res.msg) + "\n");
                             if (completedCount >= requestCount) {
                                 layer.close(loadingMsg);
                             }
                         },
                         error: function () {
                             completedCount++;
-                            $(resultElem).append("请求 #" + completedCount + "：请求失败\n");
+                            $(resultElem).append((/*[[#{logic.concurrent.request}]]*/ "请求") + " #" + completedCount + "：" + (/*[[#{logic.concurrent.requestFailed}]]*/ "请求失败") + "\n");
                             if (completedCount >= requestCount) {
                                 layer.close(loadingMsg);
                             }
@@ -219,8 +220,8 @@
             };
             var cmConfigSafe = Object.assign({}, cmConfig, {theme: 'juejinsafe'});
 
-            CodeMirror(document.getElementById("vulConcurrent"), Object.assign({}, cmConfig, {value: vulConcurrent}));
-            CodeMirror(document.getElementById("safeConcurrent"), Object.assign({}, cmConfigSafe, {value: safeConcurrent}));
+            CodeMirror(document.getElementById("vulConcurrent"), Object.assign({}, cmConfig, {value: isEnglishConcurrent ? vulConcurrent : vulConcurrentZh}));
+            CodeMirror(document.getElementById("safeConcurrent"), Object.assign({}, cmConfigSafe, {value: isEnglishConcurrent ? safeConcurrent : safeConcurrentZh}));
         });
     });
 </script>

@@ -3,6 +3,8 @@ package top.whgojp.modules.rce.command;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,12 +36,18 @@ import java.util.concurrent.TimeUnit;
 @CrossOrigin(origins = "*")
 @RequestMapping("/command")
 public class CommandController {
-    // 业务动作到固定命令参数的映射。用户只能选择动作，不能直接控制命令字符串。
+    private final MessageSource messageSource;
+
+    // Map business actions to fixed command arguments. Users cannot directly control command strings.
     private static final Map<String, List<String>> ALLOWED_COMMANDS = new HashMap<>();
 
     static {
         ALLOWED_COMMANDS.put("list", Arrays.asList("ls"));
         ALLOWED_COMMANDS.put("date", Arrays.asList("date"));
+    }
+
+    public CommandController(MessageSource messageSource) {
+        this.messageSource = messageSource;
     }
 
     @RequestMapping("")
@@ -85,10 +93,10 @@ public class CommandController {
     @ResponseBody
     public R vul3(String payload) throws Exception {
         try {
-            // 获取 ProcessImpl 类对象
+            // Get the ProcessImpl class object.
             Class<?> clazz = Class.forName("java.lang.ProcessImpl");
 
-            // 获取 start 方法
+            // Get the start method.
             Method method = clazz.getDeclaredMethod("start", String[].class, Map.class, String.class, ProcessBuilder.Redirect[].class, boolean.class);
             method.setAccessible(true);
 
@@ -102,7 +110,7 @@ public class CommandController {
                 return R.ok(output.toString());
             }
         } catch (ReflectiveOperationException | RuntimeException e) {
-            return R.error("当前JDK限制反射调用ProcessImpl.start：" + e.getMessage());
+            return R.error(msg("rce.result.processImplRestricted", e.getMessage()));
         }
     }
 
@@ -111,7 +119,7 @@ public class CommandController {
     public R safe(@RequestParam("payload") String payload) throws IOException {
         List<String> command = ALLOWED_COMMANDS.get(payload);
         if (command == null) {
-            return R.error("不允许执行该动作！");
+            return R.error(msg("rce.result.actionNotAllowed"));
         }
 
         ProcessBuilder pb = new ProcessBuilder(command);
@@ -120,11 +128,11 @@ public class CommandController {
         try {
             if (!process.waitFor(3, TimeUnit.SECONDS)) {
                 process.destroyForcibly();
-                return R.error("命令执行超时！");
+                return R.error(msg("rce.result.commandTimeout"));
             }
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            return R.error("命令执行被中断！");
+            return R.error(msg("rce.result.commandInterrupted"));
         }
         String output = readProcessOutput(process);
         return R.ok(output);
@@ -142,5 +150,8 @@ public class CommandController {
         }
     }
 
+    private String msg(String code, Object... args) {
+        return messageSource.getMessage(code, args, LocaleContextHolder.getLocale());
+    }
 
 }

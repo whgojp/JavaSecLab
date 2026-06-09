@@ -132,11 +132,17 @@ cd JavaSecLab
 - Docker
 - Docker Compose
 
-构建并启动：
+方式一：直接使用已发布镜像启动：
+
+```shell
+docker compose -f docker-compose.image.yml up -d
+```
+
+方式二：本地构建镜像并启动：
 
 ```shell
 mvn clean package -DskipTests
-docker-compose -p javaseclab up -d
+docker compose -p javaseclab up -d
 ```
 
 如果容器启动后数据库为空，请手动导入 [sql/JavaSecLab.sql](./sql/JavaSecLab.sql)。
@@ -176,6 +182,23 @@ JavaSecLab 为漏洞靶场项目，包含故意保留的危险接口、漏洞依
 **When we speak of free software, we are referring to freedom, not price.**
 
 本项目遵循 [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0) 协议，详细内容请参见 [LICENSE](./LICENSE)。
+
+## Star History
+
+<picture>
+  <source
+    media="(prefers-color-scheme: dark)"
+    srcset="https://api.star-history.com/svg?repos=whgojp/JavaSecLab&type=Date&theme=dark"
+  />
+  <source
+    media="(prefers-color-scheme: light)"
+    srcset="https://api.star-history.com/svg?repos=whgojp/JavaSecLab&type=Date"
+  />
+  <img
+    alt="Star History Chart"
+    src="https://api.star-history.com/svg?repos=whgojp/JavaSecLab&type=Date"
+  />
+</picture>
 
 ## 更新记录
 
