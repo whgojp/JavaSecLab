@@ -183,6 +183,23 @@ Issues and pull requests are welcome. Good contributions include:
 
 JavaSecLab is released under the [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0). See [LICENSE](./LICENSE) for details.
 
+## Star History
+
+<picture>
+  <source
+    media="(prefers-color-scheme: dark)"
+    srcset="https://api.star-history.com/svg?repos=whgojp/JavaSecLab&type=Date&theme=dark"
+  />
+  <source
+    media="(prefers-color-scheme: light)"
+    srcset="https://api.star-history.com/svg?repos=whgojp/JavaSecLab&type=Date"
+  />
+  <img
+    alt="Star History Chart"
+    src="https://api.star-history.com/svg?repos=whgojp/JavaSecLab&type=Date"
+  />
+</picture>
+
 ## Changelog
 
 See the [Update Log](https://github.com/whgojp/JavaSecLab/wiki/%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97) for release notes and project history.

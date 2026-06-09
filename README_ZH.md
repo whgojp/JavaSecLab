@@ -183,6 +183,23 @@ JavaSecLab 为漏洞靶场项目，包含故意保留的危险接口、漏洞依
 
 本项目遵循 [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0) 协议，详细内容请参见 [LICENSE](./LICENSE)。
 
+## Star History
+
+<picture>
+  <source
+    media="(prefers-color-scheme: dark)"
+    srcset="https://api.star-history.com/svg?repos=whgojp/JavaSecLab&type=Date&theme=dark"
+  />
+  <source
+    media="(prefers-color-scheme: light)"
+    srcset="https://api.star-history.com/svg?repos=whgojp/JavaSecLab&type=Date"
+  />
+  <img
+    alt="Star History Chart"
+    src="https://api.star-history.com/svg?repos=whgojp/JavaSecLab&type=Date"
+  />
+</picture>
+
 ## 更新记录
 
 项目详细更新记录见：[更新日志](https://github.com/whgojp/JavaSecLab/wiki/%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97)
