@@ -188,15 +188,15 @@ JavaSecLab is released under the [Apache License 2.0](http://www.apache.org/lice
 <picture>
   <source
     media="(prefers-color-scheme: dark)"
-    srcset="https://api.star-history.com/svg?repos=whgojp/JavaSecLab&type=Date&theme=dark"
+    srcset="https://star-history.dera.page/svg?repos=whgojp/JavaSecLab&type=Date&theme=dark"
   />
   <source
     media="(prefers-color-scheme: light)"
-    srcset="https://api.star-history.com/svg?repos=whgojp/JavaSecLab&type=Date"
+    srcset="https://star-history.dera.page/svg?repos=whgojp/JavaSecLab&type=Date"
   />
   <img
     alt="Star History Chart"
-    src="https://api.star-history.com/svg?repos=whgojp/JavaSecLab&type=Date"
+    src="https://star-history.dera.page/svg?repos=whgojp/JavaSecLab&type=Date"
   />
 </picture>
 
